@@ -26,7 +26,7 @@ Vulnerability research is prior work rather than a current practice, though it r
 
 ---
 
-## CVEs (37)
+## CVEs (38)
 
 | # | CVE | Product | Version | Vulnerability | Severity | CVSS |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -66,7 +66,8 @@ Vulnerability research is prior work rather than a current practice, though it r
 | 34 | [CVE-2026-39923](CVE-2026-39923/) | Flarum | < 1.8.16 | Password Reset Token Expiry Bypass | High | 8.1 |
 | 35 | [CVE-2026-39924](CVE-2026-39924/) | Flarum | < 1.8.16 | Session Persistence (token revocation) | Medium | 6.8 |
 | 36 | [CVE-2026-55807](CVE-2026-55807/) | Drupal core | 11.3.6 | Server-Side Request Forgery | Low | 3.1 |
-| 37 | [BACKDROP-SA-CORE-2026-002 (CVE pending)](BACKDROP-SA-CORE-2026-002/) | Backdrop core | 1.32.x/1.33.x | Cross Site Request Forgery | Critical | - |
+| 37 | [CVE-2026-61520](CVE-2026-61520/) | SMF (Simple Machines Forum) | 2.1.0-2.1.6; 3.0 | Server-Side Request Forgery (image proxy) | High | 7.7 |
+| 38 | [BACKDROP-SA-CORE-2026-002 (CVE pending)](BACKDROP-SA-CORE-2026-002/) | Backdrop core | 1.32.x/1.33.x | Cross Site Request Forgery | Critical | - |
 
 ---
 
@@ -90,7 +91,7 @@ Published research that does not (yet) carry a CVE identifier.
 
 ---
 
-## CVEs without a published writeup (7)
+## CVEs without a published writeup (6)
 
 Credited to 0xHamy but not yet included in this repository — the writeups were not present in the recovered backup or archives. Records link to CVE.org.
 
@@ -102,5 +103,4 @@ Credited to 0xHamy but not yet included in this repository — the writeups were
 | 4 | [CVE-2026-41930](https://www.cve.org/CVERecord?id=CVE-2026-41930) | Vvveb | < 1.0.8.2 | Hard-coded Credentials Information Disclosure via phpMyAdmin |
 | 5 | [CVE-2026-41931](https://www.cve.org/CVERecord?id=CVE-2026-41931) | Vvveb | < 1.0.8.2 | Information Disclosure via Debug Exception Handler |
 | 6 | [CVE-2026-41934](https://www.cve.org/CVERecord?id=CVE-2026-41934) | Vvveb | < 1.0.8.2 | Authenticated RCE via Code Editor |
-| 7 | [CVE-2026-61520](https://www.cve.org/CVERecord?id=CVE-2026-61520) | Simple Machines Forum (SMF) | - | SSRF via image proxy |
 
