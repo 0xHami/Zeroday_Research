@@ -6,7 +6,7 @@ A record of zero-day and vulnerability research published under the alias **0xHa
 
 <img src="assets/founder.jpg" alt="Hamed Kohi" width="220" align="left" style="margin-right:20px;" />
 
-<br>
+<br><br><br>
 
 **Hamed Kohi** — Founder · Defense Technology R&D Engineer
 
