@@ -4,8 +4,6 @@ A record of zero-day and vulnerability research published under the alias **0xHa
 
 ---
 
-## Founder
-
 <img src="assets/founder.jpg" alt="Hamed Kohi" width="220" align="left" style="margin-right:20px;" />
 
 **Hamed Kohi** — Founder · Defense Technology R&D Engineer
@@ -15,6 +13,8 @@ Founder of Kohi Research Corporation. Current focus is defense technology R&D en
 Previously founded Delta Obscura, a team whose work secured 4.5 billion digital user accounts and over 100 million digital assets — websites, servers and the infrastructure behind them.
 
 Vulnerability research is prior work rather than a current practice, though it remains active in the background. The ledger below is a record of it.
+
+<br>
 
 - Email: [hkohi@kohirc.com](mailto:hkohi@kohirc.com)
 - GitHub: [@0xHami](https://github.com/0xHami)
