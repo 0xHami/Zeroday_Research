@@ -6,8 +6,6 @@ A record of zero-day and vulnerability research published under the alias **0xHa
 
 <img src="assets/founder.jpg" alt="Hamed Kohi" width="220" align="left" style="margin-right:20px;" />
 
-<br><br><br>
-
 **Hamed Kohi** — Founder · Defense Technology R&D Engineer
 
 Founder of Kohi Research Corporation. Current focus is defense technology R&D engineering — unmanned systems, hardware and robotics, aeroballistics, and the editorial oversight of KRC.
