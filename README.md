@@ -14,7 +14,7 @@ Previously founded Delta Obscura, a team whose work secured 4.5 billion digital 
 
 Vulnerability research is prior work rather than a current practice, though it remains active in the background. The ledger below is a record of it.
 
-<br>
+<br> <br> 
 
 - Email: [hkohi@kohirc.com](mailto:hkohi@kohirc.com)
 - GitHub: [@0xHami](https://github.com/0xHami)
