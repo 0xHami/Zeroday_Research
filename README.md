@@ -104,3 +104,8 @@ Credited to 0xHamy but not yet included in this repository — the writeups were
 | 5 | [CVE-2026-41931](https://www.cve.org/CVERecord?id=CVE-2026-41931) | Vvveb | < 1.0.8.2 | Information Disclosure via Debug Exception Handler |
 | 6 | [CVE-2026-41934](https://www.cve.org/CVERecord?id=CVE-2026-41934) | Vvveb | < 1.0.8.2 | Authenticated RCE via Code Editor |
 
+
+## CVEs with KhanMarshaI
+
+CVE-2026-25552
+CVE-2025-11280, CVE-2025-11281, CVE-2025-11282, CVE-2025-11283
