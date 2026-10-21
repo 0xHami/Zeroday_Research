@@ -1,0 +1,7 @@
+GET /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+

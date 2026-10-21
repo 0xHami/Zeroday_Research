@@ -1,0 +1,11 @@
+[
+  {
+    "method": "POST",
+    "path": "/canary-e7adad984b76",
+    "from_client_ip": "172.18.0.2",
+    "user_agent": "Umbraco-Cms/18.3.0-rc.preview.34",
+    "umb_event": "Umbraco.ContentPublish",
+    "x_canary": "e7adad984b76",
+    "body": "{\"id\":\"965aba95-646c-4120-8868-5c7553e98980\",\"cultures\":[]}"
+  }
+]

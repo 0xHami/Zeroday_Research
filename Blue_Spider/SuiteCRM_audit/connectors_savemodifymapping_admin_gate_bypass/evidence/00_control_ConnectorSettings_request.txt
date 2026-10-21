@@ -1,0 +1,1 @@
+POST module=Connectors&action=ConnectorSettings

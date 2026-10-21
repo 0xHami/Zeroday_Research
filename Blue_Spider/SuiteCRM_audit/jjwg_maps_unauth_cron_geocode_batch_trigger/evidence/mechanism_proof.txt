@@ -1,0 +1,11 @@
+unauthenticated HTTP GET: http://localhost:33116/index.php?module=jjwg_Maps&entryPoint=jjwg_Maps&cron=1&display_module=Accounts
+HTTP 200 in 0.13s, 0 bytes body
+eligible (not-yet-geocoded) Accounts at time of test: 68
+
+Same-process instrumentation of the code path the HTTP request just ran:
+EMPTY_RECORDS_BEFORE_FIRST_ADDRESS=0
+FIRST_ADDRESS_RECORD_ID=08681f23-9274-4c6f-9e18-75422a600e5d
+FIRST_ADDRESS=321 University Ave., San Mateo, CA, 60261, USA
+GOOGLE_CALL_SECONDS=0.092
+GOOGLE_STATUS=REQUEST_DENIED
+TOTAL_EMPTY_ADDRESS_RECORDS_SCANNED=1

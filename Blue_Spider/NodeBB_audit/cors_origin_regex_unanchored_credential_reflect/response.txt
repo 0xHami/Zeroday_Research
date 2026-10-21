@@ -1,0 +1,9 @@
+### VULN-011 evidence: attacker Origin reflected with credentials (config enabled) ###
+
+--- request: GET /api/config with Origin: https://example.com.attacker.net ---
+HTTP/1.1 200 OK
+Access-Control-Allow-Origin: https://example.com.attacker.net
+Access-Control-Allow-Credentials: true
+
+--- control: Origin: https://unrelated-evil.org (not reflected) ---
+(no Access-Control-Allow-Origin header - not reflected)

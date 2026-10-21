@@ -1,0 +1,4 @@
+No HTTP request — direct invocation of the target function (S3 stubbed):
+  zappa.handler.LambdaHandler.load_remote_project_archive("s3://.../project.tar.gz")
+  fed a gzip tar whose member is  ../../../../../../tmp/zappa_slip_<rand>/PWNED.py.
+  Result: file written OUTSIDE project_folder. See automation.py _DRIVER.

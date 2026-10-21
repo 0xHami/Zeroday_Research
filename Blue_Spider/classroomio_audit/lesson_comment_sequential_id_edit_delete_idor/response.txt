@@ -1,0 +1,9 @@
+PUT  /course/48cc01a5-dcb7-4e6e-a810-0c5f0cb5b4b7/lesson/comment/5 (B edits A's comment) -> HTTP 200
+{"success":true,"data":{"id":5,"createdAt":"2026-09-27 14:49:33.447365+00","updatedAt":"2026-09-27 14:49:33.458+00","lessonId":"8da6e7df-110c-4034-81f7-fdd909847343","groupmemberId":"70cb9550-c89e-4498-a500-6e438861de79","comment":"HACKED by student B b_c96cebf1"}}
+
+DB after edit: 'HACKED by student B b_c96cebf1'
+
+DELETE /course/48cc01a5-dcb7-4e6e-a810-0c5f0cb5b4b7/lesson/comment/5 -> HTTP 200
+{"success":true,"data":{"id":5,"createdAt":"2026-09-27 14:49:33.447365+00","updatedAt":"2026-09-27 14:49:33.458+00","lessonId":"8da6e7df-110c-4034-81f7-fdd909847343","groupmemberId":"70cb9550-c89e-4498-a500-6e438861de79","comment":"HACKED by student B b_c96cebf1"}}
+
+DB rows after delete: 0

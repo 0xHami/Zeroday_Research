@@ -1,0 +1,2 @@
+PL=f009c879-fdd1-49bc-85b9-c4236c46b684 C1=4350a7d1-c540-4066-9f2e-46cf1a21d8d4 C2=a6c64019-ea96-4129-9801-d788db5d2f73
+[{'related_id': '4350a7d1-c540-4066-9f2e-46cf1a21d8d4', 'related_type': 'Contacts', 'prospect_list_id': 'f009c879-fdd1-49bc-85b9-c4236c46b684', 'deleted': '0'}, {'related_id': 'a6c64019-ea96-4129-9801-d788db5d2f73', 'related_type': 'Contacts', 'prospect_list_id': 'f009c879-fdd1-49bc-85b9-c4236c46b684', 'deleted': '0'}]

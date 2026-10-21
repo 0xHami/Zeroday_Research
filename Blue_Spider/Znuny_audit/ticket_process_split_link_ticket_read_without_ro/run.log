@@ -1,0 +1,14 @@
+==========================================================================
+VULN-005: AgentTicketProcess split reads any ticket + article body (no ro)
+Target: http://localhost:25114
+[INFO] LinkTicketID/ArticleID fetched at pm:85-113 BEFORE the `if($TicketID)` gate at pm:115
+==========================================================================
+[SETUP] importing minimal_process.yml (a process whose start dialog has Title+Article)
+[SETUP] deployed process Process-e3ba9e15b77ad5… dialog ActivityDialog-95da68e…
+[SETUP] victim ticket 78 (subject SUBJMARKd1e9b4a1, body BODYMARKd1e9b4a1) in off-limits queue vq005_d1e9b4a1
+[PROOF] attacker TicketPermission on victim 78: {'ro': 0, 'note': 0, 'rw': 0} (all 0 = off-limits)
+[STEP] attacker GET AgentTicketProcess DisplayActivityDialog LinkTicketID=78 ArticleID=93
+[PROOF] victim SUBJECT leaked into process form: True
+[PROOF] victim ARTICLE BODY leaked into process form: True
+[OK] exploit confirmed — low-priv attacker (no rights on victim 78) read the victim's SUBJECT and ARTICLE BODY via AgentTicketProcess split (LinkTicketID/ArticleID) — the `ro` permission gate is skipped on the new-process path.
+==> VULN-005: CONFIRMED — low-priv attacker (no rights on victim 78) read the victim's SUBJECT and ARTICLE BODY via AgentTicketProcess split (LinkTicketID/ArticleID) — the `ro` permission gate is skipped on the new-process path.

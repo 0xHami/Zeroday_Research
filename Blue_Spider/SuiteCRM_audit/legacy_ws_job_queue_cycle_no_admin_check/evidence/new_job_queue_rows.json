@@ -1,0 +1,44 @@
+[
+  {
+    "id": "29cb8c1d-1d82-4a4e-9d32-08da1b1c9079",
+    "scheduler_id": "dda14421-a2f2-4385-848a-5135b532968c",
+    "target": "function::sendEmailReminders",
+    "status": "queued",
+    "execute_time": "2026-09-28 20:32:15"
+  },
+  {
+    "id": "6e50d96c-a115-48d9-b873-fd8b4c8ee99a",
+    "scheduler_id": "a10a684f-9530-44c0-9589-468a393b8a8c",
+    "target": "function::pollMonitoredInboxesForBouncedCampaignEmails",
+    "status": "queued",
+    "execute_time": "2026-09-28 20:32:15"
+  },
+  {
+    "id": "6fb8d1fc-2029-4bd4-8a9f-2be22a92c0c5",
+    "scheduler_id": "4224c7eb-98cf-4411-ac87-6eb22ed1e0e0",
+    "target": "function::runMassEmailCampaign",
+    "status": "queued",
+    "execute_time": "2026-09-28 20:32:15"
+  },
+  {
+    "id": "887a63a7-7370-4f21-8a8c-538c80060ec9",
+    "scheduler_id": "554c283a-4d8c-428a-933c-886a1fee3ba6",
+    "target": "function::aorRunScheduledReports",
+    "status": "queued",
+    "execute_time": "2026-09-28 20:32:15"
+  },
+  {
+    "id": "c16d1caa-7daf-409f-b164-938a8c8c1c86",
+    "scheduler_id": "609fd96e-2ad7-4e01-bf25-62f144c543fa",
+    "target": "function::pollMonitoredInboxesAOP",
+    "status": "queued",
+    "execute_time": "2026-09-28 20:32:15"
+  },
+  {
+    "id": "d88ad455-ed5b-419f-a79f-59cfecec9a2e",
+    "scheduler_id": "8c700b3c-6791-4cc9-af21-1313c2fdca75",
+    "target": "function::processAOW_Workflow",
+    "status": "queued",
+    "execute_time": "2026-09-28 20:32:15"
+  }
+]

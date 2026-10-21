@@ -1,0 +1,3 @@
+GET /znuny/index.pl?Action=AdminOAuth2TokenManagement;Subaction=AddTokenConfigByTemplateFile;TokenConfigTemplateFilename=..%2Foauth2_token_config_example HTTP/1.1
+Host: localhost:25114
+Cookie: OTRSAgentInterface=<admin>

@@ -1,0 +1,36 @@
+Content-Disposition: attachment;  filename="UnitTest-Example Company-71.t"; filename*=utf-8''UnitTest-Example%20Company-71.t
+victim marker present: True
+
+--- dump head ---
+# ---
+# Copyright (C) 2021 Znuny GmbH, https://znuny.org/
+# ---
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# ---
+
+use strict;
+use warnings;
+use utf8;
+
+use vars (qw($Self));
+
+use Kernel::System::VariableCheck qw(:all);
+
+$Kernel::OM->ObjectParamAdd(
+    'Kernel::System::UnitTest::Helper' => {
+        RestoreSystemConfiguration => 1,
+        RestoreDatabase            => 1,
+    },
+);
+
+my $UserID = 1;
+my $Success;
+my $TempValue;
+my $ArticleID;
+my @Attachments;
+
+my $HelperObject       = $Kernel::OM->Get('Kernel::System::UnitTest::Helper');
+my $TicketObject       = $Kernel::OM->Get('Kernel::System::Ticket');
+my $ZnunyHelperObject  = $K

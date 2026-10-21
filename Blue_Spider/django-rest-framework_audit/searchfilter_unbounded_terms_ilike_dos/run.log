@@ -1,0 +1,16 @@
+==============================================================================
+VULN-008: SearchFilter default icontains term-count amplification (DoS)
+target: http://localhost:21514
+==============================================================================
+[INFO] sink: rest_framework/filters.py:138-167 (one ILIKE per term×field), :74-82 (no term cap)
+[SETUP] bulk-creating 40000 items (prefix bulk-6a2d71) so search cost is observable
+[INFO] seed: rows 40006
+[STEP] 1-term  search -> HTTP 200 in 0.056s
+[STEP] 250-term search -> HTTP 200 in 0.149s
+[STEP] 500-term search -> HTTP 200 in 0.141s
+[STEP] 750-term search -> HTTP 200 in 0.233s
+[STEP] 1500-term search -> HTTP 500 in 0.327s (>~1000 terms => SQLite expr-depth error => unhandled 500: a second DoS)
+[PROOF] per-request cost scales ~linearly with attacker term count: 1->0.056s, 250->0.149s, 500->0.141s, 750->0.233s (4.2x)
+[PROOF] marginal scan cost scaled ~2x from 250->750 terms; >~1000 terms => HTTP 500 (SQLite expr-depth: a second unhandled-500 DoS)
+[OK] attacker term count scaled per-request cost (raw 4.2x / marginal ~2x) — no DRF cap; unbounded volume via VULN-011; larger tables/backends => A:H
+==> VULN-008: CONFIRMED — O(terms×rows) icontains amplification confirmed (4.2x raw at 750 terms; >1000 terms => 500)

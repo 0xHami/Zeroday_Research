@@ -1,0 +1,8 @@
+[INFO] exercising: zappa/handler.py:116-131 (sink :127 cdll.LoadLibrary)
+[SETUP] compiling a malicious .so (constructor writes /tmp/dbf3_marker_a7a35644) in a gcc:14-bookworm container
+[SETUP] staging evil.so as an INCLUDE entry in /tmp/dbf3_a7a35644 inside the lab container
+[STEP] cold-starting the slim handler — it should dlopen evil.so and run its constructor
+[INFO] marker exists=True content='native-code-executed-via-dlopen-constructor-a7a35644'
+[PROOF] the slim-handler init loop dlopen'd the attacker INCLUDE entry evil.so, and its ELF constructor executed native code that wrote /tmp/dbf3_marker_a7a35644 ('native-code-executed-via-dlopen-constructor-a7a35644') — cold-start native RCE from a controlled archive (chains with VULN-003's tar-slip).
+[OK] exploit confirmed — native code executed via cdll.LoadLibrary of an INCLUDE entry
+==> VULN-031: CONFIRMED — slim_handler dlopens attacker .so -> constructor RCE at cold start

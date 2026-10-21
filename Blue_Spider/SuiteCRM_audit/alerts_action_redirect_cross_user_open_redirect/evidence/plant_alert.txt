@@ -1,0 +1,5 @@
+attacker: mod_b47e797b (id=6efff3f4-1c23-4d9a-8b9f-f83d08ec7cd0)
+victim:   mod_21c85671 (id=6e709aae-9f2e-49e4-9e76-c1146376af4a)
+planted alert id: 2d117fe9-8915-430c-b59a-76570efa55c9
+planted url_redirect: https://evil-cvehunter-c055_7edd5dd5.example/redir
+action=add response: 200 {"result":1}

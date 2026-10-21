@@ -1,0 +1,4 @@
+admin_id=1 L=2271f820-bee1-4b26-950c-7f1025e266cc V=a869ea2e-694f-43a0-a484-02a9b7b71767
+baseline row_unchanged=[{'last_name': 'Victim92_4b1e89ab'}]
+(a) new forged-audit Contact rows=[{'id': '729f973e-fd06-411f-b4ac-fb8dadbf5a41', 'created_by': '1', 'date_entered': '2010-01-01 00:00:00', 'modified_user_id': '1'}]
+(b) V after update-by-id import=[{'id': 'a869ea2e-694f-43a0-a484-02a9b7b71767', 'last_name': 'Overwritten92_37e6a652', 'assigned_user_id': '1'}]

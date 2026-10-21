@@ -1,0 +1,5 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+
+method=get_document_revision&input_type=JSON&response_type=JSON&rest_data=["5e769fa0175b28ba8b330cecbe778a1c","affb82db-8de0-4a69-a01b-85afc47415ff"]

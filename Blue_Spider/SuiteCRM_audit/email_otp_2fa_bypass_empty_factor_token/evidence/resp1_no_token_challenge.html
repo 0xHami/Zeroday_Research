@@ -1,0 +1,59 @@
+
+
+<!-- !!!1
+<form method="post" action="">
+    Email Code: <input type="text" name="factor_token"> <input type="submit" value="Send">
+</form>
+<a href="index.php?module=Users&action=Logout">logout</a>
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <!-- Bootstrap -->
+    <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
+    <link href="themes/SuiteP/css/fonts.css" rel="stylesheet" type="text/css">
+    <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css">
+    <link href="tthemes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" media="all" href="modules/Users/login.css">
+    <title>SuiteCRM</title>
+
+    
+            <!-- qtip & suggestion box -->
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" /><link rel="stylesheet" type="text/css" href="" /><link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" /><link rel="stylesheet" type="text/css" href="cache/themes/SuiteP/css/Dawn/style.css?v=p-BUXW88kPGyJ3qvsiY4dw" />
+</head>
+<body>
+<div class="p_login">
+    <div class="p_login_top">
+        <a title="SuiteCRM" href="https://www.suitecrm.com">SuiteCRM</a>
+    </div>
+
+    <div class="p_login_middle">
+        <div id="loginform">
+            <div class="error message">Two Factor Authentication code sent.</div>
+            <form method="post">
+                Email Code: <input type="text" name="factor_token">
+                <input type="submit" value="Verify">
+            </form>
+            <a href="index.php?module=Users&action=Logout">Cancel</a>&nbsp;&nbsp;&nbsp;
+            <a href="index.php?module=Users&action=Resend">Resend</a>
+        </div>
+
+        <div class="p_login_bottom">
+            <a id="admin_options">© Supercharged by SuiteCRM</a>
+            <a id="powered_by">© Powered By SugarCRM</a>
+        </div>
+    </div>
+</body>
+<script> window.history.replaceState({}, "", "");</script>
+</html>
+
+
+
+

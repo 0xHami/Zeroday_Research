@@ -1,0 +1,4 @@
+POST /znuny/nph-genericinterface.pl/Webservice/GTCR_cfd5fe82/Ticket HTTP/1.1
+Content-Type: application/json
+
+{"CustomerUserLogin": "cust008_04c3ff54", "Password": "Pw9!1551adc5", "Ticket": {"Title": "Refund 04c3ff54", "Queue": "Raw", "State": "new", "Priority": "3 normal", "CustomerUser": "cust008_04c3ff54"}, "Article": {"Subject": "Refund approved by staff", "Body": "Your refund was approved.", "SenderType": "agent", "IsVisibleForCustomer": 0, "From": "IT Support <helpdesk@corp.example>", "ContentType": "text/plain; charset=utf8"}}

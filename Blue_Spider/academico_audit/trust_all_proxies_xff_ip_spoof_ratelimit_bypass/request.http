@@ -1,0 +1,5 @@
+POST /livewire-5f244c96/update
+X-Forwarded-For: <attacker-chosen>
+Content-Type: application/json
+
+{"components":[{"snapshot":"<Login snapshot>","updates":{"data.email":"nobody_bf65a5a0@example.invalid","data.password":"<wrong>"},"calls":[{"path":"","method":"authenticate","params":[]}]}]}

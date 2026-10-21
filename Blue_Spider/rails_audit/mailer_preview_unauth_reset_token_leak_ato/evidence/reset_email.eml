@@ -1,0 +1,49 @@
+Date: Sat, 03 Oct 2026 02:57:19 +0000
+From: from@example.com
+To: admin@example.com
+Message-ID: <6ac06f0fbd926_12fb846322@0361f09f07ae.mail>
+Subject: Reset your password
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_6ac06f0fb97a8_12fb846229";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_6ac06f0fb97a8_12fb846229
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+You can reset your password on
+https://example.com/passwords/eyJfcmFpbHMiOnsiZGF0YSI6WzEsInJhVXBoWkcydi4iXSwiZXhwIjoiMjAyNi0xMC0wM1QwMzoxMjoxOS43NThaIiwicHVyIjoiVXNlclxucGFzc3dvcmRfcmVzZXRcbjkwMCJ9fQ==--012a2a1393940346c55632252d6c0af94189eae7/edit
+
+This link will expire in 15 minutes.
+
+
+----==_mimepart_6ac06f0fb97a8_12fb846229
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <p>
+  You can reset your password on
+  <a href="https://example.com/passwords/eyJfcmFpbHMiOnsiZGF0YSI6WzEsInJhVXBoWkcydi4iXSwiZXhwIjoiMjAyNi0xMC0wM1QwMzoxMjoxOS43NDlaIiwicHVyIjoiVXNlclxucGFzc3dvcmRfcmVzZXRcbjkwMCJ9fQ==--6247e4d5d960a5382d44d47207196a72835789f5/edit">this password reset page</a>.
+
+  This link will expire in 15 minutes.
+</p>
+
+  </body>
+</html>
+
+----==_mimepart_6ac06f0fb97a8_12fb846229--

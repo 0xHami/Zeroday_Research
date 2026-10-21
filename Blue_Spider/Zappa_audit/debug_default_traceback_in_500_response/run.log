@@ -1,0 +1,14 @@
+==========================================================================
+VULN-006: DEBUG traceback disclosed to unauthenticated client
+target : http://localhost:22571
+[INFO] exercising: zappa/handler.py:342-347 (_handle_request_exception, settings.DEBUG)
+==========================================================================
+[STEP] GET /_sim/info — confirming the deployment's DEBUG setting
+[INFO] deployment reports debug=True (cli.py:2699 defaults debug to True)
+[STEP] driving Zappa's real handler with a WSGI app that raises (models a propagating app)
+[INFO] handler returned statusCode=500 ; body[:260]='"{\'message\': \'An uncaught exception happened while servicing this request. You can investigate this with the `zappa tail` command.\', \'traceback\': [\'Traceback (most recent call last):\\\\n\', \'  File \\"/app/zappa/handler.py\\", line 835, in handler\\\\n    with Respo'
+[PROOF] the app's secret 'S3CRET_DB_PASSWORD_hunter2_in_exception_msg' appears in the 500 body sent to the caller (traceback_present=True, internal_paths_present=True) — a propagated app exception leaks the full stack + embedded secrets to an anonymous client.
+[STEP] live surface: an event that faults inside Zappa's handler also returns the traceback
+[INFO] live 500 body[:200]='"{\'message\': \'An uncaught exception happened while servicing this request. You can investigate this with the `zappa tail` command.\', \'traceback\': [\'Traceback (most recent call last):\\\\n\', \'  File \\"/a'
+[OK] exploit confirmed — DEBUG traceback (with secrets + file paths) returned to the client
+==> VULN-006: CONFIRMED — full traceback + embedded secret leaked in 500 body (DEBUG default-on)

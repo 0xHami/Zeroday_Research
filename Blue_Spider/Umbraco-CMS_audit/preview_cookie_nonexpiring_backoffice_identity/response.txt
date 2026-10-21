@@ -1,0 +1,9 @@
+Set-Cookie (mint): UMB_PREVIEW=CfDJ8FU4POrCXVFJuHaQVc49L1ByZxnZ2TqbzNmITrDqGCgE3eSxzyd7ml6bdkk8qxZePR48mrKNBa6tzc4DA7pr8HQ37tuZZzR6pdSIMwSA4nqBATcT6miW4qc9zMWKLgwfGzU7tVtKOmwnIfjXVyD_S-QpqLim4yQUGufsKzC5Kl-f; path=/; samesite=lax; httponly
+
+GET / with VALID UMB_PREVIEW (fresh session)          -> preview toolbar present = True  (2395 B)
+GET / with INVALID UMB_PREVIEW (control)              -> preview toolbar present = False  (2154 B)
+GET / with NO cookie (control)                        -> preview toolbar present = False  (2154 B)
+GET / with SAME cookie AFTER password change          -> preview toolbar present = True  (2395 B)
+
+injected: <script nonce="E7LqT6ZMJALZzBOjkSJo7eIPgi/o1gFtA7ST0PuUIoI=" src="/umbraco/website/preview.js"></script>
+injected: <umb-website-preview path="/umbraco" url="http://localhost:29184/" unique="694a14f8-38cb-4295-a378-a550710b8df3"></umb-website-preview></body>

@@ -1,0 +1,10 @@
+==========================================================================
+VULN-014: callbacks config imports+calls a module from cwd (local RCE)
+target : http://localhost:22571
+[INFO] exercising: zappa/cli.py:2554-2593 callback() (fires on read-only commands via :650)
+==========================================================================
+[STEP] planting evilcb.py in a hostile project cwd and running the real callback('settings')
+[INFO] callback executed = True; marker content = 'RCE via callbacks on deploy host'
+[PROOF] the config-named `evilcb.pwn` was imported from the working directory and CALLED, writing a marker file — running any Zappa command against a hostile/shared config executes attacker code on the deploy/CI host, no allow-list.
+[OK] exploit confirmed — callbacks config -> local code execution
+==> VULN-014: CONFIRMED — hostile `callbacks` config runs attacker code from cwd

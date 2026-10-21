@@ -1,0 +1,26 @@
+GET http://localhost:21526/proxy//api:3081/  (no Cookie header)
+HTTP 200
+access-control-allow-credentials: true
+access-control-expose-headers: Content-Length,X-Kuma-Revision
+content-type: application/json
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: cross-origin
+date: Sun, 27 Sep 2026 14:49:05 GMT
+origin-agent-cluster: ?1
+referrer-policy: no-referrer
+strict-transport-security: max-age=15552000; includeSubDomains
+vary: Origin
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: SAMEORIGIN
+x-permitted-cross-domain-policies: none
+x-ratelimit-limit: 100
+x-ratelimit-remaining: 98
+x-ratelimit-reset: 2026-09-27T14:50:05.846Z
+x-xss-protection: 0
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"message":"\"Welcome to Classroomio.com API - docs are at http://localhost:21527/docs\""}

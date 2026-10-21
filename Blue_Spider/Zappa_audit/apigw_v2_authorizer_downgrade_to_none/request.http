@@ -1,0 +1,3 @@
+No HTTP request — direct invocation of the target function:
+  zappa.core.Zappa.create_api_gateway_v2_routes(lambda_arn, api_key_required=True, authorization_type="CUSTOM").
+  Result: $default route AuthorizationType == "NONE", ApiKeyRequired unset. See automation.py _DRIVER.

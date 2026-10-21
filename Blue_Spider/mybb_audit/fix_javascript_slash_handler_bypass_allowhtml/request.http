@@ -1,0 +1,3 @@
+# precondition: operator enables an Allow HTML flag (e.g. forums.allowhtml=1 / sightml=1)
+# then any post/signature/PM/announcement body is parsed with allow_html=1.
+# This run drives MyBB's own parser (parse_probe.php) in the app container.

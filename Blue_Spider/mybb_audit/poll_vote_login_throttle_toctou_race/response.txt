@@ -1,0 +1,4 @@
+concurrency=30; HTTP statuses=[302, 200, 200, 200, 200, 200, 302, 302, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200]
+pollvotes rows for the single voter: before=0 after=3
+poll.numvotes=1
+Expected (secure): exactly 1 ballot. Actual: >1 => TOCTOU race won.

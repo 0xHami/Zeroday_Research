@@ -1,0 +1,12 @@
+==============================================================================
+VULN-025: AsciiDoc unsafe safe-mode -> arbitrary host-file read (LFI) + stored XSS
+target: throwaway `hugo` build (tools image: asciidoctor installed)
+[INFO] asciidoctor run with no --safe-mode; text/asciidoc omitted from allowContent
+==============================================================================
+[SETUP] planted /site/SECRET.txt = 'ASCIIDOC-LFI-edad710e'; content/p.adoc uses include:: + pass:[<script>]
+[STEP] building with the tools image (asciidoctor on PATH, ^asciidoctor$ allowed)
+[PROOF] planted secret inlined (LFI): True
+[PROOF] /etc/passwd inlined (LFI): True
+[PROOF] raw <script> emitted (stored XSS): True
+[OK] exploit confirmed — untrusted .adoc content read host files into the published HTML (secret=True, /etc/passwd=True) AND emitted a raw <script> (stored XSS). AsciiDoc escapes the Markdown-path content sandbox entirely.
+==> VULN-025: CONFIRMED — AsciiDoc unsafe mode: host-file LFI + stored XSS

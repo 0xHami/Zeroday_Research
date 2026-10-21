@@ -1,0 +1,8 @@
+# baseline (no header):    HTTP 301  Location: /hello/john
+# ATTACK (XFP: ..):        HTTP 301  Location: //hello/john
+# prefix-inject (XFP:/evil):HTTP 301  Location: /evil/hello/john
+
+Content-Type: text/html; charset=utf-8
+Location: //hello/john
+Date: Wed, 30 Sep 2026 16:55:12 GMT
+Content-Length: 47

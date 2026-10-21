@@ -1,0 +1,17 @@
+in-container read_body(8 MB):
+{
+  "buffered_bytes": 8388608,
+  "expected_bytes": 8388608,
+  "rolled_to_disk": true,
+  "on_disk_name": 6,
+  "data_upload_max": 2621440,
+  "file_upload_max": 2621440,
+  "wsgi_limitedstream_read_no_CL": 0
+}
+
+body_receive_timeout references in tree: 1 (1=dead)
+1
+/opt/django_src/django/core/handlers/asgi.py:47:    body_receive_timeout = 60
+
+HTTP: ASGI 4MB chunked (no CL) -> HTTP 403
+caught on-disk spool file: None

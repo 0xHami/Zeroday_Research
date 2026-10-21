@@ -1,0 +1,15 @@
+========================================================================
+VULN-001: Select::editOptionForm() IDOR — read+write of arbitrary related records
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: Select::getSelectedRecordUsing (noConstraints) + editOption action (no authorize)
+[SETUP] adding ->editOptionForm([...]) to PostResource's relationship author Select (documented opt-in pattern; harness; reverted after)
+[SETUP] created victim user id=7 email=victim_eee118b5@example.invalid (a different owner's record)
+[SETUP] logging in as low-priv ryan@filamentphp.com (may edit Posts only)
+[STEP] setting data.author_id=7 (a PK we don't own) and mounting the editOption action
+[PROOF] editOption fill leaked the victim's attributes into the modal (READ): victim email present = True
+[STEP] submitting the editOption modal with attacker name/email → ->update() on the victim row
+[PROOF] victim row after submit: PWNED eee118b5|pwned_eee118b5@attacker.invalid (WRITE succeeded = True)
+[OK] exploit confirmed — low-priv user read AND overwrote an arbitrary User record via the Select editOption action (no authorization, unscoped resolve)
+==> VULN-001: CONFIRMED — authenticated low-priv user reads + writes arbitrary related-model records via Select::editOptionForm (IDOR, no authz) — e.g. overwrite another user's email
+[SETUP] reverted the harness editOptionForm; PostResource restored

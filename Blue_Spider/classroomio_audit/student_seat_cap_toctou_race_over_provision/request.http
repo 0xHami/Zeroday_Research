@@ -1,0 +1,13 @@
+### VULN-029 — Seat/plan-cap over-provision race (TOCTOU)
+### Setup: a BASIC (cap 20) org filled to 19 active students (1 seat left).
+### Fire K concurrent accepts on DISTINCT invite links (so they don't serialize on the
+### invite-row lock), racing the org-row capacity check that is NOT held across the insert:
+POST http://localhost:21527/invite/r/<distinct-token-1>/accept   # joiner 1  ┐
+POST http://localhost:21527/invite/r/<distinct-token-2>/accept   # joiner 2  │ fired
+...                                                              #           │ simultaneously
+POST http://localhost:21527/invite/r/<distinct-token-K>/accept   # joiner K  ┘
+Origin: http://localhost:21526
+Cookie: classroomio.session_token=<each joiner's session>
+### Vulnerable: assertStudentCapacityOrThrow() runs on autocommit `db` (student-limit.ts:86),
+### invoked WITHOUT the accept `tx` (invite-link.ts:242) → lock released before member insert.
+### On this fast local Postgres the check→commit window did not open (1 succeeded); see notes.md.

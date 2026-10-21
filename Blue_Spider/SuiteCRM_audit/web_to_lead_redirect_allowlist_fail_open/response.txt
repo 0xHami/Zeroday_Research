@@ -1,0 +1,12 @@
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 28 Sep 2026 20:39:02 GMT
+Server: Apache/2.4.68 (Debian)
+Set-Cookie: PHPSESSID=b2ad50c4d7cf1b9f14071ba58a832ba4; path=/, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:39:02 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Location: https://evil-cvehunter-w2l_4aac3760.example/phish
+X-Content-Type-Options: nosniff
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+

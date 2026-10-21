@@ -1,0 +1,6 @@
+{
+  "result": "/app/_harness"
+}
+{
+  "result": "Linux-7.0.0-34-generic-x86_64-with-glibc2.41"
+}

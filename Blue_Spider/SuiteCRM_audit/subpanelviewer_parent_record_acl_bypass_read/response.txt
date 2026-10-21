@@ -1,0 +1,119 @@
+HTTP/1.1 200 OK
+Date: Mon, 28 Sep 2026 20:31:14 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=afd78988-19e8-44ce-9cc5-5b85e61ca4bb; expires=Sun, 27 Dec 2026 20:31:14 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:31:14 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:31:14 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Vary: Accept-Encoding
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+Content-Length: 2409
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<script>
+                function select_dialog() {
+                	var $dialog = $('<div></div>')
+					.html('<a style=\'width: 150px\' name="thispage" class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' onclick=\'if (document.MassUpdate.select_entire_list.value==1){document.MassUpdate.select_entire_list.value=0;sListView.check_all(document.MassUpdate, "mass[]", true, 10)}else {sListView.check_all(document.MassUpdate, "mass[]", true)};\' href=\'javascript:void(0)\'>Select This Page&nbsp;&#x28;10&#x29;&#x200E;</a><a style=\'width: 150px\' name="selectall" class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.check_entire_list(document.MassUpdate, "mass[]",true,1);\' href=\'javascript:void(0)\'>Select All&nbsp;&#x28;1&#x29;&#x200E;</a><a style=\'width: 150px\' name="deselect" class=\'menuItem\' onmouseover=\'hiliteItem(this,"yes");\' onmouseout=\'unhiliteItem(this);\' onclick=\'sListView.clear_all(document.MassUpdate, "mass[]", false);\' href=\'javascript:void(0)\'>Deselect All</a>')
+					.dialog({
+						autoOpen: false,
+						width: 150
+					});
+					$dialog.dialog('open');
+
+                }
+                </script><input type='hidden' name='show_plus' value=''>
+<table cellpadding="0" cellspacing="0" border="0" class="list view table-responsive subpanel-table" data-empty="No results found." data-breakpoints='{ "xs": 754, "sm": 750, "md": 768, "lg": 992}'>
+    <thead>
+        <tr class="footable-header">
+            
+            <th data-type="html"><!-- extra th for the plus button -->&nbsp;</th>
+                                                                                
+                
+                                <th data-breakpoints="" data-type="html"><a class="listViewThLinkS1" href="javascript:showSubPanel('contacts','/index.php?module=Accounts&action=SubPanelViewer&record=72e4a438-0f5b-4929-9815-165f5d1bd9bd&subpanel=contacts&inline=1&ajaxSubpanel=true&Accounts_contacts_CELL_offset=&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=contacts&Accounts_contacts_CELL_ORDER_BY=name',true);">Name <span class="suitepicon suitepicon-action-sorting-none"></span></a></th>
+                
+                                                                                
+                
+                                <th data-breakpoints="" data-type="html"><a class="listViewThLinkS1" href="javascript:showSubPanel('contacts','/index.php?module=Accounts&action=SubPanelViewer&record=72e4a438-0f5b-4929-9815-165f5d1bd9bd&subpanel=contacts&inline=1&ajaxSubpanel=true&Accounts_contacts_CELL_offset=&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=contacts&Accounts_contacts_CELL_ORDER_BY=primary_address_city',true);">City <span class="suitepicon suitepicon-action-sorting-none"></span></a></th>
+                
+                                            
+                                                    
+                                <th data-breakpoints="xs sm" data-type="html"><a class="listViewThLinkS1" href="javascript:showSubPanel('contacts','/index.php?module=Accounts&action=SubPanelViewer&record=72e4a438-0f5b-4929-9815-165f5d1bd9bd&subpanel=contacts&inline=1&ajaxSubpanel=true&Accounts_contacts_CELL_offset=&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=contacts&Accounts_contacts_CELL_ORDER_BY=primary_address_state',true);">State <span class="suitepicon suitepicon-action-sorting-none"></span></a></th>
+                
+                                            
+                                                    
+                                <th data-breakpoints="xs sm" data-type="html">Email</th>
+                
+                                            
+                                                    
+                                <th data-breakpoints="xs sm" data-type="html"><a class="listViewThLinkS1" href="javascript:showSubPanel('contacts','/index.php?module=Accounts&action=SubPanelViewer&record=72e4a438-0f5b-4929-9815-165f5d1bd9bd&subpanel=contacts&inline=1&ajaxSubpanel=true&Accounts_contacts_CELL_offset=&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=contacts&Accounts_contacts_CELL_ORDER_BY=phone_work',true);">Office Phone <span class="suitepicon suitepicon-action-sorting-none"></span></a></th>
+                
+                        <th data-type="html"><!-- extra th for the button --></th>
+        </tr>
+                <tr class='pagination' role='presentation'>
+<td COLSPAN="20" align="right">
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td align="left"  ><ul id class="clickMenu fancymenu" ><li class="sugar_action_button" ><form onsubmit="return SUGAR.subpanelUtils.sendAndRetrieve(this.id, 'subpanel_contacts', 'Loading...');" action="index.php" method="post" name="form" id="formformaccounts_contacts">
+<input type='hidden' name='target_module' value='Contacts'>
+<input type='hidden' name='account_id' value='72e4a438-0f5b-4929-9815-165f5d1bd9bd'>
+<input type='hidden' name='account_name' value='V024Acc_a0378e89'><input type='hidden' name='accounts_contacts_name' value='V024Acc_a0378e89'><input type="hidden" name="to_pdf" value="true" /><input type="hidden" name="tpl" value="QuickCreate.tpl" /><input type="hidden" name="return_module" value="Accounts" />
+<input type="hidden" name="return_action" value="SubPanelViewer" />
+<input type="hidden" name="return_id" value="72e4a438-0f5b-4929-9815-165f5d1bd9bd" />
+<input type="hidden" name="return_relationship" value="accounts_contacts" />
+<input type="hidden" name="record" value="" /><input type="hidden" name="action" value="SubpanelCreates" />
+<input type="hidden" name="module" value="Home" />
+<input type="hidden" name="target_action" value="QuickCreate" />
+<input type="hidden" name="primary_address_street" value='' />
+<input type="hidden" name="primary_address_city" value='' />
+<input type="hidden" name="primary_address_state" value='' />
+<input type="hidden" name="primary_address_country" value='' />
+<input type="hidden" name="primary_address_postalcode" value='' />
+<input type="hidden" name="phone_work" value='' />
+<input type="hidden" name="return_name" value='V024Acc_a0378e89' />
+<input type="hidden" name="parent_type" value='Accounts' />
+<input type="hidden" name="parent_name" value='V024Acc_a0378e89' />
+<input type="hidden" name="parent_id" value='72e4a438-0f5b-4929-9815-165f5d1bd9bd' />
+<input title='Create' class='button' type='submit' name='accounts_contacts_create_button' id='accounts_contacts_create_button' value='  Create  '/>
+</form><ul id class="subnav" ><li> <input type="button" name="accounts_contacts_select_button" id="accounts_contacts_select_button" class="button"
+ title="Select" value="Select"
+ onclick='open_popup("Contacts",600,400,"",true,true,{"call_back_function":"set_return_and_save_background","form_name":"DetailView","field_to_name_array":{"id":"subpanel_id"},"passthru_data":{"child_field":"contacts","return_url":"index.php%3Fmodule%3DAccounts%26action%3DSubPanelViewer%26subpanel%3Dcontacts%26record%3D72e4a438-0f5b-4929-9815-165f5d1bd9bd%26sugar_body_only%3D1","link_field_name":"contacts","module_name":"contacts","refresh_page":0}},"MultiSelect",true);' />
+</li></ul></li></ul></td>
+<td nowrap align="right"><button type='button' name='listViewStartButton' title='Start' class='button' disabled><span class='suitepicon suitepicon-action-first'></span></button>&nbsp;&nbsp;<button type='button' name='listViewPrevButton' title='Previous' class='button' disabled><span class='suitepicon suitepicon-action-left'></span></button>&nbsp;&nbsp;<span class='pageNumbers'>(1 - 1 of 1)</span>&nbsp;&nbsp;<button type='button' name='listViewNextButton' title='Next' class='button' disabled><span class='suitepicon suitepicon-action-right'></span></button>&nbsp;&nbsp;<button type='button' name='listViewEndButton' title='End' class='button' disabled><span class='suitepicon suitepicon-action-last'></span></button></td></tr></table>
+</td>
+</tr>
+
+        <tr id="contacts_search" class="pagination" style="display:none">
+            <td align="right" colspan="20">
+                
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+    
+                                                    <tr class="oddListRowS1" >
+            <td>&nbsp;</td>
+                            <td><a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3DDetailView%26record%3D20f10308-a737-4d20-b6ab-27f450f4a86f" >Victim024 V024Contact_c4aaba90</a></td>
+                            <td>
+
+</td>
+                            <td>
+
+</td>
+                            <td>            <a class="email-link" href="mailto:"
+                    onclick="$(document).openComposeViewModal(this);"
+                    data-module="Contacts" data-record-id="20f10308-a737-4d20-b6ab-27f450f4a86f"
+                    data-module-name="Victim024 V024Contact_c4aaba90" data-email-address=""
+                ></a></td>
+                            <td>
+<a href="tel:"></a></td>
+                        <td>
+                                    <ul id="20f10308-a737-4d20-b6ab-27f450f4a86f" class="clickMenu " ><li class="sugar_action_button" ><a href="#" onmouseover="subp_nav('Contacts', '20f10308-a737-4d20-b6ab-27f450f4a86f', 'e', this, 'contacts');" onfocus="subp_nav('Contacts', '20f10308-a737-4d20-b6ab-27f450f4a86f', 'e', this, 'contacts');" class="listViewTdToolsS1" id="contacts_edit_1">Edit</a><ul id class="subnav" ><li><a href="javascript:sub_p_rem('contacts', 'contacts', '20f10308-a737-4d20-b6ab-27f450f4a86f', 0);" class="listViewTdToolsS1"id=contacts_remove_1 onclick="return sp_rem_conf();">Remove</a></li></ul></li></ul>
+                            </td>
+        </tr>
+        
+        </tbody>
+</table><script>secondsSinceLoad = 0; alertList = [];		if (!alertsTimeoutId) {
+		    checkAlerts();
+		}
+</script>

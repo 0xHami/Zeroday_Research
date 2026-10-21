@@ -1,0 +1,32 @@
+GET /api/auth/login-link?...&redirect=//evil.example/phish
+HTTP 302
+access-control-allow-credentials: true
+access-control-expose-headers: Content-Length,X-Kuma-Revision
+content-type: application/json
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: cross-origin
+location: //evil.example/phish
+origin-agent-cluster: ?1
+referrer-policy: no-referrer
+strict-transport-security: max-age=15552000; includeSubDomains
+vary: Origin
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: SAMEORIGIN
+x-permitted-cross-domain-policies: none
+x-ratelimit-limit: 100
+x-ratelimit-remaining: 87
+x-ratelimit-reset: 2026-09-27T14:50:52.737Z
+x-xss-protection: 0
+set-cookie: classroomio.session_token=5a75b9991fdf8716deef3691ae05e9d119cac84e0204ddc1093e634df65ef863.SFYD4JpbVILSF02G1Lg%2B0iHfkiOelfFgMghLslFAiSk%3D; Max-Age=2592000; Path=/; HttpOnly; SameSite=Lax, classroomio.session_data=eyJzZXNzaW9uIjp7InNlc3Npb24iOnsiaWQiOiJiOWZhMjNiYi1iYWM4LTRhNzctODI3ZC00M2E1NTExODBiOGEiLCJ1c2VySWQiOiJkMzczZjc3Ny1hNmE0LTQzN2ItOGRiNy01OTQ0MGMyOWMwNjMiLCJ0b2tlbiI6IjVhNzViOTk5MWZkZjg3MTZkZWVmMzY5MWFlMDVlOWQxMTljYWM4NGUwMjA0ZGRjMTA5M2U2MzRkZjY1ZWY4NjMiLCJleHBpcmVzQXQiOiIyMDI2LTEwLTA0VDE0OjQ5OjUyLjczOVoiLCJjcmVhdGVkQXQiOiIyMDI2LTA5LTI3VDE0OjQ5OjUyLjczOVoiLCJ1cGRhdGVkQXQiOiIyMDI2LTA5LTI3VDE0OjQ5OjUyLjczOVoifSwidXNlciI6eyJpZCI6ImQzNzNmNzc3LWE2YTQtNDM3Yi04ZGI3LTU5NDQwYzI5YzA2MyIsIm5hbWUiOiJ1X2FjZjUxMWYyIiwiZW1haWwiOiJ1X2FjZjUxMWYyQGN2ZWh1bnQubG9jYWwiLCJlbWFpbFZlcmlmaWVkIjpmYWxzZSwiaW1hZ2UiOm51bGwsImNyZWF0ZWRBdCI6IjIwMjYtMDktMjdUMTQ6NDk6NTIuNjU5WiIsInVwZGF0ZWRBdCI6IjIwMjYtMDktMjdUMTQ6NDk6NTIuNjU5WiJ9LCJ1cGRhdGVkQXQiOjE3OTA1MjA1OTI3NDEsInZlcnNpb24iOiIxIn0sImV4cGlyZXNBdCI6MTc5MDUyNDE5Mjc0MSwic2lnbmF0dXJlIjoiN1AzOVdkUnJrc0k4SkRMNDUxaDFuZ0JWbnI1YmRCTVRzVXFVTEM2VVpRMCJ9; Max-Age=3600; Path=/; HttpOnly; SameSite=Lax
+Date: Sun, 27 Sep 2026 14:49:52 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+--- guard behaviour across payloads ---
+redirect='//evil.example/phish'   → 302  Location='//evil.example/phish'
+redirect='/\\evil.example/phish'  → 302  Location='/\\evil.example/phish'
+redirect='/lms'                   → 302  Location='/lms'
+redirect='https://evil.example/x' → 302  Location='/'

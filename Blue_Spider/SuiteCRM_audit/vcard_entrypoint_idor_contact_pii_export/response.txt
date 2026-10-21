@@ -1,0 +1,28 @@
+HTTP/1.1 200 OK
+Date: Mon, 28 Sep 2026 20:31:06 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Mon, 26 Jul 1997 05:00:00 GMT
+Cache-Control: max-age=0
+Pragma: public
+Set-Cookie: ck_login_id_20=a898bfce-f04a-4ae2-afb3-544a18bd7c5a; expires=Sun, 27 Dec 2026 20:31:06 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:31:06 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:31:06 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Content-Disposition: attachment; filename=Victim004_V004Contact_463c880b.vcf
+Last-Modified: Mon, 28 Sep 2026 20:31:06 GMT
+Content-Length: 267
+X-Content-Type-Options: nosniff
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/x-vcard; charset=UTF-8
+
+BEGIN:VCARD
+N;CHARSET=utf-8:V004Contact_463c880b;Victim004;;
+FN;CHARSET=utf-8: Victim004 V004Contact_463c880b
+BDAY:
+TEL;WORK;FAX:
+TEL;HOME:
+TEL;CELL:
+TEL;WORK;CHARSET=utf-8:555-26e83a
+EMAIL;INTERNET:
+ADR;WORK;CHARSET=utf-8:;;;;;;
+ORG;CHARSET=utf-8:;
+TITLE:
+END:VCARD

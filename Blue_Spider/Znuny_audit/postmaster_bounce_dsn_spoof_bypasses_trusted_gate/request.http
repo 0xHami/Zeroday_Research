@@ -1,0 +1,35 @@
+(synthetic DSN piped to Maint::PostMaster::Read --untrusted)
+
+From: Mail Delivery System <mailer-daemon@evil.example>
+To: support@localhost
+Subject: Mail delivery failed: returning message to sender
+Message-ID: <bounce-56cff256@evil.example>
+Date: Tue, 29 Sep 2026 12:20:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/report; report-type=delivery-status; boundary="BB"
+
+--BB
+Content-Type: text/plain; charset=us-ascii
+
+ATTACKER-ERROR-56cff256 mailbox full http://attacker.example/phish
+
+--BB
+Content-Type: message/delivery-status
+
+Reporting-MTA: dns; evil.example
+Final-Recipient: rfc822; customer@example.test
+Action: failed
+Status: 5.1.1
+Diagnostic-Code: smtp; 553 mailbox full
+
+--BB
+Content-Type: message/rfc822
+
+From: support@localhost
+To: customer@example.test
+Message-ID: <sent-56cff256@localhost>
+Subject: your ticket
+
+outbound reply
+
+--BB--

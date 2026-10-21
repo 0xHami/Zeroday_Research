@@ -1,0 +1,13 @@
+### Step 1 -- create a PERSONAL provider (any authenticated user)
+POST /index.php HTTP/1.1
+Cookie: PHPSESSID=<low-priv-session>
+
+module=ExternalOAuthProvider&action=Save&record=&type=personal&name=provider_79a9db02&connector=Generic&client_id=poc-client&client_secret=poc-secret&url_authorize=https://example.com/oauth/authorize&url_access_token=http://172.18.0.1:33119/token-oauth085_94163786&extra_provider_params-key[]=urlResourceOwnerDetails&extra_provider_params-value[]=https://example.com/resource&redirect_uri_type=pretty_url
+
+### Step 2 -- start the (self-driven) authorize flow to obtain a valid state
+GET /index.php?entryPoint=redirectToExternalOAuth&provider=b4658433-d317-45e6-95c7-46c14aefdd6a&clientId=&clientSecret= HTTP/1.1
+Cookie: PHPSESSID=<low-priv-session>
+
+### Step 3 -- callback drives the server-side POST to url_access_token
+GET /index.php?entryPoint=setExternalOAuthToken&provider=b4658433-d317-45e6-95c7-46c14aefdd6a&state=0889b7debab6a8ad410554daeb153e43&code=anycode HTTP/1.1
+Cookie: PHPSESSID=<low-priv-session>

@@ -1,0 +1,12 @@
+single-slash foreign key -> HTTP 403 {"success":false,"error":"One or more requested keys do not belong to this organization","code":"FORBIDDEN"}
+multi-slash  HLS   key   -> HTTP 200 {"success":true,"urls":{"22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8":"http://localhost:21528/videos/22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8?X-Amz-Algorithm
+signed url: http://localhost:21528/videos/22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=minioadmin%2F20260927%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260927T144938Z&X-Amz-Expires=3600&X-Amz-Signature=a2b5853a7cd0a92b542f754e75b477dfd1cd83724168ade61e16da566666f267&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject
+
+download -> HTTP 200
+#EXTM3U
+#EXT-X-VERSION:3
+## CONFIDENTIAL-HLS-MANIFEST sig_f4374506
+#EXT-X-ENDLIST
+
+
+seeded secret: '#EXTM3U\n#EXT-X-VERSION:3\n## CONFIDENTIAL-HLS-MANIFEST sig_f4374506\n#EXT-X-ENDLIST\n'

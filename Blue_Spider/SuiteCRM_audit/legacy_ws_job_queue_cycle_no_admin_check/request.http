@@ -1,0 +1,5 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+
+method=job_queue_cycle&input_type=JSON&response_type=JSON&rest_data=["58b038e9ab6cbd64387a31377c15805b","lowpriv_client_9dd61730"]

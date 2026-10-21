@@ -1,0 +1,29 @@
+{
+  "id": "89caf3bf-0636-4a41-91b0-23d225bc16e4",
+  "entry_list": {
+    "id": {
+      "name": "id",
+      "value": "89caf3bf-0636-4a41-91b0-23d225bc16e4"
+    },
+    "name": {
+      "name": "name",
+      "value": "Stage10 VULN-077 acct_077150ce"
+    },
+    "created_by": {
+      "name": "created_by",
+      "value": "1"
+    },
+    "modified_user_id": {
+      "name": "modified_user_id",
+      "value": "1"
+    },
+    "date_modified": {
+      "name": "date_modified",
+      "value": "2000-01-01 00:00:00"
+    },
+    "date_entered": {
+      "name": "date_entered",
+      "value": "2000-01-01 00:00:00"
+    }
+  }
+}

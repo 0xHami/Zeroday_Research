@@ -1,0 +1,5 @@
+Phase A (fixed XFF 203.0.113.4):    ['CREDS', 'CREDS', 'CREDS', 'CREDS', 'CREDS', 'THROTTLED', 'THROTTLED', 'THROTTLED']
+Phase B (rotating XFF):            ['CREDS', 'CREDS', 'CREDS', 'CREDS', 'CREDS', 'CREDS', 'CREDS', 'CREDS']
+Phase A throttled: 3/8
+Phase B throttled: 0/8
+IP resolution corroboration: resolved_ip=203.0.113.77

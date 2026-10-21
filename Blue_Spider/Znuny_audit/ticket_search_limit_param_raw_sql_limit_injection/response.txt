@@ -1,0 +1,2 @@
+GI Limit=100 -> 78 tickets; Limit='100 OR 1=1' -> 0 tickets
+sink SQL error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'OR 7=7' at line 1

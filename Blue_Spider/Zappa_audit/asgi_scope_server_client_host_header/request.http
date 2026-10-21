@@ -1,0 +1,3 @@
+No HTTP request — direct invocation of the target function:
+  zappa.asgi.create_asgi_scope(event, script_name="")  with Host: attacker.evil.example, X-Forwarded-Port: 8443.
+  Result: scope["server"] == ("attacker.evil.example", 8443). See automation.py _DRIVER.

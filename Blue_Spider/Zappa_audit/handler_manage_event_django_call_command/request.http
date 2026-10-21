@@ -1,0 +1,3 @@
+No HTTP request (Surface B on a Django deployment) — direct invocation of the target handler branch:
+  zappa.handler.LambdaHandler.handler({"manage":"diffsettings"}, ctx)  on a minimal Django project.
+  Result: management.call_command("diffsettings") ran and printed SECRET_KEY. See automation.py _DRIVER.

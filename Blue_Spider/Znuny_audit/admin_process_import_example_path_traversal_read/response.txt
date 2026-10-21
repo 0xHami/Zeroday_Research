@@ -1,0 +1,8 @@
+=== /etc/passwd (readable) ===
+<title>Error - Admin - Znuny</title>
+
+=== /etc/shadow (present, not readable by www-data) ===
+<title>Fatal Error - Frontend - Znuny</title>
+
+=== nonexistent ===
+<title>Fatal Error - Frontend - Znuny</title>

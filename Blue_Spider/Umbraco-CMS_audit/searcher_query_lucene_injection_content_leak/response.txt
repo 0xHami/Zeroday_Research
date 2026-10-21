@@ -1,0 +1,9 @@
+secret injected this run: topsecretvald5bb729847a6
+low-priv allowedSections: ['Umb.Section.Settings']
+
+GET /document/c1636bf1-03e3-467b-96d6-87ac7be920f5                      -> 403 (normal content endpoint)
+GET /searcher/InternalIndex/query?term=nodeName:secretdoca6449e  -> 200
+    leaked body property value              -> ["topsecretvald5bb729847a6"]
+GET /searcher/ExternalIndex/query (same node)  -> 200, total=0  (unpublished => 0)
+GET /searcher/InternalIndex/query?term=nodeName:secretdoca6449e AND __IndexType:content   -> 200, total=1
+GET /searcher/InternalIndex/query?term=*abc    -> 400 {"type":"Error","title":"Could not parse the query","status":404,"detail":"Parser could not parse the query. Please double check if the query is valid. Sometime

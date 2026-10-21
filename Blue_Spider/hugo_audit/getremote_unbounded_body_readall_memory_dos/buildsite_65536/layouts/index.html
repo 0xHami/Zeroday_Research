@@ -1,0 +1,2 @@
+{{- $r := try (resources.GetRemote "http://bombhost.local:45801/stream") -}}
+{{- with $r.Err }}ERR:{{ . }}{{ else }}{{ with $r.Value }}LEN={{ len .Content }}{{ end }}{{ end -}}

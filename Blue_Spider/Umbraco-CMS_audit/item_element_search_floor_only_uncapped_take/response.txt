@@ -1,0 +1,27 @@
+element created this run: SecretElement_fd94852f  (key=ae2bab5c-6c05-4afc-afce-34cc6c795ab2)
+GET /element/ae2bab5c-6c05-4afc-afce-34cc6c795ab2                    (real, section+per-node gated) -> 403
+GET /item/element?id=ae2bab5c-6c05-4afc-afce-34cc6c795ab2            (floor-only item)              -> 200
+    leaked: [
+  {
+    "isTrashed": false,
+    "parent": null,
+    "hasChildren": false,
+    "documentType": {
+      "id": "657131df-108f-4007-b3b9-754d8c5acffd",
+      "icon": "icon-document",
+      "collection": null
+    },
+    "variants": [
+      {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "flags": [],
+        "state": "Draft",
+        "name": "SecretElement_fd94852f",
+        "culture": null
+      }
+    ],
+    "id": "ae2bab5c-6c05-4afc-afce-34cc6c795ab2",
+    "flags": []
+  }
+]
+GET /item/element/search?query=Secret&take=1000000                     -> 200, total=4 (take NOT clamped)

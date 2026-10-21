@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>企业中英文站点 - Management system</title>
+    <meta name="viewport" content="width=device-width,initial-scale=0.6">
+    <link href="/resource/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/resource/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"/>
+    <link href="/resource/css/core.css?version=20260525" rel="stylesheet" media="screen"/>
+    <link href="/resource/css/cms.css?version=20250328" rel="stylesheet" media="screen"/>
+    <script src="/resource/js/echarts.proxy.js"></script>
+</head>
+<body>
+    <div id="background"></div><div id="progressBar"><i class="icon-spinner icon-spin"></i></div>
+    <header>
+        <div class="logo"><img src="//site2.dev.publiccms.com:8080/webfile/assets/images/logo.gif" alt="LOGO"/></div>
+        <ul class="nav">
+            <li>
+                <a href="//site2.dev.publiccms.com:8080/" target="_blank"><i class="icon-home icon-large"></i></a>
+            </li>
+            <li>
+                <a href="clearCache" target="ajaxTodo" title="Clear cache"><i class="icon-rubbish icon-large"></i></a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" class="langList"> 
+                    <img src="/resource/images/en.png" alt="English" title="English"/>
+                </a>
+                <ul class="langList">
+                    <li class="selected">
+                        <a href="changeLocale?lang=en" target="ajaxTodo">
+                            <img src="/resource/images/en.png" alt="English" title="English"/> English
+                        </a>
+                    </li>
+                    <li>
+                        <a href="changeLocale?lang=ja" target="ajaxTodo">
+                            <img src="/resource/images/ja.png" alt="日本語" title="日本語"/> 日本語
+                        </a>
+                    </li>
+                    <li>
+                        <a href="changeLocale?lang=zh_TW" target="ajaxTodo">
+                            <img src="/resource/images/zh_TW.png" alt="繁體" title="繁體"/> 繁體
+                        </a>
+                    </li>
+                    <li>
+                        <a href="changeLocale?lang=zh" target="ajaxTodo">
+                            <img src="/resource/images/zh.png" alt="中文" title="中文"/> 中文
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:void(0)" class="theme"></a>
+                <ul class="themeList" id="themeList">
+                    <li class="toptry"><a href="javascript:void(0)"><img src="/resource/images/theme-toptry.png" alt="toptry"/></a></li>
+                    <li class="red"><a href="javascript:void(0)"><img src="/resource/images/theme-red.png" alt="red"/></a></li>
+                    <li class="ghibli"><a href="javascript:void(0)"><img src="/resource/images/theme-ghibli.png" alt="ghibli"/></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="myself/profile.html" target="navTab" rel="myself/profile" title="My account" class="exclude-translate"><i class="avatar icon-user icon-large"></i> admin</a>
+                <ul>
+                    <li>
+                        <a href="logout?userId=2" title="Logout"><i class="icon-signout icon-large"></i> Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav left">
+            <li>
+                <a href="javascript:;" onclick="return false;" class="navbar-toggler"></a>
+            </li>
+            <li><a href="cmsDiy/preview.html" target="navTab" rel="cmsDiy/preview"><i class="bi bi-palette2"></i> Quick Maintenance</a></li>
+        </ul>
+    </header>
+    <main>
+        <aside id="leftside">
+            <nav id="sidebar">
+                <div id="menu">
+<div class="accordion">
+    
+    <div class="accordionHeader">
+        <h2><i class="bi bi-file-post icon-large"></i> Content <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>Content</h2>
+        <ul>
+            <li>
+                <a href="cmsContent/list" target="navTab" rel="cmsContent/list" title="Content management"><i class="icon-book icon-large"></i> Content management</a>
+            </li>
+            <li>
+                <a href="sysWorkflowProcess/list" target="navTab" rel="sysWorkflowProcess/list" title="Review process"><i class="bi bi-ui-checks icon-large"></i> Review process<span class="todoNumber" data-type="process_list"></span></a>
+            </li>
+            <li>
+                <a href="cmsContent/search" target="navTab" rel="cmsContent/search" title="Content search"><i class="icon-search icon-large"></i> Content search</a>
+            </li>
+            <li>
+                <a href="cmsComment/list" target="navTab" rel="cmsComment/list" title="Comment management"><i class="icon-comment icon-large"></i> Comment management<span class="todoNumber" data-type="comment_list"></span></a>
+            </li>
+            <li>
+                <a href="cmsCategory/list" target="navTab" rel="cmsCategory/list" title="Category management"><i class="icon-folder-open icon-large"></i> Category management</a>
+            </li>
+            <li>
+                <a href="cmsTag/list" target="navTab" rel="cmsTag/list" title="Tag management"><i class="icon-tag icon-large"></i> Tag management</a>
+            </li>
+            <li>
+                <a href="cmsVote/list" target="navTab" rel="cmsVote/list" title="Voting Management"><i class="icon-ticket icon-large"></i> Voting Management</a>
+            </li>
+            <li>
+                <a href="cmsSurvey/list" target="navTab" rel="cmsSurvey/list" title="Survey management"><i class="icon-list-ul icon-large"></i> Survey management</a>
+            </li>
+            <li>
+                <a href="cmsWord/list" target="navTab" rel="cmsWord/list" title="Search word management"><i class="bi bi-search-heart icon-large"></i> Search word management</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="icon-tablet icon-large"></i> Page <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>Page</h2>
+        <ul>
+            <li>
+                <a href="cmsDiy/preview" target="navTab" rel="cmsDiy/preview" title="Quick Maintenance"><i class="bi bi-palette2 icon-large"></i> Quick Maintenance</a>
+            </li>
+            <li>
+                <a href="cmsPage/list" target="navTab" rel="cmsPage/list" title="Page management"><i class="icon-globe icon-large"></i> Page management</a>
+            </li>
+            <li>
+                <a href="cmsPlace/list" target="navTab" rel="cmsPlace/list" title="Page fragment management"><i class="icon-list-alt icon-large"></i> Page fragment management</a>
+            </li>
+            <li>
+                <a href="cmsPage/diy" target="navTab" rel="cmsPage/diy" title="Visualized page"><i class="bi bi-palette icon-large"></i> Visualized page</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="bi bi-cart4 icon-large"></i> Trade <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>Trade</h2>
+        <ul>
+            <li>
+                <a href="tradeOrder/list" target="navTab" rel="tradeOrder/list" title="Order management"><i class="icon-barcode icon-large"></i> Order management<span class="todoNumber" data-type="order_list"></span></a>
+            </li>
+            <li>
+                <a href="cmsContentProduct/list" target="navTab" rel="cmsContentProduct/list" title="Product management"><i class="icon-truck icon-large"></i> Product management</a>
+            </li>
+            <li>
+                <a href="tradePayment/list" target="navTab" rel="tradePayment/list" title="Payment management"><i class="icon-money icon-large"></i> Payment management</a>
+            </li>
+            <li>
+                <a href="tradeRefund/list" target="navTab" rel="tradeRefund/list" title="Refund management"><i class="icon-signout icon-large"></i> Refund management<span class="todoNumber" data-type="refund_list"></span></a>
+            </li>
+            <li>
+                <a href="tradeAccount/list" target="navTab" rel="tradeAccount/list" title="Account management"><i class="icon-credit-card icon-large"></i> Account management</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="bi bi-person-circle icon-large"></i> User <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>User</h2>
+        <ul>
+            <li>
+                <a href="sysUser/list" target="navTab" rel="sysUser/list" title="User management"><i class="icon-user icon-large"></i> User management</a>
+            </li>
+            <li>
+                <a href="sysDept/list" target="navTab" rel="sysDept/list" title="Department management"><i class="icon-group icon-large"></i> Department management</a>
+            </li>
+            <li>
+                <a href="sysRole/list" target="navTab" rel="sysRole/list" title="Role management"><i class="icon-user-md icon-large"></i> Role management</a>
+            </li>
+            <li>
+                <a href="sysAppClient/list" target="navTab" rel="sysAppClient/list" title="Application client management"><i class="icon-coffee icon-large"></i> Application client management</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="icon-cogs icon-large"></i> System <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>System</h2>
+        <ul>
+            <li>
+                <a href="sysWorkflow/list" target="navTab" rel="sysWorkflow/list" title="Workflow"><i class="bi bi-diagram-3 icon-large"></i> Workflow</a>
+            </li>
+            <li>
+                <a href="sysConfigData/list" target="navTab" rel="sysConfigData/list" title="Site configuration"><i class="icon-cog icon-large"></i> Site configuration</a>
+            </li>
+            <li>
+                <a href="sysTask/list" target="navTab" rel="sysTask/list" title="Task management"><i class="icon-time icon-large"></i> Task management</a>
+            </li>
+            <li>
+                <a href="cmsDictionary/list" target="navTab" rel="cmsDictionary/list" title="Dictionary management"><i class="icon-book icon-large"></i> Dictionary management</a>
+            </li>
+            <li>
+                <a href="sysApp/list" target="navTab" rel="sysApp/list" title="Application Authorization"><i class="icon-linux icon-large"></i> Application Authorization</a>
+            </li>
+            <li>
+                <a href="sysRecord/list" target="navTab" rel="sysRecord/list" title="Custom record management"><i class="bi bi-receipt icon-large"></i> Custom record management</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="bi bi-binoculars-fill icon-large"></i> Operation <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>Operation</h2>
+        <ul>
+            <li>
+                <a href="cmsContent/workload" target="navTab" rel="cmsContent/workload" title="Workload"><i class="bi bi-calendar-heart icon-large"></i> Workload</a>
+            </li>
+            <li>
+                <a href="report/user" target="navTab" rel="report/user" title="User report"><i class="icon-male icon-large"></i> User report</a>
+            </li>
+            <li>
+                <a href="report/visit" target="navTab" rel="report/visit" title="Visit report"><i class="bi bi-pie-chart icon-large"></i> Visit report</a>
+            </li>
+            <li>
+                <a href="log/upload" target="navTab" rel="log/upload" title="Upload log"><i class="icon-list-alt icon-large"></i> Upload log</a>
+            </li>
+            <li>
+                <a href="log/operate" target="navTab" rel="log/operate" title="Operate log"><i class="icon-list-alt icon-large"></i> Operate log</a>
+            </li>
+            <li>
+                <a href="log/login" target="navTab" rel="log/login" title="Login log"><i class="icon-signin icon-large"></i> Login log</a>
+            </li>
+            <li>
+                <a href="log/task" target="navTab" rel="log/task" title="Task log"><i class="icon-time icon-large"></i> Task log</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="bi bi-file-earmark-text icon-large"></i> File <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>File</h2>
+        <ul>
+            <li>
+                <a href="cmsTemplate/list" target="navTab" rel="cmsTemplate/list" title="Template management"><i class="bi bi-code-square icon-large"></i> Template management</a>
+            </li>
+            <li>
+                <a href="placeTemplate/list" target="navTab" rel="placeTemplate/list" title="Page fragment template"><i class="icon-list-alt icon-large"></i> Page fragment template</a>
+            </li>
+            <li>
+                <a href="cmsDiy/list" target="navTab" rel="cmsDiy/list" title="Page visualization management"><i class="icon-dashboard icon-large"></i> Page visualization management</a>
+            </li>
+            <li>
+                <a href="taskTemplate/list" target="navTab" rel="taskTemplate/list" title="Task template management"><i class="icon-time icon-large"></i> Task template management</a>
+            </li>
+            <li>
+                <a href="cmsWebFile/list" target="navTab" rel="cmsWebFile/list" title="Website file management"><i class="icon-globe icon-large"></i> Website file management</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="bi bi-nut icon-large"></i> Config <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>Config</h2>
+        <ul>
+            <li>
+                <a href="cmsModel/list" target="navTab" rel="cmsModel/list" title="Model management"><i class="icon-th-large icon-large"></i> Model management</a>
+            </li>
+            <li>
+                <a href="cmsCategoryType/list" target="navTab" rel="cmsCategoryType/list" title="Category type management"><i class="icon-road icon-large"></i> Category type management</a>
+            </li>
+            <li>
+                <a href="sysConfig/list" target="navTab" rel="sysConfig/list" title="Site config management"><i class="icon-cogs icon-large"></i> Site config management</a>
+            </li>
+            <li>
+                <a href="sysDomain/domainList" target="navTab" rel="sysDomain/domainList" title="Domain management"><i class="icon-qrcode icon-large"></i> Domain management</a>
+            </li>
+            <li>
+                <a href="cmsLanguage/list" target="navTab" rel="cmsLanguage/list" title="Language Management"><i class="bi bi-globe icon-large"></i> Language Management</a>
+            </li>
+        </ul>
+    </div>
+    <div class="accordionHeader">
+        <h2><i class="icon-key icon-large"></i> Myself <i class="icon icon-chevron-up"></i></h2>
+    </div>
+    <div class="accordionContent">
+        <h2>Myself</h2>
+        <ul>
+            <li>
+                <a href="myself/myDept" target="navTab" rel="myself/myDept" title="My department"><i class="icon-group icon-large"></i> My department</a>
+            </li>
+            <li>
+                <a href="myself/profile" target="navTab" rel="myself/profile" title="Modify personal information"><i class="icon-user icon-large"></i> Modify personal information</a>
+            </li>
+            <li>
+                <a href="myself/contentList" target="navTab" rel="myself/contentList" title="My content"><i class="icon-book icon-large"></i> My content</a>
+            </li>
+            <li>
+                <a href="myself/logOperate" target="navTab" rel="myself/logOperate" title="My operate log"><i class="icon-list-alt icon-large"></i> My operate log</a>
+            </li>
+            <li>
+                <a href="myself/logLogin" target="navTab" rel="myself/logLogin" title="My login log"><i class="icon-signin icon-large"></i> My login log</a>
+            </li>
+            <li>
+                <a href="myself/userDeviceList" target="navTab" rel="myself/userDeviceList" title="My device"><i class="icon-linux icon-large"></i> My device</a>
+            </li>
+            <li>
+                <a href="myself/userTokenList" target="navTab" rel="myself/userTokenList" title="My login token"><i class="icon-unlock-alt icon-large"></i> My login token</a>
+            </li>
+        </ul>
+    </div>
+</div>                </div>
+                <footer>
+No license                    <br/>
+                    Copyright &copy; 2026
+                </footer>
+            </nav>
+        </aside>
+        <div id="navTab" class="tabsPage">
+            <div class="tabsPageHeader">
+                <div class="tabsPageHeaderContent">
+                    <ul class="navTab-tab">
+                        <li tabid="main" class="main" url="main.html"><a href="javascript:;" onclick="return false;">Working table</a></li>
+                    </ul>
+                </div>
+                <a href="javascript:;" onclick="return false;" class="tabsLeft"><i class="icon-backward icon-large"></i></a>
+                <a href="javascript:;" onclick="return false;" class="tabsRight"><i class="icon-forward icon-large"></i></a>
+                <a href="javascript:;" onclick="return false;" class="tabsMore"><i class="icon-th-list icon-large"></i></a>
+            </div>
+            <ul class="tabsMoreList">
+                <li><a href="javascript:;" onclick="return false;">Working table</a></li>
+            </ul>
+            <div class="navTab-panel tabsPageContent layoutBox">
+                <div class="page unitBox work-bench">
+<a class="button float" href="main.html" target="navTab" rel="main" data-change-title="false"><i class="icon-refresh"></i>Refresh</a>
+<div class="pageFormContent" layoutH>
+    <fieldset>
+        <legend>My account</legend>
+        <div class="unit">
+            <ul>
+                <li>
+                    <div class="card">
+                        <i class="bi bi-ui-checks icon-large icon"></i>
+                        <p>Pending process</p>
+                        <a href="sysWorkflowProcess/list.html" title="Pending process" target="navTab" rel="sysWorkflowProcess/list">
+                                <h3 data-todo="" data-todo-type="process_list">0</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-book icon-large icon"></i>
+                        <p>My pending content</p>
+                        <a href="myself/contentList.html?status=2" title="My content" target="navTab" rel="myself/contentList">
+                                <h3>2</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-edit icon-large icon"></i>
+                        <p>My draft</p>
+                        <a href="myself/contentList.html?status=0" title="My content" target="navTab" rel="myself/contentList">
+                                <h3>2</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-signin icon-large icon"></i>
+                        <p>Login count</p>
+                        <a href="myself/logLogin.html" title="My login log" target="navTab" rel="myself/logLogin">
+                            <h3>36</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-unlock-alt icon-large icon"></i>
+                        <p>My login token</p>
+                        <a href="myself/userTokenList.html" title="My login token" target="navTab" rel="myself/userTokenList">
+                            <h3>36</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-calendar-empty icon-large icon"></i>
+                        <p class="label">
+Last login date                        </p>
+                        <p>
+                            2026-09-20 12:23
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="bi bi-cloudy-fill icon-large icon"></i>
+                        <p class="label">
+Last login ip                        </p>
+                        <p title="内网IP,内网IP">
+                            172.19.0.1
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Content</legend>
+        <ul class="report clearfix">
+            <li>
+                <h2 class="contentTitle">Lastest content</h2>
+                <div class="pageFormContent">
+                    <p class="ellipsis">
+                        <span class="float-right date info">2020-01-01 <i class="bi bi-eye"></i> 0</span>
+                        [<a href="//site2.dev.publiccms.com:8080/news/14" class="exclude-translate" target="_blank">公司新闻</a>]
+                        <a href="//site2.dev.publiccms.com:8080/content/1" class="exclude-translate" target="_blank">企业中英文站点模板使用说明</a>
+                    </p>
+                </div>
+            </li>
+            <li>
+                <div class="tabs box">
+                    <div class="tabsHeader">
+                        <ul class="right">
+                            <h2 class="float-left">Hot content</h2>
+                            <li><a href="common/hotContent.html?startVisitDate=2026-09-20" class="j-ajax">Today</a></li>
+                            <li><a href="common/hotContent.html?startVisitDate=2026-09-18&endVisitDate=2026-09-19" class="j-ajax">Yesterday</a></li>
+                            <li><a href="common/hotContent.html?startVisitDate=2026-09-13&dayAnalytics=false" class="j-ajax">This week</a></li>
+                            <li><a href="common/hotContent.html?startVisitDate=2026-09-06&endVisitDate=2026-09-13&dayAnalytics=false" class="j-ajax">Last week</a></li>
+                            <li><a href="common/hotContent.html?startVisitDate=2026-08-31&dayAnalytics=false" class="j-ajax">This month</a></li>
+                            <li><a href="common/hotContent.html?startVisitDate=2026-07-31&endVisitDate=2026-08-31&dayAnalytics=false" class="j-ajax">Last month</a></li>
+                        </ul>
+                    </div>
+                    <div class="tabsContent unitBox">
+                        <div>
+<div class="pageFormContent">
+
+</div>                        </div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </fieldset>
+    <fieldset>
+        <legend>Comment management</legend>
+        <div class="unit">
+            <div id="comment" class="chart box" data-resize-object="commentChart"></div>
+            <ul class="clearfix">
+                <li>
+                    <div class="card">
+                        <i class="icon-comment icon-large icon"></i>
+                        <p>Pending comment</p>
+                        <a href="cmsComment/list.html?status=2" title="Comment management" target="navTab" rel="cmsComment/list">
+                                <h3 data-todo="" data-todo-type="comment_list">0</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-comments icon-large icon"></i>
+                        <p>Comments</p>
+                        <a href="cmsComment/list.html" title="Comment management" target="navTab" rel="cmsComment/list">
+                                <h3>0</h3>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+<script>
+var commentChart=echarts.init(document.getElementById('comment'));
+commentChart.setOption({
+    title: {
+        text: "Comment",
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ["09-13","09-14","09-15","09-16","09-17","09-18","09-19","09-20"]
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+    {
+        name:'Operate',
+        type:'line',
+        smooth: true,
+        data:[0,0,0,0,0,0,0,0],
+        areaStyle: {}
+    }]
+});
+</script>
+   </fieldset>
+    <fieldset>
+        <legend>Product order</legend>
+        <div class="unit">
+            <div id="order" class="chart box" data-resize-object="orderChart"></div>
+            <ul class="clearfix">
+                <li>
+                    <div class="card">
+                        <i class="icon-barcode icon-large icon"></i>
+                        <p>To be processed</p>
+                        <a href="tradeOrder/list.html?status=2&processed=false" title="Product order" target="navTab" rel="tradeOrder/list">
+                                <h3 data-todo="" data-todo-type="order_list">0</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-money icon-large icon"></i>
+                        <p>Pending payment</p>
+                        <a href="tradeOrder/list.html?status=0&processed=false" title="Product order" target="navTab" rel="tradeOrder/list">
+                                <h3>0</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-credit-card icon-large icon"></i>
+                        <p>Recharge</p>
+                        <a href="tradeAccountHistory/list.html?status=2&startCreateDate=2026-09-13" title="Account history" target="navTab" rel="tradeAccountHistory/list">
+                                <h3>0</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-signout icon-large icon"></i>
+                        <p>Pending refund</p>
+                        <a href="tradeRefund/list.html?status=0" title="Refund" target="navTab" rel="tradeRefund/list">
+                                <h3 data-todo="4" data-todo-type="refund_list">4</h3>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+<script>
+var orderChart=echarts.init(document.getElementById('order'));
+orderChart.setOption({
+    title: {
+        text: 'Product order',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['09-13','09-14','09-15','09-16','09-17','09-18','09-19','09-20']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+       {
+           name:"Pending payment",
+           type:'line',
+           smooth: true,
+           data:[0,0,0,0,0,0,0,0],
+           areaStyle: {}
+       },
+       {
+           name:"Invalid order",
+           type:'line',
+           smooth: true,
+           data:[0,0,0,0,0,0,0,0],
+           areaStyle: {}
+       },
+       {
+           name:"Paid",
+           type:'line',
+           smooth: true,
+           data:[0,0,0,0,0,0,0,0],
+           areaStyle: {}
+       },
+       {
+           name:"Refunded",
+           type:'line',
+           smooth: true,
+           data:[0,0,0,0,0,0,0,0],
+           areaStyle: {}
+       },
+       {
+           name:"Closed",
+           type:'line',
+           smooth: true,
+           data:[0,0,0,0,0,0,0,0],
+           areaStyle: {}
+       }    ]
+});
+</script>
+    </fieldset>
+    <fieldset>
+        <legend>User data report</legend>
+        <div class="unit">
+            <div id="visit" class="chart box"  data-resize-object="visitChart"></div>
+            <ul>
+                <li>
+                    <div class="card">
+                        <i class="icon-signal icon-large icon"></i>
+                        <p>Register</p>
+                        <a href="report/user.html" title="User data report" target="navTab" rel="report/user">
+                               <h3>28</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-signal icon-large icon"></i>
+                        <p>User</p>
+                        <a href="report/user.html" title="User data report" target="navTab" rel="report/user">
+                               <h3>29</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-ticket icon-large icon"></i>
+                        <p>Login</p>
+                        <a href="report/user.html" title="User data report" target="navTab" rel="report/user">
+                               <h3>60</h3>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <div class="card">
+                        <i class="icon-list-alt icon-large icon"></i>
+                        <p>Operate</p>
+                        <a href="report/user.html" title="User data report" target="navTab" rel="report/user">
+                               <h3>51</h3>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+<script>
+var visitChart = echarts.init(document.getElementById('visit'));
+visitChart.setOption({
+    title: {
+        text: 'Visit report',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    legend: {
+        data: ['PV', 'UV', 'IP Views'],
+        top:30
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: []
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+       {
+           name:'PV',
+           type:'line',
+           smooth: true,
+           data:[],
+           areaStyle: {}
+       },
+       {
+           name:'UV',
+           type:'line',
+           smooth: true,
+           data:[],
+           areaStyle: {}
+       },
+       {
+           name:'IP Views',
+           type:'line',
+           smooth: true,
+           data:[],
+           areaStyle: {}
+       }]
+});
+</script>
+    </fieldset>
+    <fieldset>
+        <legend>System</legend>
+        <div class="unit">
+            <ul>
+                <li class="cmsVersion">
+                    <label>PublicCMS:</label>
+                    <a href="//www.publiccms.com/" target="navTab" rel="publiccms.com" title="PublicCMS website">V5.202608.a</a> <span class="new hide" style="color:green">[Latest version]</span><span class="old hide" style="color:red">[Outdated version]</span>
+                </li>
+                <li>
+                    <label>Timezone:</label>Asia/Shanghai
+                </li>
+        </div>
+    </fieldset>
+</div>                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        var base = "/admin";
+        window.UEDITOR_HOME_URL = "//site2.dev.publiccms.com:8080/resource/plugins/ueditor/";
+        window.UEDITOR_BASE_URL = "/resource/plugins/ueditor/";
+        window.UEDITOR_LANGUAGE = "en/en.js";
+        window.TIMYMCE_HOME_URL = "//site2.dev.publiccms.com:8080/resource/plugins/tinymce/";
+        window.TIMYMCE_LANGUAGE = "en";
+        window.TIMYMCE_RESOURCE_PREFIX = "//site2.dev.publiccms.com:8080/webfile/";
+        window.TIMYMCE_FILETYPES = "";
+        window.CKEDITOR_BASEPATH = "//site2.dev.publiccms.com:8080/resource/plugins/ckeditor/";
+        window.CKEDITOR_LANGUAGE = "en";
+        window.FILEROBOT_LANGUAGE = "en";
+        window.SPECTRUM_LANGUAGE = "en";
+        window.LOADSCRIPTS_BASE = "";
+        window.FILE_UPLOAD_PREFIX = "//site2.dev.publiccms.com:8080/webfile/";
+    </script>
+    <script src="/resource/plugins/jquery/jquery.min.js"></script>
+    <script src="/resource/plugins/jquery/jquery.cookie.js"></script>
+    <script src="/resource/plugins/jquery/jquery.validate.min.js"></script>
+    <script src="/resource/plugins/encrypt/base64.js"></script>
+    <script src="/resource/plugins/encrypt/sha512.min.js"></script>
+    <script src="/resource/js/loadscripts.js?version=20250428"></script>
+    <script src="/resource/js/loadscripts.config.js?version=20250428"></script>
+    <script src="/resource/js/jui.min.js?version=202605251"></script>
+    <script src="/resource/js/jui.plugins.js?version=20250428"></script>
+    <script src="/resource/js/lang/regional.en.js"></script>
+    <script src="/resource/js/cms.js?version=202408"></script>
+    <script>
+        JUI.init(base + "/common/jui.frag.html", {
+            loginUrl:"login_dialog.html", loginTitle:"Login",
+            pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderType"},
+            debug:false,
+            callback:function(){
+                initEnv();
+                $("#themeList").theme({themeBase:window.LOADSCRIPTS_BASE+"/resource/css/theme-",defaultTheme:"toptry"});
+
+
+                loadScripts([window.LOADSCRIPTS_BASE+"/resource/plugins/echarts/echarts.common.min.js"],function(){
+                    echartsProxy(echarts);
+                });
+                if($(window).width() < 1024 ){
+                    $(".navbar-toggler").not(".side-right").trigger("click");
+                }
+            }
+        });
+    </script>
+</body>
+</html>

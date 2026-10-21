@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html><head>
+<title>Mailer Preview for passwords_mailer#reset</title>
+<meta name="viewport" content="width=device-width" />
+<style type="text/css">
+  html, body, iframe {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    width: 100%;
+    padding: 10px 0 0 0;
+    margin: 0;
+    background: white;
+    font: 12px "Lucida Grande", sans-serif;
+    border-bottom: 1px solid #dedede;
+  }
+
+  dl {
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+
+  dt {
+    width: 80px;
+    padding: 1px;
+    float: left;
+    clear: left;
+    text-align: right;
+    color: #7f7f7f;
+  }
+
+  dd {
+    margin-left: 90px; /* 80px + 10px */
+    padding: 1px;
+  }
+
+  dd:empty:before {
+    content: "\00a0"; // &nbsp;
+  }
+
+  th {
+    font-weight: inherit;
+    color: #7f7f7f;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  iframe {
+    border: 0;
+    width: 100%;
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <dl>
+
+
+    <dt>From:</dt>
+    <dd id="from">from@example.com</dd>
+
+
+    <dt>To:</dt>
+    <dd id="to">admin@example.com</dd>
+
+
+
+    <dt>Date:</dt>
+    <dd id="date">Sat, 03 Oct 2026 02:52:47 +0000</dd>
+
+    <dt>Subject:</dt>
+    <dd><strong id="subject">Reset your password</strong></dd>
+
+
+    <dt>Format:</dt>
+      <dd>
+        <select id="part" onchange="refreshBody(false);">
+          <option value="part=text%2Fhtml">View as HTML email</option>
+          <option value="part=text%2Fplain">View as plain-text email</option>
+        </select>
+      </dd>
+
+
+      <dt>Headers:</dt>
+      <dd>
+        <details>
+          <summary>Show all headers</summary>
+          <table>
+            <tr>
+              <th>From:</th>
+              <td>from@example.com</td>
+            </tr>
+            <tr>
+              <th>To:</th>
+              <td>admin@example.com</td>
+            </tr>
+            <tr>
+              <th>Subject:</th>
+              <td>Reset your password</td>
+            </tr>
+            <tr>
+              <th>MIME-Version:</th>
+              <td>1.0</td>
+            </tr>
+            <tr>
+              <th>Content-Type:</th>
+              <td>multipart/alternative; boundary=&quot;--==_mimepart_6ac06dff783df_12ff0944f4&quot;; charset=UTF-8</td>
+            </tr>
+          </table>
+        </details>
+      </dd>
+
+    <dt>EML File:</dt>
+    <dd><a href="/rails/mailers/download/passwords_mailer/reset">Download</a></dd>
+  </dl>
+</header>
+
+  <iframe name="messageBody" src="?part=text%2Fhtml"></iframe>
+
+<script>
+  function refreshBody(reload) {
+    var part_select = document.querySelector('select#part');
+    var locale_select = document.querySelector('select#locale');
+    var iframe = document.getElementsByName('messageBody')[0];
+    var part_param = part_select ?
+      part_select.options[part_select.selectedIndex].value :
+      document.querySelector('#mime_type').dataset.mimeType;
+    var locale_param = locale_select ? locale_select.options[locale_select.selectedIndex].value : null;
+    var fresh_location;
+    if (locale_param) {
+      fresh_location = '?' + part_param + '&' + locale_param;
+    } else {
+      fresh_location = '?' + part_param;
+    }
+    iframe.contentWindow.location = fresh_location;
+
+    var url = location.pathname.replace(/\.(txt|html)$/, '');
+    var format = /html/.test(part_param) ? '.html' : '.txt';
+    var state_to_replace = locale_param ? (url + format + '?' + locale_param) : (url + format);
+
+    if (reload) {
+      location.href = state_to_replace;
+    } else if (history.replaceState) {
+      window.history.replaceState({}, '', state_to_replace);
+    }
+  }
+</script>
+
+</body>
+</html>

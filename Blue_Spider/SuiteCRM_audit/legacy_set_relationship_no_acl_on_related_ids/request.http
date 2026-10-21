@@ -1,0 +1,5 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+
+method=set_relationship&input_type=JSON&response_type=JSON&rest_data=["6593ce75c9d7f5b900d6c8749a1f213a","Accounts","b8ce128d-189a-4eae-bb08-c7f64db937a0","contacts",["13aa69e8-5ae7-400b-a50f-6be60f3f4302"]]

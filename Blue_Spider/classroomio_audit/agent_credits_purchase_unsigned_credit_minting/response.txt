@@ -1,0 +1,4 @@
+POST /agent/credits/purchase (anonymous session cookie)
+HTTP 200
+
+{"success":true,"data":{"id":5,"orgId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","triggeredBy":null,"provider":"polar","providerOrderId":"cvehunt-ord_9a9e24ae-3c72584e","tokens":1000000000,"quantity":1,"unitPriceCents":0,"currency":"USD","payload":null,"createdAt":"2026-09-27 14:49:06.415519+00"}}

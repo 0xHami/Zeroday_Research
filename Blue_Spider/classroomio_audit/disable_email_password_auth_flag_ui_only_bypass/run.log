@@ -1,0 +1,12 @@
+========================================================================
+VULN-028: disableEmailPassword enforced UI-only — disabled method still logs in
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] admin session ok; current organization.disable_email_password = 'f'
+[STEP] baseline sign-in (method enabled): HTTP 200
+[STEP] PUT /organization {disableEmailPassword:true} → HTTP 200; DB now = 't'
+[STEP] sign-in with email/password while DISABLED → HTTP 200  session cookie set = True
+[PROOF] disable_email_password=true is persisted, yet email/password sign-in returned 200 + Set-Cookie → the disabled method still authenticates (UI-only policy)
+[SETUP] restored organization.disable_email_password = 'f'
+==> VULN-028: CONFIRMED — disableEmailPassword is UI-only; server still authenticates the disabled method
+[OK] confirmed (email/password). Google path is dormant here (placeholder OAuth creds) — same dead guard.

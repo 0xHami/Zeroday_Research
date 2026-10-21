@@ -1,0 +1,11 @@
+==============================================================================
+VULN-026: RST content -> arbitrary host-file read (LFI) + stored XSS
+target: throwaway `hugo` build (tools image: docutils installed)
+[INFO] rst2html run with no --no-file-insertion/--no-raw; text/rst omitted from allowContent
+==============================================================================
+[SETUP] planted /site/SECRET.txt = 'RST-LFI-983ecd91'; content/p.rst uses .. include:: + .. raw:: html
+[STEP] building with the tools image (rst2html on PATH, ^rst2html$ allowed)
+[PROOF] planted secret inlined (LFI via .. include::): True
+[PROOF] raw <script> emitted (stored XSS via .. raw:: html): True
+[OK] exploit confirmed — untrusted .rst content read a host file into the published HTML (.. include::) AND emitted a raw <script> (.. raw:: html). RST escapes the Markdown-path content sandbox.
+==> VULN-026: CONFIRMED — RST docutils: host-file LFI + stored XSS

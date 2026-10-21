@@ -1,0 +1,3 @@
+victim V8 call BEFORE: HTTP 200
+attacker massupdate: HTTP 301
+victim V8 call AFTER : HTTP 401

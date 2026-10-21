@@ -1,0 +1,48 @@
+OOB listener (host 0.0.0.0:57221) captured hit(s):
+[
+  {
+    "method": "POST",
+    "path": "/canary-e7adad984b76",
+    "from_client_ip": "172.18.0.2",
+    "user_agent": "Umbraco-Cms/18.3.0-rc.preview.34",
+    "umb_event": "Umbraco.ContentPublish",
+    "x_canary": "e7adad984b76",
+    "body": "{\"id\":\"965aba95-646c-4120-8868-5c7553e98980\",\"cultures\":[]}"
+  }
+]
+
+webhook log (OPEN target http://172.18.0.1:57221/canary-e7adad984b76):
+{
+  "key": "6ad30ae3-c900-48a1-ad28-3a851a918dbc",
+  "webhookKey": "d00bc3fd-7e24-4457-8600-f7ce24adb08c",
+  "statusCode": "OK (200)",
+  "httpStatusCode": 200,
+  "isSuccessStatusCode": true,
+  "date": "2026-09-29T03:11:41.9194723Z",
+  "eventAlias": "Umbraco.ContentPublish",
+  "url": "http://172.18.0.1:57221/canary-e7adad984b76",
+  "retryCount": 0,
+  "requestHeaders": "Content-Type: application/json; charset=utf-8\nContent-Length: 59\nUmb-Webhook-Event: Umbraco.ContentPublish\nUmb-Webhook-RetryCount: 0\nX-Attacker: ssrf\nX-Canary: e7adad984b76\nUser-Agent: Umbraco-Cms/18.3.0-rc.preview.34\n",
+  "requestBody": "{\"id\":\"965aba95-646c-4120-8868-5c7553e98980\",\"cultures\":[]}",
+  "responseHeaders": "Content-Type: application/json\nServer: BaseHTTP/0.6 Python/3.14.4\nDate: Tue, 29 Sep 2026 03:11:41 GMT\n",
+  "responseBody": "{\"oob\":\"canary-hit\",\"secret\":\"internal-service-only\"}",
+  "exceptionOccured": false
+}
+
+webhook log (CLOSED target http://172.18.0.1:49561/closed-e7adad984b76):
+{
+  "key": "64bd2844-5627-490e-91ad-99df9a33a284",
+  "webhookKey": "7f146eed-92d7-43c2-9d73-de5497624edc",
+  "statusCode": "ConnectionError",
+  "httpStatusCode": null,
+  "isSuccessStatusCode": false,
+  "date": "2026-09-29T03:11:41.9159815Z",
+  "eventAlias": "Umbraco.ContentPublish",
+  "url": "http://172.18.0.1:49561/closed-e7adad984b76",
+  "retryCount": 0,
+  "requestHeaders": "Content-Type: application/json; charset=utf-8\nContent-Length: 59\nUmb-Webhook-Event: Umbraco.ContentPublish\nUmb-Webhook-RetryCount: 0\nX-Canary: e7adad984b76\nUser-Agent: Umbraco-Cms/18.3.0-rc.preview.34\n",
+  "requestBody": "{\"id\":\"965aba95-646c-4120-8868-5c7553e98980\",\"cultures\":[]}",
+  "responseHeaders": "",
+  "responseBody": "ConnectionError: Connection refused (172.18.0.1:49561)",
+  "exceptionOccured": true
+}

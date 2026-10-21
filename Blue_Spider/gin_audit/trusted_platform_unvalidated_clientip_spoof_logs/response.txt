@@ -1,0 +1,3 @@
+baseline (XFF 9.9.9.9, peer untrusted): {'clientIP': '172.19.0.1', 'remoteIP': '172.19.0.1'}
+attack   (X-CF-Connecting-IP 6.6.6.6):          {'clientIP': '6.6.6.6', 'remoteIP': '172.19.0.1'}
+raw-value(X-CF-Connecting-IP 'not-an-ip-INJECTED-value'):      {'clientIP': 'not-an-ip-INJECTED-value', 'remoteIP': '172.19.0.1'}

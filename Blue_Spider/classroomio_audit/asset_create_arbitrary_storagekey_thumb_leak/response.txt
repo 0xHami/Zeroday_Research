@@ -1,0 +1,7 @@
+create asset -> HTTP 201 {"success":true,"data":{"id":"0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","kind":"video","provider":"upload","storageProvider":"s3","storageKey":"44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4","hlsManifestKey":null,"hlsAudioKe
+
+DB assets row [storage_key|org|created_by]: 44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4|48bbdff8-2ad5-46a3-a259-2ca3d52677dd|b90be333-8221-4fe0-b324-aae290d833c5
+(attacker org = 48bbdff8-2ad5-46a3-a259-2ca3d52677dd; storageKey prefix org = 44444444-4444-4444-8444-444444444444)
+
+published thumbnailUrl: http://localhost:21528/media/thumbnails/0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5/middle-1790520568845.jpg
+anonymous thumbnail fetch -> HTTP 200, jpeg=True

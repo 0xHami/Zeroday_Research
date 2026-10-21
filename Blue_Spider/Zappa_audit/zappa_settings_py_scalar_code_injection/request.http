@@ -1,0 +1,3 @@
+No HTTP request — direct invocation of the deploy-time target function:
+  zappa.cli.ZappaCLI.get_zappa_settings_string(self)  with self.api_stage set to a
+  quote-breaking payload, then exec() of the generated settings string. See automation.py _DRIVER.

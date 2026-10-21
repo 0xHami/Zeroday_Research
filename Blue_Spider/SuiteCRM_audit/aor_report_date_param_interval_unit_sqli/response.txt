@@ -1,0 +1,21 @@
+### ORACLE=TRUE  (admin user_hash byte 1 == '$' (ORD 36))  -> report populated
+HTTP 200  content-length=6247
+<div class="list-view-rounded-corners"><table id="report_table_c49f74fd-e517-44f6-a73f-21b6a635dea2" width="100%" border="0" class="list view table-responsive aor_reports"><thead><tr><th scope='col'><div>Name</div></th></tr><tr id="pagination" class="pagination-unique" role="presentation"><td colspan='1'>
+                       <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
+                        <td nowrap="nowrap" class="paginationActionButtons" ></td><td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%"><button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' disabled='disabled'>
+                    <span class='suitepicon suitepicon-action-first'></span>
+                </button>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' disabled='disabled'>
+                    <span class='suitepicon suitepicon-action-left'></span>
+                </button></td><td style="vertical-align:middle" nowrap="nowrap" width="1%" class="paginationActionButtons"> <div class="pageNumbers">(1 - 20 of 56)</div></td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%"><button type='button' id='listViewNextButton_top' name='listViewNextButton' ti
+
+### ORACLE=FALSE (byte 1 in 37..90) -> report EMPTY
+HTTP 200  content-length=3145
+<div class="list-view-rounded-corners"><table id="report_table_cb9dcc3a-dba9-4277-b784-adf90e382331" width="100%" border="0" class="list view table-responsive aor_reports"><thead><tr><th scope='col'><div>Name</div></th></tr><tr id="pagination" class="pagination-unique" role="presentation"><td colspan='1'>
+                       <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
+                        <td nowrap="nowrap" class="paginationActionButtons" ></td><td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%"><button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='list-view-pagination-button' disabled='disabled'>
+                    <span class='suitepicon suitepicon-action-first'></span>
+                </button>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='list-view-pagination-button' title='Previous' disabled='disabled'>
+                    <span class='suitepicon suitepicon-action-left'></span>
+                </button></td><td style="vertical-align:middle" nowrap="nowrap" width="1%" class="paginationActionButtons"> <div class="pageNumbers">(0 - 0 of 0)</div></td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%"><button type='button' id='listViewNextButton_top' name='listViewNextButton' titl

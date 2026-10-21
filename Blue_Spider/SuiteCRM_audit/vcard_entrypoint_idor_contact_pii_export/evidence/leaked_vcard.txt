@@ -1,0 +1,16 @@
+Victim contact id: 11a02f59-4829-4f33-b400-f8c20faedc21
+
+Full vCard returned to attacker:
+BEGIN:VCARD
+N;CHARSET=utf-8:V004Contact_463c880b;Victim004;;
+FN;CHARSET=utf-8: Victim004 V004Contact_463c880b
+BDAY:
+TEL;WORK;FAX:
+TEL;HOME:
+TEL;CELL:
+TEL;WORK;CHARSET=utf-8:555-26e83a
+EMAIL;INTERNET:
+ADR;WORK;CHARSET=utf-8:;;;;;;
+ORG;CHARSET=utf-8:;
+TITLE:
+END:VCARD

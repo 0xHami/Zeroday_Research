@@ -1,0 +1,4 @@
+marker=RCEMARK_ba8c0cf6
+command=id
+output=uid=33(www-data) gid=33(www-data) groups=33(www-data)
+proof_file_on_server=upload/rce_ba8c0cf6.txt

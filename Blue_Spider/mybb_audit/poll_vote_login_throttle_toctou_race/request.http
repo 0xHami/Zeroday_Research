@@ -1,0 +1,7 @@
+# 30 of these fired concurrently as the SAME voter
+POST /polls.php?action=vote&pid=1 HTTP/1.1
+Host: localhost:25850
+Content-Type: application/x-www-form-urlencoded
+Cookie: mybbuser=<voter uid_loginkey>
+
+action=vote&pid=1&option=1&my_post_key=<key>

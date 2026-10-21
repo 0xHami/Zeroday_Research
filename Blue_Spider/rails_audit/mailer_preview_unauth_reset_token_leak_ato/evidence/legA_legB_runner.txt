@@ -1,0 +1,5 @@
+@@legA token_present=true resolves_id=1 is_admin_take=true admin_email=admin@example.com
+@@legB guard_line="before_action :require_local!, unless: :show_previews?"
+@@legB show_previews_pred="ActionMailer::Base.show_previews"
+@@legB routes_mounted_iff_show_previews=true
+@@done

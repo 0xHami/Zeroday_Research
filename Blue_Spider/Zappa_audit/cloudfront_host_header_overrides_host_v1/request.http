@@ -1,0 +1,10 @@
+# Direct-invoke of a v1 event modelling a CloudFront->Function-URL delivery.
+# (Header casing Host + lowercase cloudfront-host matches AWS delivery; the HTTP
+#  simulator's werkzeug layer would otherwise re-case a custom header.)
+POST /_sim/raw-event HTTP/1.1
+Host: localhost:22571
+Content-Type: application/json
+
+{"httpMethod":"GET","path":"/echo",
+ "headers":{"Host":"abc123def456.lambda-url.us-east-1.on.aws","cloudfront-host":"evil.attacker.example"},
+ "requestContext":{"identity":{}}}

@@ -1,0 +1,4 @@
+TEST 1 (direct, expected blocked): HTTP 200, content-type=application/pdf, 42699 bytes, OOB hit=no
+
+TEST 2 (redirect bypass): HTTP 200, content-type=application/pdf, 42995 bytes
+First 32 bytes of PDF: b'%PDF-1.7\n%\xe2\xe3\xcf\xd3\n6 0 obj\n<< /Type '

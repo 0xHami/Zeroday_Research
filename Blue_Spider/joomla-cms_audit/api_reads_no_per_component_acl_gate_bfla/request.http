@@ -1,0 +1,17 @@
+### VULN-008 — API tokens minted directly as base64("sha256:<uid>:HMAC_sha256(seed, site_secret)")
+### where seed = base64_decode(user_profiles 'joomlatoken.token'); site_secret from configuration.php.
+
+### BASELINE: a group-7 (non-Super-User) token is rejected.
+### Two independent gates keep the API Super-User-only: plg_user_token allowedUserGroups
+### (default [8]) AND the root core.login.api grant (default group 8).
+GET /api/index.php/v1/users HTTP/1.1
+Host: localhost:34931
+Authorization: Bearer <group-7 token>
+Accept: application/vnd.api+json
+# -> HTTP 401
+
+### WIDENED CONFIG (operator action): plg_user_token allowedUserGroups += "7"  AND
+### root asset core.login.api += {"7":1}. The SAME group-7 token now reads every component:
+GET /api/index.php/v1/users                              Authorization: Bearer <group-7 token>   -> 200 (ALL users)
+GET /api/index.php/v1/plugins                            Authorization: Bearer <group-7 token>   -> 200 (every plugin + state)
+GET /api/index.php/v1/content/articles?filter[state]=-2  Authorization: Bearer <group-7 token>   -> 200 (trashed state accepted; no per-component gate)

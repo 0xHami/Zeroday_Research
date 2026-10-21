@@ -1,0 +1,3 @@
+No HTTP request — compiles a constructor .so (gcc container), stages it as an INCLUDE entry, and drives
+  the real slim-handler cold start: zappa.handler.LambdaHandler(settings_name=...) with SLIM_HANDLER=True,
+  INCLUDE=["evil.so"]. Result: .so constructor executed (marker written). See automation.py _DRIVER.

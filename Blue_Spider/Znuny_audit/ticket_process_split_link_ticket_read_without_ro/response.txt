@@ -1,0 +1,3 @@
+attacker perm on victim={'ro': 0, 'note': 0, 'rw': 0}
+subject_leak=True body_leak=True
+CTX: lidate_Depending_TimeUnits" name="Body" rows="15" cols="78">BODYMARKd1e9b4a1</textarea>     <div id=

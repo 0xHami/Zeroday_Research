@@ -1,0 +1,7 @@
+S role_id: ADMIN(1) at key-use baseline → demoted to STUDENT(3)=3
+
+Phase S=ADMIN   : {'courses': 200, 'students': 200, 'members': 200}
+Phase S=STUDENT : {'courses': 200, 'students': 200, 'members': 403}
+
+stale roster read HTTP 200, body[:600]:
+{"success":true,"data":[{"id":"536e65a7-c0c2-475b-99f6-c888660f0837","groupId":"0ded2570-7227-4e56-a1c8-5c95d50f65fb","roleId":3,"profileId":"a3638baf-f0b8-4522-8ad8-3c81e5203747","email":"u_0aa6c5cf@cvehunt.local","createdAt":"2026-09-27 08:14:24.363449+00","assignedStudentId":null,"certificateEarnedAt":"2026-09-27 08:14:24.426+00","certificationEmailSentAt":"2026-09-27 08:14:24.491+00","profile":{"id":"a3638baf-f0b8-4522-8ad8-3c81e5203747","fullname":"u_0aa6c5cf","username":"u_0aa6c5cf1790496864330","avatarUrl":null,"email":"u_0aa6c5cf@cvehunt.local"},"progressPercent":100,"stage":{"kind":"c

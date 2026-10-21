@@ -1,0 +1,18 @@
+==========================================================================
+VULN-008: ASGI unbounded body-spool DoS (read_body has no size/time cap)
+target : http://localhost:20796  (commit 9e06baf2e4dd)
+==========================================================================
+[INFO] exercising vulnerable code path: core/handlers/asgi.py:249-267 read_body → SpooledTemporaryFile, no running total
+[STEP] primary: drive the REAL read_body coroutine in-container with an 8 MB body
+[INFO] DATA_UPLOAD_MAX_MEMORY_SIZE=2621440 FILE_UPLOAD_MAX_MEMORY_SIZE=2621440
+[PROOF] read_body buffered 8,388,608 bytes (= 8,388,608, the full body) with NO exception, despite DATA_UPLOAD_MAX_MEMORY_SIZE=2,621,440 (no running byte total)
+[PROOF] the spool rolled over to a real on-disk file: rolled_to_disk=True, path=6
+[PROOF] WSGI LimitedStream with no Content-Length read 0 bytes (chunked body ignored — the guard ASGI lacks)
+[STEP] confirming body_receive_timeout is dead code (declared, never referenced)
+[PROOF] body_receive_timeout appears 1 time(s) in the tree (1 = definition only → dead): /opt/django_src/django/core/handlers/asgi.py:47:    body_receive_timeout = 60
+[STEP] secondary: bounded 4 MB chunked HTTP POST with NO Content-Length
+[PROOF] ASGI accepted a 4 MB chunked body with no Content-Length -> HTTP 403 in 0.05s (no Content-Length gate; body fully read by read_body)
+[STEP] best-effort: catch the rolled-over spool file in the asgi container /tmp
+[INFO] did not catch the transient /tmp file (timing) — in-container proof already decisive
+[OK] exploit confirmed — ASGI read_body buffers an unbounded body to disk with no size/time cap (WSGI does not); an unauth chunked flood exhausts /tmp / workers
+==> VULN-008: CONFIRMED — ASGI read_body spools entire (8 MB demo) body to disk past the 2.5 MB limit with no running total and a dead body_receive_timeout; WSGI immune

@@ -1,0 +1,9 @@
+POST /api/auth/sign-in/anonymous  →  session user
+{'user': {'name': 'Anonymous', 'email': 'temp@wclq0djprnxd0occjygldwsbecglgmac.com', 'emailVerified': False, 'image': None, 'createdAt': '2026-09-27T14:49:37.531Z', 'updatedAt': '2026-09-27T14:49:37.531Z', 'role': 'user', 'banned': False, 'banReason': None, 'banExpires': None, 'isAnonymous': True, 'id': 'c722527c-40af-4184-a6bd-c7b6c9ac5296'}, 'session': {'expiresAt': '2026-10-27T14:49:37.539Z', 'token': 'WtfFcC5J5oy9cRjfWp42ylFhy89obCnb', 'createdAt': '2026-09-27T14:49:37.539Z', 'updatedAt': '2026-09-27T14:49:37.539Z', 'ipAddress': '10.21.9.9', 'userAgent': 'python-requests/2.32.3', 'userId': 'c722527c-40af-4184-a6bd-c7b6c9ac5296', 'impersonatedBy': None, 'id': '2e02ab2d-95b4-4dca-bbf5-852fd69a6b6b'}, 'orgRoles': {}}
+
+GET /account/profile (anon cookie) → 200
+{"success":true,"profile":{"id":"c722527c-40af-4184-a6bd-c7b6c9ac5296","fullname":"temp","username":"temp1790520577536","avatarUrl":null,"createdAt":"2026-09-27 14:49:37.536665+00","updatedAt":"2026-09-27 14:49:37.536665+00","email":"temp@wclq0djprnxd0occjygldwsbecglgmac.com","canAddCourse":true,"role":null,"goal":null,"source":null,"metadata":null,"telegramChatId":null,"isEmailVerified":false,"ve
+
+GET /organization (anon cookie) → 200
+{"success":true,"data":[{"id":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","name":"CVE Hunt Academy","siteName":"cve-hunt-academy","avatarUrl":null,"settings":{"studentLimitNotified":{"half":true,"reached":true}},"landingpage":{},"theme":"blue","createdAt":"2026-09-27 03:24:59.550137+00","customization":{"apps":{"poll":true,"comments":true},"course":{"grading":true,"newsfeed":true},"dashboard":{"exercis
+

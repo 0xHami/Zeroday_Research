@@ -1,0 +1,8 @@
+control(.Resize 50x50) rc=0
+
+attack(.Resize 50000x50000) rc=137
+---
+Start building sites … 
+hugo v0.167.0-DEV linux/amd64 BuildDate=unknown VendorInfo=cvehunterlab
+
+WARN  found no layout file for "html" for kind "section": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.

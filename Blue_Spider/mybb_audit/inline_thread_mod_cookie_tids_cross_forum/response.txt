@@ -1,0 +1,3 @@
+forum A (moderated) = 2; forum B (NOT moderated) = 3; victim tid=15
+multiclosethreads   : closed 0 -> 1
+multisoftdeletethreads: visible 1 -> -1 (-1 = soft-deleted)

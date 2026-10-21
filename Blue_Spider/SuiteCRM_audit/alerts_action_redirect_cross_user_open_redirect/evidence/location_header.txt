@@ -1,0 +1,4 @@
+victim (mod_21c85671) GET /index.php?module=Alerts&action=redirect&record=2d117fe9-8915-430c-b59a-76570efa55c9  (alert owned by attacker mod_b47e797b)
+
+response status: 301
+Location: https://evil-cvehunter-c055_7edd5dd5.example/redir

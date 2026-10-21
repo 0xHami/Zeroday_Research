@@ -1,0 +1,8 @@
+POST /cohort (STUDENT session, cio-org-id header)
+HTTP 201
+
+{"success":true,"data":{"id":"430473a4-0254-4346-9561-e1501f14a10d","createdAt":"2026-09-27 14:49:26.174458+00","updatedAt":"2026-09-27 14:49:26.174458+00","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","name":"pwn-cohort-c_7928be56","description":"A cohort for pwn-cohort-c_7928be56","coverImage":null,"status":"ACTIVE","createdByProfileId":"e1e45687-cc2a-4d93-b044-36b3097f4881"}}
+
+-- DB side effect --
+cohort_member role_id (this student) = 2
+cohort.organization_id = 48bbdff8-2ad5-46a3-a259-2ca3d52677dd

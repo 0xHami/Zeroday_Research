@@ -1,0 +1,1 @@
+{{ $c := resources.Get "css/x.css" }}{{ $r := $c | css.PostCSS (dict "use" "/site/evil.js") }}built={{ $r.RelPermalink }}

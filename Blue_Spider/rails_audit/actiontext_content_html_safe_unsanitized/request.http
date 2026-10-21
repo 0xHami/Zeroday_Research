@@ -1,0 +1,2 @@
+# Not HTTP — framework-library finding. Exercised via:
+#   docker exec -i cvehunterlab_rails_app bash -lc 'cd /harness && RAILS_ENV=production bin/rails runner -' < evidence/runner.rb

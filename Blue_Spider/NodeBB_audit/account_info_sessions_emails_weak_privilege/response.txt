@@ -1,0 +1,17 @@
+### VULN-021 — evidence (viewer holds only view:users:info) ###
+
+viewer session: uid=5  isAdmin=False  isGlobalModerator=False
+
+GET /api/user/admin/info    -> HTTP 200
+  sessions: 10 records; first = {
+     "ip":"172.18.0.1","uuid":"6909ac82-...","platform":"Linux","browser":"Chrome",
+     "version":"124.0.0.0","datetime":1790601662054 }
+  emails:    [ "admin@example.com" ]        (full email history w/ timestamps + byUser)
+  usernames: [ "admin" ]                     (full username history)
+  invitedBy: present
+
+GET /api/user/admin/sessions -> HTTP 403     (dedicated endpoint requires canEdit -> denied)
+
+# Same session/email/username data, two gates: /info (view:users:info) leaks it; /sessions (canEdit)
+# and listEmails (showemail/self/priv) deny it. A delegated non-moderator harvests GDPR-sensitive
+# session IPs/UAs and email/username history for arbitrary users.

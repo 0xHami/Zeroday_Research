@@ -1,0 +1,1 @@
+send_error rows: [['102', '<sent-56cff256@localhost>', 'ATTACKER-ERROR-56cff256 mailbox full http://attacker.example/phish\\n']]

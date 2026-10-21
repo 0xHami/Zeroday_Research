@@ -1,0 +1,4 @@
+No HTTP request — direct invocation of the target function:
+  zappa.core.Zappa.get_cached_manylinux_wheel("evilpkg<rand>","1.0") after planting
+  /tmp/cached_wheels/evilpkg<rand>-1.0-cp312-cp312-manylinux_2_17_x86_64.whl.
+  Result: planted wheel returned with no download/hash check. See automation.py _DRIVER.

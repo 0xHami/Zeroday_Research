@@ -1,0 +1,11 @@
+Signature id: d85a492e-d58c-495a-8bee-0b331ec0510c
+Owner (user_id, should be unchanged): b27d955a-9edd-4dc9-b0b7-aa50e26e6d66 (mod_144a0d30)
+Attacker: fd1fca01-8c1a-43bc-8530-429df8604d7f (mod_58b5a588)
+
+-- BEFORE (created by victim) --
+id	user_id	name	signature_html	deleted
+d85a492e-d58c-495a-8bee-0b331ec0510c	b27d955a-9edd-4dc9-b0b7-aa50e26e6d66	V033Sig_d874a965	<p>SECRETSIG033_941ab45d</p>	0
+
+-- AFTER (overwritten by attacker) --
+id	user_id	name	signature_html	deleted
+d85a492e-d58c-495a-8bee-0b331ec0510c	b27d955a-9edd-4dc9-b0b7-aa50e26e6d66	pwned-by-attacker	<p>PWNEDSIG033_440c7048</p>	0

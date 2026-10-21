@@ -1,0 +1,4 @@
+victim=victim_6b2955ec@example.invalid
+edit_status=200
+patch_status=302 loc=https://localhost:27966/session/new
+login_with_new_password_status=302 loc=https://localhost:27966/

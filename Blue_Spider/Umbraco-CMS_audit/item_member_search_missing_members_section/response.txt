@@ -1,0 +1,22 @@
+member created this run: SecretMember_ddf124e0  (key=25d15c4b-01d9-4d60-a143-98422d7df654)
+GET /member/25d15c4b-01d9-4d60-a143-98422d7df654                 (real, section-gated) -> 403
+GET /item/member?id=25d15c4b-01d9-4d60-a143-98422d7df654         (floor-only item)     -> 200
+    leaked: [
+  {
+    "memberType": {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "icon": "icon-user",
+      "collection": null
+    },
+    "variants": [
+      {
+        "name": "SecretMember_ddf124e0",
+        "culture": null
+      }
+    ],
+    "kind": "Default",
+    "id": "25d15c4b-01d9-4d60-a143-98422d7df654",
+    "flags": []
+  }
+]
+GET /item/member/search?query=Secret&take=100000       -> 200, total=4

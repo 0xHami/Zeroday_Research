@@ -1,0 +1,5 @@
+POST /_sim/raw-event HTTP/1.1
+Host: localhost:22571
+Content-Type: application/json
+
+{"command": "os.getcwd"}

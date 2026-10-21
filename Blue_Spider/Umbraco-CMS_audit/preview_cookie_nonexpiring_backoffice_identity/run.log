@@ -1,0 +1,18 @@
+==============================================================================
+VULN-025: Preview cookie = non-expiring, non-revocable full backoffice identity
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: UserBasedPreviewTokenGenerator.cs:30/44 (no expiry/stamp) + PreviewAuthenticationMiddleware.cs:69 (full identity injected)
+[SETUP] admin authenticated to Management API
+[SETUP] document used to enter preview: 694a14f8-38cb-4295-a378-a550710b8df3
+[SETUP] created throwaway Administrators user lowuser_29291de2@example.invalid (id ccd7b9e4-247b-485c-ba29-56cc88a4922f)
+[STEP] victim logs in and enters preview (GET /document/{id}/preview-url) -> server mints UMB_PREVIEW
+[PROOF] minted UMB_PREVIEW (len 176); Set-Cookie: UMB_PREVIEW=CfDJ8FU4POrCXVFJuHaQVc49L1ByZxnZ2TqbzNmITrDqGCgE3eSxzyd7ml6bdkk8qxZePR48mrKNBa6tzc4DA7pr8HQ37tuZZzR6pdSIMwSA4nqBATcT6miW4qc9zMWKLgwfGzU7tVtKOmwnIfjX
+[PROOF] cookie attributes -> httponly=True, has Expires/Max-Age=False (absent => session cookie, no TTL); token payload = encrypted user GUID only
+[STEP] replay ONLY UMB_PREVIEW in a brand-new session (no UMB_UCONTEXT, no bearer) -> GET /
+[PROOF] backoffice preview toolbar injected (<umb-website-preview + /umbraco/website/preview.js), body=2395B => the standalone cookie IS treated as an authenticated backoffice preview identity
+[PROOF] controls: invalid cookie -> no toolbar (2154B), no cookie -> no toolbar (2154B) => toolbar is gated on successful token verification, not incidental
+[STEP] admin changes the victim's password (rotates the ASP.NET-Identity security stamp -> should kill all tokens)
+[STEP] replay the SAME pre-change UMB_PREVIEW cookie in a fresh session -> GET /
+[PROOF] preview toolbar STILL injected after the password change (body=2395B) => the preview token is NON-REVOCABLE: it survives credential rotation (no stamp/expiry binding)
+==> VULN-025: CONFIRMED — captured preview cookie is a full backoffice preview identity that survives a password change (non-revocable)

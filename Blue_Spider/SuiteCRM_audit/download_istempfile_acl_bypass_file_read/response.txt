@@ -1,0 +1,22 @@
+### Bypass response ###
+HTTP/1.1 200 OK
+Date: Mon, 28 Sep 2026 20:31:02 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Wed, 28 Oct 2026 20:31:02 GMT
+Cache-Control: no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=610a523e-80a8-4517-8c71-f19265aef725; expires=Sun, 27 Dec 2026 20:31:02 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:31:02 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:31:02 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Content-Disposition: attachment; filename="secret002.txt";
+X-Content-Type-Options: nosniff
+Content-Length: 49
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/plain;charset=UTF-8
+
+--- raw body ---
+SECRET FILE CONTENTS FOR VULN-002 marker_aa430d98
+
+### Control response (non-isTempFile) ###
+HTTP/1.1 200 OK
+bytes_match=True
+body[:300]=b'SECRET FILE CONTENTS FOR VULN-002 marker_aa430d98'

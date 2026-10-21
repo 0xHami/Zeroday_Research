@@ -1,0 +1,16 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-088/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-088/../.venv
+========================================================================
+VULN-088: Action-name case mismatch defeats CSRF referer guard (MassUpdate)
+target: http://localhost:33116
+========================================================================
+[INFO] isModifyAction() raw-case in_array (SugarApplication.php:516) vs strtolower dispatch (SugarController.php:595)
+[SETUP] admin creates a disposable victim user; the CSRF acts as this authenticated victim
+[SETUP] seeded 2 Contacts owned by victim: block=0f0de015-1c0e-44b5-89ae-6ddda5ed3fab bypass=f43b7c6a-5b8e-4bfe-a954-6ef9321dc5d6
+[STEP] control: POST action=massupdate (lowercase, classified modify) with NO Referer -> guard should BLOCK
+[PROOF] lowercase massupdate: HTTP 200, csrf-guard-blocked=True
+[STEP] attack: POST action=MassUpdate (CamelCase, NOT classified) with NO Referer -> guard should be SKIPPED
+[PROOF] CamelCase MassUpdate: HTTP 301, csrf-guard-blocked=False
+[PROOF] post-state: block-contact alive=True (guard held) | bypass-contact alive=False (should be deleted)
+[OK] exploit confirmed — identical action, but CamelCase 'MassUpdate' with no Referer bypassed the CSRF guard that blocked lowercase 'massupdate', and deleted the record
+==> VULN-088: CONFIRMED — CamelCase MassUpdate bypasses the empty-Referer CSRF guard -> cross-site mass delete

@@ -1,0 +1,33 @@
+# ODD-backslash-case HTTP response (status=200) -- identical shape to the EVEN case:
+HTTP/1.1 200 OK
+Date: Mon, 28 Sep 2026 20:31:12 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=216f2091-b83f-43f7-8449-4499772ff6f0; expires=Sun, 27 Dec 2026 20:31:12 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:31:12 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:31:12 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Vary: Accept-Encoding
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+Content-Length: 8330
+Keep-Alive: timeout=5, max=97
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+body length: 86687 bytes
+<!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <!-- Bootstrap -->
+    <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css"/>
+    <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
+    <lin
+
+# The HTTP response by itself proves nothing (handleSubs() computes its JSON
+# response BEFORE running the injected query, EmailUIAjax.php:70-79) -- the
+# decisive proof is suitecrm.log; see evidence/oracle_log_lines.txt.

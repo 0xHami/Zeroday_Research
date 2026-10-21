@@ -1,0 +1,6 @@
+GET /course/426d7fae-b7a9-413d-bfb2-face8d58b209/newsfeed/ea39ff41-3d38-4b6b-96c2-1cffb6eefdcd HTTP/1.1
+Host: localhost:21527
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<STUDENT session — member of course Y only>
+
+# feed ea39ff41-3d38-4b6b-96c2-1cffb6eefdcd belongs to course X (3a0d55ac-5713-4cca-8f33-0399e1a512e4); caller is enrolled only in Y (426d7fae-b7a9-413d-bfb2-face8d58b209).

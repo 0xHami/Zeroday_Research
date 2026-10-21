@@ -1,0 +1,11 @@
+GET /index.php?module=jjwg_Maps&entryPoint=jjwg_Maps&cron=1&display_module=Accounts HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 cvehunter-stage10
+
+# No Cookie header -- entryPoint 'jjwg_Maps' is registered `auth => false`
+# (modules/jjwg_Maps/entry_point_registry.php:2), so SugarApplication::execute()
+# skips loadUser()/ACLFilter()/checkHTTPReferer() entirely. This single
+# anonymous GET reaches jjwg_Maps_Router.php:14-25, which -- because
+# $_REQUEST['cron'] is non-empty -- instantiates jjwg_MapsController and calls
+# action_geocode_addresses() (controller.php:171-313), an unauthenticated
+# batch job with no $current_user / ACL check anywhere in it.

@@ -1,0 +1,8 @@
+term_count -> elapsed (HTTP 200 unless noted)
+     1 -> 0.056s
+   250 -> 0.149s
+   500 -> 0.141s
+   750 -> 0.233s
+  1500 -> 0.327s  HTTP 500 (SQLite expr-depth 500)
+
+amplification (750 terms / 1 term) = 4.2x on 40000 rows

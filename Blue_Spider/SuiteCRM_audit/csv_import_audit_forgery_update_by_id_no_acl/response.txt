@@ -1,0 +1,4 @@
+baseline set_entry response: {'name': 'Access Denied', 'number': 40, 'description': 'You do not have access'}
+
+(a) Step4 HTTP 200
+(b) Step4 HTTP 200

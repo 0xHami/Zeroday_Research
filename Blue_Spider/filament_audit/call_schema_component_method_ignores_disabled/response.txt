@@ -1,0 +1,16 @@
+{
+  "components": [
+    {
+      "snapshot": "{\"data\":{\"data\":[{\"fileUploadDisabled\":[{\"inj\":\"disabled-victim-0aeb9127\\/secret-0aeb9127.txt\"},{\"s\":\"arr\"}],\"fileUpload\":[[],{\"s\":\"arr\"}],\"fileUploadAvatar\":[[],{\"s\":\"arr\"}],\"fileUploadImagePreview\":[{\"07c26dc0-89c5-4832-81d9-eeaec59fa38b\":\"test\\/sample-image.jpg\"},{\"s\":\"arr\"}],\"fileUploadMultipleGrid\":[{\"4424b70a-e4fa-41dd-9232-ed0f5ecea4aa\":\"test\\/sample-image.jpg\",\"cd85f9d5-5cb1-4fe1-959e-bceefc67a5ec\":\"test\\/sample-image-2.jpg\",\"5d52975d-9d8e-4117-811c-52d74dfc9024\":\"test\\/sample-image-3.jpg\"},{\"s\":\"arr\"}],\"fileUploadOpenable\":[{\"c4eedec2-5218-412d-b3e9-44ead049d3c5\":\"test\\/sample-image.jpg\"},{\"s\":\"arr\"}],\"fileUploadDownloadable\":[{\"d9d699c4-acc5-433b-959f-423d09af2e92\":\"test\\/sample-image.jpg\"},{\"s\":\"arr\"}],\"fileUploadImageEditor\":[{\"5f38abcb-9e20-4d70-95de-6f31feda5b8c\":\"test\\/sample-image.jpg\"},{\"s\":\"arr\"}]},{\"s\":\"arr\"}],\"component\":\"file-upload\",\"mountedActions\":[[],{\"s\":\"arr\"}],\"defaultAction\":null,\"defaultActionArguments\":null,\"defaultActionContext\":null,\"defaultTableAction\":null,\"defaultTableActionRecord\":null,\"defaultTableActionArguments\":null,\"componentFileAttachments\":[[],{\"s\":\"arr\"}],\"areSchemaStateUpdateHooksDisabledForTesting\":false,\"discoveredSchemaNames\":[[\"form\"],{\"s\":\"arr\"}],\"loadedDeferredSchemas\":[[],{\"s\":\"arr\"}]},\"memo\":{\"id\":\"mxoco1PpLmOtNlYkKb2R\",\"name\":\"forms.fields-demo\",\"path\":\"forms\\/fields\\/file-upload\",\"method\":\"GET\",\"release\":\"a-a-a\",\"children\":[],\"scripts\":[],\"assets\":[],\"errors\":[],\"locale\":\"en\"},\"checksum\":\"a7aaef22e9d0f3bc93200ce1c7937e49db20c822deb37587b50ecc267789cd92\"}",
+      "effects": {
+        "returns": [
+          {
+            "inj": {
+              "name": "secret-0aeb9127.txt",
+              "size": 70,
+              "type": "text/plain",
+              "url": "http://localhost:21890/storage/disabled-victim-0aeb9127/secret-0aeb9127.txt"
+            }
+          }
+        ],
+        "html": "<div wire:id=\"mxoco1PpLmOtNlYkKb2R\" class=\"min-h-screen p-16\">\n    <div>\n        <!--[if BLOCK]><![endif]-->            \n        <div x-data=\"filamentSchema({ livewireId: 'mxoco1PpLmOtNlYkKb2R', schemaKey: 'form' })\" x-on:form-validation-error.window=\"handleFormValidationError\" x-on:reset-schema-component-state.window=\"handleClientSideStateReset\" class=\"fi-grid  fi-sc  fi-sc-has-gap\" style=\"--cols-default: repeat(1, minmax(0, 1fr));\">\n                                                \n        <div                                                    x-data=\"filamentSchemaComponent({\n                    path: 'data',\n                    containerPath: 'data',\n                    $wire,\n                })\"\n                                                        class=\"fi-grid-col\" style=\"--col-span-default: span 1 / span 1;\"        >\n                            <div\n

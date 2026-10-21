@@ -1,0 +1,3 @@
+GET /api/items/?search=q+q+q+…(x750) HTTP/1.1
+Host: localhost:21514
+# each term -> ILIKE '%q%' across 2 search_fields x 40000 rows

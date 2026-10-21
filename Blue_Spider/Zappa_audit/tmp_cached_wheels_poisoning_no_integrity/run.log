@@ -1,0 +1,12 @@
+==========================================================================
+VULN-013: /tmp wheel-cache poisoning (planted wheel used, no hash check)
+target : http://localhost:22571
+[INFO] exercising: zappa/core.py:840-856 get_cached_manylinux_wheel
+==========================================================================
+[SETUP] planting a malicious wheel with the expected name in /tmp/cached_wheels (co-tenant)
+[STEP] calling the real get_cached_manylinux_wheel — it should return the planted file, no download
+[INFO] planted : /tmp/cached_wheels/evilpkgf1d193a5-1.0-cp312-cp312-manylinux_2_17_x86_64.whl
+[INFO] returned: /tmp/cached_wheels/evilpkgf1d193a5-1.0-cp312-cp312-manylinux_2_17_x86_64.whl
+[PROOF] get_cached_manylinux_wheel returned the attacker-planted wheel from the world-writable /tmp/cached_wheels with no download and no SHA/integrity check — a local co-tenant's malicious wheel is packaged into the Lambda and runs at import (cache poisoning -> RCE).
+[OK] exploit confirmed — poisoned wheel accepted from the shared cache
+==> VULN-013: CONFIRMED — planted /tmp/cached_wheels wheel used verbatim (no integrity check)

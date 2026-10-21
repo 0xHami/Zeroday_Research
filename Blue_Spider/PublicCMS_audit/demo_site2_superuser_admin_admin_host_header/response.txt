@@ -1,0 +1,8 @@
+HTTP/1.1 302 
+Set-Cookie: JSESSIONID=499ED37B8795CDA779CB311CCA5C8D6D; Path=/; HttpOnly
+Set-Cookie: PUBLICCMS_ADMIN=2_45687396-139a-40e5-8b74-d06122404f5b; Expires=Tue, 20 Oct 2026 04:23:30 GMT; Max-Age=2592000; Path=/; HttpOnly; SameSite=Strict
+Location: index.html;jsessionid=499ED37B8795CDA779CB311CCA5C8D6D
+Content-Language: en-US
+Content-Length: 0
+Date: Sun, 20 Sep 2026 04:23:30 GMT
+

@@ -1,0 +1,17 @@
+# All requests sent as the SETTINGS-ONLY user (no Content, no Media section)
+
+# contrast — normal content endpoint refuses this user:
+GET http://localhost:29184/umbraco/management/api/v1/document/c1636bf1-03e3-467b-96d6-87ac7be920f5 HTTP/1.1
+Authorization: Bearer <settings-only-token>
+
+# disclosure — read the forbidden document's property values out of AllValues:
+GET http://localhost:29184/umbraco/management/api/v1/searcher/InternalIndex/query?term=nodeName:secretdoca6449e&take=10 HTTP/1.1
+Authorization: Bearer <settings-only-token>
+
+# injection — raw boolean/fielded Lucene syntax reaches the classic QueryParser:
+GET http://localhost:29184/umbraco/management/api/v1/searcher/InternalIndex/query?term=nodeName:secretdoca6449e%20AND%20__IndexType:content HTTP/1.1
+Authorization: Bearer <settings-only-token>
+
+# malformed term -> Lucene ParseException path:
+GET http://localhost:29184/umbraco/management/api/v1/searcher/InternalIndex/query?term=*abc HTTP/1.1
+Authorization: Bearer <settings-only-token>

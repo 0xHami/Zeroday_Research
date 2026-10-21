@@ -1,0 +1,1 @@
+ticket row (tn,queue,owner,state,sender,visible): [['2026092910000792', 'Junk', '2', 'closed successful', 'agent', '0']]

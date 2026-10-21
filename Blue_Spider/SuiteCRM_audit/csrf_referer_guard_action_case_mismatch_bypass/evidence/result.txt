@@ -1,0 +1,2 @@
+lowercase_massupdate: http=200 guard_blocked=True block_contact_alive_after=True
+CamelCase_MassUpdate: http=301 guard_blocked=False bypass_contact_alive_after=False

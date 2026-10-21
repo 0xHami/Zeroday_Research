@@ -1,0 +1,3 @@
+{{- $u := "http://internalcanary.test:37825/x" -}}
+{{- $r := resources.GetRemote $u -}}
+{{- if $r }}{{ with $r.Err }}FETCH_ERR:{{ . }}{{ else }}FETCHED:{{ $r.Content }}{{ end }}{{ else }}NIL{{ end -}}

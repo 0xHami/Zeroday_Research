@@ -1,0 +1,2 @@
+injected via body match: [['BODY-FOLLOWUP-87bfa18d. Following up, ref Ticket#2026092910000836 from last week.'], ['\\n']]
+count 1->2

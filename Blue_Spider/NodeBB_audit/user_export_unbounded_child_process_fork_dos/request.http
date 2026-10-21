@@ -1,0 +1,14 @@
+### VULN-019 — Unbounded export process-fork DoS
+
+### Any registered user can self-export; each request forks a Node child. No rate limiter on /api/v3.
+### The three types are independent locks -> 3 concurrent forks per account.
+POST /api/v3/users/<self-uid>/exports/posts    HTTP/1.1   (Cookie + x-csrf-token)   -> 202
+POST /api/v3/users/<self-uid>/exports/profile  HTTP/1.1                             -> 202
+POST /api/v3/users/<self-uid>/exports/uploads  HTTP/1.1                             -> 202
+
+# Repeated across N self-registered accounts, fired concurrently:
+#   -> up to 3N concurrent OS child processes (observed 18 from 5 accounts x 3 types).
+#
+# The only guard is a per-(uid,type) lock (cleared on child exit):
+POST /api/v3/users/<uid>/exports/posts   (while one is in flight) -> 400 [[error:already-exporting]]
+#   -> blocks only the SAME (uid,type); different types and different uids are all accepted.

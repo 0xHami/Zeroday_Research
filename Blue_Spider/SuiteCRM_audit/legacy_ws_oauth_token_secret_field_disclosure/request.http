@@ -1,0 +1,5 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+
+method=get_entry&input_type=JSON&response_type=JSON&rest_data=["917214c4c50b7ac6080639dc3d8619d4","OAuth2Tokens","587e1eab-f82e-4086-9e08-1919046f1d45",["id","access_token","refresh_token","assigned_user_id","state","client"],[]]

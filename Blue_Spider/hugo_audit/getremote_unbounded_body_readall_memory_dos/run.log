@@ -1,0 +1,11 @@
+==============================================================================
+VULN-018: GetRemote unbounded io.ReadAll of the response body -> build OOM
+target: throwaway `hugo` build -> malicious responder capped at 1g RAM
+[INFO] exercising create/remote.go io.ReadAll(res.Body) (no io.LimitReader anywhere in the chain)
+==============================================================================
+[SETUP] control build: responder returns a small (64 KB) body
+[INFO] control: rc=0 output='LEN=65536' responder-hits=1
+[STEP] attack build: responder streams ~2 GB under --memory=1g
+[PROOF] attack: responder-hits=1 rc=137 (137=OOM-kill, 124=timeout)
+[OK] exploit confirmed — the remote server's oversized streamed body was buffered by io.ReadAll with no ceiling and OOM-killed the build, while a small body built fine. The build's memory is dictated by the (untrusted) responder = unbounded-body DoS.
+==> VULN-018: CONFIRMED — GetRemote unbounded response body OOM-kills the build

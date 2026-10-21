@@ -1,0 +1,5 @@
+organization.disable_email_password (before) = 'f'
+organization.disable_email_password (set)    = 't'
+
+POST /api/auth/sign-in/email (method DISABLED) → HTTP 200
+Set-Cookie: classroomio.session_token=0aIbcCPzYL9Lh5TWwO7pWyh96eXySC77.HsksXOhzEQkLSb5NOTUV9Gm4OykDGmT%2BuXKrsXvgMB4%3D; Max-Age=2592000; Path=/; HttpOnly; SameSite=Lax, classroomio.session_data=eyJzZXNzaW9uIjp7InNlc3Npb24iOnsiZXhwa

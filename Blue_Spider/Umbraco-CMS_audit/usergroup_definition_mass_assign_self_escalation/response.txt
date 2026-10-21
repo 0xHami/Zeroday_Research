@@ -1,0 +1,9 @@
+contrast: grant unheld section (Settings)      -> HTTP 401 (blocked)
+contrast: grant specific out-of-scope node D2  -> HTTP 401 (blocked)
+attack:   grant documentRootAccess=true (⊃ D2) -> HTTP 201 (accepted) id=35f1eaa1-93bc-4fb0-afee-c977aa3b7eaa
+persisted group documentRootAccess             -> True
+persisted group mediaRootAccess                -> True
+persisted group hasAccessToAllLanguages        -> True
+delegate auto-joined to escalation group       -> True
+BEFORE hasDocumentRootAccess                   -> False
+AFTER  hasDocumentRootAccess (effective)        -> True (flipped=True)

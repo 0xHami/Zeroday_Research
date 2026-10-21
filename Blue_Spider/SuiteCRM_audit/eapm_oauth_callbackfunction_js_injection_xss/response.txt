@@ -1,0 +1,9 @@
+HTTP 200
+
+--- snippet around the emitted <script> ---
+<script type="text/javascript">window.opener.eval("top.__vuln043_fired=true"); window.close();</script><!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta char

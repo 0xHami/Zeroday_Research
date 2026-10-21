@@ -1,0 +1,3 @@
+GET /index.php?entryPoint=generatePdf&module=AOS_Quotes&uid=1d612c3a-8028-4d03-aa8f-ab2cff583775&templateID=2e20f60b-8b41-40eb-b138-73e00d12ad20&task=email HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<admin-session>

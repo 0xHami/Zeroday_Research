@@ -1,0 +1,11 @@
+victim userId = c7310451-ad19-447a-8ae5-0eb5ba2b2830
+victim email = u_0bda229a@cvehunt.local
+victim orgRoles = {}  (not an org member)
+
+GET /organization/audience/c7310451-ad19-447a-8ae5-0eb5ba2b2830/analytics -> HTTP 200
+  data.user = {"id": "c7310451-ad19-447a-8ae5-0eb5ba2b2830", "fullName": "u_0bda229a", "email": "u_0bda229a@cvehunt.local", "avatarUrl": "", "lastSeen": "2026-09-27T14:49:35.241Z"}
+
+GET /course/24c1770e-1b00-4f57-a585-8b5730351b0e/members/c7310451-ad19-447a-8ae5-0eb5ba2b2830/analytics -> HTTP 200
+  data.user = {"id": "c7310451-ad19-447a-8ae5-0eb5ba2b2830", "fullName": "u_0bda229a", "email": "u_0bda229a@cvehunt.local", "avatarUrl": "", "lastSeen": "2026-09-27T14:49:35.241Z"}
+
+negative control (STUDENT on org endpoint) -> HTTP 403

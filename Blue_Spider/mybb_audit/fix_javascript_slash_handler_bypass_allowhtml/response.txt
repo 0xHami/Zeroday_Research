@@ -1,0 +1,7 @@
+postParser::parse_message(payload, {allow_html:1}) output per payload
+(fix_javascript inserts U+200C between 'on' and the handler when it MATCHES)
+
+RESULT|img_space_onerror|1|0|<img src=x on‌error=alert(1)>
+RESULT|svg_slash_onload|0|1|<svg/onload=alert(1)>
+RESULT|img_slash_onerror|0|1|<img src=x/onerror=alert(1)>
+RESULT|iframe_data|0|1|<iframe src=data:text/html,alert(1)></iframe>

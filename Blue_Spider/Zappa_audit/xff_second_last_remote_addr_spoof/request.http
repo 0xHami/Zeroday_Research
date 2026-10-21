@@ -1,0 +1,4 @@
+GET /whoami HTTP/1.1
+Host: localhost:22571
+X-Forwarded-For: 13.37.13.37, 203.0.113.9
+

@@ -1,0 +1,1 @@
+cvehunterlab_filament_app  | [2026-10-01 09:21:18] production.ERROR: Maximum execution time of 30 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 30 seconds exceeded at /opt/filament-src/packages/forms/src/Components/Repeater.php:892)

@@ -1,0 +1,46 @@
+== baseline (no cookie) ==
+GET http://localhost:21527/organization  ->  HTTP 401
+{"success":false,"message":"Unauthorized: Authentication required (session or API key)"}
+
+== with anonymous session cookie ==
+GET http://localhost:21527/organization  ->  HTTP 200
+orgs returned = 8  siteNames = ['cve-hunt-academy', 'probe3f8bad', 'capd6eac2', 'capfe3c55', 'cap85004d', 'probe2a325e', 'cap5aa164', 'probef3eeab']
+target org (48bbdff8-2ad5-46a3-a259-2ca3d52677dd) present = True
+config keys exposed per org = ['siteName', 'disableEmailPassword', 'disableGoogleAuth', 'disableSignup', 'settings', 'customCode', 'aiTutorSettings']
+
+sample org config (row 0) exposed to anon:
+{
+  "siteName": "cve-hunt-academy",
+  "disableEmailPassword": false,
+  "disableGoogleAuth": false,
+  "disableSignup": false,
+  "settings": {
+    "studentLimitNotified": {
+      "half": true,
+      "reached": true
+    }
+  },
+  "customCode": null,
+  "aiTutorSettings": {
+    "enabled": true,
+    "persona": "encouraging",
+    "codePolicy": "hints_only",
+    "escalation": {
+      "email": "",
+      "enabled": false
+    },
+    "thingsToSay": "",
+    "blockOffTopic": true,
+    "customPersona": "",
+    "assessmentMode": "hint_only",
+    "groundingScope": "course",
+    "responseLength": "medium",
+    "thingsNotToSay": "",
+    "welcomeMessage": "",
+    "forbiddenTopics": [],
+    "profanityFilter": true,
+    "disclaimerFooter": "I am an AI tutor, not your instructor.",
+    "requireCitations": true,
+    "revealSolutionsAfterAttempts": 3
+  }
+}

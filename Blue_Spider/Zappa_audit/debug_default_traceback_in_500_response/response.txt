@@ -1,0 +1,17 @@
+{
+  "zappa_version": "0.62.1",
+  "zappa_module": "/app/zappa",
+  "app_module": "demo_app",
+  "app_function": "app",
+  "api_stage": "dev",
+  "debug": true,
+  "binary_support": true,
+  "app_type": "wsgi"
+}
+--- 500 with full traceback (Zappa handler fault; DEBUG default-on) ---
+{
+  "result": {
+    "statusCode": 500,
+    "body": "\"{'message': 'An uncaught exception happened while servicing this request. You can investigate this with the `zappa tail` command.', 'traceback': ['Traceback (most recent call last):\\\\n', '  File \\\"/app/zappa/handler.py\\\", line 832, in handler\\\\n    environ = self._create_lambda_wsgi_environ(event, context, script_name, settings)\\\\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\\\n', '  File \\\"/app/zappa/handler.py\\\", line 474, in _create_lambda_wsgi_environ\\\\n    environ = create_wsgi_request(\\\\n              ^^^^^^^^^^^^^^^^^^^^\\\\n', '  File \\\"/app/zappa/wsgi.py\\\", line 37, in create_wsgi_request\\\\n    method, headers, path, query_string, remote_user, authorizer = process_lambda_payload_v1(event_info)\\\\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\\\n', '  File \\\"/app/zappa/wsgi.py\\\", line 129, in process_lambda_payload_v1\\\\n    path = unquote(event_info[\\\"path\\\"])\\\\n                   ~~~~~~~~~~^^^^^^^^\\\\n', \\\"KeyError: 'path'\\\\n\\\"]}\""
+  }
+}

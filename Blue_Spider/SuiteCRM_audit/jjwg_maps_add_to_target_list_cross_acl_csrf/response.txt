@@ -1,0 +1,18 @@
+(a) HTTP 200 body[:200] (JSON prefix, then SuiteCRM's normal page chrome follows since jjwg_MapsController sets no dedicated view):
+{"message":"Target List Updated","list":{"name":"Contact"}}<!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+
+(b) HTTP 200 body[:200]:
+{"message":"Target List Updated","list":{"name":"Contact"}}<!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+
+(c) HTTP 200 body[:200]:
+{"message":"Target List NOT Updated","list":{"name":null}}<!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+

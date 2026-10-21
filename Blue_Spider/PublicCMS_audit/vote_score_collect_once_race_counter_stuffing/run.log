@@ -1,0 +1,4 @@
+[INFO] VULN-012: redemption race (collect-once) -> counter stuffing
+[SETUP] racer id=20; content.collections BEFORE=9; firing 40 parallel collects
+[INFO] collections delta=7 ; racer collection markers=1
+[OK] exploit confirmed — one user inflated the counter by 7 while owning 1 marker (should be +1)

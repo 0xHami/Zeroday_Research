@@ -1,0 +1,3 @@
+attacker calendar perm=''
+EditMask disclosed secret=True
+injected row=[['8', 'INJECTED-74c7df70']]

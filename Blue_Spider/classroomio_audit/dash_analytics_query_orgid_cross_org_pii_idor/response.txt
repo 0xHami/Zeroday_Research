@@ -1,0 +1,9 @@
+OUR ORG 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+[1] GET /dash/compliance-overview?orgId=<OUR ORG> (header=OUR ORG) -> HTTP 200
+    learners[].email = ['u_f3b8c648@cvehunt.local']  (seeded student = u_f3b8c648@cvehunt.local)
+
+[2] GET /dash/compliance-overview?orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583 (FOREIGN real org (admin is NOT a member)) (header=OUR ORG) -> HTTP 200
+    learners = 0  emails = []
+    served_foreign(200)=True  scoped_to_query_org=True
+
+[contrast] GET /dash/top-courses?orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583 -> HTTP 200 (SAFE: uses header org, ignores query)

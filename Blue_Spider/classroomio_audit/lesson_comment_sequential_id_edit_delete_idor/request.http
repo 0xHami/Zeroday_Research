@@ -1,0 +1,5 @@
+DELETE /course/48cc01a5-dcb7-4e6e-a810-0c5f0cb5b4b7/lesson/comment/5 HTTP/1.1
+Host: localhost:21527
+Cookie: classroomio.session_token=<STUDENT B session — member of course Y only>
+
+# comment 5 lives in course X (766edcfd-ee01-47ac-87ee-3f6eadb63abd); B is enrolled only in Y (48cc01a5-dcb7-4e6e-a810-0c5f0cb5b4b7).

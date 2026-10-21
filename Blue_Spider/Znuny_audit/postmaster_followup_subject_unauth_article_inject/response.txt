@@ -1,0 +1,2 @@
+injected article rows: [['attacker_a6736705@evil.example', "UNAUTH-INJECTED-a6736705: content injected into someone else's ticket thread."], ['\\n']]
+article count 1->2; state open

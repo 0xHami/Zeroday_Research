@@ -1,0 +1,1 @@
+{{ with .Resources.GetMatch "pic.png" }}{{ (.Resize "50000x50000").RelPermalink }}{{ end }}

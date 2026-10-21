@@ -1,0 +1,3 @@
+No HTTP request — direct invocation of the deploy-time target function inside the lab container:
+  zappa.core.Zappa.update_function_url_policy(self, "victim-func", {"authorizer": "NONE"})
+with a mock lambda_client capturing add_permission() calls. See automation.py _DRIVER.

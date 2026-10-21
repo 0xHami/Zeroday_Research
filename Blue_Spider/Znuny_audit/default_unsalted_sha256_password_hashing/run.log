@@ -1,0 +1,12 @@
+==========================================================================
+VULN-030: Weak password hashing: unsalted single-round SHA-256
+Target: http://localhost:25114
+[INFO] User.pm:868 CryptType defaults to sha2; :963-973 Digest::SHA('sha256')->add($Pw), no salt
+==========================================================================
+[SETUP] two agents h30a_f5d1f41a, h30b_f5d1f41a with the SAME password
+[PROOF] stored hash user1 = 722d721fa34084fcab21a3c2fc40854e7f4cd22c1eaa0d544930a67dd3475dbb
+[PROOF] stored hash user2 = 722d721fa34084fcab21a3c2fc40854e7f4cd22c1eaa0d544930a67dd3475dbb
+[PROOF] sha256_hex(password) = 722d721fa34084fcab21a3c2fc40854e7f4cd22c1eaa0d544930a67dd3475dbb
+[PROOF] hash == unsalted sha256_hex(pw): True; two users share the hash: True
+[OK] exploit confirmed — stored password hash equals unsalted sha256_hex(password) and two accounts with the same password have identical hashes — no salt, single round SHA-256 (GPU-crackable, rainbow-tableable).
+==> VULN-030: CONFIRMED — stored password hash equals unsalted sha256_hex(password) and two accounts with the same password have identical hashes — no salt, single round SHA-256 (GPU-crackable, rainbow-tableable).

@@ -1,0 +1,6 @@
+POST /index.php?entryPoint=json_server HTTP/1.1
+Host: localhost:33116
+Content-Type: application/json
+Cookie: PHPSESSID=510249e5dae4f05a47401faa97c819dc; sugar_user_theme=SuiteP; ck_login_id_20=d55ed419-15e2-4e6d-9660-ecf7efa5668d; ck_login_language_20=en_us
+
+{"method": "retrieve", "id": "2", "params": [{"module": "Opportunities", "record": "50a8963f-0cbd-44ce-aabf-aab3456562ff"}]}

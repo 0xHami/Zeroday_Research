@@ -1,0 +1,2 @@
+[INFO] forged standalone log line: 66.66.66.66 - - [01/Jan/2099:00:00:00 +0000] "GET /admin/PWN_aa0fa2be HTTP/1.1" 200 0 "-" "-" HTTP/1.1" 404 207 "" "probe" 0/668
+[PROOF] an encoded CRLF in the request path produced a separate, fully attacker-authored access-log record (source IP 66.66.66.66, fake 'GET /admin/PWN_aa0fa2be') in the log stream — Zappa's CLF formatter interpolates the decoded path with no neutralisation.

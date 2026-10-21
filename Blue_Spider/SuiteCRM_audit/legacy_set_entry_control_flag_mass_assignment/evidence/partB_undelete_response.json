@@ -1,0 +1,25 @@
+{
+  "control_delete_attempt": {
+    "name": "Access Denied",
+    "number": 40,
+    "description": "You do not have access"
+  },
+  "y_before": [
+    {
+      "deleted": "1"
+    }
+  ],
+  "undelete_attempt": {
+    "id": "15ce23c7-487a-4e72-af6b-256ad2604e55",
+    "entry_list": {
+      "id": {
+        "name": "id",
+        "value": "15ce23c7-487a-4e72-af6b-256ad2604e55"
+      },
+      "deleted": {
+        "name": "deleted",
+        "value": 0
+      }
+    }
+  }
+}

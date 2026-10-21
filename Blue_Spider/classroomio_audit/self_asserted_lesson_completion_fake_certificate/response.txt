@@ -1,0 +1,12 @@
+{
+  "progressPercent": 100,
+  "certificationThreshold": 100,
+  "meetsThreshold": true,
+  "eligibleForCertificate": true,
+  "certificateEarnedAt": "2026-09-27T14:50:25.965Z",
+  "blockers": [],
+  "meetsFinalExerciseRule": true,
+  "isNewCompletion": false
+}
+
+DB groupmember.certificate_earned_at = '2026-09-27 14:50:25.958+00'

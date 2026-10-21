@@ -1,0 +1,4 @@
+img.onerror executed (window.__xss_w1vemdjt) = 1
+<script> executed (window.__xss2_w1vemdjt) = 1
+dialog fired = false
+[OK] stored XSS EXECUTED in a real browser

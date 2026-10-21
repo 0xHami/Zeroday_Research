@@ -1,0 +1,14 @@
+========================================================================
+VULN-010: customBlocks preview rendered via innerHTML, sanitizer never invoked → XSS
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: RichEditorStateCast base64(toPreviewHtml) no Str::sanitizeHtml → client innerHTML
+[SETUP] registering a config-reflecting custom block (RawHtmlBlock, the 'natural pattern'); the demo's shipped blocks escape config, so this models a normal integrator block
+[STEP] driving the custom-block insert over Livewire; the server base64's toPreviewHtml(config)
+[PROOF] preview path emitted base64 of the RAW payload (unsanitized): True
+[PROOF] reader path Str::sanitizeHtml('<img onerror...>') → '<img src="x" />' (onerror stripped) — the preview path skips this sanitizer
+[STEP] driving the same insert flow in a real browser (Playwright container) → innerHTML fires
+[PROOF] document.title after insert = 'PWNED-1ac5fe18' (sentinel = PWNED-1ac5fe18)
+[OK] exploit confirmed — the customBlock preview path emits unsanitized HTML and the client innerHTMLs it → the payload executed in the editor
+==> VULN-010: CONFIRMED — RichEditor customBlock preview path base64's unsanitized toPreviewHtml and the client innerHTMLs it → stored XSS (sanitizer bypass; reader path sanitizes, preview path does not)
+[SETUP] reverted: unregistered + deleted RawHtmlBlock, regenerated autoloader; demo restored

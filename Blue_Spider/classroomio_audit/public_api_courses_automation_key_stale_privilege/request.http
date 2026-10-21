@@ -1,0 +1,7 @@
+### VULN-030 — same automation key, after its creator was demoted to STUDENT
+GET http://localhost:21527/public-api/v1/courses/09bf0d17-212d-4360-9e20-a179e8a8defe/students HTTP/1.1
+Authorization: Bearer <api key created by now-demoted S>
+
+### contrast — the guarded sibling honours the demotion:
+GET http://localhost:21527/public-api/v1/courses/09bf0d17-212d-4360-9e20-a179e8a8defe/members HTTP/1.1
+Authorization: Bearer <same key>

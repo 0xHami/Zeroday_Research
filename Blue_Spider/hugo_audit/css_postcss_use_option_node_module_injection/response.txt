@@ -1,0 +1,21 @@
+npm rc=0
+build rc=0
+OOB callouts to /postcss-rce-6bd71b5d: 1
+records: ['/postcss-rce-6bd71b5d']
+
+build tail:
+Start building sites … 
+hugo v0.167.0-DEV linux/amd64 BuildDate=unknown VendorInfo=cvehunterlab
+
+
+                  │ EN 
+──────────────────┼────
+ Pages            │  1 
+ Paginator pages  │  0 
+ Non-page files   │  0 
+ Static files     │  0 
+ Processed images │  0 
+ Aliases          │  0 
+ Cleaned          │  0 
+
+Total in 328 ms

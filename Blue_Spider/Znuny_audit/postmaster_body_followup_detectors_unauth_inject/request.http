@@ -1,0 +1,11 @@
+(raw email piped to Maint::PostMaster::Read --untrusted)
+
+From: attacker_87bfa18d@evil.example
+To: support@localhost
+Subject: your invoice 87bfa18d
+Message-ID: <atkbody-87bfa18d@evil.example>
+Date: Tue, 29 Sep 2026 12:30:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+
+BODY-FOLLOWUP-87bfa18d. Following up, ref Ticket#2026092910000836 from last week.

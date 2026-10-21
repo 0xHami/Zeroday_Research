@@ -1,0 +1,6 @@
+GET /organization/link-invite (admin) → data:
+{'id': '02c2703a-f8b6-4c32-8de4-23682deb0d32', 'token': 'D2LNpExPRYAhlp80GL5mq6HEH5bAsKRhyauI-Kmefyg', 'roleId': 1, 'isRevoked': False}
+
+Account #1 u_945f600d@cvehunt.local: accept HTTP 200, session orgRoles[48bbdff8-2ad5-46a3-a259-2ca3d52677dd]=1, DB role_id=1
+Account #2 u_825d6085@cvehunt.local: accept HTTP 200, session orgRoles[48bbdff8-2ad5-46a3-a259-2ca3d52677dd]=1, DB role_id=1
+(ROLE.ADMIN == 1)

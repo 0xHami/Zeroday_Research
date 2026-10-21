@@ -1,0 +1,27 @@
+Victim meeting id: 3f967741-fa3e-43a4-a990-cbd2869e6a86
+Victim user id: 4d14ce66-cd55-4e95-93c6-d27f356381d7
+
+Raw 'calendar_items' JS object embedded in attacker's page (contains victim's private meeting):
+dy":"7D6459","text":"E5E5E5","label":"Events"}};
+	calendar_items = {"4d14ce66-cd55-4e95-93c6-d27f356381d7":[{"user_id":"4d14ce66-cd55-4e95-93c6-d27f356381d7","module_name":"Meetings","type":"meeting","assigned_user_id":"4d14ce66-cd55-4e95-93c6-d27f356381d7","record":"3f967741-fa3e-43a4-a990-cbd2869e6a86","name":"V029Meeting_0d24d197 Low Stage103925","description":"SECRETDESC029_3b9d2c16","duration_hours":"1","duration_minutes":0,"detail":1,"edit":1,"status":"Planned","parent_name":"","parent_type":"Accounts","timestamp":"1790589600","time_start":"10:00","ts_start":"1790553600","offset":36000,"ts_end":"1790640000","days":1}]};
+
+	
+	views = {
+		sharedMonth: {
+			type: 'month',
+			buttonText: 'Shared Month'
+		},
+		sharedWeek: {
+			type: 'agendaWeek',
+			buttonText: 'Shared Week'
+		}
+	};
+	
+
+	
+	YAHOO.util.Event.onDOMReady(function(){
+		dom_loaded = true;
+	});
+
+	function check_cal_loaded(){
+		return (typeof cal_loaded != 'undefined' && cal_loa

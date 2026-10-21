@@ -1,0 +1,4 @@
+listener bound 0.0.0.0:33119, banner='* OK IMAP4rev1 BANNER-LEAK-imap_2ea5a07c ready\r\n'
+HIT from 172.18.0.3:55430: client sent b''
+HIT from 172.18.0.3:55438: client sent b''
+HIT from 172.18.0.3:55450: client sent b'A0001 CAPABILITY\r\n'

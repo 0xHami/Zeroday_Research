@@ -1,0 +1,39 @@
+HTTP/1.1 200 OK
+Date: Mon, 28 Sep 2026 20:31:21 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=9978165c-c600-4e7f-afc9-b5f71b3e9d18; expires=Sun, 27 Dec 2026 20:31:21 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:31:21 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:31:21 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Vary: Accept-Encoding
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+Content-Length: 23288
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+--- excerpt around the leaked calendar_items JS payload ---
+1","body":"707C9C","text":"E5E5E5","label":"Tasks"},"FP_events":{"border":"C29B8A","body":"7D6459","text":"E5E5E5","label":"Events"}};
+	calendar_items = {"4d14ce66-cd55-4e95-93c6-d27f356381d7":[{"user_id":"4d14ce66-cd55-4e95-93c6-d27f356381d7","module_name":"Meetings","type":"meeting","assigned_user_id":"4d14ce66-cd55-4e95-93c6-d27f356381d7","record":"3f967741-fa3e-43a4-a990-cbd2869e6a86","name":"V029Meeting_0d24d197 Low Stage103925","description":"SECRETDESC029_3b9d2c16","duration_hours":"1","duration_minutes":0,"detail":1,"edit":1,"status":"Planned","parent_name":"","parent_type":"Accounts","timestamp":"1790589600","time_start":"10:00","ts_start":"1790553600","offset":36000,"ts_end":"1790640000","days":1}]};
+
+	
+	views = {
+		sharedMonth: {
+			type: 'month',
+			buttonText: 'Shared Month'
+		},
+		sharedWeek: {
+			type: 'agendaWeek',
+			buttonText: 'Shared Week'
+		}
+	};
+	
+
+	
+	YAHOO.util.Event.onDOMReady(function(){
+		dom_loaded = true;
+	});
+
+	function check_cal_loaded(){
+		return (typeof 

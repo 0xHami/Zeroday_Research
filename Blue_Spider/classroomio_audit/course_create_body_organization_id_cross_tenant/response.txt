@@ -1,0 +1,9 @@
+Test A (bogus body org, header=my org): HTTP 500
+{"success":false,"error":"Failed to create course","code":"INTERNAL_ERROR"}
+
+Contrast (bogus HEADER org): HTTP 403
+{"success":false,"error":"Only organization admins can perform this action","code":"ORG_TEAM_NOT_AUTHORIZED"}
+
+Test B (FOREIGN body org f0259e1a-b93d-4f0a-ae75-1939a177e583): HTTP 201
+  injected group.organization_id == victim: True
+  (injected course=41c48373-e0a7-4964-9dad-79bd00dd4b3d group=265a4eb7-979a-4087-9308-ae2c185941ef deleted after verification)

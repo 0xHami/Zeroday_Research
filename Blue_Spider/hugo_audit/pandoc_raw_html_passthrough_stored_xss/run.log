@@ -1,0 +1,10 @@
+==============================================================================
+VULN-027: Pandoc raw_html -> stored XSS
+target: throwaway `hugo` build (tools image: pandoc installed)
+[INFO] pandoc run with no -f/--sandbox; text/pandoc omitted from allowContent
+==============================================================================
+[SETUP] content/p.pandoc contains inline <script>pandoc-xss-badb6270</script>
+[STEP] building with the tools image (pandoc on PATH, ^pandoc$ allowed)
+[PROOF] raw <script> emitted by pandoc's default reader (raw_html on): True
+[OK] exploit confirmed — pandoc's default Markdown reader passed the inline <script> verbatim into the published HTML (raw_html enabled, no --sandbox). Stored XSS in every reader's browser.
+==> VULN-027: CONFIRMED — Pandoc raw_html stored XSS

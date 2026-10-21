@@ -1,0 +1,1 @@
+attacker perm victim={'ro': 0, 'note': 0, 'rw': 0}; link_relation(victim->source) rows=[['69', '68']]

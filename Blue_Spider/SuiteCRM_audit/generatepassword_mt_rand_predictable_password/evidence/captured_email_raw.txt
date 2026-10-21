@@ -1,0 +1,42 @@
+Date: Mon, 28 Sep 2026 21:16:25 +0000
+To: mod_ebca2b3b@example.invalid
+From: 
+Subject: New account information
+Message-ID: <d5wqGHL4j3xRyoe8z6D0bWFoAGRY1OMT1zAH16JOPQ8@localhost>
+X-Mailer: PHPMailer 6.12.0 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="b1=_d5wqGHL4j3xRyoe8z6D0bWFoAGRY1OMT1zAH16JOPQ8"
+
+--b1=_d5wqGHL4j3xRyoe8z6D0bWFoAGRY1OMT1zAH16JOPQ8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Here is your account username and temporary password:
+
+Username : mod_ebca2b3b
+
+Password : YOnElQ
+
+http://localhost:33116
+
+After you log in using the above password, you may be required to reset the=
+ password to one of your own choice.
+
+--b1=_d5wqGHL4j3xRyoe8z6D0bWFoAGRY1OMT1zAH16JOPQ8
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">=0A<html xmlns=3D"http://www.=
+w3.org/1999/xhtml" lang=3D'en_us'>=0A<head>=0A=09<meta http-equiv=3D"Conten=
+t-Type" content=3D"text/html; charset=3DUTF-8" />=0A<title>New account info=
+rmation</title>=0A</head>=0A<body><div><table width=3D"550"><tbody><tr><td>=
+<p>Here is your account username and temporary password:</p><p>Username : m=
+od_ebca2b3b </p><p>Password : YOnElQ </p><br /><p>http://localhost:33116</p=
+><br /><p>After you log in using the above password, you may be required to=
+ reset the password to one of your own choice.</p>   </td>         </tr><tr=
+><td></td>         </tr> </tbody></table> </div></body></html>
+
+--b1=_d5wqGHL4j3xRyoe8z6D0bWFoAGRY1OMT1zAH16JOPQ8--
+

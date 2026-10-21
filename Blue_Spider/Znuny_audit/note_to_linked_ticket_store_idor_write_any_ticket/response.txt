@@ -1,0 +1,2 @@
+attacker perm on source 66={'ro': 1, 'note': 1, 'rw': 1}; on victim 67={'ro': 0, 'note': 0, 'rw': 0}
+victim_article_rows=[['82', 'agent', 'forged f908d36e', 'PWNED-VULN001-f908d36e']]

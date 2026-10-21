@@ -1,0 +1,7 @@
+POST /index.php?module=Administration&action=UpdateAjaxUI HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<U-session (non-admin)>
+Content-Type: application/x-www-form-urlencoded
+Referer: http://localhost:33116/index.php?module=Administration&action=index
+
+disabled_modules=["StageTenBannedModule_e097ad22"]

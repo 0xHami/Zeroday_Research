@@ -1,0 +1,11 @@
+==========================================================================
+VULN-012: Public Function URL grants InvokeFunction to Principal:* (world invoke)
+target : http://localhost:22571
+[INFO] exercising: zappa/core.py:1633-1649 update_function_url_policy (authorizer==NONE)
+==========================================================================
+[STEP] driving update_function_url_policy for a public Function URL (authorizer=NONE)
+[INFO] add_permission Sid=FunctionURLAllowPublicAccess Action=lambda:InvokeFunctionUrl Principal=* AuthType=NONE
+[INFO] add_permission Sid=FunctionURLAllowPublicAccessInvoke Action=lambda:InvokeFunction Principal=* AuthType=<none>
+[PROOF] Zappa emitted add_permission(Action='lambda:InvokeFunction', Principal='*') with no FunctionUrlAuthType / SourceArn / SourceAccount — any AWS principal can direct-invoke the function with an arbitrary event, opening the Surface-B RCE sinks cross-account.
+[OK] exploit confirmed — world-invocable lambda:InvokeFunction statement generated
+==> VULN-012: CONFIRMED — public Function URL adds unscoped InvokeFunction to Principal:*

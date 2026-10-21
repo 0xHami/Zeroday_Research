@@ -1,0 +1,2 @@
+legit  (email only):            {'IsAdmin': False, 'Role': '', 'email': 'user@example.com'}
+attack (email+IsAdmin+Role):    {'IsAdmin': True, 'Role': 'superadmin', 'email': 'attacker@example.com'}

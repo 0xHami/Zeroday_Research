@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+(0-byte body -- the cron branch of jjwg_Maps_Router.php calls
+action_geocode_addresses() then `exit;` with no output. The response itself
+is deliberately opaque; the security-relevant effect is server-side.)
+
+--- what the anonymous request above actually did server-side -------------
+(captured via evidence/mechanism_proof.txt, same-process instrumentation of
+the identical action_geocode_addresses() code path -- see notes.md)
+
+EMPTY_RECORDS_BEFORE_FIRST_ADDRESS=0
+FIRST_ADDRESS_RECORD_ID=08681f23-9274-4c6f-9e18-75422a600e5d
+FIRST_ADDRESS=321 University Ave., San Mateo, CA, 60261, USA
+GOOGLE_CALL_SECONDS=0.092
+GOOGLE_STATUS=REQUEST_DENIED
+TOTAL_EMPTY_ADDRESS_RECORDS_SCANNED=1
+
+The anonymous, unauthenticated HTTP GET caused the SuiteCRM server to make a
+real outbound HTTPS call to https://maps.googleapis.com/maps/api/geocode/json
+carrying a real CRM account's billing address ("321 University Ave., San
+Mateo, CA, 60261, USA"), and to process that response as part of an
+attacker-triggered, ACL-free batch job over the Accounts table.

@@ -1,0 +1,10 @@
+==========================================================================
+VULN-025: ASGI scope['server'] taken from client Host (host injection)
+target : http://localhost:22571
+[INFO] exercising: zappa/asgi.py:55,77 create_asgi_scope
+==========================================================================
+[STEP] driving create_asgi_scope with Host: attacker.evil.example and X-Forwarded-Port: 8443
+[INFO] scope['server'] = ['attacker.evil.example', 8443]
+[PROOF] scope['server'] host is the attacker-supplied 'attacker.evil.example' (port 8443 from X-Forwarded-Port) — unlike WSGI which pins SERVER_NAME='zappa'. An ASGI (Starlette/FastAPI) app derives absolute URLs from this, so the client poisons reset links / redirects / cache keys.
+[OK] exploit confirmed — client Host controls ASGI scope['server']
+==> VULN-025: CONFIRMED — client Host -> ASGI scope['server'] (host injection)

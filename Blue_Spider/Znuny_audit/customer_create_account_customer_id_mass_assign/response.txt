@@ -1,0 +1,1 @@
+customer_user row: [['attacker_9e6bfb3b@example.test', 'VictimCorp-9e6bfb3b']]

@@ -1,0 +1,13 @@
+### VULN-019 — evidence ###
+5 unprivileged accounts, fired 3 export types each simultaneously (15 requests):
+
+export requests accepted (202): 15/15        <-- NO rate limiting on /api/v3
+peak concurrent export-*.js child processes: 18   <-- fork-per-request, well beyond one account's 3
+                                                     (observed via /proc/[0-9]*/cmdline in the container)
+
+per-(uid,type) lock (only guard):
+  POST .../exports/posts (in flight) -> 400 [[error:already-exporting]]   <-- blocks SAME type only;
+                                                                              cleared on child exit (re-triggerable)
+
+# 18 heavyweight OS processes from a small unprivileged burst, with open self-registration and no
+# HTTP rate limiter, extrapolates to PID/CPU/RAM exhaustion (DoS).

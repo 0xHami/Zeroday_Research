@@ -1,0 +1,7 @@
+relationship id: b0b3d685-0134-4bf1-819e-832f667eda4f
+
+BEFORE (attacker's request):
+b0b3d685-0134-4bf1-819e-832f667eda4f	0
+
+AFTER:
+b0b3d685-0134-4bf1-819e-832f667eda4f	1	2026-09-28 20:47:52

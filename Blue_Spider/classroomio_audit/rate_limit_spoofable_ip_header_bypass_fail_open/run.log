@@ -1,0 +1,14 @@
+========================================================================
+VULN-036: Rate-limit bypass via spoofable X-Forwarded-For
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] limiter key = extractClientIp (key-generators.ts:20-53): CF-Connecting-IP→X-Real-IP→X-Forwarded-For
+[INFO] API is published directly (no trusted-proxy check), so the client controls the key
+[STEP] phase 1: 130x GET / with FIXED X-Forwarded-For=203.0.113.7 (one bucket)
+[INFO]   429 first seen at request #101 (limit reached)
+[PROOF] fixed IP is throttled — 429 after 101 requests (a real limit exists)
+[STEP] phase 2: 130x GET / with ROTATING X-Forwarded-For (fresh bucket each request)
+[INFO]   rotating: 130/130 → 200, 0 → 429
+[PROOF] rotating the IP sent 130 requests with ZERO 429s, while a single IP was blocked after 101 — the limiter is bypassed by header rotation
+==> VULN-036: CONFIRMED — rate limit bypassed by rotating X-Forwarded-For
+[OK] exploit confirmed — spoofable IP header defeats the limiter (fail-open on Redis error noted in writeup)

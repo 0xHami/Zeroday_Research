@@ -1,0 +1,10 @@
+==========================================================================
+VULN-025: GI XSLT mapping unsandboxed -> arbitrary host file R/W
+Target: http://localhost:25114
+[INFO] XSLT.pm:167 XML::LibXSLT->new() bare; no security_callbacks / no_network
+==========================================================================
+[STEP] running Znuny Mapping::XSLT with a stylesheet that WRITES a file and READS an XML file
+[PROOF] arbitrary file WRITE: /tmp/xslt_write_60fd9f7a.txt contains 'PWNED-XSLT-60fd9f7a' (expected 'PWNED-XSLT-60fd9f7a')
+[PROOF] arbitrary file READ via document(): extracted a value from Framework.xml: ''
+[OK] exploit confirmed — the unsandboxed XSLT mapping WROTE an arbitrary host file (/tmp/xslt_write_60fd9f7a.txt='PWNED-XSLT-60fd9f7a') via the exsl:document EXSLT extension — arbitrary file write (RCE path); document() also reaches host files (READ).
+==> VULN-025: CONFIRMED — the unsandboxed XSLT mapping WROTE an arbitrary host file (/tmp/xslt_write_60fd9f7a.txt='PWNED-XSLT-60fd9f7a') via the exsl:document EXSLT extension — arbitrary file write (RCE path); document() also reaches host files (READ).

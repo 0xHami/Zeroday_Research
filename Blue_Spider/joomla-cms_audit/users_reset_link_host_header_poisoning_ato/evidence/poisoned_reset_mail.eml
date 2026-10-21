@@ -1,0 +1,21 @@
+To: PoV 7b993278 <victim_7b993278@example.invalid>
+Subject: =?us-ascii?Q?Your_CVEHunter_Joomla_Lab_password_reset_reques?=
+ =?us-ascii?Q?t?=
+Date: Fri, 2 Oct 2026 07:32:14 +0000
+From: CVEHunter Joomla Lab <admin@example.com>
+Message-ID: <vqfkPoR44fUHCaMLFvAw98DG70n9abPoPERIMTf44@attacker.evil.example>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Hello,
+
+A request has been made to reset your CVEHunter Joomla Lab account password. To reset your password, you will need to submit this verification code to verify that the request was legitimate.
+
+The verification code is 534f855468bfc7c891aa54328bbeea00
+
+Select the URL below and proceed with resetting your password.
+
+http://attacker.evil.example/index.php/component/users/reset?layout=confirm&token=534f855468bfc7c891aa54328bbeea00 
+
+Thank you.
+

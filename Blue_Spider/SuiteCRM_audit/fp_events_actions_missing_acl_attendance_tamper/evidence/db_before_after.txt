@@ -1,0 +1,5 @@
+event_id=0bf66c8a-b226-443d-9f1b-e96de4cba006 (owned by V=bdd3be2d-96bb-45d7-abe7-69c2aefaa6b5)
+contact_id=2ce1c4ac-0032-4f03-a714-720fbaa34baf
+
+invite_status BEFORE attacker's request: Not Invited
+invite_status AFTER:  Attended

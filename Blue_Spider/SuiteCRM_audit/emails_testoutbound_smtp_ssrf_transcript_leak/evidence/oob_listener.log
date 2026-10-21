@@ -1,0 +1,2 @@
+listener bound 0.0.0.0:33119, banner='220 BANNER-LEAK-smtp_f306bf73 ESMTP ready\r\n'
+HIT from 172.18.0.3:35990: client sent b'EHLO localhost\r\n'

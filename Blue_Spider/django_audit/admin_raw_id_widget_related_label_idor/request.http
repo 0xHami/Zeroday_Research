@@ -1,0 +1,7 @@
+POST /admin/labapp/article/add/ HTTP/1.1
+Host: localhost:20796
+Cookie: sessionid=<attacker mod_d2059231>; csrftoken=<t>
+Content-Type: application/x-www-form-urlencoded
+Referer: http://localhost:20796/admin/labapp/article/add/
+
+csrfmiddlewaretoken=<t>&author=1&title=&slug=&body=&category=&metadata=%7B%7D&comments-TOTAL_FORMS=0&comments-INITIAL_FORMS=0&comments-MIN_NUM_FORMS=0&comments-MAX_NUM_FORMS=1000

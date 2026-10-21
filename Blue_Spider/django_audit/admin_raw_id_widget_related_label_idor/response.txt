@@ -1,0 +1,14 @@
+[first probe response truncated to the author widget region]
+                       
+                            <div><input type="text" name="author" value="1" id="id_author" class="vForeignKeyRawIdAdminField">
+<a href="/admin/auth/user/?_to_field=id" class="related-lookup" id="lookup_id_author" title="Lookup"></a>
+<strong><a href="/admin/auth/user/1/change/">admin</a></strong></div>
+                        
+                    
+                </div>
+                
+            
+        </div>
+    
+        <div class="form-row field-tags">
+            

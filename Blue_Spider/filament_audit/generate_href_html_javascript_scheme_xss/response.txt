@@ -1,0 +1,4 @@
+HREF=javascript:void(document.title='PWNED-f2248868')
+TITLE_BEFORE=Posts - Filament
+TITLE_AFTER=PWNED-f2248868
+RESULT=PASS (server emitted javascript: href AND it executed on click)

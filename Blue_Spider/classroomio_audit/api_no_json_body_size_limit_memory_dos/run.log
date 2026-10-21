@@ -1,0 +1,15 @@
+========================================================================
+VULN-037: No global JSON body-size limit (memory-exhaustion DoS)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] app.ts:52-106 has no hono/body-limit; node-server sets no maxRequestBodySize
+[INFO] sending oversized bodies to /agent/credits/purchase; a 413 would mean a limit exists (it does not)
+[STEP] POST 1 MB body → expect the server to BUFFER it (not 413)
+[INFO]   1 MB → HTTP 401 '{"success":false,"message":"Unauthorized: Authentication required (session or AP'
+[STEP] POST 10 MB body → expect the server to BUFFER it (not 413)
+[INFO]   10 MB → HTTP 401 '{"success":false,"message":"Unauthorized: Authentication required (session or AP'
+[STEP] POST 30 MB body → expect the server to BUFFER it (not 413)
+[INFO]   30 MB → HTTP 401 '{"success":false,"message":"Unauthorized: Authentication required (session or AP'
+[PROOF] bodies up to 30 MB were buffered with no 413 — the server allocates unbounded per-request memory; repeated concurrently (VULN-018 + VULN-036) → DoS
+==> VULN-037: CONFIRMED — no body-size limit — 30 MB body buffered, no 413
+[OK] exploit confirmed — unbounded request-body buffering

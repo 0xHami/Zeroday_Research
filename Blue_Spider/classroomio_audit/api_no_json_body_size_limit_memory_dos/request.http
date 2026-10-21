@@ -1,0 +1,8 @@
+### VULN-037 — No global JSON body-size limit (memory-exhaustion DoS)
+### Any JSON endpoint buffers the whole body before Zod; no 413 at tens of MB.
+POST http://localhost:21527/agent/credits/purchase HTTP/1.1
+Host: localhost:21527
+Content-Type: application/json
+X-Forwarded-For: 203.0.113.209
+
+<<30 MB of bytes>>            # server buffers all of it, then 400s on JSON parse (no 413)

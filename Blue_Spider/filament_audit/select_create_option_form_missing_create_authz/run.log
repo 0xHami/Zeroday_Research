@@ -1,0 +1,14 @@
+========================================================================
+VULN-003: Select::createOptionForm() creates related records with no create authz
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: Select::getCreateOptionAction — gated only by isDisabled(), no ->authorize()
+[SETUP] adding ->createOptionForm([...]) to PostResource's relationship author Select (documented opt-in pattern; harness; reverted after)
+[INFO] User rows before: 7
+[SETUP] logging in as low-priv ryan@filamentphp.com (no 'create User' right)
+[STEP] mounting the createOption action on the author Select (no create policy is consulted)
+[STEP] submitting the createOption modal → newModelInstance()->fill()->save() a new User
+[PROOF] User rows after: 8 (was 7); injected account exists: YES
+[OK] exploit confirmed — a low-priv Post editor created a new User record via Select createOption with no create authorization
+==> VULN-003: CONFIRMED — authenticated low-priv user creates arbitrary related-model records (e.g. new User) via Select::createOptionForm with no create policy check (CWE-862)
+[SETUP] reverted the harness createOptionForm; PostResource restored

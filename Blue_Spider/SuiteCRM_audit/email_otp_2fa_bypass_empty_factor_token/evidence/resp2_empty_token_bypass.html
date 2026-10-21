@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <!-- Bootstrap -->
+    <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css"/>
+    <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
+    <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css"/>
+    <link href="themes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css"/>
+    <title>Home &raquo; SuiteCRM Lab</title>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>jscal_today = 1000*1790630209; if(typeof app_strings == "undefined") app_strings = new Array();</script><script type="text/javascript" src="cache/include/javascript/sugar_grp1_jquery.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script type="text/javascript" src="cache/include/javascript/sugar_grp1.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script type="text/javascript" src="include/javascript/calendar.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script>
+SUGAR.config.stockAjaxBannedModules = ["Calendar","Emails","Campaigns","Documents","DocumentRevisions","Project","ProjectTask","EmailMarketing","CampaignLog","CampaignTrackers","Releases","Groups","EmailMan","Administration","ModuleBuilder","Schedulers","SchedulersJobs","DynamicFields","EditCustomFields","EmailTemplates","Users","Currencies","Trackers","Connectors","Import_1","Import_2","Versions","vCals","CustomFields","Roles","Audit","InboundEmail","SavedSearch","UserPreferences","MergeRecords","EmailAddresses","Relationships","Employees","Import","OAuthKeys","Surveys","StageTenBannedModule_e097ad22"];
+SUGAR.config.disableAjaxUI = false;
+SUGAR.config.addAjaxBannedModules = ["StageTenBannedModule_e097ad22"];</script>
+<script type="text/javascript">SUGAR.themes.image_server="";</script><script type="text/javascript">var name_format = "s f l";</script><script type="text/javascript">
+	var time_reg_format = '([0-9]{1,2}):([0-9]{1,2})';
+	var date_reg_format = '([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})';
+	var date_reg_positions = { 'm': 1,'d': 2,'Y': 3 };
+	var time_separator = ':';
+	var cal_date_format = '%m/%d/%Y';
+	var time_offset = 0;
+	var num_grp_sep = ',';
+	var dec_sep = '.';
+	function convertDbTimestampToUserTZ(dbTimestamp) {
+        if (!dbTimestamp) {
+            return null;
+        }
+
+        var utcDate = new Date(dbTimestamp.replace(' ', 'T') + 'Z');
+
+        if (isNaN(utcDate.getTime())) {
+            return null;
+        }
+
+        var userDate = new Date(utcDate.getTime() + (0 * 1000));
+    
+        const tokens = {
+            Y: () => String(userDate.getUTCFullYear()),
+            y: () => String(userDate.getUTCFullYear()).slice(-2),
+            F: () => userDate.toLocaleString(undefined, { month: 'long', timeZone: 'UTC' }),
+            M: () => userDate.toLocaleString(undefined, { month: 'short', timeZone: 'UTC' }),
+            m: () => String(userDate.getUTCMonth() + 1).padStart(2, '0'),
+            n: () => String(userDate.getUTCMonth() + 1),
+            d: () => String(userDate.getUTCDate()).padStart(2, '0'),
+            j: () => String(userDate.getUTCDate()),
+            D: () => userDate.toLocaleString(undefined, { weekday: 'short', timeZone: 'UTC' }),
+            l: () => userDate.toLocaleString(undefined, { weekday: 'long', timeZone: 'UTC' }),
+            H: () => String(userDate.getUTCHours()).padStart(2, '0'),
+            h: () => String(userDate.getUTCHours() % 12 || 12).padStart(2, '0'),
+            G: () => String(userDate.getUTCHours()),
+            g: () => String(userDate.getUTCHours() % 12 || 12),
+            i: () => String(userDate.getUTCMinutes()).padStart(2, '0'),
+            s: () => String(userDate.getUTCSeconds()).padStart(2, '0'),
+            a: () => userDate.getUTCHours() < 12 ? 'am' : 'pm',
+            A: () => userDate.getUTCHours() < 12 ? 'AM' : 'PM'
+        };
+
+        let formatted = 'm/d/Y H:i';
+        Object.keys(tokens)
+            .sort((a, b) => b.length - a.length)
+            .forEach(token => formatted = formatted.split(token).join(tokens[token]()));
+
+        return formatted;
+    }
+</script><script type="text/javascript" src="cache/jsLanguage/en_us.js?v=hH0cJQlwInRE6zI5BuIZgA"></script><script type="text/javascript" src="cache/jsLanguage/Home/en_us.js?v=hH0cJQlwInRE6zI5BuIZgA"></script><script type='text/javascript'>
+var sugar_cache_dir = 'cache/';
+var action_sugar_grp1 = 'index';
+</script>
+<script type="text/javascript" src="cache/themes/SuiteP/js/style.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+    
+    <script type="text/javascript">
+        <!--
+        SUGAR.themes.theme_name = 'SuiteP';
+        SUGAR.themes.theme_ie6compat = 'false';
+        SUGAR.themes.hide_image = 'themes/default/images/hide.gif?v=p-BUXW88kPGyJ3qvsiY4dw';
+        SUGAR.themes.show_image = 'themes/default/images/show.gif?v=p-BUXW88kPGyJ3qvsiY4dw';
+        SUGAR.themes.loading_image = 'themes/default/images/img_loading.gif?v=p-BUXW88kPGyJ3qvsiY4dw';
+        
+        if (YAHOO.env.ua)
+            UA = YAHOO.env.ua;
+        -->
+    </script>
+    
+    
+            <!-- qtip & suggestion box -->
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" /><link rel="stylesheet" type="text/css" href="" /><link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" /><link rel="stylesheet" type="text/css" href="cache/themes/SuiteP/css/Dawn/style.css?v=p-BUXW88kPGyJ3qvsiY4dw" />
+    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">
+    <script type="text/javascript" src='themes/SuiteP/js/jscolor.js?v=p-BUXW88kPGyJ3qvsiY4dw'></script>
+    <script type="text/javascript" src='cache/include/javascript/sugar_field_grp.js?v=p-BUXW88kPGyJ3qvsiY4dw'></script>
+    <script type="text/javascript" src='vendor/tinymce/tinymce/tinymce.min.js?v=p-BUXW88kPGyJ3qvsiY4dw'></script>
+</head>
+<body onMouseOut="closeMenus();">
+
+    <div id="ajaxHeader">
+        <!--Start Responsive Top Navigation Menu -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="dropdown">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <ul class="dropdown-menu mobile_menu" role="menu" id="mobile_menu">
+                                                                                                                                                                                                                                                                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DAll'">
+                                    Home
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAccounts%26action%3Dindex%26parentTab%3DAll'">
+                                    Accounts
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Accounts'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3Dindex%26parentTab%3DAll'">
+                                    Contacts
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Contacts'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DOpportunities%26action%3Dindex%26parentTab%3DAll'">
+                                    Opportunities
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Opportunities'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3Dindex%26parentTab%3DAll'">
+                                    Leads
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Leads'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Quotes%26action%3Dindex%26parentTab%3DAll'">
+                                    Quotes
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOS_Quotes'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=Calendar&action=index&parentTab=All'">
+                                    Calendar
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=Documents&action=index&parentTab=All'">
+                                    Documents
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Documents'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=Emails&action=index&parentTab=All'">
+                                    Emails
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Emails'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DSpots%26action%3Dindex%26parentTab%3DAll'">
+                                    Spots
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Spots'"></span>
+                                                                                                            </a>
+                            </li>
+                                                                            <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=Campaigns&action=index&parentTab=All'">
+                                    Campaigns
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Campaigns'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DCalls%26action%3Dindex%26parentTab%3DAll'">
+                                    Calls
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Calls'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DMeetings%26action%3Dindex%26parentTab%3DAll'">
+                                    Meetings
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Meetings'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DTasks%26action%3Dindex%26parentTab%3DAll'">
+                                    Tasks
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Tasks'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DNotes%26action%3Dindex%26parentTab%3DAll'">
+                                    Notes
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Notes'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Invoices%26action%3Dindex%26parentTab%3DAll'">
+                                    Invoices
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOS_Invoices'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Contracts%26action%3Dindex%26parentTab%3DAll'">
+                                    Contracts
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOS_Contracts'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DCases%26action%3Dindex%26parentTab%3DAll'">
+                                    Cases
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Cases'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DProspects%26action%3Dindex%26parentTab%3DAll'">
+                                    Targets
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Prospects'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DProspectLists%26action%3Dindex%26parentTab%3DAll'">
+                                    Targets - Lists
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=ProspectLists'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=Project&action=index&parentTab=All'">
+                                    Projects
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Project'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAM_ProjectTemplates%26action%3Dindex%26parentTab%3DAll'">
+                                    Projects - Templates
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AM_ProjectTemplates'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DFP_events%26action%3Dindex%26parentTab%3DAll'">
+                                    Events
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=FP_events'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DFP_Event_Locations%26action%3Dindex%26parentTab%3DAll'">
+                                    Locations
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=FP_Event_Locations'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Products%26action%3Dindex%26parentTab%3DAll'">
+                                    Products
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOS_Products'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Product_Categories%26action%3Dindex%26parentTab%3DAll'">
+                                    Products - Categories
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOS_Product_Categories'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_PDF_Templates%26action%3Dindex%26parentTab%3DAll'">
+                                    PDF - Templates
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOS_PDF_Templates'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOR_Reports%26action%3Dindex%26parentTab%3DAll'">
+                                    Reports
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOR_Reports'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOK_KnowledgeBase%26action%3Dindex%26parentTab%3DAll'">
+                                    Knowledge Base
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOK_KnowledgeBase'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOK_Knowledge_Base_Categories%26action%3Dindex%26parentTab%3DAll'">
+                                    KB - Categories
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=AOK_Knowledge_Base_Categories'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=EmailTemplates&action=index&parentTab=All'">
+                                    Email - Templates
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=EmailTemplates'"></span>
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="2">
+                                <a href="javascript:void(0)" onclick="window.location.href = 'index.php?module=Surveys&action=index&parentTab=All'">
+                                    Surveys
+                                    <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Surveys'"></span>
+                                                                    </a>
+                            </li>
+                                                                        </ul>
+            <div id="mobileheader" class="mobileheader">
+                <div id="modulelinks" class="modulelinks">
+                                                                        <span class="modulename" data-toggle="dropdown" aria-expanded="false">
+                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex" id="moduleTab_Home">Home<span class="suitepicon suitepicon-action-caret"></span></a>
+                            </span>
+                                <ul class="dropdown-menu" role="menu">
+                                
+                                    
+                                                                    </ul>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+            </div>
+        </div>
+        <div class="desktop-toolbar" id="toolbar">
+                            <ul class="nav navbar-nav">
+                    <li class="navbar-brand-container">
+                            <a class="navbar-brand with-home-icon suitepicon suitepicon-action-home" href="index.php?module=Home&action=index"></a>
+                    </li>
+                                                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <li class="topnav ">
+                            <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                            <a href="#" id="grouptab_0" class="dropdown-toggle grouptab">Sales</a>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="dropdown-menu" role="menu" >
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DSales" id="moduleTab_9_Home">Home</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAccounts%26action%3Dindex%26parentTab%3DSales" id="moduleTab_9_Accounts">Accounts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3Dindex%26parentTab%3DSales" id="moduleTab_9_Contacts">Contacts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DOpportunities%26action%3Dindex%26parentTab%3DSales" id="moduleTab_9_Opportunities">Opportunities</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3Dindex%26parentTab%3DSales" id="moduleTab_9_Leads">Leads</a>
+                                    </li>
+                                                                                            </ul>
+                        </li>
+                                                                    <li class="topnav ">
+                            <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                            <a href="#" id="grouptab_1" class="dropdown-toggle grouptab">Marketing</a>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="dropdown-menu" role="menu" >
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DMarketing" id="moduleTab_9_Home">Home</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAccounts%26action%3Dindex%26parentTab%3DMarketing" id="moduleTab_9_Accounts">Accounts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3Dindex%26parentTab%3DMarketing" id="moduleTab_9_Contacts">Contacts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3Dindex%26parentTab%3DMarketing" id="moduleTab_9_Leads">Leads</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Campaigns&action=index&parentTab=Marketing" id="moduleTab_9_Campaigns">Campaigns</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DProspects%26action%3Dindex%26parentTab%3DMarketing" id="moduleTab_9_Targets">Targets</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DProspectLists%26action%3Dindex%26parentTab%3DMarketing" id="moduleTab_9_Targets - Lists">Targets - Lists</a>
+                                    </li>
+                                                                                            </ul>
+                        </li>
+                                                                    <li class="topnav ">
+                            <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                            <a href="#" id="grouptab_2" class="dropdown-toggle grouptab">Support</a>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="dropdown-menu" role="menu" >
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DSupport" id="moduleTab_9_Home">Home</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAccounts%26action%3Dindex%26parentTab%3DSupport" id="moduleTab_9_Accounts">Accounts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3Dindex%26parentTab%3DSupport" id="moduleTab_9_Contacts">Contacts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DCases%26action%3Dindex%26parentTab%3DSupport" id="moduleTab_9_Cases">Cases</a>
+                                    </li>
+                                                                                            </ul>
+                        </li>
+                                                                    <li class="topnav ">
+                            <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                            <a href="#" id="grouptab_3" class="dropdown-toggle grouptab">Activities</a>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="dropdown-menu" role="menu" >
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DActivities" id="moduleTab_9_Home">Home</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Calendar&action=index&parentTab=Activities" id="moduleTab_9_Calendar">Calendar</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DCalls%26action%3Dindex%26parentTab%3DActivities" id="moduleTab_9_Calls">Calls</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DMeetings%26action%3Dindex%26parentTab%3DActivities" id="moduleTab_9_Meetings">Meetings</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Emails&action=index&parentTab=Activities" id="moduleTab_9_Emails">Emails</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DTasks%26action%3Dindex%26parentTab%3DActivities" id="moduleTab_9_Tasks">Tasks</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DNotes%26action%3Dindex%26parentTab%3DActivities" id="moduleTab_9_Notes">Notes</a>
+                                    </li>
+                                                                                            </ul>
+                        </li>
+                                                                    <li class="topnav ">
+                            <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                            <a href="#" id="grouptab_4" class="dropdown-toggle grouptab">Collaboration</a>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="dropdown-menu" role="menu" >
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DCollaboration" id="moduleTab_9_Home">Home</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Emails&action=index&parentTab=Collaboration" id="moduleTab_9_Emails">Emails</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Documents&action=index&parentTab=Collaboration" id="moduleTab_9_Documents">Documents</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Project&action=index&parentTab=Collaboration" id="moduleTab_9_Projects">Projects</a>
+                                    </li>
+                                                                                            </ul>
+                        </li>
+                                                                    <li class="topnav all">
+                            <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                            <a href="#" id="grouptab_5" class="dropdown-toggle grouptab">All</a>
+                            <span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="dropdown-menu" role="menu"  class="All">
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Home">Home</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAccounts%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Accounts">Accounts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Contacts">Contacts</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DOpportunities%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Opportunities">Opportunities</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DLeads%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Leads">Leads</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Quotes%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Quotes">Quotes</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Calendar&action=index&parentTab=All" id="moduleTab_9_Calendar">Calendar</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Documents&action=index&parentTab=All" id="moduleTab_9_Documents">Documents</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="index.php?module=Emails&action=index&parentTab=All" id="moduleTab_9_Emails">Emails</a>
+                                    </li>
+                                                                    <li>
+                                                                                <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DSpots%26action%3Dindex%26parentTab%3DAll" id="moduleTab_9_Spots">Spots</a>
+                                    </li>
+                                                                                                    <li>
+                                        <a href="index.php?module=Campaigns&action=index&parentTab=All">Campaigns</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DCalls%26action%3Dindex%26parentTab%3DAll">Calls</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DMeetings%26action%3Dindex%26parentTab%3DAll">Meetings</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DTasks%26action%3Dindex%26parentTab%3DAll">Tasks</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DNotes%26action%3Dindex%26parentTab%3DAll">Notes</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Invoices%26action%3Dindex%26parentTab%3DAll">Invoices</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Contracts%26action%3Dindex%26parentTab%3DAll">Contracts</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DCases%26action%3Dindex%26parentTab%3DAll">Cases</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DProspects%26action%3Dindex%26parentTab%3DAll">Targets</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DProspectLists%26action%3Dindex%26parentTab%3DAll">Targets - Lists</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="index.php?module=Project&action=index&parentTab=All">Projects</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAM_ProjectTemplates%26action%3Dindex%26parentTab%3DAll">Projects - Templates</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DFP_events%26action%3Dindex%26parentTab%3DAll">Events</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DFP_Event_Locations%26action%3Dindex%26parentTab%3DAll">Locations</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Products%26action%3Dindex%26parentTab%3DAll">Products</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_Product_Categories%26action%3Dindex%26parentTab%3DAll">Products - Categories</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOS_PDF_Templates%26action%3Dindex%26parentTab%3DAll">PDF - Templates</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOR_Reports%26action%3Dindex%26parentTab%3DAll">Reports</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOK_KnowledgeBase%26action%3Dindex%26parentTab%3DAll">Knowledge Base</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAOK_Knowledge_Base_Categories%26action%3Dindex%26parentTab%3DAll">KB - Categories</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="index.php?module=EmailTemplates&action=index&parentTab=All">Email - Templates</a>
+                                    </li>
+                                                                    <li>
+                                        <a href="index.php?module=Surveys&action=index&parentTab=All">Surveys</a>
+                                    </li>
+                                                            </ul>
+                        </li>
+                                    </ul>
+                            
+                <script>
+                  var windowResize = function() {
+                    // Since the height can be changed in Sass.
+                    // Take a measurement of the initial desktop navigation bar height with just one menu item
+                    $('.desktop-toolbar ul.navbar-nav > li').not('.all').addClass('hidden');
+                    var dth = $('.desktop-toolbar').outerHeight();
+
+                    // Show all desktop menu items
+                    $('.desktop-toolbar ul.navbar-nav > li.hidden').removeClass('hidden');
+
+                    // Remove the each menu item from the end of the toolbar until
+                    // the navigation bar is the matches the initial height.
+                    while($('.desktop-toolbar').outerHeight() > dth) {
+                      ti = $('.desktop-toolbar ul.navbar-nav > li').not('.hidden').not('.all');
+                      $(ti).last().addClass('hidden');
+                    }
+                  };
+                  $(window).resize(windowResize);
+                  $(document).ready(windowResize);
+                </script>
+            
+                    </div>
+
+        <!-- Right side of the main navigation -->
+        <div class="mobile-bar">
+            <ul id="toolbar" class="toolbar">
+                <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        CREATE<span class="suitepicon suitepicon-action-caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">Create Accounts</a></li>
+                        <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">Create Contacts</a></li>
+                        <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">Create Opportunities</a></li>
+                        <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">Create Leads</a></li>
+                        <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">Create Documents</a></li>
+                        <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">Create Calls</a></li>
+                        <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">Create Tasks</a></li>
+                    </ul>
+                </li>
+                <li id="" class="dropdown nav navbar-nav navbar-search">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+                        <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+                              onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                            <input type='hidden' class='form-control' name='action' value='UnifiedSearch'>
+                            <input type="hidden" class="form-control" name="module" value="Home">
+                            <input type="hidden" class="form-control" name="search_form" value="false">
+                            <input type="hidden" class="form-control" name="advanced" value="false">
+                            <div class="input-group">
+                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                       placeholder="Search..." value=""/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+                            </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="alert_count hidden">0</span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">This information is not available</div>
+                </li>
+                <li>
+                    <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
+                          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                        <input type='hidden' class='form-control' name='action' value='UnifiedSearch'>
+                        <input type="hidden" class="form-control" name="module" value="Home">
+                        <input type="hidden" class="form-control" name="search_form" value="false">
+                        <input type="hidden" class="form-control" name="advanced" value="false">
+                        <div class="input-group">
+                            <input type="text" class="form-control query_string " name="query_string" id="query_string"
+                                   placeholder="Search..." value=""/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+                    </span>
+                        </div>
+                    </form>
+                </li>
+                <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
+
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown" aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-user-small"></span>
+                    </button>
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        <li role="presentation">
+                            <a href='index.php?module=Users&action=EditView&record=68761c9f-e248-43b1-b717-0df477b1a467'>
+                                Profile
+                            </a>
+                        </li>
+                                                    <li role="presentation">
+                                <a id="employees_link"
+                                   href="index.php?module=Employees&action=index"
+                                                                                                         >Employees</a>
+                            </li>
+                                                    <li role="presentation">
+                                <a id="training_link"
+                                   href="https://community.suitecrm.com"
+                                                                       
+                                   target="_blank"
+                                                                      >Support Forum</a>
+                            </li>
+                                                    <li role="presentation">
+                                <a id="about_link"
+                                   href="index.php?module=Home&action=About"
+                                                                                                         >About</a>
+                            </li>
+                                                <li role="presentation"><a role="menuitem" id="logout_link" href='index.php?module=Users&action=Logout'
+                                                   class='utilsLink'>Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="tablet-bar">
+            <ul id="toolbar" class="toolbar">
+                <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        CREATE<span class="suitepicon suitepicon-action-caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">Create Accounts</a></li>
+                        <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">Create Contacts</a></li>
+                        <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">Create Opportunities</a></li>
+                        <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">Create Leads</a></li>
+                        <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">Create Documents</a></li>
+                        <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">Create Calls</a></li>
+                        <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">Create Tasks</a></li>
+                    </ul>
+                </li>
+                <li id="" class="dropdown nav navbar-nav navbar-search">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+                        <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+                              onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                            <input type='hidden' class='form-control' name='action' value='UnifiedSearch'>
+                            <input type="hidden" class="form-control" name="module" value="Home">
+                            <input type="hidden" class="form-control" name="search_form" value="false">
+                            <input type="hidden" class="form-control" name="advanced" value="false">
+                            <div class="input-group">
+                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                       placeholder="Search..." value=""/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+                            </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
+                          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                        <input type='hidden' class='form-control' name='action' value='UnifiedSearch'>
+                        <input type="hidden" class="form-control" name="module" value="Home">
+                        <input type="hidden" class="form-control" name="search_form" value="false">
+                        <input type="hidden" class="form-control" name="advanced" value="false">
+                        <div class="input-group">
+                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                   placeholder="Search..." value=""/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+                    </span>
+                        </div>
+                    </form>
+                </li>
+                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="alert_count hidden">0</span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">This information is not available</div>
+                </li>
+                <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-mobile">
+
+                    <button id="usermenucollapsed" class="dropdown-toggle btn btn-default usermenucollapsed" data-toggle="dropdown"
+                            aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-current-user"></span>
+                    </button>
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="dropdownMenu2">
+                        <li role="presentation">
+                            <a href='index.php?module=Users&action=EditView&record=68761c9f-e248-43b1-b717-0df477b1a467'>
+                                Profile
+                            </a>
+                        </li>
+                                                    <li role="presentation">
+                                <a id="employees_link"
+                                   href="index.php?module=Employees&action=index"
+                                                                                                         >Employees</a>
+                            </li>
+                                                    <li role="presentation">
+                                <a id="training_link"
+                                   href="https://community.suitecrm.com"
+                                                                       
+                                   target="_blank"
+                                                                      >Support Forum</a>
+                            </li>
+                                                    <li role="presentation">
+                                <a id="about_link"
+                                   href="index.php?module=Home&action=About"
+                                                                                                         >About</a>
+                            </li>
+                                                <li role="presentation"><a role="menuitem" id="logout_link" href='index.php?module=Users&action=Logout'
+                                                   class='utilsLink'>Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="desktop-bar">
+            <ul id="toolbar" class="toolbar">
+                <li id="quickcreatetop" class="create dropdown nav navbar-nav quickcreatetop">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        CREATE<span class="suitepicon suitepicon-action-caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">Create Accounts</a></li>
+                        <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">Create Contacts</a></li>
+                        <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">Create Opportunities</a></li>
+                        <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">Create Leads</a></li>
+                        <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">Create Documents</a></li>
+                        <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">Create Calls</a></li>
+                        <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">Create Tasks</a></li>
+                    </ul>
+                </li>
+                <li id="" class="dropdown nav navbar-nav navbar-search">
+                    <button id="searchbutton" class="dropdown-toggle btn btn-default searchbutton suitepicon suitepicon-action-search" data-toggle="dropdown" aria-expanded="true">
+                    </button>
+                    <div class="dropdown-menu" role="menu" aria-labelledby="searchbutton">
+                        <form id="searchformdropdown" class="searchformdropdown" name='UnifiedSearch' action='index.php'
+                              onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                            <input type='hidden' class='form-control' name='action' value='UnifiedSearch'>
+                            <input type="hidden" class="form-control" name="module" value="Home">
+                            <input type="hidden" class="form-control" name="search_form" value="false">
+                            <input type="hidden" class="form-control" name="advanced" value="false">
+                            <div class="input-group">
+                                <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                       placeholder="Search..." value=""/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+                            </span>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <form id="searchform" class="navbar-form searchform" name='UnifiedSearch' action='index.php'
+                          onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                        <input type='hidden' class='form-control' name='action' value='UnifiedSearch'>
+                        <input type="hidden" class="form-control" name="module" value="Home">
+                        <input type="hidden" class="form-control" name="search_form" value="false">
+                        <input type="hidden" class="form-control" name="advanced" value="false">
+                        <div class="input-group">
+                            <input type="text" class="form-control query_string" name="query_string" id="query_string"
+                                   placeholder="Search..." value=""/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default suitepicon suitepicon-action-search"></button>
+                    </span>
+                        </div>
+                    </form>
+                </li>
+                <li id="desktop_notifications" class="dropdown nav navbar-nav desktop_notifications">
+                    <button class="alertsButton btn dropdown-toggle suitepicon suitepicon-action-alerts" data-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="alert_count hidden">0</span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">This information is not available</div>
+                </li>
+                <li id="globalLinks" class="dropdown nav navbar-nav globalLinks-desktop">
+                    <button id="with-label" class="dropdown-toggle user-menu-button" title="Low Stage10-2FA"data-toggle="dropdown" aria-expanded="true">
+                        <span class="suitepicon suitepicon-action-current-user"></span>
+                        <span class="globallabel-user">Low Stage10-2FA</span>
+                        <span class="suitepicon suitepicon-action-caret"></span>
+                    </button>
+                    <ul class="dropdown-menu user-dropdown user-menu" role="menu" aria-labelledby="with-label">
+                        <li role="presentation">
+                            <a href='index.php?module=Users&action=EditView&record=68761c9f-e248-43b1-b717-0df477b1a467'>
+                                Profile
+                            </a>
+                        </li>
+                                                    <li role="presentation">
+                                <a id="employees_link"
+                                   href="index.php?module=Employees&action=index"
+                                                                                                         >Employees</a>
+                            </li>
+                                                    <li role="presentation">
+                                <a id="training_link"
+                                   href="https://community.suitecrm.com"
+                                                                                                         target="_blank"
+                                                                      >Support Forum</a>
+                            </li>
+                                                    <li role="presentation">
+                                <a id="about_link"
+                                   href="index.php?module=Home&action=About"
+                                                                                                         >About</a>
+                            </li>
+                                                <li role="presentation"><a role="menuitem" id="logout_link" href='index.php?module=Users&action=Logout'
+                                                   class='utilsLink'>Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+</nav>
+<!--End Responsive Top Navigation Menu -->
+    <!--Start Page Container and Responsive Sidebar -->
+    <div id='sidebar_container' class="container-fluid sidebar_container">
+
+        <a id="buttontoggle" class="buttontoggle"><span></span></a>
+
+        <div              class="sidebar">
+
+                <div id="actionMenuSidebar" class="actionMenuSidebar">
+                                                                        <ul>
+                                                            </ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
+
+                <div id="recentlyViewedSidebar" class="recentlyViewedSidebar">
+                                        <ul class="nav nav-pills nav-stacked">
+                                            </ul>
+                </div>
+                 <div id="favoritesSidebar" class="favoritesSidebar">
+                                    <ul class="nav nav-pills nav-stacked">
+                                            </ul>
+                </div>
+            </div>
+        <!--</div>-->
+    </div>
+    <!--End Responsive Sidebar -->
+<!--Start Page content -->
+    </div>
+
+<input id='ajaxUI-history-field' type='hidden'>
+<script type='text/javascript'>
+    if (SUGAR.ajaxUI && !SUGAR.ajaxUI.hist_loaded) {
+        YAHOO.util.History.register('ajaxUILoc', "", SUGAR.ajaxUI.go);
+                YAHOO.util.History.initialize("ajaxUI-history-field", "ajaxUI-history-iframe");
+            }
+</script>
+
+<!-- Start of page content -->
+<div id="bootstrap-container"
+     class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main bootstrap-container">
+    <div id="content" class="content">
+        <div id="pagecontent" class=".pagecontent" data-module="Home">
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js' ></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.dynamic.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.effects.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.tooltips.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.context.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.annotate.js'></script>
+
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js' ></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.drawing.text.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.pie.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.bar.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.line.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.radar.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.hbar.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.rose.js'></script>
+
+        <script>
+            function rgraphMouseMove(e,shape)
+            {
+                e.target.style.cursor = 'pointer';
+            }
+
+            	var maxYForSmallNumbers = 5;    //The Y axis for bars needs to have at least a max of 5 of it shows (0,0,0,1,1) as per bug 876
+                function calculateMaxYForSmallNumbers(dataPoints)
+                {
+                    var largest = null;
+                    if(dataPoints !== undefined && dataPoints.length > 0)
+                        largest = Math.max.apply(Math,dataPoints);//http://stackoverflow.com/a/14693622/3894683
+
+                    if (largest === null || largest < maxYForSmallNumbers) {
+                      return maxYForSmallNumbers;
+                    }
+                    return(null);
+                }
+
+            function resizeGraph(graph)
+            {
+              var maxHeight = 500;
+              var maxTextSize = 10;
+    
+              graph.width = $(graph).parent().width();
+              graph.height = ($(graph).parent().height() < maxHeight ? $(graph).parent().height() : maxHeight);
+    
+              var text_size = Math.min(maxTextSize, (graph.width / 700) * 10 );
+              graph.__object__["properties"]["chart.text.size"] = text_size;
+              graph.__object__["properties"]["chart.key.text.size"] = text_size;
+                
+              RGraph.redrawCanvas(graph);
+            }
+
+            function resizeGraphs()
+            {
+              var graphs = $(".resizableCanvas");
+              $.each(graphs,function(i,v){
+                resizeGraph(v);
+              });
+            }
+
+            $(window).resize(function ()
+            {
+              resizeGraphs();
+            });
+
+
+            function myPipelineBySalesStageClick(e,bar)
+            {
+                                if( bar !== undefined
+                &&  bar[5] !== undefined
+                &&  bar['object'] !== undefined
+                &&  bar['object']['properties'] !== undefined
+                &&  bar['object']['properties']['chart.tooltips']!== undefined
+                &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
+                {
+                    var graphId = bar[0]['id'];
+                    var divHolder = $("#"+graphId).parent();
+                    var module = $(divHolder).find(".module").val();
+                    var action = $(divHolder).find(".action").val();
+                    var query = $(divHolder).find(".query").val();
+                    var searchFormTab = $(divHolder).find(".searchFormTab").val();
+                    var userId = $(divHolder).find(".userId").val();
+                    var startDate = encodeURI($(divHolder).find(".startDate").val());
+                    var endDate = encodeURI($(divHolder).find(".endDate").val());
+                    
+                    var keys = window["chartHBarKeys"+graphId];
+                    var stage = encodeURI(keys[bar[5]]);
+                    
+                    window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_self');
+                }
+            }
+
+            function outcomeByMonthClick(e,bar)
+            {
+                 if( bar !== undefined
+                &&  bar[5] !== undefined
+                &&  bar['object'] !== undefined
+                &&  bar['object']['properties'] !== undefined
+                &&  bar['object']['properties']['chart.tooltips']!== undefined
+                &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
+                {
+                    var info = bar['object']['properties']['chart.tooltips'][bar[5]];
+                    var stage = $(info).find('.stage').val();
+                    var date = $(info).find('.date').val();
+
+                    stage = encodeURI($.trim(stage));
+                    date = encodeURI($.trim(date));
+                    //console.log(stage + ' ' + date);
+                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&date_closed_advanced='+date+'&sales_stage='+stage,'_self');
+                }
+            }
+
+            function allOpportunititesByLeadSourceByOutcomeClick(e,bar)
+            {
+                if( bar !== undefined
+                &&  bar[5] !== undefined
+                &&  bar['object'] !== undefined
+                &&  bar['object']['properties'] !== undefined
+                &&  bar['object']['properties']['chart.tooltips']!== undefined
+                &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
+                {
+                    var info = bar['object']['properties']['chart.tooltips'][bar[5]];
+                    var stage = $(info).find('.stage').val();
+                    var category = $(info).find('.category').val();
+
+                    stage = encodeURI($.trim(stage));
+                    category = encodeURI($.trim(category));
+                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_self');
+                }
+            }
+
+            function opportunitiesByLeadSourceDashletClick(e,bar)
+            {
+            if(bar['object']!== undefined && bar['object']['id']!==undefined)
+            {
+                var graphId = bar['object']['id'];
+                var divHolder = $("#"+graphId).parent();
+                var module = $(divHolder).find(".module").val();
+                var action = $(divHolder).find(".action").val();
+                var query = $(divHolder).find(".query").val();
+                var searchFormTab = $(divHolder).find(".searchFormTab").val();
+
+                var labels = bar["object"]["properties"]["chart.labels"];
+
+                var keys = window["chartHBarKeys"+graphId];
+                var clicked = encodeURI(keys[bar[5]]);
+
+                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_self');
+            }
+                else
+                alert("Sorry, there has been an error with the click-through event");
+            }
+
+            function myFunnelClick(e,bar)
+            {
+            if(bar[0]!== undefined && bar[0]['id']!==undefined)
+            {
+                var graphId = bar[0]['id'];
+                var divHolder = $("#"+graphId).parent();
+                var module = $(divHolder).find(".module").val();
+                var action = $(divHolder).find(".action").val();
+                var query = $(divHolder).find(".query").val();
+                var searchFormTab = $(divHolder).find(".searchFormTab").val();
+                var startDate = $(divHolder).find(".startDate").val();
+                var endDate = $(divHolder).find(".endDate").val();
+
+                var labels = bar["object"]["properties"]["chart.labels"];
+                var keys = window["chartHBarKeys"+graphId];
+                var clicked = encodeURI(keys[bar[5]]);
+
+                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&start_range_date_closed='+startDate+'&end_range_date_closed='+endDate+'&sales_stage='+clicked,'_self');
+            }
+                else
+                alert("Sorry, there has been an error with the click-through event");
+            }
+        </script>
+    <style>
+        .menu {
+            z-index: 100;
+        }
+
+        .subDmenu {
+            z-index: 100;
+        }
+
+        div.moduleTitle {
+            height: 10px;
+        }
+    </style>
+
+
+
+
+<script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+<script type="text/javascript" src="include/javascript/dashlets.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+
+
+		<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/Jit/jit.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+		<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/sugarCharts.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+		
+
+		<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/mySugarCharts.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+		
+<div class="dashboard">
+        <ul class="nav nav-tabs nav-dashboard">
+
+                                    <li role="presentation" class="active">
+                    <a id="tab0" href="#tab_content_0" data-toggle="tab" ondblclick="renameTab(0)" onClick="retrievePage(0);" class="hidden-xs">
+                        SUITECRM DASHBOARD
+                    </a>
+
+                    <a id="xstab0" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                        SUITECRM DASHBOARD
+                        <span class="suitepicon suitepicon-action-caret"></span>
+                    </a>
+                    <ul id="first-tab-menu-xs" class="dropdown-menu">
+                        
+                                                    
+                            <li role="presentation">
+                                <a id="tabxs0" href="#tab_content_0" data-toggle="tab"  onClick="retrievePage(0);">
+                                    SUITECRM DASHBOARD
+                                </a>
+                            </li>
+                                            </ul>
+                </li>
+                    
+                    <li id="tab-actions" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">ACTIONS<span class="suitepicon suitepicon-action-caret"></span></a>
+                <ul class="dropdown-menu tab-actions">
+    
+        <li>
+            <input class="button addDashlets" type="button" name="Edit"  data-toggle="modal" data-target=".modal-add-dashlet" value="Add Dashlets">
+        </li>
+        <li>
+            <input class="button addDashboard" type="button" name="Edit"  data-toggle="modal" data-target=".modal-add-dashboard" value="Add Tab">
+        </li>
+        <li>
+            <input class="button addDashboard" type="button" name="Edit"  data-toggle="modal" data-target=".modal-edit-dashboard" value="Edit Tabs">
+        </li>
+    </ul>
+            </li>
+            </ul>
+    <div class="clearfix"></div>
+    <div class="tab-content">
+                                <div class="tab-pane active fade in" id='tab_content_0'>
+                            <img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt="">
+            </div>
+            </div>
+</div>
+    <div class="modal fade modal-add-dashlet" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Dashlets</h4>
+                </div>
+                <div class="modal-body" id="dashletsList">
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade modal-add-dashboard" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add Tab</h4>
+                </div>
+                <div class="modal-body" id="dashboardDialog">
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger btn-add-dashboard" data-dismiss="modal">Add Tab</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade modal-edit-dashboard" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Edit Tabs</h4>
+                </div>
+                <div class="modal-body">
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>                </div>
+                    <div class="container-fluid">
+                        <div class="panel panel-default panel-template">
+                            <div class="panel-heading">
+                                <div>
+                                    <div class="col-xs-10 col-sm-11 col-md-11">
+                                        <div class="edit-dashboard-tabs">
+                                            <span class="suitepicon suitepicon-mimetype-tab"></span>
+                                            <span class="panel-title">Untitled</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- fix errors in mysugar.js -->
+    <div style="visibility: collapse">
+        <div id="dashletsDialog"></div>
+        <div id="dashletsDialog_c"></div>
+    </div>
+
+<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
+<script type="text/javascript">
+
+    var activePage = 0;
+    var theme = 'SuiteP';
+    current_user_id = '68761c9f-e248-43b1-b717-0df477b1a467';
+    jsChartsArray = new Array();
+    var moduleName = 'Home';
+    document.body.setAttribute("class", "yui-skin-sam");
+    
+    var mySugarLoader = new YAHOO.util.YUILoader({
+        require: ["my_sugar", "sugar_charts"],
+        // Bug #48940 Skin always must be blank
+        skin: {
+            base: 'blank',
+            defaultSkin: ''
+        },
+        onSuccess: function () {
+            initMySugar();
+            initmySugarCharts();
+            SUGAR.mySugar.maxCount =    15;
+            SUGAR.mySugar.homepage_dd = new Array();
+            var j = 0;
+
+            
+            var dashletIds = ["30119ea4-bebb-4f4c-baf5-9df404f15e02","ec57cebb-9740-49f8-b305-7a20b113b9aa","b73ea6d8-ffb1-4d4b-a850-b13a73c03fbf","5b51906f-9221-478b-85a0-525673318ffe","590d4979-750d-4a27-ba5f-836e9fbf28d0","028c0d68-6cca-4900-b1fd-5a36e1f4f320"];
+
+                        for (i in dashletIds) {
+                SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
+                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+                // Bug #47097 : Dashlets not displayed after moving them
+                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+                j++;
+                }
+                        YAHOO.util.DDM.mode = 1;
+                        
+            SUGAR.mySugar.renderDashletsDialog();
+            SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
+            
+            
+        }
+    });
+    mySugarLoader.addModule({
+        name: "my_sugar",
+        type: "js",
+        fullpath: "include/MySugar/javascript/MySugar.js?v=p-BUXW88kPGyJ3qvsiY4dw",
+        varName: "initMySugar",
+        requires: []
+    });
+    mySugarLoader.addModule({
+        name: "sugar_charts",
+        type: "js",
+        fullpath: "include/SugarCharts/Jit/js/mySugarCharts.js?v=p-BUXW88kPGyJ3qvsiY4dw",
+        varName: "initmySugarCharts",
+        requires: []
+    });
+    mySugarLoader.insert();
+    
+</script>
+<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script><script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script><script> $( '#pageNum_'+ 0).addClass( 'active' );</script><script>secondsSinceLoad = 0; alertList = [];		if (!alertsTimeoutId) {
+		    checkAlerts();
+		}
+</script></div>
+</div>
+<!-- END of container-fluid, pageContainer divs -->
+<!-- Start Footer Section -->
+    <!-- Start generic footer -->
+    <footer>
+        <div id="copyright_data" class="footer_left">
+            <div id="dialog2" title="Supercharged by SuiteCRM" style="display: none">
+                <p>SuiteCRM has been written and assembled by <a href="https://suitecrm.com/">SuiteCRM Ltd</a>. The Program is provided AS IS, without warranty. Licensed under AGPLv3.</p>
+                <br>
+                <p>This program is free software; you can redistribute it and/or modify it under the terms of the GNU Affero General Public License version 3 as published by the Free Software Foundation, including the additional permission set forth in the source code header.</p>
+                <br>
+                <p>SuiteCRM is a trademark of SuiteCRM Ltd<. All other company and product names may be trademarks of the respective companies with which they are associated.</p>
+                <br>
+            </div>
+            <div id="dialog" title="&copy; Powered By SugarCRM" style="display: none">
+                <p>&copy; 2004-2013 SugarCRM Inc. The Program is provided AS IS, without warranty.  Licensed under <a href="LICENSE.txt" target="_blank" class="copyRightLink">AGPLv3</a>.<br>This program is free software; you can redistribute it and/or modify it under the terms of the <br><a href="LICENSE.txt" target="_blank" class="copyRightLink"> GNU Affero General Public License version 3</a> as published by the Free Software Foundation, including the additional permission set forth in the source code header.<br>SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.<br /><img style='margin-top: 2px' border='0' width='120' height='34' src='include/images/poweredby_sugarcrm_65.png' alt='Powered By SugarCRM'>
+</p>
+            </div>
+            <div id="copyrightbuttons">
+                <a id="admin_options">&copy; Supercharged by SuiteCRM</a>
+                <a id="powered_by">&copy; Powered By SugarCRM</a>
+            </div>
+        </div>
+                <div class="serverstats">
+            <span class="glyphicon glyphicon-globe"></span> Server response time: 0.36 seconds.<br />
+        </div>
+            	<div class="footer_right">
+    		
+    		<a onclick="SUGAR.util.top();" href="javascript:void(0)">Back to top<span class="suitepicon suitepicon-action-above"></span> </a>
+    	</div>
+    </footer>
+    <!-- END Generic Footer -->
+<!-- END Footer Section -->
+
+    <script>
+        SUGAR_callsInProgress++;
+        SUGAR._ajax_hist_loaded = true;
+        if (SUGAR.ajaxUI)
+            YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
+
+        $(function(){
+
+            // fix for campaign wizard
+            if($('#wizard').length) {
+
+                // footer fix
+                var bodyHeight = $('body').height();
+                var contentHeight = $('#pagecontent').height() + $('#wizard').height();
+                var fieldsetHeight = $('#pagecontent').height() + $('#wizard fieldset').height();
+                var height = bodyHeight < contentHeight ? contentHeight : bodyHeight;
+                if(fieldsetHeight > height) {
+                    height = fieldsetHeight;
+                }
+                height += 50;
+                $('#content').css({
+                    'min-height': height + 'px'
+                });
+            }
+        });
+
+    </script>
+
+</div>
+<div class="modal fade modal-generic" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="title-generic">Reset Password</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                <button id="btn-generic" class="btn btn-danger" type="button">Ok</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+</body>
+</html>

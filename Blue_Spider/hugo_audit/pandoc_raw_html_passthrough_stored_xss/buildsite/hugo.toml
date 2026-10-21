@@ -1,0 +1,5 @@
+baseURL='http://localhost/'
+title='h27'
+disableKinds=['taxonomy','term','sitemap','rss','404']
+[security.exec]
+  allow = ['^(dart-)?sass$','^go$','^git$','^node$','^postcss$','^pandoc$']

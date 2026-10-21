@@ -1,0 +1,14 @@
+========================================================================
+VULN-009: generate_href_html() emits javascript: href (no scheme sanitization) → XSS
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: support/helpers.php generate_href_html — e() only, no Str::sanitizeUrl()
+[SETUP] adding ->url(fn ($state) => $state) to the posts 'title' column (documented ->url() pattern, as shipped LinksRelationManager uses; harness; reverted after)
+[SETUP] setting post 1 title to "javascript:void(document.title='PWNED-f2248868')" (attacker-controlled value)
+[SETUP] authenticated as viewer ryan@filamentphp.com; driving a real browser to view + click
+[STEP] launching chromium (Playwright container) to render the posts table and click the link
+[PROOF] server emitted href = javascript:void(document.title='PWNED-f2248868')  (e()-escaped but scheme NOT sanitized)
+[PROOF] document.title after clicking = 'PWNED-f2248868' (sentinel = PWNED-f2248868)
+[OK] stored javascript: href executed in the viewer's authenticated session
+==> VULN-009: CONFIRMED — stored user ->url() value renders as <a href='javascript:...'> and executes on click (generate_href_html does not scheme-sanitize) → stored XSS
+[SETUP] reverted the harness ->url(); PostResource restored

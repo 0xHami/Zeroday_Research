@@ -1,0 +1,14 @@
+Attacker session, GET SubPanelViewer for Account 72e4a438-0f5b-4929-9815-165f5d1bd9bd (owned by victim f50a165a-2a33-4620-94b0-0cf16f87f74b)
+Victim Contact id: 20f10308-a737-4d20-b6ab-27f450f4a86f, last_name marker: V024Contact_c4aaba90
+
+--- snippet of attacker's HTTP response containing the leaked marker ---
+      <td>&nbsp;</td>
+                            <td><a href="?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3DDetailView%26record%3D20f10308-a737-4d20-b6ab-27f450f4a86f" >Victim024 V024Contact_c4aaba90</a></td>
+                            <td>
+
+</td>
+                            <td>
+
+</td>
+                            <td>            <a class="email-link" href="mailto:"
+         

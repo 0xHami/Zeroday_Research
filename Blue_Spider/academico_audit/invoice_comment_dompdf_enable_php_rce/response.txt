@@ -1,0 +1,5 @@
+invoice id: 4
+marker: /tmp/pwn_2099405b
+marker before trigger: <absent>
+download_pdf action: HTTP 200
+marker after trigger (output of `id` run by the server): uid=0(root) gid=0(root) groups=0(root)

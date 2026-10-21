@@ -1,0 +1,14 @@
+========================================================================
+VULN-005: TOCTOU race — poll-vote ballot stuffing (Leg B)
+Target: http://localhost:25850
+========================================================================
+[INFO] exercising polls.php:999 check-then-insert with no atomicity (CWE-367)
+[SETUP] open poll pid=1 on thread tid=16 (2 options, numvotes=0)
+[SETUP] voter voter_cf500507 (uid=67); has cast 0 votes on pid=1
+[STEP] firing 30 concurrent votes (option=1) as the single voter
+[INFO] ballots for this single voter on pid=1: before=0, after=3 (poll.numvotes=1)
+[PROOF] ONE user recorded 3 ballots on one poll — the 'already voted?' check (polls.php:999) and the INSERT are not atomic, so 3 concurrent votes all passed
+------------------------------------------------------------------------
+[WARN] sibling legs share the same no-atomicity pattern (static): login-throttle (headline, member.php:1767-1769 + check/increment ordering bug), reputation, duplicate-email registration
+[OK] exploit confirmed — 3 ballots from one user (poll-vote TOCTOU)
+==> VULN-005: CONFIRMED — poll-vote TOCTOU (ballot stuffing); family shares the root cause

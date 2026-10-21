@@ -1,0 +1,4 @@
+HTTP/1.1 302 
+Location: /;jsessionid=DB5CCF63B040A7371FF128D6A7868EEF
+payment 900913484 status before=1 after=2 (2=PENDING_REFUND)
+refund row: 920010551:owner=27:pay=900913484:status=0 (owner should be attacker=27)

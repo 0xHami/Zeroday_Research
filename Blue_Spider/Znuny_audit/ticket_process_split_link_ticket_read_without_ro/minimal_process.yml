@@ -1,0 +1,66 @@
+---
+Activities:
+  Activity-68b9189a4e07718d1ac9011da2e1f507:
+    ActivityDialogs:
+    - ActivityDialog-95da68e7feabff50cdefa69eb196d17d
+    ChangeTime: 2026-09-29 12:14:19
+    Config:
+      ActivityDialog:
+        '1': ActivityDialog-95da68e7feabff50cdefa69eb196d17d
+      Scope: Global
+    CreateTime: 2026-09-29 12:14:19
+    EntityID: Activity-68b9189a4e07718d1ac9011da2e1f507
+    ID: 1
+    Name: Stage10Start
+ActivityDialogs:
+  ActivityDialog-95da68e7feabff50cdefa69eb196d17d:
+    ChangeTime: 2026-09-29 12:21:14
+    Config:
+      DescriptionLong: ''
+      DescriptionShort: Stage10 minimal dialog (VULN-005 validation)
+      FieldOrder:
+      - Title
+      - Article
+      Fields:
+        Article:
+          DefaultValue: ''
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: 1
+        Title:
+          DefaultValue: ''
+          DescriptionLong: ''
+          DescriptionShort: ''
+          Display: 1
+      Interface:
+      - AgentInterface
+      Permission: rw
+      RequiredLock: '0'
+      SubmitAdviceText: ''
+      SubmitButtonText: Submit
+    CreateTime: 2026-09-29 12:14:19
+    EntityID: ActivityDialog-95da68e7feabff50cdefa69eb196d17d
+    ID: 1
+    Name: Stage10Dialog
+Process:
+  Activities:
+  - Activity-68b9189a4e07718d1ac9011da2e1f507
+  ChangeTime: 2026-09-29 12:14:19
+  Config:
+    Description: Stage10 minimal process for VULN-005 dynamic validation
+    Path:
+      Activity-68b9189a4e07718d1ac9011da2e1f507: {}
+    StartActivity: Activity-68b9189a4e07718d1ac9011da2e1f507
+    StartActivityDialog: ActivityDialog-95da68e7feabff50cdefa69eb196d17d
+  CreateTime: 2026-09-29 12:14:19
+  EntityID: Process-e3ba9e15b77ad51b99bfe82d5ed8abfa
+  ID: 1
+  Layout:
+    Activity-68b9189a4e07718d1ac9011da2e1f507:
+      left: '10'
+      top: '10'
+  Name: Stage10MinimalProcess
+  State: Active
+  StateEntityID: S1
+  TransitionActions: []
+  Transitions: []

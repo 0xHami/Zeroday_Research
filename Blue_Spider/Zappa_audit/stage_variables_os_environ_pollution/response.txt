@@ -1,0 +1,7 @@
+[INFO] exercising: zappa/handler.py:705-709
+[STEP] invocation #1: event with stageVariables {'ZAPPA_POLLUTED_8a878147': 'set-by-invocation-1-8a878147'}
+[STEP] invocation #2 (separate request): read os.environ['ZAPPA_POLLUTED_8a878147'] back via raw_command
+[INFO] invocation #2 sees ZAPPA_POLLUTED_8a878147 = 'set-by-invocation-1-8a878147'
+[PROOF] the stage variable set by invocation #1 was still present in os.environ during a separate invocation #2 (ZAPPA_POLLUTED_8a878147='set-by-invocation-1-8a878147') — a direct-invoke caller pollutes the warm container's environment, and the mutation bleeds into later (incl. internet-facing) requests.
+[OK] exploit confirmed — stageVariables persist into os.environ across invocations
+==> VULN-008: CONFIRMED — stageVariables -> os.environ, persists across warm invocations

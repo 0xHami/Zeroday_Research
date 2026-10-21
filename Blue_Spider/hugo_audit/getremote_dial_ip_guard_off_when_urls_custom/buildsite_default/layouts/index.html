@@ -1,0 +1,3 @@
+{{- $u := "http://internalcanary.test:41455/latest/meta-data/iam/secret" -}}
+{{- $r := try (resources.GetRemote $u) -}}
+{{- with $r.Err }}FETCH_ERR:{{ . }}{{ else }}{{ with $r.Value }}FETCHED:{{ .Content }}{{ else }}FETCH_NIL{{ end }}{{ end -}}

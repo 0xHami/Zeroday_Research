@@ -1,0 +1,8 @@
+account_id=8384e206-4b36-4777-97c0-4a250db90fed (owned by V=da2826bc-e590-4331-a965-1a17de95ad9b)
+contact_id=a5e3fa52-6c22-4769-a192-4432afaa3f08 (owned by A=1eb995b3-a66b-4e74-bafd-957fd17fe291)
+
+accounts_contacts BEFORE: ''
+accounts_contacts AFTER:  '98bdc931-79f6-40ea-a7a4-e3109efb4921\t0'
+
+accounts row BEFORE (modified_user_id, date_modified): 'da2826bc-e590-4331-a965-1a17de95ad9b\t2026-09-28 20:49:22'
+accounts row AFTER  (modified_user_id, date_modified): '1eb995b3-a66b-4e74-bafd-957fd17fe291\t2026-09-28 20:49:24'

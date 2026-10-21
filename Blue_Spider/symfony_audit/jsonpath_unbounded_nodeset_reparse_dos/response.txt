@@ -1,0 +1,23 @@
+Captured proof output (NO_COLOR=1 ./run.sh), lab commit e6df33ba, PHP 8.4.26:
+
+# raw timings printed by the in-container PHP:
+B n=500 bytes=4906 matches=0 time=0.1050
+B n=1000 bytes=9906 matches=0 time=0.3726
+B n=2000 bytes=20906 matches=0 time=1.6198
+A depth=4 bytes=2381 nodes=912 time=0.0012
+A depth=5 bytes=9549 nodes=5008 time=0.0164
+A depth=6 bytes=38221 nodes=25488 time=0.3417
+C len=25000 bytes=25020 time=0.0142
+C len=50000 bytes=50020 time=0.0238
+C len=100000 bytes=100020 time=0.0484
+
+# analysis:
+(b) $-rooted filter operand re-decodes the whole document per element
+    fitted exponent time~N^1.97 (1=linear, 2=quadratic); last doubling x4.3 (linear would be x2)
+(a) recursive-descent '..' node-set explosion (fixed 7-byte query '$..*..*')
+    a 7-byte query returns a node-set up to 25488 nodes from a 38 KB document;
+    time~bytes^2.04 (super-linear) for a 4x-per-step document
+(c) tokenizer scans the full (uncapped) filter text before the length cap applies
+    cost grows with query length despite MAX_FILTER_EXPRESSION_LENGTH=10000 (enforced only after tokenize())
+
+==> VULN-006: CONFIRMED — attacker JsonPath query => super-linear worker CPU DoS (sinks a,b,c).

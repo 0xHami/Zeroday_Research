@@ -1,0 +1,11 @@
+==========================================================================
+VULN-028: HTTP API v2 downgrades non-IAM authorizer to NONE, ignores api_key
+target : http://localhost:22571
+[INFO] exercising: zappa/core.py:2091-2103 (create_api_gateway_v2_routes $default)
+==========================================================================
+[STEP] building the v2 $default route with a CUSTOM authorizer + api_key_required=True
+[INFO] generated route AuthorizationType = 'NONE'
+[INFO] generated route ApiKeyRequired    = '<unset>' (never set for v2)
+[PROOF] the operator asked for a CUSTOM authorizer and an API key, but the generated $default route has AuthorizationType='NONE' and no ApiKeyRequired — the HTTP API is served unauthenticated while the operator believes it is protected (only a log warning is emitted).
+[OK] exploit confirmed — v2 authorizer downgraded to NONE, api_key ignored
+==> VULN-028: CONFIRMED — v2 $default route serves app unauthenticated (auth->NONE)

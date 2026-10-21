@@ -1,0 +1,23 @@
+HTTP 200
+Date: Mon, 28 Sep 2026 20:27:34 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=019bfe02-580a-4acb-8ffb-b236d1fd5bbb; expires=Sun, 27 Dec 2026 20:27:34 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:27:34 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:27:34 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Vary: Accept-Encoding
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+Content-Length: 191
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<div id='rss_dash_1f4b2bb5' style='overflow: auto; width: 100%; height: 200px; border: 1px #ddd solid'>
+<table class='edit view'><tr>
+<td>
+    <h3><a href="" target="_child">hit</a></h3>
+    
+</td>
+</tr></table>
+</div><br />

@@ -1,0 +1,14 @@
+VULN-044 backslash-parity oracle -- suitecrm.log evidence
+============================================================
+
+[baseline_0bs] backslashes=0 marker=BASE590655df21
+  (no log entry -- clean parse)
+
+[odd_1bs] backslashes=1 marker=ODD-10c7698dbdf
+  Mon Sep 28 2026 at 20:31:12 [17][216f2091-b83f-43f7-8449-4499772ff6f0][FATAL]  Query Failed: SELECT * FROM folders WHERE folders.id LIKE "ODD-10c7698dbdf\" OR folders.parent_folder LIKE "ODD-10c7698dbdf\": MySQL error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ODD-10c7698dbdf\"' at line 1
+
+[even_2bs] backslashes=2 marker=EVEN-2ec31c1f4b5
+  (no log entry -- clean parse)
+
+[odd_3bs] backslashes=3 marker=ODD-350abe56a47
+  Mon Sep 28 2026 at 20:31:12 [17][216f2091-b83f-43f7-8449-4499772ff6f0][FATAL]  Query Failed: SELECT * FROM folders WHERE folders.id LIKE "ODD-350abe56a47\\\" OR folders.parent_folder LIKE "ODD-350abe56a47\\\": MySQL error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ODD-350abe56a47\\\"' at line 1

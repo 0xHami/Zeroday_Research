@@ -1,0 +1,10 @@
+Victim Note id: a9de2e9a-c6a5-40fe-b573-10fa8d0aa341
+Uploaded (by V) file bytes:
+  b'SECRET FILE CONTENTS FOR VULN-002 marker_aa430d98'
+
+Bytes returned to attacker via isTempFile bypass:
+  b'SECRET FILE CONTENTS FOR VULN-002 marker_aa430d98'
+
+Exact match: True
+
+Control (non-isTempFile, ACL-checked path) also succeeded: True

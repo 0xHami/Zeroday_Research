@@ -1,0 +1,2 @@
+POST /znuny/index.pl (session A)  Action=AgentPreferences;Subaction=Update;Group=Password;CurPw=OldPw_5a763288;NewPw=NewPw_5a763288;NewPw1=NewPw_5a763288;ChallengeToken=<A>
+GET  /znuny/index.pl?Action=AgentDashboard (session B, old cookie) -> still 'You are logged in'

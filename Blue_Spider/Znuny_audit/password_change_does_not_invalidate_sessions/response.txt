@@ -1,0 +1,2 @@
+password_changed=True
+session_B_still_valid_after_change=True

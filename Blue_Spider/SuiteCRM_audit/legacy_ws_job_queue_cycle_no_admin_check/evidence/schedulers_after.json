@@ -1,0 +1,89 @@
+{
+  "schedulers": [
+    {
+      "id": "5643f2be-a077-4e88-98eb-2dc4669d54c2",
+      "name": "Calendar Accounts Sync",
+      "job_interval": "*/15::*::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "609fd96e-2ad7-4e01-bf25-62f144c543fa",
+      "name": "Check Inbound Mailboxes",
+      "job_interval": "*::*::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "b0ee9f68-a1e4-4bcc-9f74-f546b1ca41de",
+      "name": "Clean Jobs Queue",
+      "job_interval": "0::5::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "2fab3da9-d34a-46fc-b460-9e15be4f4c4c",
+      "name": "Optimise AOD Index",
+      "job_interval": "0::*/3::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "67487dd0-1d12-4c40-88f1-3300f05f1efc",
+      "name": "Perform Elasticsearch Index",
+      "job_interval": "30::4::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "82b547b6-b7da-4f9e-8a26-0657165eb2f4",
+      "name": "Perform Lucene Index",
+      "job_interval": "0::0::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "8c700b3c-6791-4cc9-af21-1313c2fdca75",
+      "name": "Process Workflow Tasks",
+      "job_interval": "*::*::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "dd623225-f72c-431a-b0bd-fb46abeb3aeb",
+      "name": "Prune SuiteCRM Feed Tables",
+      "job_interval": "0::2::1::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "b9f8cb62-0013-4b8a-b7b5-4e33ae8619b8",
+      "name": "Prune Tracker Tables",
+      "job_interval": "0::2::1::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "76540550-9aca-4e33-a79b-3ed753777e9d",
+      "name": "Removal of documents from filesystem",
+      "job_interval": "0::3::1::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "dda14421-a2f2-4385-848a-5135b532968c",
+      "name": "Run Email Reminder Notifications",
+      "job_interval": "*::*::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "4224c7eb-98cf-4411-ac87-6eb22ed1e0e0",
+      "name": "Run Nightly Mass Email Campaigns",
+      "job_interval": "0::2-6::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "a10a684f-9530-44c0-9589-468a393b8a8c",
+      "name": "Run Nightly Process Bounced Campaign Emails",
+      "job_interval": "0::2-6::*::*::*",
+      "last_run": "NULL"
+    },
+    {
+      "id": "554c283a-4d8c-428a-933c-886a1fee3ba6",
+      "name": "Run Report Generation Scheduled Tasks",
+      "job_interval": "*::*::*::*::*",
+      "last_run": "NULL"
+    }
+  ],
+  "job_queue_count": "6"
+}

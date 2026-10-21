@@ -1,0 +1,7 @@
+POST /token-oauth085_94163786
+  Host: 172.18.0.1:33119
+  User-Agent: GuzzleHttp/7
+  content-type: application/x-www-form-urlencoded
+  Content-Length: 161
+  BODY: b'client_id=poc-client&client_secret=poc-secret&redirect_uri=http%3A%2F%2Flocalhost%3A33116%2Fep%2FsetExternalOAuthToken&grant_type=authorization_code&code=anycode'
+

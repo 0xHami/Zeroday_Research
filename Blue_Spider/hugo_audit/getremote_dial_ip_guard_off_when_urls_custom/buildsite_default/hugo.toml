@@ -1,0 +1,3 @@
+baseURL='http://localhost/'
+title='h1'
+disableKinds=['taxonomy','term','sitemap','rss','404']

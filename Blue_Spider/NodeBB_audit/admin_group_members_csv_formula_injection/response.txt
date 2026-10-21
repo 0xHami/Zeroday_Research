@@ -1,0 +1,9 @@
+### VULN-010 — group-members CSV (vulnerable, raw cells) ###
+"email","username","uid"
+"admin@example.com","admin",1
+"","+HYPERLINK_6a600426",9         <-- ATTACKER cell: begins with '+' (formula trigger), NO leading apostrophe
+
+# The username cell is emitted verbatim. A spreadsheet interprets a leading =,+,-,@ as a formula.
+# Contrast (source): the USERS export src/user/admin.js:91,106-110 runs neutralizeCsvFormula, which
+# prefixes such a cell with an apostrophe (e.g. "'+HYPERLINK_..."), neutralizing it. The group export
+# (src/controllers/admin/groups.js:97-105) omits that step -> regression / CSV injection.

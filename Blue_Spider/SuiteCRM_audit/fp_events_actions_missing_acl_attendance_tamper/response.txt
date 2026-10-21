@@ -1,0 +1,154 @@
+HTTP/1.1 200 OK
+Date: Mon, 28 Sep 2026 20:50:54 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=9933ad84-ebd0-45ff-af3b-1ea306645f76; expires=Sun, 27 Dec 2026 20:50:54 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:50:54 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:50:54 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Vary: Accept-Encoding
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+Content-Length: 8412
+Keep-Alive: timeout=5, max=98
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<!DOCTYPE html>
+<html lang='en_us'>
+<head>
+    <link rel="SHORTCUT ICON" href="themes/SuiteP/images/sugar_icon.ico?v=p-BUXW88kPGyJ3qvsiY4dw">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+    <!-- Bootstrap -->
+    <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css"/>
+    <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
+    <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css"/>
+    <link href="themes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css"/>
+    <title>Events &raquo; SuiteCRM Lab</title>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>jscal_today = 1000*1790628654; if(typeof app_strings == "undefined") app_strings = new Array();</script><script type="text/javascript" src="cache/include/javascript/sugar_grp1_jquery.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script type="text/javascript" src="cache/include/javascript/sugar_grp1_yui.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script type="text/javascript" src="cache/include/javascript/sugar_grp1.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script type="text/javascript" src="include/javascript/calendar.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script><script>
+SUGAR.config.stockAjaxBannedModules = ["Calendar","Emails","Campaigns","Documents","DocumentRevisions","Project","ProjectTask","EmailMarketing","CampaignLog","CampaignTrackers","Releases","Groups","EmailMan","Administration","ModuleBuilder","Schedulers","SchedulersJobs","DynamicFields","EditCustomFields","EmailTemplates","Users","Currencies","Trackers","Connectors","Import_1","Import_2","Versions","vCals","CustomFields","Roles","Audit","InboundEmail","SavedSearch","UserPreferences","MergeRecords","EmailAddresses","Relationships","Employees","Import","OAuthKeys","Surveys","StageTenBannedModule_e097ad22"];
+SUGAR.config.disableAjaxUI = false;
+SUGAR.config.addAjaxBannedModules = ["StageTenBannedModule_e097ad22"];</script>
+<script type="text/javascript">SUGAR.themes.image_server="";</script><script type="text/javascript">var name_format = "s f l";</script><script type="text/javascript">
+	var time_reg_format = '([0-9]{1,2}):([0-9]{1,2})';
+	var date_reg_format = '([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})';
+	var date_reg_positions = { 'm': 1,'d': 2,'Y': 3 };
+	var time_separator = ':';
+	var cal_date_format = '%m/%d/%Y';
+	var time_offset = 0;
+	var num_grp_sep = ',';
+	var dec_sep = '.';
+	function convertDbTimestampToUserTZ(dbTimestamp) {
+        if (!dbTimestamp) {
+            return null;
+        }
+
+        var utcDate = new Date(dbTimestamp.replace(' ', 'T') + 'Z');
+
+        if (isNaN(utcDate.getTime())) {
+            return null;
+        }
+
+        var userDate = new Date(utcDate.getTime() + (0 * 1000));
+    
+        const tokens = {
+            Y: () => String(userDate.getUTCFullYear()),
+            y: () => String(userDate.getUTCFullYear()).slice(-2),
+            F: () => userDate.toLocaleString(undefined, { month: 'long', timeZone: 'UTC' }),
+            M: () => userDate.toLocaleString(undefined, { month: 'short', timeZone: 'UTC' }),
+            m: () => String(userDate.getUTCMonth() + 1).padStart(2, '0'),
+            n: () => String(userDate.getUTCMonth() + 1),
+            d: () => String(userDate.getUTCDate()).padStart(2, '0'),
+            j: () => String(userDate.getUTCDate()),
+            D: () => userDate.toLocaleString(undefined, { weekday: 'short', timeZone: 'UTC' }),
+            l: () => userDate.toLocaleString(undefined, { weekday: 'long', timeZone: 'UTC' }),
+            H: () => String(userDate.getUTCHours()).padStart(2, '0'),
+            h: () => String(userDate.getUTCHours() % 12 || 12).padStart(2, '0'),
+            G: () => String(userDate.getUTCHours()),
+            g: () => String(userDate.getUTCHours() % 12 || 12),
+            i: () => String(userDate.getUTCMinutes()).padStart(2, '0'),
+            s: () => String(userDate.getUTCSeconds()).padStart(2, '0'),
+            a: () => userDate.getUTCHours() < 12 ? 'am' : 'pm',
+            A: () => userDate.getUTCHours() < 12 ? 'AM' : 'PM'
+        };
+
+        let formatted = 'm/d/Y H:i';
+        Object.keys(tokens)
+            .sort((a, b) => b.length - a.length)
+            .forEach(token => formatted = formatted.split(token).join(tokens[token]()));
+
+        return formatted;
+    }
+</script><script type="text/javascript" src="cache/jsLanguage/en_us.js?v=hH0cJQlwInRE6zI5BuIZgA"></script><script type="text/javascript" src="cache/jsLanguage/FP_events/en_us.js?v=hH0cJQlwInRE6zI5BuIZgA"></script><script type='text/javascript'>
+var sugar_cache_dir = 'cache/';
+var module_sugar_grp1 = 'FP_events';
+var action_sugar_grp1 = 'markasattended';
+</script>
+<script type="text/javascript" src="cache/themes/SuiteP/js/style-min.js?v=p-BUXW88kPGyJ3qvsiY4dw"></script>
+    
+    <script type="text/javascript">
+        <!--
+        SUGAR.themes.theme_name = 'SuiteP';
+        SUGAR.themes.theme_ie6compat = 'false';
+        SUGAR.themes.hide_image = 'themes/default/images/hide.gif?v=p-BUXW88kPGyJ3qvsiY4dw';
+        SUGAR.themes.show_image = 'themes/default/images/show.gif?v=p-BUXW88kPGyJ3qvsiY4dw';
+        SUGAR.themes.loading_image = 'themes/default/images/img_loading.gif?v=p-BUXW88kPGyJ3qvsiY4dw';
+        
+        if (YAHOO.env.ua)
+            UA = YAHOO.env.ua;
+        -->
+    </script>
+    
+    
+            <!-- qtip & suggestion box -->
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" /><link rel="stylesheet" type="text/css" href="" /><link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" /><link rel="stylesheet" type="text/css" href="cache/themes/SuiteP/css/Dawn/style.css?v=p-BUXW88kPGyJ3qvsiY4dw" />
+    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">
+    <script type="text/javascript" src='themes/SuiteP/js/jscolor.js?v=p-BUXW88kPGyJ3qvsiY4dw'></script>
+    <script type="text/javascript" src='cache/include/javascript/sugar_field_grp.js?v=p-BUXW88kPGyJ3qvsiY4dw'></script>
+    <script type="text/javascript" src='vendor/tinymce/tinymce/tinymce.min.js?v=p-BUXW88kPGyJ3qvsiY4dw'></script>
+</head>
+<body onMouseOut="closeMenus();">
+
+    <div id="ajaxHeader">
+        <!--Start Responsive Top Navigation Menu -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="dropdown">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <ul class="dropdown-menu mobile_menu" role="menu" id="mobile_menu">
+                                                                                                                                                                                                                                                                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DFP_events%26action%3Dindex%26parentTab%3DAll'">
+                                    Events
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=FP_events'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DHome%26action%3Dindex%26parentTab%3DAll'">
+                                    Home
+                                                                    </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DAccounts%26action%3Dindex%26parentTab%3DAll'">
+                                    Accounts
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Accounts'"></span>
+                                                                                                            </a>
+                            </li>
+                                                    <li role="presentation" data-test="1">
+                                                                <a href="javascript:void(0)" onclick="window.location.href = '?action=ajaxui#ajaxUILoc=index.php%3Fmodule%3DContacts%26action%3Dindex%26parentTab%3DAll'">
+                                    Contacts
+                                                                            <span class="glyphicon glyphicon-plus"  onclick="window.location.href = 'index.php?action=EditView&module=Contacts'"></span>
+ 

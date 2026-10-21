@@ -1,0 +1,6 @@
+POST /livewire-5f244c96/update HTTP/1.1
+Host: localhost:20000
+X-CSRF-TOKEN: z1W31cG2tjTBwTV9YsNe9GQpd85X173FtWEIFaX0
+Content-Type: application/json
+
+{"components":[{"snapshot":"<RegistrationWizard snapshot>","updates":{"currentStep":4,"contacts":[],"email":"bypass_61067c01@example.invalid","password":"1","gender":9,"idnumber":"XXXXXXXXXXXXXXXXXXXXXXXXX","address":""},"calls":[{"path":"","method":"register","params":[]}]}]}

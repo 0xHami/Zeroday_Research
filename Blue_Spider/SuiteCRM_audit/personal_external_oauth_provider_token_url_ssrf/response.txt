@@ -1,0 +1,30 @@
+HTTP 200
+Date: Mon, 28 Sep 2026 20:32:56 GMT
+Server: Apache/2.4.68 (Debian)
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: ck_login_id_20=6fb21c1d-794a-4360-9756-08971d489ed8; expires=Sun, 27 Dec 2026 20:32:56 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, ck_login_language_20=en_us; expires=Sun, 27 Dec 2026 20:32:56 GMT; Max-Age=7776000; path=/; domain=localhost; HttpOnly, sugar_user_theme=SuiteP; expires=Tue, 28 Sep 2027 20:32:56 GMT; Max-Age=31536000; path=/; domain=localhost; HttpOnly
+Vary: Accept-Encoding
+Content-Encoding: gzip
+X-Content-Type-Options: nosniff
+Content-Length: 212
+Keep-Alive: timeout=5, max=96
+Connection: Keep-Alive
+Content-Type: text/html; charset=UTF-8
+
+<body>
+<script>
+    var data;
+    const channel = new BroadcastChannel('auth');
+                        data = ['access_token', 'poc-access-token'];
+            channel.postMessage(data);
+                    data = ['expires_in', '1790631176'];
+            channel.postMessage(data);
+                    data = ['refresh_token', 'Array'];
+            channel.postMessage(data);
+                    data = ['token_type', ''];
+            channel.postMessage(data);
+                window.close();
+</script>
+</body>

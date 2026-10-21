@@ -1,0 +1,4 @@
+configured default cap (list_max_entries_per_page) = 20
+limit=15 (below cap)  -> totalCount=15
+limit=45 (above cap)   -> totalCount=45
+no limit key (baseline)   -> totalCount=20

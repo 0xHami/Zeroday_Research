@@ -1,0 +1,11 @@
+========================================================================
+VULN-011: Repeater/Builder accept unbounded client items (DoS)
+========================================================================
+[INFO] target: http://localhost:21890
+[INFO] exercising: CanLimitItemsLength — no default maxItems; one child schema hydrated per item
+[INFO] baseline: 5-item repeater → HTTP 200 in 0.13s
+[STEP] submitting a 25000-item repeater array (1013890 bytes) → the server hydrates 25000 child schemas in one request
+[PROOF] attack returned HTTP 500 after 31.35s — the worker crashed building 25000 child schemas for one request
+[PROOF] app log: Maximum execution time of 30 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalErro
+[OK] exploit confirmed — a single 25000-item submit crashed the worker (~31s vs 0.13s baseline); no default maxItems cap
+==> VULN-011: CONFIRMED — one unauthenticated submit of 25000 repeater items exhausts the worker (A); no default item cap (maxItems null)

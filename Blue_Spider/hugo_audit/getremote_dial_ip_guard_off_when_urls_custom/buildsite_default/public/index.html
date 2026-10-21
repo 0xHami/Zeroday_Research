@@ -1,0 +1,27 @@
+FETCH_ERR:template: index.html:2:24: executing &#34;index.html&#34; at &lt;resources.GetRemote&gt;: error calling GetRemote: Get &#34;http://internalcanary.test:41455/latest/meta-data/iam/secret&#34;: dial tcp 127.0.0.1:41455: access denied: &#34;127.0.0.1&#34; is not whitelisted in policy &#34;security.http.urls&#34;; the current security configuration is:
+
+[security]
+  allowContent = [&#39;! ^text/html$&#39;, &#39;! ^text/org$&#39;]
+  enableInlineShortcodes = false
+
+  [security.exec]
+    allow = [&#39;^(dart-)?sass$&#39;, &#39;^go$&#39;, &#39;^git$&#39;, &#39;^node$&#39;, &#39;^postcss$&#39;]
+    osEnv = [&#39;(?i)^((HTTPS?|NO)_PROXY|PATH(EXT)?|APPDATA|TE?MP|TERM|GO\w&#43;|(XDG_CONFIG_)?HOME|USERPROFILE|SSH_AUTH_SOCK|DISPLAY|LANG|SYSTEMDRIVE|PROGRAMDATA)$&#39;]
+
+  [security.funcs]
+    getenv = [&#39;^HUGO_&#39;, &#39;^CI$&#39;]
+
+  [security.http]
+    methods = [&#39;(?i)GET|POST&#39;]
+    proxyFromEnvironment = false
+    urls = [&#39;(?i)^https?://[a-z0-9]&#39;, &#39;! (?i)^https?://\d&#43;\.&#39;, &#39;! (?i)localhost&#39;, &#39;! (?i)^https?://[^/?#]*@&#39;]
+
+  [security.node]
+    [security.node.permissions]
+      allowAddons = [&#39;tailwindcss&#39;]
+      allowChildProcess = [&#39;tailwindcss&#39;]
+      allowRead = [&#39;.&#39;]
+      allowWorker = [&#39;tailwindcss&#39;]
+      allowWrite = []
+      disable = false
+

@@ -1,0 +1,20 @@
+========================================================================
+VULN-030: Public-API /v1/courses/* stale privilege after key-creator demotion
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[SETUP] course C=09bf0d17-212d-4360-9e20-a179e8a8defe has 2 student(s) on its roster (PII target)
+[SETUP] key-creator S=u_ffc1493e@cvehunt.local added as ADMIN (DB role_id=1)
+[INFO]   (real POST /organization/automation/keys {type:api} → HTTP 201: {"success":true,"data":{"key":{"id":"cf32d23f-6691-4b17-b5e8-23f2c53fe535","organizationId":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","createdB — plan-gated, so seeding the key row directly)
+[SETUP] seeded org api key 5a6f114b-2fbb-4b3f-98ad-f44ef154d559 (created_by=S)
+[STEP] [S=ADMIN] GET /public-api/v1/courses → HTTP 200   (listCoursesService — NO actor check)
+[STEP] [S=ADMIN] GET /public-api/v1/courses/09bf0d17-212d-4360-9e20-a179e8a8defe/students → HTTP 200   (listCourseStudentsService — NO actor check (roster PII))
+[STEP] [S=ADMIN] GET /public-api/v1/courses/09bf0d17-212d-4360-9e20-a179e8a8defe/members → HTTP 200   (listCourseMembersService — re-checks actor role (guarded sibling))
+[STEP] demoted S to STUDENT (DB role_id=3); key left intact
+[STEP] [S=STUDENT] GET /public-api/v1/courses → HTTP 200   (listCoursesService — NO actor check)
+[STEP] [S=STUDENT] GET /public-api/v1/courses/09bf0d17-212d-4360-9e20-a179e8a8defe/students → HTTP 200   (listCourseStudentsService — NO actor check (roster PII))
+[STEP] [S=STUDENT] GET /public-api/v1/courses/09bf0d17-212d-4360-9e20-a179e8a8defe/members → HTTP 403   (listCourseMembersService — re-checks actor role (guarded sibling))
+[SETUP] cleaned up seeded key 5a6f114b-2fbb-4b3f-98ad-f44ef154d559 and S's membership row
+[PROOF] after demotion, GET /v1/courses/:id/students still returns 200 with the student roster (PII) — the service never re-checks the actor's current role (stale privilege)
+[PROOF] the SAME demoted key gets 403 on /v1/courses/:id/members (it re-derives the live role) — proving the /courses & /students services simply omit that check
+==> VULN-030: CONFIRMED — demoted key still reads /v1/courses + student roster; guarded /members returns 403
+[OK] confirmed stale privilege in v1 course services (missing assertOrgTeamMember)

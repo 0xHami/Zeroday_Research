@@ -1,0 +1,9 @@
+{
+  "document_revision": {
+    "id": "affb82db-8de0-4a69-a01b-85afc47415ff",
+    "document_name": "<a href=\"index.php?module=Documents&action=DetailView&record=4e293d47-5214-459a-b4ee-a3e4c37f4494\">Stage10 VULN-003 target doc_2baaa904</a>",
+    "revision": "1",
+    "filename": "secret.txt",
+    "file": "Q1ZFSFVOVEVSLVNFQ1JFVC1GSUxFLWRvY181M2Y0NThmMwo="
+  }
+}

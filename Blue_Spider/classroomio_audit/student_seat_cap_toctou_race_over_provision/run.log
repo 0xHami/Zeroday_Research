@@ -1,0 +1,18 @@
+========================================================================
+VULN-029: Seat/plan-cap over-provision race
+target: API=http://localhost:21527  dashboard=http://localhost:21526
+========================================================================
+[INFO] student-limit.ts:86-131 locks the org row but on autocommit `db`; invite-link.ts:242
+[INFO] calls it without the accept `tx` → lock released before the member insert
+[SETUP] provision a FRESH org (no plan → Free/BASIC cap=20)
+[SETUP] fresh org=b0083358-2d98-4814-aae2-f3a8e3dd03c0
+[SETUP] course=df52a464-5a2a-4b9b-a39b-34c0edeae9d2 share-link token=RbqPcG0G56…
+[STEP] filling the org to 19 active students (one seat left)
+[INFO]   active students now = 19 (target cap-1 = 19)
+[SETUP] creating 10 DISTINCT course share-links + 10 joiner accounts
+[STEP] firing 10 concurrent accepts (distinct links) with 1 seat remaining
+[INFO]   concurrent accept statuses: [(0, 403), (1, 403), (2, 403), (3, 403), (4, 403), (5, 403), (6, 200), (7, 200), (8, 403), (9, 403)]
+[INFO]   2/10 accepts succeeded; final active students = 21 (cap=20)
+[PROOF] final active students = 21 > plan cap 20; 2 joiners passed the capacity check for a single remaining seat (lock not held across the insert) → over-provision
+==> VULN-029: CONFIRMED — seat cap 20 exceeded (active=21) via concurrent-join race
+[OK] exploit confirmed — plan seat cap bypassed by TOCTOU race

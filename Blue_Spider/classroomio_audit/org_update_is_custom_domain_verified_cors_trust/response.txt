@@ -1,0 +1,10 @@
+PUT http://localhost:21527/organization  {'customDomain': 'evil-daa911bc5.example', 'isCustomDomainVerified': True}
+HTTP 200
+{"success":true,"data":{"id":"48bbdff8-2ad5-46a3-a259-2ca3d52677dd","name":"CVE Hunt Academy","siteName":"cve-hunt-academy","avatarUrl":null,"settings":{"studentLimitNotified":{"half":true,"reached":true}},"landingpage":{},"theme":"blue","createdAt":"2026-09-27 03:24:59.550137+00","customization":{"apps":{"poll":true,"comments":true},"course":{"grading":true,"newsfeed":true},"dashboard":{"exercise":true,"community":true,"bannerText":"","bannerImage":""}},"isRestricted":false,"customCode":null,"customDomain":"evil-daa911bc5.example","favicon":null,"isCustomDomainVerified":true,"disableSignup":false,"disableSignupMessage":null,"disableEmailPassword":false,"disableGoogleAuth":false,"parentOrganizationId":null,"readOnlyUntil":null,"aiTutorSettings":{"enabled":true,"persona":"encouraging","codePolicy":"hints_only","escalation":{"email":"","enabled":false},"thingsToSay":"","blockOffTopic":true,"customPersona":"","assessmentMode":"hint_only","groundingScope":"course","responseLength":"medium","thingsNotToSay":"","welcomeMessage":"","forbiddenTopics":[],"profanityFilter":true,"disclaimerFooter":"I am an AI tutor, not your instructor.","requireCitations":true,"revealSolutionsAfterAttempts":3}}}
+
+DB before: <null>|f
+DB after : evil-daa911bc5.example|t
+
+CORS probe Origin: http://evil-daa911bc5.example
+  before poison: Access-Control-Allow-Origin=None Allow-Credentials=true
+  after  poison: Access-Control-Allow-Origin=http://evil-daa911bc5.example Allow-Credentials=true

