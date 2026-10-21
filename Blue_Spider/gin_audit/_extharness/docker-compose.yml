@@ -1,0 +1,28 @@
+# Extended gin harness for stage-10 conditional/primitive findings.
+# Separate compose project (cvehunterlab_gin_ext) so it does NOT reconcile with the
+# default lab's `app` service; still carries the cvehunterlab_gin* prefix for cleanup.
+name: cvehunterlab_gin_ext
+
+services:
+  ext:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      additional_contexts:
+        # gin source (audit target), relative to this dir: exploits/_extharness -> targets/gin
+        ginsrc: ../../../../targets/gin
+    image: cvehunterlab_gin_ext:latest
+    container_name: cvehunterlab_gin_ext
+    ports:
+      - "36275:8090"   # demo   (VULN-004/010/011/019/020 + VULN-007 write)
+      - "36276:8091"   # tp     (VULN-003)
+      - "36277:8092"   # rawpath(VULN-008)
+      - "36278:8093"   # slash  (VULN-009)
+      - "36279:8094"   # fixed  (VULN-016)
+      - "36280:8095"   # mna    (VULN-017)
+      - "36281:8096"   # h2c    (VULN-006)
+      - "36282:8097"   # rparam (VULN-001 escalation)
+    # within the per-target budget alongside the 8g default app (8+2 < 16g)
+    mem_limit: 2g
+    cpus: 2.0
+    restart: unless-stopped

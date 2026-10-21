@@ -1,0 +1,2 @@
+# Shared dependencies for all symfony exploit PoCs (stage 10 dynamic validation).
+requests==2.32.3

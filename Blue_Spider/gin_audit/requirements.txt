@@ -1,0 +1,4 @@
+# Shared dependencies for all gin exploit automation scripts.
+# Installed into the shared venv (exploits/.venv) by each finding's run.sh.
+requests==2.32.3
+httpx[http2]==0.27.2

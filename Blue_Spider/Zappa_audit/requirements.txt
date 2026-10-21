@@ -1,0 +1,4 @@
+# Shared deps for all Zappa stage-10 exploits (installed into exploits/.venv/).
+# Host-side exploits need only an HTTP client; target code (cli/core/handler)
+# is exercised INSIDE the lab container, which already ships boto3/troposphere/etc.
+requests==2.32.3

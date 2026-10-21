@@ -1,0 +1,3 @@
+# Shared dependencies for the django Stage-10 exploit suite.
+# Installed into the shared venv at exploits/.venv/ by each run.sh.
+requests==2.32.3

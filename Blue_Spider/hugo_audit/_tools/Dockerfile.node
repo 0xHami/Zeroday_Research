@@ -1,0 +1,12 @@
+# Throwaway image: the target hugo binary on top of Node 24 (which supports the
+# `--permission` model Hugo applies by default; the lab's Debian Node 18 does not, so
+# PostCSS cannot run there at all). This lets HUGO-002 be validated under Hugo's DEFAULT
+# Node hardening — proving the injected plugin executes and can still reach the network
+# despite `--permission` (which restricts fs/child-process, not network egress).
+FROM node:24-bookworm
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git ca-certificates \
+    && apt-get clean
+COPY --from=cvehunterlab_hugo_app:latest /usr/local/bin/hugo /usr/local/bin/hugo
+ENTRYPOINT ["hugo"]
+CMD ["version"]

@@ -1,0 +1,5 @@
+# Shared dependencies for all NodeBB exploit automation scripts (stage 10).
+# Installed into the shared venv at exploits/.venv/ by each finding's run.sh.
+requests==2.32.3
+python-socketio[client]==5.11.4
+websocket-client==1.8.0
