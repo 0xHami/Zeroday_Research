@@ -107,5 +107,8 @@ Credited to 0xHamy but not yet included in this repository — the writeups were
 
 ## CVEs with KhanMarshaI
 
-CVE-2026-25552
-CVE-2025-11280, CVE-2025-11281, CVE-2025-11282, CVE-2025-11283
+- CVE-2026-25552
+- CVE-2025-11280
+- CVE-2025-11281
+- CVE-2025-11282
+- CVE-2025-11283
