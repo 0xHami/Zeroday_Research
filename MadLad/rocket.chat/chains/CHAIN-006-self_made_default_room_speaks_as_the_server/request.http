@@ -1,0 +1,7 @@
+POST /api/v1/teams.create HTTP/1.1
+Host: 127.0.0.1:39649
+X-Auth-Token: B-ouk7uFCf_S9GD_SrUob3Ry4WrvBo8KKzA0HvU7f2v
+X-User-Id: kenWsigf4bi86fnF4
+Content-Type: application/json
+
+{"name": "it-announcements-9a8b55af", "type": 0, "room": {"extraData": {"default": true, "featured": true, "description": "Official IT announcements", "topic": "Read-only announcements from IT"}}}

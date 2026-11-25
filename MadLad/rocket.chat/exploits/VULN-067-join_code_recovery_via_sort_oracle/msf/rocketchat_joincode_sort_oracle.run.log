@@ -1,0 +1,15 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/channels.list
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+SORTFIELD => joinCode
+[*] 127.0.0.1:39649       - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649       - Vulnerable: VULN-067
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

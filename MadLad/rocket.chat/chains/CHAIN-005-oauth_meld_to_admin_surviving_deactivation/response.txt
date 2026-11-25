@@ -1,0 +1,22 @@
+final URL: http://127.0.0.1:39649/home?loginCode=eff719a19e9ae5171831e739869e67aff4a1997e4010948fd69e1764bc086c99
+HTTP 200
+
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+<base href="/">
+<meta name="rc-message-parser-max-length" content="10000" />
+
+		<link rel="icon" sizes="16x16" type="image/png" href=/assets/favicon_16.png />
+		<link rel="icon" sizes="32x32" type="image/png" href=/assets/favicon_32.png />
+			<link rel="icon" sizes="any" type="image/svg+xml" href=/assets/favicon.svg />
+<meta http-equiv="content-language" content=""><meta name="language" content="">
+<meta property="fb:app_id" content="">
+<meta name="robots" content="INDEX,FOLLOW">
+<meta name="google-site-verification" content="">
+<meta name="msvalidate.01" content="">
+<title>Rocket.Chat</title><meta name="application-name" content="Rocket.Chat"><meta name="apple-mobile-web-app-title" content="Rocket.Chat">
+<script id="scripts" type="text/javascript" src="/sc

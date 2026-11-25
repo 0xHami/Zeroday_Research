@@ -1,0 +1,64 @@
+{
+  "room": "boardroom-2b7e9d13",
+  "rid": "6b05a362e7422a44df31db2b",
+  "banned_account": "insider_2b7e9d13",
+  "step1_invite": {
+    "token": "zqZ7Ap",
+    "created": 200,
+    "owner_list": 403,
+    "owner_revoke": 403
+  },
+  "ban": {
+    "status": 200,
+    "history_after": 400,
+    "room_stream_after": "nosub"
+  },
+  "step3_notification_pref": {
+    "status": 200,
+    "body": "{\"success\":true}"
+  },
+  "step2_leaks": {
+    "notification_subscription": "ready",
+    "message_after_ban_received": true,
+    "frame": {
+      "msg": "changed",
+      "collection": "stream-notify-user",
+      "id": "id",
+      "fields": {
+        "eventName": "RLBnGw8BhE5RTisJa/notification",
+        "args": [
+          {
+            "title": "#boardroom-2b7e9d13",
+            "text": "chair_2b7e9d13: after-ban-2b7e9d13: the acquisition price is 41m",
+            "payload": {
+              "_id": "bYYBwbr6b8L4FxhBj",
+              "rid": "6b05a362e7422a44df31db2b",
+              "sender": {
+                "_id": "tFQKmNsAYNMD8uqdm",
+                "username": "chair_2b7e9d13",
+                "name": "chair_2b7e9d13"
+              },
+              "type": "p",
+              "message": {
+                "msg": "after-ban-2b7e9d13: the acquisition price is 41m"
+              },
+              "name": "boardroom-2b7e9d13"
+            }
+          }
+        ]
+      }
+    },
+    "file_status": 200,
+    "file_body": "severance-terms-2b7e9d13\n"
+  },
+  "step4_reentry": {
+    "banned_account_redemption": 400,
+    "new_account_redemption": 200,
+    "history_status": 200,
+    "post_ban_message_read": true,
+    "members_now": [
+      "chair_2b7e9d13",
+      "consultant_2b7e9d13"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+172.18.0.3 - - [24/Nov/2026:16:00:04 +0000] "POST /api/v1/livechat/transcript HTTP/1.1" 200 56 "-" "-" 9322 "rocketchat@file" "http://rocketchat:3000" 303ms

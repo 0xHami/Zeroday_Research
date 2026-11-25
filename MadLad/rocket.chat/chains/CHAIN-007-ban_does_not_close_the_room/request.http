@@ -1,0 +1,7 @@
+POST /api/v1/useInviteToken HTTP/1.1
+Host: 127.0.0.1:39649
+X-Auth-Token: hedY6AM_xMnAhbyitmKcvY98ZKfkqMzbST0xngpA3cY
+X-User-Id: Cvo3gGd7dTdop7PkL
+Content-Type: application/json
+
+{"token": "zqZ7Ap"}

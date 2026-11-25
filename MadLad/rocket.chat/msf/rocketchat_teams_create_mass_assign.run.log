@@ -1,0 +1,15 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/teams.create
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+NEWTEAM => bs-helpdesk-probe
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[-] Auxiliary aborted due to failure: not-vulnerable: VULN-058: the attack did not land
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

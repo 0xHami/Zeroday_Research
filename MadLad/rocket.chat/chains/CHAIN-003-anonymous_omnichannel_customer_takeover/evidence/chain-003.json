@@ -1,0 +1,34 @@
+{
+  "omnichannel_was": {
+    "Livechat_enabled": false,
+    "Livechat_accept_chats_with_no_agents": false
+  },
+  "step1_stream": {
+    "subscribe": {
+      "msg": "ready",
+      "subs": [
+        "314c748c"
+      ]
+    },
+    "secret_seen": true,
+    "phone_harvested": "+1555235835"
+  },
+  "step2_token": {
+    "status": 200,
+    "token_returned": "customer-834e8323",
+    "is_customers_own": true
+  },
+  "step2_use": {
+    "history_status": 200,
+    "history_has_secret": true,
+    "posted_as_customer": 200
+  },
+  "step3_transcript": {
+    "upload": 200,
+    "transcript": 200,
+    "mail_from": "rocketchat@lab.invalid",
+    "subject": "Transcript of your omnichannel conversation.",
+    "customer_text_in_mail": true,
+    "lure_live": true
+  }
+}

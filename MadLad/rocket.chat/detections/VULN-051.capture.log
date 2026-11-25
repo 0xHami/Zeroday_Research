@@ -1,0 +1,16 @@
+172.18.0.3 - - [24/Nov/2026:15:59:58 +0000] "POST /api/v1/login HTTP/1.1" 200 1960 "-" "-" 9312 "rocketchat@file" "http://rocketchat:3000" 142ms
+172.18.0.3 - - [24/Nov/2026:15:59:58 +0000] "GET /api/v1/settings/Livechat_enabled HTTP/1.1" 200 55 "-" "-" 9313 "rocketchat@file" "http://rocketchat:3000" 17ms
+172.18.0.3 - - [24/Nov/2026:15:59:58 +0000] "POST /api/v1/settings/Livechat_enabled HTTP/1.1" 200 16 "-" "-" 9314 "rocketchat@file" "http://rocketchat:3000" 108ms
+172.18.0.3 - - [24/Nov/2026:15:59:58 +0000] "GET /api/v1/settings/Livechat_accept_chats_with_no_agents HTTP/1.1" 200 75 "-" "-" 9315 "rocketchat@file" "http://rocketchat:3000" 17ms
+172.18.0.3 - - [24/Nov/2026:15:59:58 +0000] "POST /api/v1/settings/Livechat_accept_chats_with_no_agents HTTP/1.1" 200 16 "-" "-" 9316 "rocketchat@file" "http://rocketchat:3000" 56ms
+172.18.0.3 - - [24/Nov/2026:15:59:58 +0000] "GET /api/v1/settings/Livechat_enable_transcript HTTP/1.1" 200 65 "-" "-" 9317 "rocketchat@file" "http://rocketchat:3000" 30ms
+172.18.0.3 - - [24/Nov/2026:16:00:01 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 291 "-" "-" 9318 "rocketchat@file" "http://rocketchat:3000" 55ms
+172.18.0.3 - - [24/Nov/2026:16:00:02 +0000] "GET /api/v1/livechat/room?token=t-33ba47d1 HTTP/1.1" 200 857 "-" "-" 9319 "rocketchat@file" "http://rocketchat:3000" 661ms
+172.18.0.3 - - [24/Nov/2026:16:00:03 +0000] "POST /api/v1/livechat/upload/MDBEeS7AnzPeXfyrn HTTP/1.1" 200 1724 "-" "-" 9320 "rocketchat@file" "http://rocketchat:3000" 460ms
+172.18.0.3 - - [24/Nov/2026:16:00:03 +0000] "POST /api/v1/livechat/message HTTP/1.1" 200 649 "-" "-" 9321 "rocketchat@file" "http://rocketchat:3000" 659ms
+172.18.0.3 - - [24/Nov/2026:16:00:04 +0000] "POST /api/v1/livechat/transcript HTTP/1.1" 200 56 "-" "-" 9322 "rocketchat@file" "http://rocketchat:3000" 303ms
+172.18.0.3 - - [24/Nov/2026:16:00:06 +0000] "POST /api/v1/livechat/room.close HTTP/1.1" 200 72 "-" "-" 9323 "rocketchat@file" "http://rocketchat:3000" 352ms
+172.18.0.3 - - [24/Nov/2026:16:00:07 +0000] "GET /api/v1/settings/Livechat_enabled HTTP/1.1" 200 54 "-" "-" 9324 "rocketchat@file" "http://rocketchat:3000" 22ms
+172.18.0.3 - - [24/Nov/2026:16:00:07 +0000] "POST /api/v1/settings/Livechat_enabled HTTP/1.1" 200 16 "-" "-" 9325 "rocketchat@file" "http://rocketchat:3000" 71ms
+172.18.0.3 - - [24/Nov/2026:16:00:07 +0000] "GET /api/v1/settings/Livechat_accept_chats_with_no_agents HTTP/1.1" 200 74 "-" "-" 9326 "rocketchat@file" "http://rocketchat:3000" 21ms
+172.18.0.3 - - [24/Nov/2026:16:00:07 +0000] "POST /api/v1/settings/Livechat_accept_chats_with_no_agents HTTP/1.1" 200 16 "-" "-" 9327 "rocketchat@file" "http://rocketchat:3000" 101ms

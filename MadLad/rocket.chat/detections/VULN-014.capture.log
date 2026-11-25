@@ -1,0 +1,15 @@
+172.18.0.3 - - [24/Nov/2026:15:55:22 +0000] "POST /api/v1/login HTTP/1.1" 200 1960 "-" "-" 8862 "rocketchat@file" "http://rocketchat:3000" 639ms
+172.18.0.3 - - [24/Nov/2026:15:55:23 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 400 158 "-" "-" 8863 "rocketchat@file" "http://rocketchat:3000" 19ms
+172.18.0.3 - - [24/Nov/2026:15:55:23 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8864 "rocketchat@file" "http://rocketchat:3000" 124ms
+172.18.0.3 - - [24/Nov/2026:15:55:23 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8865 "rocketchat@file" "http://rocketchat:3000" 159ms
+172.18.0.3 - - [24/Nov/2026:15:55:26 +0000] "GET /api/v1/getCurrentImportOperation HTTP/1.1" 200 308 "-" "-" 8866 "rocketchat@file" "http://rocketchat:3000" 30ms
+172.18.0.3 - - [24/Nov/2026:15:55:26 +0000] "GET /api/v1/getImportFileData HTTP/1.1" 400 91 "-" "-" 8867 "rocketchat@file" "http://rocketchat:3000" 51ms
+172.18.0.3 - - [24/Nov/2026:15:55:26 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8868 "rocketchat@file" "http://rocketchat:3000" 266ms
+172.18.0.3 - - [24/Nov/2026:15:55:27 +0000] "POST /api/v1/users.create HTTP/1.1" 200 353 "-" "-" 8869 "rocketchat@file" "http://rocketchat:3000" 467ms
+172.18.0.3 - - [24/Nov/2026:15:55:27 +0000] "POST /api/v1/login HTTP/1.1" 200 1780 "-" "-" 8870 "rocketchat@file" "http://rocketchat:3000" 190ms
+172.18.0.3 - - [24/Nov/2026:15:55:27 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 403 117 "-" "-" 8871 "rocketchat@file" "http://rocketchat:3000" 25ms
+172.18.0.3 - - [24/Nov/2026:15:55:27 +0000] "POST /api/v1/permissions.update HTTP/1.1" 200 258811 "-" "-" 8872 "rocketchat@file" "http://rocketchat:3000" 247ms
+172.18.0.3 - - [24/Nov/2026:15:55:30 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8873 "rocketchat@file" "http://rocketchat:3000" 193ms
+172.18.0.3 - - [24/Nov/2026:15:55:30 +0000] "POST /api/v1/permissions.update HTTP/1.1" 200 258804 "-" "-" 8874 "rocketchat@file" "http://rocketchat:3000" 174ms
+172.18.0.3 - - [24/Nov/2026:15:55:30 +0000] "POST /api/v1/import.clear HTTP/1.1" 200 16 "-" "-" 8875 "rocketchat@file" "http://rocketchat:3000" 66ms
+172.18.0.3 - - [24/Nov/2026:15:55:30 +0000] "POST /api/v1/users.delete HTTP/1.1" 200 34 "-" "-" 8876 "rocketchat@file" "http://rocketchat:3000" 229ms

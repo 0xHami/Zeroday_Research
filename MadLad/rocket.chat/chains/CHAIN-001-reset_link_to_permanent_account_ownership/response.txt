@@ -1,0 +1,15 @@
+HTTP/1.1 200
+Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization
+Access-Control-Allow-Origin: *
+Cache-Control: no-store
+Content-Length: 1364
+Content-Security-Policy: default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com
+Content-Type: application/json
+Date: Tue, 24 Nov 2026 14:00:46 GMT
+Pragma: no-cache
+X-Content-Type-Options: nosniff
+X-Frame-Options: sameorigin
+X-Instance-Id: e287198e-5576-4f77-898f-18ea23e4d9e4
+X-Xss-Protection: 1
+
+{"user":{"_id":"q87bw5rfCRL6imzZY","createdAt":"2026-11-24T14:00:40.216Z","services":{"password":true,"email2fa":{"enabled":true,"changedAt":"2026-11-24T14:00:40.216Z"},"totp":{"enabled":true,"hashedBackup":["417bba6c5f069eb4d69f659610e1fdcdbc6b0282030396d970e1f037e9860487","a16aef91cd5f62e00fe58fbc3881a8281761f62814dbe14bb14a1d59c28268b7","a8eaf44cfe68eefb875b2999e7f69a6cb858a7054327880ce98bdc357cc462e9","ac0022b4ba4c4369cbe7834591ff6db27a758f9215c4896c970d7340d6721621","e22005a5f63c5ab4ea7b44702efb65cf495ecab45f49a4c17a3773f4e4ede06d","2084617672e1022b23459d25880feb5da7df88cb73a31c34550fafcbc46ba4f9","7bf6e9d922f24645cd1b5fbddffc779c9b4fede37883c4588210dfc0473ab3a8","6694e5730a1a56976efe54a76d4115aa9da198e394294ea95f10a1bc3f484e48","3ebee9a7c0f0796d8043e683c97c97f81173e8fa668144d4c05f2c11d5c53c1a","196a489580a66d14ac74f622bc224b8219bea498884645dcee9a04deaf999fcc","6dfab5c190758baf6bd21fdfa5f3034934a9dcb9c29f4c677f8bde55d89651d4","369d8f9ac1b543802a94877f879f170d1d7de07db64a6a5d648c986e0623c77f"],"secret":"NQSTMQJDJV4DCR3RO5RTAL2KJ52SYTZXPUVEAJRFIZ6W66KYJBEQ"}},"username":"vic_5d7a3bf5","emails":[{"address":"vic_5d7a3bf5@lab.invalid","verified":true}],"name":"vic_5d7a3bf5","type":"user","roles":["user"],"status":"offline","active":true,"requirePasswordChange":false,"lastLogin":"2026-11-24T14:00:46.447Z","canViewAllInfo":true},"success":true}

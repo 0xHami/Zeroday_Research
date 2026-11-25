@@ -1,0 +1,3 @@
+172.18.0.3 - - [24/Nov/2026:16:05:25 +0000] "POST /api/v1/livechat/webhook.test HTTP/1.1" 400 58 "-" "-" 9668 "rocketchat@file" "http://rocketchat:3000" 47ms
+172.18.0.3 - - [24/Nov/2026:16:05:25 +0000] "POST /api/v1/livechat/webhook.test HTTP/1.1" 400 58 "-" "-" 9670 "rocketchat@file" "http://rocketchat:3000" 246ms
+172.18.0.3 - - [24/Nov/2026:16:05:26 +0000] "POST /api/v1/livechat/webhook.test HTTP/1.1" 200 16 "-" "-" 9672 "rocketchat@file" "http://rocketchat:3000" 55ms

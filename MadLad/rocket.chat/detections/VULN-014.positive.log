@@ -1,0 +1,6 @@
+172.18.0.3 - - [24/Nov/2026:15:55:23 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 400 158 "-" "-" 8863 "rocketchat@file" "http://rocketchat:3000" 19ms
+172.18.0.3 - - [24/Nov/2026:15:55:23 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8864 "rocketchat@file" "http://rocketchat:3000" 124ms
+172.18.0.3 - - [24/Nov/2026:15:55:23 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8865 "rocketchat@file" "http://rocketchat:3000" 159ms
+172.18.0.3 - - [24/Nov/2026:15:55:26 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8868 "rocketchat@file" "http://rocketchat:3000" 266ms
+172.18.0.3 - - [24/Nov/2026:15:55:27 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 403 117 "-" "-" 8871 "rocketchat@file" "http://rocketchat:3000" 25ms
+172.18.0.3 - - [24/Nov/2026:15:55:30 +0000] "POST /api/v1/downloadPublicImportFile HTTP/1.1" 200 16 "-" "-" 8873 "rocketchat@file" "http://rocketchat:3000" 193ms

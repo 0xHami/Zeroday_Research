@@ -1,0 +1,412 @@
+{
+  "schema": "blue_spider.known_issues/1",
+  "target": {
+    "repo": "rocket.chat",
+    "product": "Rocket.Chat",
+    "version": "9.1.0-develop",
+    "commit": "9f3d6c8c48911e32ed6c2ce36befd431faa71190"
+  },
+  "checked_at": "2026-11-24",
+  "findings": [
+    {
+      "id": "VULN-001",
+      "verdict": "NOT KNOWN",
+      "novelty": 50,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-002",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-wontfix",
+      "searches": 12
+    },
+    {
+      "id": "VULN-003",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 12
+    },
+    {
+      "id": "VULN-004",
+      "verdict": "NOT KNOWN",
+      "novelty": 75,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-005",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 11
+    },
+    {
+      "id": "VULN-006",
+      "verdict": "NOT KNOWN",
+      "novelty": 80,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-007",
+      "verdict": "NOT KNOWN",
+      "novelty": 70,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-008",
+      "verdict": "NOT KNOWN",
+      "novelty": 40,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-009",
+      "verdict": "NOT KNOWN",
+      "novelty": 70,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-010",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 10
+    },
+    {
+      "id": "VULN-011",
+      "verdict": "NOT KNOWN",
+      "novelty": 85,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-012",
+      "verdict": "NOT KNOWN",
+      "novelty": 55,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-014",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 10
+    },
+    {
+      "id": "VULN-015",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 13
+    },
+    {
+      "id": "VULN-018",
+      "verdict": "NOT KNOWN",
+      "novelty": 70,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-019",
+      "verdict": "NOT KNOWN",
+      "novelty": 75,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-020",
+      "verdict": "NOT KNOWN",
+      "novelty": 80,
+      "known_status": "novel",
+      "searches": 9
+    },
+    {
+      "id": "VULN-024",
+      "verdict": "NOT KNOWN",
+      "novelty": 65,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-026",
+      "verdict": "NOT KNOWN",
+      "novelty": 25,
+      "known_status": "novel",
+      "searches": 13
+    },
+    {
+      "id": "VULN-030",
+      "verdict": "NOT KNOWN",
+      "novelty": 40,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-032",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 11
+    },
+    {
+      "id": "VULN-033",
+      "verdict": "NOT KNOWN",
+      "novelty": 55,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-035",
+      "verdict": "NOT KNOWN",
+      "novelty": 65,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-036",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 11
+    },
+    {
+      "id": "VULN-037",
+      "verdict": "NOT KNOWN",
+      "novelty": 45,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-040",
+      "verdict": "NOT KNOWN",
+      "novelty": 80,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-041",
+      "verdict": "NOT KNOWN",
+      "novelty": 70,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-042",
+      "verdict": "NOT KNOWN",
+      "novelty": 30,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-043",
+      "verdict": "NOT KNOWN",
+      "novelty": 70,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-045",
+      "verdict": "NOT KNOWN",
+      "novelty": 75,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-046",
+      "verdict": "NOT KNOWN",
+      "novelty": 75,
+      "known_status": "novel",
+      "searches": 9
+    },
+    {
+      "id": "VULN-047",
+      "verdict": "NOT KNOWN",
+      "novelty": 60,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-049",
+      "verdict": "NOT KNOWN",
+      "novelty": 55,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-051",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 11
+    },
+    {
+      "id": "VULN-054",
+      "verdict": "NOT KNOWN",
+      "novelty": 55,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-055",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 10
+    },
+    {
+      "id": "VULN-057",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 11
+    },
+    {
+      "id": "VULN-058",
+      "verdict": "NOT KNOWN",
+      "novelty": 40,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-059",
+      "verdict": "NOT KNOWN",
+      "novelty": 30,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-060",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 11
+    },
+    {
+      "id": "VULN-061",
+      "verdict": "NOT KNOWN",
+      "novelty": 75,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-062",
+      "verdict": "NOT KNOWN",
+      "novelty": 35,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-063",
+      "verdict": "NOT KNOWN",
+      "novelty": 30,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-066",
+      "verdict": "NOT KNOWN",
+      "novelty": 45,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-067",
+      "verdict": "NOT KNOWN",
+      "novelty": 45,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-068",
+      "verdict": "NOT KNOWN",
+      "novelty": 75,
+      "known_status": "novel",
+      "searches": 9
+    },
+    {
+      "id": "VULN-069",
+      "verdict": "NOT KNOWN",
+      "novelty": 45,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-070",
+      "verdict": "NOT KNOWN",
+      "novelty": 50,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-071",
+      "verdict": "KNOWN",
+      "novelty": 0,
+      "known_status": "known-unpatched",
+      "searches": 10
+    },
+    {
+      "id": "VULN-073",
+      "verdict": "NOT KNOWN",
+      "novelty": 45,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-074",
+      "verdict": "NOT KNOWN",
+      "novelty": 60,
+      "known_status": "novel",
+      "searches": 11
+    },
+    {
+      "id": "VULN-076",
+      "verdict": "NOT KNOWN",
+      "novelty": 70,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-077",
+      "verdict": "NOT KNOWN",
+      "novelty": 55,
+      "known_status": "novel",
+      "searches": 9
+    },
+    {
+      "id": "VULN-078",
+      "verdict": "NOT KNOWN",
+      "novelty": 30,
+      "known_status": "novel",
+      "searches": 12
+    },
+    {
+      "id": "VULN-079",
+      "verdict": "NOT KNOWN",
+      "novelty": 55,
+      "known_status": "novel",
+      "searches": 9
+    },
+    {
+      "id": "VULN-081",
+      "verdict": "NOT KNOWN",
+      "novelty": 50,
+      "known_status": "novel",
+      "searches": 10
+    },
+    {
+      "id": "VULN-084",
+      "verdict": "NOT KNOWN",
+      "novelty": 60,
+      "known_status": "novel",
+      "searches": 11
+    }
+  ],
+  "attribution": "Blue Spider, a product of Kohi Research Corporation (kohirc.com). Copyright 2026 Kohi Research Corporation. All rights reserved. Blue Spider (TM) is a trademark of Kohi Research Corporation. Generated by Blue Spider; do not use or redistribute without attribution to Kohi Research Corporation."
+}

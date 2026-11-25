@@ -1,0 +1,20 @@
+========================================================================
+CHAIN-008: a deleted message is still readable: by an outsider, by a member, by nobody at all
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-010 (the deletion timeline of any room) -> VULN-059 (the hidden thread root, default install) -> VULN-049 (any deleted message by id, with history on) -> VULN-047 (the same content with no account)
+[SETUP] author_ec5a97aa owns the private group legal-ec5a97aa (6b05a0f2e7422a44df31dab0) and the public channel general-notes-ec5a97aa (6b05a0f2e7422a44df31dab3); member_ec5a97aa is in both, outsider_ec5a97aa is in neither
+[STEP] 1/4 VULN-010: author_ec5a97aa posted and deleted a message in the private group; outsider_ec5a97aa asks for that room's deletions
+[PROOF]     the outsider cannot open the room at all (groups.history -> HTTP 400) yet chat.getDeletedMessages answers HTTP 200 with 1 deletion(s), including the id just deleted (True)
+[STEP] 2/4 VULN-059: a thread root deleted on the default configuration, read back by another member through chat.syncThreadsList
+[PROOF]     the sync route returns the deleted root's text (True) while the room's own history withholds it (False), with Message_KeepHistory still at its shipped False
+[STEP] 3/4 VULN-049: with message edit history on, read an ordinary deleted message's text back by its id
+[PROOF]     chat.getMessage on the deleted id returns its text to a member (HTTP 200, text present=True) while the room's own history does not (False)
+[INFO]     and the interaction worth recording: with history keeping on nothing is moved to the trash collection, so the step-1 timeline for this channel is [] (the deleted id present=False). The timeline leak and the content leak therefore apply in opposite configurations, and each is enough on its own for the step that follows
+[STEP] 4/4 VULN-047: with anonymous read on, ask for the same channel with no credentials whatsoever
+[PROOF]     unauthenticated channels.anonymousread -> HTTP 200; it contains the deleted message (True) and the deleted thread root (True)
+[INFO] cleanup: restoring both settings and deleting the rooms and accounts this run created
+[INFO]     settings restored: Message_KeepHistory=False, Accounts_AllowAnonymousRead=False
+[OK] CHAIN-008 CONFIRMED
+==> CHAIN-008 CONFIRMED 2026-11-24 - an account with no access to a private group listed that room's deletions, a member recovered a deleted thread root's full text on the shipped configuration, a member recovered an ordinary deleted message's text by id once history keeping was on, and an unauthenticated request returned both of those deleted texts once anonymous read was on

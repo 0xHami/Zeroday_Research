@@ -1,0 +1,729 @@
+{
+  "schema": "blue_spider.detections/1",
+  "author": "Blue Spider",
+  "generated": "2026-11-24",
+  "target": {
+    "repo": "rocket.chat",
+    "product": "Rocket.Chat",
+    "version": "9.1.0-develop",
+    "commit": "9f3d6c8c48911e32ed6c2ce36befd431faa71190",
+    "base_url": "http://127.0.0.1:39649"
+  },
+  "logsource": {
+    "service": "bluespiderlab_rocket.chat_proxy (Traefik v3.4, the lab's reverse proxy; the compose project is bluespiderlab_rocket_chat because Compose rejects a dot, so the container is read by name)",
+    "how": "container stdout (docker logs bluespiderlab_rocket.chat_proxy), the proxy running with --accesslog=true; the application writes no per-request line at its shipped Log_Level 0",
+    "format": "combined, read by det.log_event; Traefik logs a hijacked /websocket connection with a status of 0, which det.log_event's 3-digit status pattern does not match, so those 22 lines of clean.log are built as dicts with the Sigma webserver field names (cs-method, cs-uri-stem, cs-uri-query, sc-status, cs-user-agent) instead of being dropped"
+  },
+  "counts": {
+    "confirmed_findings": 57,
+    "rules": 20,
+    "rules_confirmed": 20,
+    "skipped": 37,
+    "clean_log_lines": 400
+  },
+  "rules": [
+    {
+      "finding": "VULN-001",
+      "file": "VULN-001.sigma.yml",
+      "rule_id": "41c17d9a-d020-5f15-ae6b-73f310502e29",
+      "title": "Rocket.Chat: anonymous Livechat visitor registration (visitor-token IDOR)",
+      "level": "high",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 6,
+        "matched_positives": 6,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 17,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-001.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Sees every anonymous visitor registration reaching the route; cannot see whose phone number or email address was in the body, so with Omnichannel in use it needs the request payload to separate an attack from a real visitor."
+    },
+    {
+      "finding": "VULN-007",
+      "file": "VULN-007.sigma.yml",
+      "rule_id": "67400bc5-8dff-55fe-a59b-2d5ae3868aa7",
+      "title": "Rocket.Chat: users.listByStatus ordered by a credential field",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 1,
+        "matched_positives": 1,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 10,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-007.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees the sort-order probe, which is the part of the finding that reaches the URL; the plain listing call that discloses every account's email and roles is byte-identical to the admin area's own request and is not detectable from a web server log."
+    },
+    {
+      "finding": "VULN-010",
+      "file": "VULN-010.sigma.yml",
+      "rule_id": "1db8b347-9fde-514d-a556-bc0437b8d14a",
+      "title": "Rocket.Chat: chat.getDeletedMessages called for a room the caller may not read",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 2,
+        "matched_positives": 2,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 13,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-010.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees every call to the route with the room it names; cannot say whether the caller was entitled to that room, which is the finding itself, so pair it with the room membership from the application."
+    },
+    {
+      "finding": "VULN-014",
+      "file": "VULN-014.sigma.yml",
+      "rule_id": "8c620203-d9b2-516e-a2c8-f115e3c25300",
+      "title": "Rocket.Chat: downloadPublicImportFile invoked (arbitrary server-side file read)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 6,
+        "matched_positives": 6,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 9,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-014.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Sees that the route was called and by how many requests; cannot see the fileUrl, so a local path and a legitimate https URL look the same until payload logging is on."
+    },
+    {
+      "finding": "VULN-019",
+      "file": "VULN-019.sigma.yml",
+      "rule_id": "36e3a422-9b8b-5417-a37e-28c00dc17e9e",
+      "title": "Rocket.Chat: integration management through /hooks/add or /hooks/remove",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 3,
+        "matched_positives": 3,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 18,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-019.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires on any use of the two management sub-routes, which is what the finding abuses, and stays silent on an ordinary incoming webhook post to /hooks/<id>/<token>; it cannot tell a revoked token from a live one (both authenticate) nor read the target_url from the body."
+    },
+    {
+      "finding": "VULN-020",
+      "file": "VULN-020.sigma.yml",
+      "rule_id": "6cb9b4a0-39eb-5695-ac0e-b89446a0f90e",
+      "title": "Rocket.Chat: roles.addUserToRole refusals (role-membership authorization oracle)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 4,
+        "matched_positives": 4,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 13,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-020.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Sees every refused call to the route, which is the oracle's own answer, and stays silent on the successful grants an administrator makes; the username and roleId that were probed are in the body."
+    },
+    {
+      "finding": "VULN-041",
+      "file": "VULN-041.sigma.yml",
+      "rule_id": "0c5f4116-9a99-5be6-af7d-0004e937c91b",
+      "title": "Rocket.Chat: channels.messages filtered by starredIds (star privacy bypass)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 1,
+        "matched_positives": 1,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 20,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-041.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees the query that performs the bypass, with the room and the user id it filtered on, because both are in the URL; the realtime leg of the same finding travels over /websocket and is invisible here."
+    },
+    {
+      "finding": "VULN-046",
+      "file": "VULN-046.sigma.yml",
+      "rule_id": "4055d11a-2952-55f5-ae63-30989ff70ad5",
+      "title": "Rocket.Chat: anonymous write into any room through livechat/page.visited",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 2,
+        "matched_positives": 2,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 16,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-046.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires on every call to the route, which on a default install (Livechat off) is already the anomaly; the room id and the injected text are in the body and need payload logging."
+    },
+    {
+      "finding": "VULN-047",
+      "file": "VULN-047.sigma.yml",
+      "rule_id": "78fb731d-24ac-51ca-ad81-883d5de45976",
+      "title": "Rocket.Chat: channels.anonymousread serving Omnichannel and deleted content",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 2,
+        "matched_positives": 2,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 35,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-047.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees every anonymous read with the room id it asked for, all in the URL; it cannot show which messages came back."
+    },
+    {
+      "finding": "VULN-051",
+      "file": "VULN-051.sigma.yml",
+      "rule_id": "1f3c917e-0db2-5b6c-a4e7-82b54529e391",
+      "title": "Rocket.Chat: Livechat transcript mailed to a caller-named address",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 1,
+        "matched_positives": 1,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 15,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-051.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Sees that a transcript was requested; the recipient address, the room and the HTML all travel in the body, so attributing it needs payload logging or the mail log."
+    },
+    {
+      "finding": "VULN-054",
+      "file": "VULN-054.sigma.yml",
+      "rule_id": "8c874c9f-9a0a-5e99-a893-f6193d847839",
+      "title": "Rocket.Chat: Livechat offline form submitted (unescaped HTML into the support mailbox)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 2,
+        "matched_positives": 2,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 21,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-054.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires on every offline-form submission, which on this default install (Omnichannel off) is already anomalous; the HTML in the name, message and host fields is in the body."
+    },
+    {
+      "finding": "VULN-059",
+      "file": "VULN-059.sigma.yml",
+      "rule_id": "54e9cd49-b330-5c37-a791-189a8c07302f",
+      "title": "Rocket.Chat: chat.syncThreadsList called (deleted thread roots disclosed)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 1,
+        "matched_positives": 1,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 13,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-059.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees the route, the room and the cursor, all in the URL; it cannot show which deleted roots came back in the response."
+    },
+    {
+      "finding": "VULN-060",
+      "file": "VULN-060.sigma.yml",
+      "rule_id": "d3213542-7c0d-5ea9-ab7e-053b10e400f4",
+      "title": "Rocket.Chat: password set through the method bridge (policy bypass)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 2,
+        "matched_positives": 2,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 17,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-060.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires on the changePassword leg, which names the method in the URL; the resetPassword leg of the same finding uses /api/v1/method.callAnon/resetPassword, the route the product's own reset page uses, and is deliberately not matched."
+    },
+    {
+      "finding": "VULN-066",
+      "file": "VULN-066.sigma.yml",
+      "rule_id": "dfcca7ae-9698-518c-adac-61eaca0b8cd7",
+      "title": "Rocket.Chat: forgotPassword through the anonymous method bridge",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 9,
+        "matched_positives": 9,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 8,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-066.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires on every anonymous forgotPassword call on the bridge, with the source address; the target email address is in the body."
+    },
+    {
+      "finding": "VULN-067",
+      "file": "VULN-067.sigma.yml",
+      "rule_id": "f08bf309-a6f2-580c-a544-95a2812f5af3",
+      "title": "Rocket.Chat: channels.list sorted by joinCode (join-code recovery oracle)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 60,
+        "matched_positives": 60,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 45,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-067.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees every oracle question, because the sort key is in the URL, and counts them; it cannot show which channel was being attacked unless the query also names a filter."
+    },
+    {
+      "finding": "VULN-073",
+      "file": "VULN-073.sigma.yml",
+      "rule_id": "e0cd89ba-909d-5032-a5a0-f1f724c25296",
+      "title": "Rocket.Chat: Livechat offline form answered 503 (mailer regex denial of service)",
+      "level": "high",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 1,
+        "matched_positives": 1,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 26,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-073.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires when the route itself fails, which is the denial of service landing; it cannot see the long input (the body is not logged) and it does not fire on the requests that stall the server without timing out, so pair it with response-time monitoring."
+    },
+    {
+      "finding": "VULN-074",
+      "file": "VULN-074.sigma.yml",
+      "rule_id": "8d3b1f6f-115a-57f8-ab61-d7d8ce04b829",
+      "title": "Rocket.Chat: unknown method name on the anonymous DDP bridge (metric cardinality)",
+      "level": "high",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 300,
+        "matched_positives": 300,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 5,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-074.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Fires per request on any anonymous method name outside the shipped client's own set, which is how the series are created; Sigma does not count, so the volume that makes it a denial of service has to be read from the number of alerts."
+    },
+    {
+      "finding": "VULN-077",
+      "file": "VULN-077.sigma.yml",
+      "rule_id": "e2411de2-e715-5530-a4b4-3e067a50d8f8",
+      "title": "Rocket.Chat: livechat/visitors.pagesVisited read (visitor tokens disclosed)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 1,
+        "matched_positives": 1,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 23,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-077.validation.log"
+      },
+      "limitation": "",
+      "coverage": "Sees each read and the conversation it was for, both in the URL; it cannot show whether the tokens that came back were then used, which shows up as visitor-token traffic on /api/v1/livechat/*."
+    },
+    {
+      "finding": "VULN-081",
+      "file": "VULN-081.sigma.yml",
+      "rule_id": "b4cd8b7a-60a1-558c-ad71-ea09def60c2a",
+      "title": "Rocket.Chat: Livechat webhook test fired (server-side request forgery)",
+      "level": "medium",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 3,
+        "matched_positives": 3,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 23,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-081.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Fires on each test, which is the request that performs the fetch; the URL that gets fetched is a workspace setting, not part of this request, so pair it with the POST /api/v1/omnichannel/integrations that set it."
+    },
+    {
+      "finding": "VULN-084",
+      "file": "VULN-084.sigma.yml",
+      "rule_id": "2403f3d6-ec86-5cd4-ace7-a3ab5bb48d8b",
+      "title": "Rocket.Chat: users.register refusals (account enumeration by email address)",
+      "level": "informational",
+      "author": "Blue Spider",
+      "status": "CONFIRMED",
+      "validation": {
+        "positives": 2,
+        "matched_positives": 2,
+        "negatives": 400,
+        "matched_negatives": 0,
+        "same_run_other_lines": 8,
+        "same_run_matched": 0,
+        "sigma_check": "valid",
+        "sigma_problems": [],
+        "log": "VULN-084.validation.log"
+      },
+      "limitation": "the payload is in the request body, which a web server does not log: this rule detects the request reaching the route, and application or proxy logs are needed to see the payload",
+      "coverage": "Sees every refused registration attempt and the source address; the email address that was probed is in the body, so the enumeration target needs payload logging."
+    }
+  ],
+  "skipped": [
+    {
+      "finding": "VULN-002",
+      "title": "OAuth account linking by unverified email claim, so an IdP identity melds into any local account with that address",
+      "why": "NEEDS_MANUAL (the attack traffic never reaches the proxy, and the decisive value is the identity provider's claim)",
+      "evidence": "the replay window holds no /oauth/gitlab request at all: the exploit drives the OAuth hops on the app directly (rocketchat:3000), because the session cookie that flow issues is Secure and the lab's plain-HTTP proxy rewrites X-Forwarded-Proto; what is left in the log is ordinary (GET /api/v1/me 200)",
+      "needs": "the application's own OAuth log plus the identity provider's response, where the unverified email claim is"
+    },
+    {
+      "finding": "VULN-003",
+      "title": "Cross-user event injection on notify-room-users: any member forges userData and video-conference events into every other member's private stream",
+      "why": "NEEDS_MANUAL (the attack is DDP frames inside a websocket session)",
+      "evidence": "3 lines of 'GET /websocket' with status 0, which is what every legitimate client also produces; the forged stream-notify-room-users frames are inside the upgraded connection",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-004",
+      "title": "users.info returns the caller's raw services document, disclosing the TOTP seed and backup-code hashes to any holder of the session",
+      "why": "NEEDS_MANUAL (the request is the web client's own profile fetch; the disclosure is in the response body)",
+      "evidence": "'GET /api/v1/users.info?userId=<self> 200', the same line clean.log carries 7 times from the product's own client",
+      "needs": "the response body, or an egress rule on the services document: no request attribute separates the two"
+    },
+    {
+      "finding": "VULN-005",
+      "title": "Anonymous callers can read the permission-to-role map through the permissions/get method",
+      "why": "NEEDS_MANUAL (the attack is a single anonymous DDP method call)",
+      "evidence": "the whole window is 1 line: 'GET /websocket' status 0; the permissions/get call is a frame inside it",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-006",
+      "title": "stream-apps and stream-importers accept anonymous subscriptions, and the app setting-changed event carries the new value (secrets included)",
+      "why": "NEEDS_MANUAL (the attack is an anonymous DDP subscription)",
+      "evidence": "1 line of 'GET /websocket' status 0; the stream-apps and stream-importers subscriptions are frames inside it",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-008",
+      "title": "Room-message stream authorization is never re-evaluated, so a previewer keeps receiving a channel's messages after it is made private",
+      "why": "NEEDS_MANUAL (the attack is a websocket subscription that is never re-evaluated)",
+      "evidence": "2 lines of 'GET /websocket' status 0; the finding is precisely that no further request is made after the room is made private, so there is nothing to log",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-009",
+      "title": "Room ban not enforced on the notification and file-download paths, because both match the banned subscription",
+      "why": "NEEDS_MANUAL (an ordinary file download; the ban state is not in the request)",
+      "evidence": "'GET /file-upload/<id>/<name> 200', the same line clean.log carries for a member's own download; the refusal that proves the bypass is a different request (groups.history 400)",
+      "needs": "the application's own request log with the caller's user id (Log_Level 1, middlewares/logger.ts:15-31), correlated with the room's ban list"
+    },
+    {
+      "finding": "VULN-011",
+      "title": "Typing indicators accept a room the caller cannot access, because the user-activity write rule only checks the claimed name",
+      "why": "NEEDS_MANUAL (the attack is a DDP method call on a stream the caller may not read)",
+      "evidence": "2 lines of 'GET /websocket' status 0; the refused subscription and the accepted write are both frames",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-012",
+      "title": "Mass assignment in rooms.mediaConfirm: a member sets any message type t, forging system notices that chat.sendMessage refuses",
+      "why": "NEEDS_MANUAL (the forged message type is in the request body)",
+      "evidence": "'POST /api/v1/rooms.mediaConfirm/<rid>/<fileId> 200', which clean.log also carries: the web client confirms every upload on this route",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the t field)"
+    },
+    {
+      "finding": "VULN-015",
+      "title": "MFA bypass through the recovery flow: resetPassword and verifyEmail are exempted from the second factor and return a session",
+      "why": "NEEDS_MANUAL (the second-factor bypass runs over DDP)",
+      "evidence": "the window's only attack-side line is 'POST /api/v1/users.forgotPassword 200' (requesting the mail, which clean.log also carries); the resetPassword call that returns a session is a frame in 'GET /websocket' status 0",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-018",
+      "title": "/oauth/userinfo accepts expired access tokens for 30 days, because only the REST bearer path checks expires",
+      "why": "NEEDS_MANUAL (the token and its expiry are in the Authorization header)",
+      "evidence": "the valid and the expired call are byte-identical in the log: two lines of 'GET /oauth/userinfo 200', and clean.log carries the same line for a token that is still in date",
+      "needs": "the application's own OAuth log, or the token store: the access log records no Authorization header"
+    },
+    {
+      "finding": "VULN-024",
+      "title": "Protected file downloads and personal data exports are marked publicly cacheable for a year, so a shared cache serves them to other people",
+      "why": "NEEDS_MANUAL (the defect is in the response's Cache-Control header)",
+      "evidence": "'GET /file-upload/<id>/<name> 200', which clean.log carries as well; nothing in the request says the answer will be marked public, max-age=31536000",
+      "needs": "the response headers (a proxy log with response-header capture), or the shared cache's own log"
+    },
+    {
+      "finding": "VULN-026",
+      "title": "Workspace-wide denial of service from one message: the markdown parser is super-quadratic and the attachment-description parse has no length cap",
+      "why": "NEEDS_MANUAL (the payload is a long string in the request body and the effect is latency)",
+      "evidence": "'POST /api/v1/chat.sendMessage 200', which clean.log also carries; the access log records the response size, not the request size, and det.log_event does not read Traefik's duration field",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries, with response-time monitoring for the stall"
+    },
+    {
+      "finding": "VULN-030",
+      "title": "Deactivated and pending-approval accounts get working tokens through the OAuth login-code path, which bypasses validateLoginAttempt, and REST never re-checks active",
+      "why": "NEEDS_MANUAL (the attack traffic never reaches the proxy; the account's state is not in the request)",
+      "evidence": "no /oauth/gitlab line in the window (the hops go to the app directly, as in VULN-002); loginCode.redeem is the same call a legitimate SSO login makes",
+      "needs": "the application's own login log, which has the account's active status"
+    },
+    {
+      "finding": "VULN-032",
+      "title": "Account lockout bypass: the per-user failed-login block reads the username as typed, so logins by email or inside a totp envelope are never locked",
+      "why": "NEEDS_MANUAL (the bypass is the identifier form in the request body)",
+      "evidence": "38 lines of 'POST /api/v1/login 401' and 3 of 200: identical in the log whether the body names the username (locked) or the email address (never locked)",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the user field); a thresholded failed-login rule is standard practice but detects the class, not this bypass"
+    },
+    {
+      "finding": "VULN-033",
+      "title": "Password change, reset and remove-other-tokens leave open realtime sessions alive, and an admin-set password is broadcast in clear to them",
+      "why": "NEEDS_MANUAL (the surviving session is a websocket, and the broadcast is a frame)",
+      "evidence": "the attack-side lines are ordinary ('POST /api/v1/users.update 200', 'users.removeOtherTokens 200'); the session that survives them and receives the new password is inside 'GET /websocket'",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-035",
+      "title": "Room invite links are not revocable by the room's owners, outlive their creator's rights, and their use limit is not consumed atomically",
+      "why": "NEEDS_MANUAL (a revoked invite is used on the same route as a valid one)",
+      "evidence": "'POST /api/v1/useInviteToken' 400 x9 and 200 x2; the product's own client calls this route for every invite link (client/views/invite/hooks/useInviteTokenMutation.ts:11), and the token is in the body",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries, correlated with the invite's revocation state"
+    },
+    {
+      "finding": "VULN-036",
+      "title": "Mandatory 2FA for a role is enforced only by the web client, so its members keep single-factor access over REST and DDP",
+      "why": "NEEDS_MANUAL (the bypass is the absence of a second-factor field in the body)",
+      "evidence": "'POST /api/v1/login 200', the same line clean.log carries twice: a login with no code and a login with one are indistinguishable in the access log",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries, or the application's own login log with the factors used"
+    },
+    {
+      "finding": "VULN-037",
+      "title": "Pre-registration squatting survives the owner's OAuth claim: the email meld resets the password but keeps the squatter's sessions and personal access tokens",
+      "why": "NEEDS_MANUAL (the squatter's traffic is an ordinary authenticated read)",
+      "evidence": "'GET /api/v1/me 200' and 'GET /api/v1/subscriptions.get 200', both in clean.log; the OAuth meld that should have revoked the token never reaches the proxy (see VULN-002)",
+      "needs": "the application's own request log with the caller's user id (Log_Level 1, middlewares/logger.ts:15-31), correlated with the token's creation time against the meld"
+    },
+    {
+      "finding": "VULN-040",
+      "title": "Second-factor codes are not single-use: a TOTP code is replayable inside the window and a backup code can be redeemed twice by concurrent requests",
+      "why": "NEEDS_MANUAL (the replayed code is in the request body)",
+      "evidence": "'POST /api/v1/login' 200 x9 and 401 x8: the same code sent twice logs as two identical lines",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the code field), or the application's own 2FA log"
+    },
+    {
+      "finding": "VULN-042",
+      "title": "Attacker-chosen text in the workspace's own registration and reset emails, sent to any address",
+      "why": "NEEDS_MANUAL (the attacker-chosen text is in the request body)",
+      "evidence": "'POST /api/v1/users.register 200' and 'POST /api/v1/users.forgotPassword 200', both of which clean.log carries from an ordinary signup",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the name field that lands in the email)"
+    },
+    {
+      "finding": "VULN-043",
+      "title": "OAuth login skips the second factor for any account inside the registration grace window, even one that has enrolled TOTP",
+      "why": "NEEDS_MANUAL (the attack traffic never reaches the proxy; the grace window is server state)",
+      "evidence": "no /oauth/gitlab line in the window (the hops go to the app directly, as in VULN-002); what remains is 'GET /api/v1/me 200'",
+      "needs": "the application's own login log, which records whether a second factor was asked for"
+    },
+    {
+      "finding": "VULN-045",
+      "title": "Profanity filter is a per-token, per-word regex scan on the request path, so one member stalls the whole server for seconds per message",
+      "why": "NEEDS_MANUAL (the payload is a long message body and the effect is latency)",
+      "evidence": "'POST /api/v1/chat.sendMessage 200', which clean.log also carries; the filter's cost is in the request body and in the time the request takes",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries, with response-time monitoring"
+    },
+    {
+      "finding": "VULN-049",
+      "title": "With message edit history on, deleted and edited-away content stays readable: personal exports include the hidden copies and their files, and chat.getMessage returns them by id",
+      "why": "NEEDS_MANUAL (the request is the client's own message fetch; the deleted text is in the response)",
+      "evidence": "'GET /api/v1/chat.getMessage?msgId=<id> 200', the same line clean.log carries",
+      "needs": "the response body: no request attribute says the message was deleted or edited"
+    },
+    {
+      "finding": "VULN-055",
+      "title": "Missing permission check on retentionOverrideGlobal lets any room owner exempt their room from the retention policy",
+      "why": "NEEDS_MANUAL (the retention override is a field in the request body)",
+      "evidence": "'POST /api/v1/rooms.saveRoomSettings' 200 and 400, and clean.log carries a 200 for an ordinary topic change on the same route",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the retentionOverrideGlobal field)"
+    },
+    {
+      "finding": "VULN-057",
+      "title": "statistics.telemetry lets any signed-in user increment any numeric workspace setting, weakening 2FA, lockouts and rate limits",
+      "why": "NEEDS_MANUAL (the setting that gets incremented is named in the request body)",
+      "evidence": "'POST /api/v1/statistics.telemetry 200' x2, and clean.log carries the same line from the product's own client (it reports telemetry from five places)",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the settingsId values), or the settings audit log"
+    },
+    {
+      "finding": "VULN-058",
+      "title": "Mass assignment in teams.create: the caller's room.extraData is spread into the new room, setting default, featured and other administrative flags",
+      "why": "NEEDS_MANUAL (the administrative flags are in the request body's room.extraData)",
+      "evidence": "'POST /api/v1/teams.create 200', the same line clean.log carries for an ordinary team",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the room.extraData object)"
+    },
+    {
+      "finding": "VULN-061",
+      "title": "Integration updates and deletes trust the type the caller names, so one integration permission family reaches the other's objects, script included",
+      "why": "NEEDS_MANUAL (the confused type is a field in the request body)",
+      "evidence": "'PUT /api/v1/integrations.update 200', which clean.log also carries for an administrator editing their own integration",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the type and integrationId pair)"
+    },
+    {
+      "finding": "VULN-062",
+      "title": "Revoking preview-c-room only closes the history and the live stream: ten other message, file and thread routes still serve non-members",
+      "why": "NEEDS_MANUAL (the ten routes that still serve a non-member are the ordinary read routes)",
+      "evidence": "'GET /api/v1/channels.messages 200', 'chat.getMessage 200', 'chat.search 200', 'chat.syncMessages 200', all four in clean.log; the signal is the 403 on channels.history beside them, a correlation one Sigma selection cannot express",
+      "needs": "the application's own request log with the caller's user id (Log_Level 1, middlewares/logger.ts:15-31) plus a correlation rule over the same caller and room"
+    },
+    {
+      "finding": "VULN-063",
+      "title": "On a fresh install the REST API has no per-route rate limiting until the server restarts, and changes to the default limit never apply",
+      "why": "NEEDS_MANUAL (the finding is the absence of a limit, and each request is ordinary)",
+      "evidence": "35 lines of 'GET /api/v1/channels.list 200' and 25 each of users.list and /api/v1/me, every one of which clean.log carries once",
+      "needs": "a counting rule (Sigma's count() aggregation, which this engine's matcher does not evaluate), or the rate limiter's own refusals once it works"
+    },
+    {
+      "finding": "VULN-068",
+      "title": "rooms.bannedUsers returns a room's ban list to any member, while the client shows it only to holders of ban-user",
+      "why": "NEEDS_MANUAL (the caller's permission is not in the request)",
+      "evidence": "'GET /api/v1/rooms.bannedUsers?roomId=<id> 200', which clean.log carries as well: the product's own client calls this route from the members panel",
+      "needs": "the application's own request log with the caller's user id (Log_Level 1, middlewares/logger.ts:15-31), correlated with whether the caller holds ban-user"
+    },
+    {
+      "finding": "VULN-069",
+      "title": "Removing the admin role skips assign-admin-role: users.update replaces the role list with no last-admin guard",
+      "why": "NEEDS_MANUAL (the role list that removes the administrator is in the request body)",
+      "evidence": "'POST /api/v1/users.update' 400 and 200, and clean.log carries a 200 for an ordinary rename on the same route",
+      "needs": "the REST request payload (LOG_REST_PAYLOAD=true, logPayloads.ts:5), which the access log never carries (the data.roles array)"
+    },
+    {
+      "finding": "VULN-070",
+      "title": "autotranslate.translateMessage omits the auto-translate permission its sibling routes and the client require",
+      "why": "NEEDS_MANUAL (the missing permission is not in the request)",
+      "evidence": "'POST /api/v1/autotranslate.translateMessage 200' x6; clean.log carries the same route from the product's own translate button, and the status difference in this lab comes from the AutoTranslate setting, not from the attack",
+      "needs": "the application's own request log with the caller's user id (Log_Level 1, middlewares/logger.ts:15-31), correlated with whether the caller holds auto-translate"
+    },
+    {
+      "finding": "VULN-071",
+      "title": "e2e.fetchUsersWaitingForGroupKey takes room ids from the caller without authorizing them, disclosing private rooms' members",
+      "why": "NEEDS_MANUAL (the request is the shape the product's own E2E client sends)",
+      "evidence": "'GET /api/v1/e2e.fetchUsersWaitingForGroupKey?roomIds%5B%5D=<id> 200'; the client passes roomIds the same way (client/lib/e2ee/rocketchat.e2e.ts:855), and clean.log carries it",
+      "needs": "the application's own request log with the caller's user id (Log_Level 1, middlewares/logger.ts:15-31), correlated with the caller's membership of the room ids it names"
+    },
+    {
+      "finding": "VULN-076",
+      "title": "Livechat stream access is decided against the room the client names in extraData, so a visitor with one open chat of its own reads any other Livechat room's live messages",
+      "why": "NEEDS_MANUAL (the room confusion is in a websocket subscription's extraData)",
+      "evidence": "the window's livechat lines are the visitor setup that clean.log cannot contain; the subscription that reads the other customer's room is a frame in 'GET /websocket'",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38)"
+    },
+    {
+      "finding": "VULN-078",
+      "title": "The DDP-over-REST bridges key their rate limits on the caller's own X-Auth-Token header, so every header-less anonymous caller shares one bucket and a rotating header escapes it",
+      "why": "NEEDS_MANUAL (the shared bucket is keyed on a request header, and the route is the client's own)",
+      "evidence": "37 lines of 'POST /api/v1/method.callAnon/getServerInfo 400'; clean.log carries that exact line, and the rotating X-Auth-Token that escapes the limit is a header the access log does not record",
+      "needs": "the rate limiter's own log plus request-header capture; a counting rule for the volume"
+    },
+    {
+      "finding": "VULN-079",
+      "title": "getRoomByTypeAndName passes an untyped method parameter into a Mongo filter, so any user enumerates private-room names by regular expression through its two distinct error codes",
+      "why": "NEEDS_MANUAL (the Mongo operator is a DDP method parameter)",
+      "evidence": "4 lines of 'GET /websocket' status 0; the REST sibling the writeup names (POST /api/v1/method.call/getRoomByTypeAndName) is a call the product's own client makes, and clean.log carries it",
+      "needs": "the DDP method and subscription names (Log_Trace_Methods / Log_Trace_Subscriptions, server/settings/logs.ts:24-38) with their parameters (LOG_METHOD_PAYLOAD=true)"
+    }
+  ],
+  "notes": "Rocket.Chat is a JSON API with a realtime transport, and this is what that means for detection from an access log: of the 57 CONFIRMED findings, 20 put something in the request line that separates the attack from the legitimate use of the same route (a sort key the client never sends, a method name in the path, a management sub-route, a refusal status), and those are the rules here. For the other 37 the request is byte-identical to traffic this workspace's own client produces, and what distinguishes the attack is in the JSON body, in a header, in the response, or inside a /websocket session; each is listed in skipped[] with the line the lab actually logged and the log source that would see it. Three switches the product already ships would cover most of them: Log_Level 1 (middlewares/logger.ts:15-31, adds a per-request line with the caller's user id), LOG_REST_PAYLOAD=true (lib/logger/logPayloads.ts:5, adds the request body) and Log_Trace_Methods (server/settings/logs.ts:24, names the DDP methods). None of them is on by default, so a stock deployment cannot see those 37 attacks at all. Positives are the attack's own request lines, selected from each replay window by the regex recorded in that rule's validation log; the whole window is kept beside the rule as <VULN-ID>.capture.log, because an exploit also provisions its accounts and rooms and a rule must not fire on that. Every rule was additionally matched against the non-attack lines of its own run (same_run_other_lines in each validation block) and fired on none of them. Two routes are deliberately absent from clean.log, and the rules that rest on them say so in falsepositives: chat.getDeletedMessages and chat.syncThreadsList (no first-party caller of either exists in this build, so no client of this deployment produces them), and the /api/v1/livechat/* attack routes (Omnichannel is off by its shipped default here, so the widget that would call them does not run; the client does call livechat/config/routing, which clean.log carries and no rule matches). det.sigma_for_finding fills its own blue_spider.limitation only when the request body carries one of its attack markers (a script tag, a traversal, a SQL keyword), which a JSON body does not, although its det.observables still reports detectable_from_webserver_log: false. The 12 rules whose payload is body-only therefore carry that statement in the generator's own words; the other 8 key on the URL and carry none.",
+  "attribution": "Blue Spider, a product of Kohi Research Corporation (kohirc.com). Copyright 2026 Kohi Research Corporation. All rights reserved. Blue Spider (TM) is a trademark of Kohi Research Corporation. Generated by Blue Spider; do not use or redistribute without attribution to Kohi Research Corporation."
+}

@@ -1,0 +1,1 @@
+172.18.0.3 - - [24/Nov/2026:15:58:32 +0000] "GET /api/v1/channels.messages?roomId=GENERAL&starredIds=GXfyfkFvySLi6RTbK&count=50 HTTP/1.1" 200 476 "-" "-" 9191 "rocketchat@file" "http://rocketchat:3000" 113ms

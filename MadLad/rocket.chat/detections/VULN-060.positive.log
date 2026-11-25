@@ -1,0 +1,2 @@
+172.18.0.3 - - [24/Nov/2026:16:01:35 +0000] "POST /api/v1/method.call/changePassword HTTP/1.1" 200 103 "-" "-" 9428 "rocketchat@file" "http://rocketchat:3000" 185ms
+172.18.0.3 - - [24/Nov/2026:16:01:38 +0000] "POST /api/v1/method.call/changePassword HTTP/1.1" 200 103 "-" "-" 9434 "rocketchat@file" "http://rocketchat:3000" 178ms

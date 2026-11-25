@@ -1,0 +1,11 @@
+172.18.0.3 - - [24/Nov/2026:15:54:13 +0000] "POST /api/v1/login HTTP/1.1" 200 1960 "-" "-" 8773 "rocketchat@file" "http://rocketchat:3000" 186ms
+172.18.0.3 - - [24/Nov/2026:15:54:13 +0000] "POST /api/v1/users.create HTTP/1.1" 200 353 "-" "-" 8774 "rocketchat@file" "http://rocketchat:3000" 224ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "POST /api/v1/users.create HTTP/1.1" 200 353 "-" "-" 8775 "rocketchat@file" "http://rocketchat:3000" 196ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "POST /api/v1/login HTTP/1.1" 200 1780 "-" "-" 8776 "rocketchat@file" "http://rocketchat:3000" 145ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "GET /api/v1/users.listByStatus?count=100&offset=0 HTTP/1.1" 200 4985 "-" "-" 8777 "rocketchat@file" "http://rocketchat:3000" 58ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "GET /api/v1/users.list?count=100 HTTP/1.1" 200 3308 "-" "-" 8778 "rocketchat@file" "http://rocketchat:3000" 31ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "GET /api/v1/users.listByStatus?count=100&roles=%5B%22admin%22%5D HTTP/1.1" 200 58 "-" "-" 8779 "rocketchat@file" "http://rocketchat:3000" 50ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "GET /api/v1/users.listByStatus?count=100&hasLoggedIn=false HTTP/1.1" 200 612 "-" "-" 8780 "rocketchat@file" "http://rocketchat:3000" 21ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "GET /api/v1/users.listByStatus?count=100&sort=%7B%22services.password.bcrypt%22:1%7D HTTP/1.1" 200 4985 "-" "-" 8781 "rocketchat@file" "http://rocketchat:3000" 21ms
+172.18.0.3 - - [24/Nov/2026:15:54:14 +0000] "POST /api/v1/users.delete HTTP/1.1" 200 34 "-" "-" 8782 "rocketchat@file" "http://rocketchat:3000" 208ms
+172.18.0.3 - - [24/Nov/2026:15:54:15 +0000] "POST /api/v1/users.delete HTTP/1.1" 200 34 "-" "-" 8783 "rocketchat@file" "http://rocketchat:3000" 1380ms

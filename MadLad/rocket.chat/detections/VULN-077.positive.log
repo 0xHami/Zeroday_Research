@@ -1,0 +1,1 @@
+172.18.0.3 - - [24/Nov/2026:16:03:44 +0000] "GET /api/v1/livechat/visitors.pagesVisited/mZQC8cDtsnHdaAPFo HTTP/1.1" 200 527 "-" "-" 9627 "rocketchat@file" "http://rocketchat:3000" 38ms

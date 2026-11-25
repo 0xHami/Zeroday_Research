@@ -1,0 +1,53 @@
+{
+  "setup": {
+    "victim": "vicadm_7fe21092",
+    "password_login_gated": {
+      "success": false,
+      "error": "totp-required",
+      "details": {
+        "method": "totp",
+        "codeGenerated": false,
+        "availableMethods": [
+          "totp"
+        ]
+      },
+      "message": "TOTP Required"
+    },
+    "grace_window": 1800
+  },
+  "step12_takeover": {
+    "final_url": "http://127.0.0.1:39649/home",
+    "login_code": true,
+    "second_factor_demanded": false,
+    "username": "vicadm_7fe21092",
+    "roles": [
+      "user",
+      "admin"
+    ],
+    "admin_route": 200,
+    "owner_password_after": {
+      "success": false,
+      "error": "Unauthorized",
+      "message": "Unauthorized"
+    }
+  },
+  "step3_survives_deactivation": {
+    "stolen_token_after_deactivation": 401,
+    "password_path_after_deactivation": {
+      "success": false,
+      "error": "Unauthorized",
+      "message": "Unauthorized"
+    },
+    "second_login_code": true,
+    "me": {
+      "status": 200,
+      "username": "vicadm_7fe21092",
+      "active": false,
+      "roles": [
+        "user",
+        "admin"
+      ]
+    },
+    "admin_route": 200
+  }
+}

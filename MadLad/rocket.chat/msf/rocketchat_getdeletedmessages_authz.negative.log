@@ -1,0 +1,11 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/groups.history
+SSL => false
+VERBOSE => true
+[-] 127.0.0.1:39649       - Could not sign in
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

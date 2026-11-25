@@ -1,0 +1,20 @@
+========================================================================
+CHAIN-007: a room ban removes nobody: live reads, files, and re-entry through an unrevocable link
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-035 (the owners cannot revoke a moderator's invite) -> VULN-009 (notifications and file downloads ignore the ban) -> the per-room notification preference and public registration, both working as designed
+[SETUP] chair_2b7e9d13 owns the private group boardroom-2b7e9d13 (6b05a362e7422a44df31db2b); insider_2b7e9d13 is a member and a moderator
+[SETUP] the room holds a confidential file (/file-upload/6b05a362e7422a44df31db2f/board-2b7e9d13.txt) and a message
+[STEP] 1/4 VULN-035: as a moderator, mint a permanent unlimited invite; then see whether the room's owner can revoke it
+[PROOF]     invite zqZ7Ap created (HTTP 200); the room's own owner: listInvites -> HTTP 403 {"success":false,"error":"You are not allowed to do this","e, removeInvite -> HTTP 403 {"success":false,"error":"You are not allowed to do this","e
+[STEP]     chair_2b7e9d13 banned insider_2b7e9d13 (HTTP 200); the front doors do close: groups.history -> HTTP 400, the room's message stream -> nosub
+[STEP] 2/4 VULN-009: listen on the banned account's own notification stream and pull the room's file
+[STEP] 3/4 feature: the banned account sets this room to notify it of every message: rooms.saveNotification -> HTTP 200 {"success":true}
+[PROOF]     the banned account received the message posted after its ban (yes) and downloaded the confidential file (HTTP 200, body=b'severance-terms-2b7e9d13\n')
+[STEP] 4/4 feature: public registration, then redeem the invite nobody could revoke
+[PROOF]     the banned account's own redemption is refused (HTTP 400 User is banned from this room [error-use), while the fresh account's succeeds (HTTP 200) and reads the private history including the post-ban message=True
+[PROOF]     the private room's member list is now ['chair_2b7e9d13', 'consultant_2b7e9d13']
+[INFO] cleanup: deleting the group, the invite and the three accounts this run created
+[OK] CHAIN-007 CONFIRMED
+==> CHAIN-007 CONFIRMED 2026-11-24 - after the ban the room's owner could not revoke the banned moderator's invite, the banned account still received the room's new messages and downloaded its confidential file, and a fresh account registered through the public form used that invite to read the private room's whole history

@@ -1,0 +1,19 @@
+========================================================================
+CHAIN-005: an IdP account becomes an administrator, past TOTP, and survives deactivation
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-002 (the meld trusts the asserted address) -> VULN-043 (the OAuth path skips an enrolled second factor inside the grace window) -> VULN-030 (the login-code path ignores the account's active flag)
+[SETUP] victim administrator vicadm_7fe21092 <vicadm_7fe21092@lab.invalid> with TOTP enrolled: its own password login answers HTTP 401 totp-required; the grace window Accounts_TwoFactorAuthentication_RememberFor is 1800
+[SETUP] the workspace's GitLab provider now points at the stand-in http://bluespiderlab_rocket.chat_attacker:8800, which asserts vicadm_7fe21092@lab.invalid without claiming to have verified it
+[STEP] 1/3 VULN-002 + 2/3 VULN-043: drive /oauth/gitlab as the outsider
+[PROOF]     the callback ended at http://127.0.0.1:39649/home with loginCode=eff719a19e9a... (a second-factor challenge would have been /2fa/totp/<id>)
+[PROOF]     the redeemed session is vicadm_7fe21092 with roles ['user', 'admin'], and it reaches an administrator-only route: rooms.adminRooms HTTP 200
+[PROOF]     meanwhile the real owner's own password answers HTTP 401 Unauthorized: the meld reset it, so the takeover locks the owner out too
+[STEP] 3/3 VULN-030: the operator deactivates the compromised administrator, then the outsider signs in again
+[INFO]     deactivation did what it promises for the stolen token (/api/v1/me -> HTTP 401) and for the password path (HTTP 401 Unauthorized)
+[PROOF]     signing in again through the same provider returned a working token: /api/v1/me HTTP 200 username=vicadm_7fe21092 active=False, and rooms.adminRooms HTTP 200: the deactivated administrator's rights are back in the attacker's hands
+[INFO] cleanup: restoring the provider settings and deleting the administrator this run created
+[INFO]     provider off: Accounts_OAuth_Gitlab=False, API_Gitlab_URL='http://bluespiderlab_rocket.chat_attacker:8800'
+[OK] CHAIN-005 CONFIRMED
+==> CHAIN-005 CONFIRMED 2026-11-24 - an identity provider asserting an administrator's unverified address produced a full administrator session with no second factor although the account had TOTP enrolled, reset that administrator's password, and after the operator deactivated the account the same provider handed out another working token that still reached administrator-only routes

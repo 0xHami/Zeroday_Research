@@ -1,0 +1,4 @@
+172.18.0.3 - - [24/Nov/2026:15:56:19 +0000] "POST /api/v1/roles.addUserToRole HTTP/1.1" 400 118 "-" "-" 8917 "rocketchat@file" "http://rocketchat:3000" 56ms
+172.18.0.3 - - [24/Nov/2026:15:56:19 +0000] "POST /api/v1/roles.addUserToRole HTTP/1.1" 400 214 "-" "-" 8918 "rocketchat@file" "http://rocketchat:3000" 48ms
+172.18.0.3 - - [24/Nov/2026:15:56:19 +0000] "POST /api/v1/roles.addUserToRole HTTP/1.1" 400 118 "-" "-" 8919 "rocketchat@file" "http://rocketchat:3000" 36ms
+172.18.0.3 - - [24/Nov/2026:15:56:19 +0000] "POST /api/v1/roles.addUserToRole HTTP/1.1" 400 214 "-" "-" 8920 "rocketchat@file" "http://rocketchat:3000" 54ms

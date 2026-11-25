@@ -1,0 +1,15 @@
+172.18.0.3 - - [24/Nov/2026:15:54:47 +0000] "POST /api/v1/login HTTP/1.1" 200 1960 "-" "-" 8815 "rocketchat@file" "http://rocketchat:3000" 280ms
+172.18.0.3 - - [24/Nov/2026:15:54:47 +0000] "POST /api/v1/users.create HTTP/1.1" 200 362 "-" "-" 8816 "rocketchat@file" "http://rocketchat:3000" 214ms
+172.18.0.3 - - [24/Nov/2026:15:54:47 +0000] "POST /api/v1/users.create HTTP/1.1" 200 368 "-" "-" 8817 "rocketchat@file" "http://rocketchat:3000" 191ms
+172.18.0.3 - - [24/Nov/2026:15:54:47 +0000] "POST /api/v1/login HTTP/1.1" 200 1792 "-" "-" 8818 "rocketchat@file" "http://rocketchat:3000" 156ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "POST /api/v1/login HTTP/1.1" 200 1800 "-" "-" 8819 "rocketchat@file" "http://rocketchat:3000" 206ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "POST /api/v1/groups.create HTTP/1.1" 200 337 "-" "-" 8820 "rocketchat@file" "http://rocketchat:3000" 124ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "POST /api/v1/chat.postMessage HTTP/1.1" 200 526 "-" "-" 8821 "rocketchat@file" "http://rocketchat:3000" 199ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "POST /api/v1/chat.delete HTTP/1.1" 200 220 "-" "-" 8822 "rocketchat@file" "http://rocketchat:3000" 150ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "GET /api/v1/groups.history?roomId=6b05b348e7422a44df31dbb5&count=10 HTTP/1.1" 400 165 "-" "-" 8823 "rocketchat@file" "http://rocketchat:3000" 44ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "GET /api/v1/groups.info?roomId=6b05b348e7422a44df31dbb5 HTTP/1.1" 400 165 "-" "-" 8824 "rocketchat@file" "http://rocketchat:3000" 23ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "GET /api/v1/chat.getDeletedMessages?roomId=6b05b348e7422a44df31dbb5&since=2000-01-01T00:00:00.000Z&count=100 HTTP/1.1" 200 88 "-" "-" 8825 "rocketchat@file" "http://rocketchat:3000" 25ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "GET /api/v1/chat.getDeletedMessages?roomId=6b05b348e7422a44df31dbb5&since=2026-11-24T15:54:48.000Z&count=100 HTTP/1.1" 200 88 "-" "-" 8826 "rocketchat@file" "http://rocketchat:3000" 43ms
+172.18.0.3 - - [24/Nov/2026:15:54:49 +0000] "POST /api/v1/groups.delete HTTP/1.1" 200 16 "-" "-" 8827 "rocketchat@file" "http://rocketchat:3000" 141ms
+172.18.0.3 - - [24/Nov/2026:15:54:49 +0000] "POST /api/v1/users.delete HTTP/1.1" 200 34 "-" "-" 8828 "rocketchat@file" "http://rocketchat:3000" 143ms
+172.18.0.3 - - [24/Nov/2026:15:54:49 +0000] "POST /api/v1/users.delete HTTP/1.1" 200 34 "-" "-" 8829 "rocketchat@file" "http://rocketchat:3000" 152ms

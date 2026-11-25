@@ -1,0 +1,10 @@
+172.18.0.3 - - [24/Nov/2026:16:05:43 +0000] "POST /api/v1/login HTTP/1.1" 200 1960 "-" "-" 9686 "rocketchat@file" "http://rocketchat:3000" 250ms
+172.18.0.3 - - [24/Nov/2026:16:05:43 +0000] "POST /api/v1/users.create HTTP/1.1" 200 353 "-" "-" 9687 "rocketchat@file" "http://rocketchat:3000" 218ms
+172.18.0.3 - - [24/Nov/2026:16:05:43 +0000] "GET /api/v1/settings/Accounts_RegistrationForm HTTP/1.1" 200 67 "-" "-" 9688 "rocketchat@file" "http://rocketchat:3000" 17ms
+172.18.0.3 - - [24/Nov/2026:16:05:43 +0000] "POST /api/v1/settings/Accounts_RegistrationForm HTTP/1.1" 200 16 "-" "-" 9689 "rocketchat@file" "http://rocketchat:3000" 142ms
+172.18.0.3 - - [24/Nov/2026:16:05:45 +0000] "GET /api/v1/settings/Accounts_RegistrationForm HTTP/1.1" 200 69 "-" "-" 9690 "rocketchat@file" "http://rocketchat:3000" 28ms
+172.18.0.3 - - [24/Nov/2026:16:05:45 +0000] "POST /api/v1/users.register HTTP/1.1" 400 48 "-" "-" 9691 "rocketchat@file" "http://rocketchat:3000" 21ms
+172.18.0.3 - - [24/Nov/2026:16:05:45 +0000] "POST /api/v1/users.register HTTP/1.1" 400 175 "-" "-" 9692 "rocketchat@file" "http://rocketchat:3000" 51ms
+172.18.0.3 - - [24/Nov/2026:16:05:45 +0000] "POST /api/v1/settings/Accounts_RegistrationForm HTTP/1.1" 200 16 "-" "-" 9693 "rocketchat@file" "http://rocketchat:3000" 130ms
+172.18.0.3 - - [24/Nov/2026:16:05:46 +0000] "GET /api/v1/settings/Accounts_RegistrationForm HTTP/1.1" 200 67 "-" "-" 9694 "rocketchat@file" "http://rocketchat:3000" 50ms
+172.18.0.3 - - [24/Nov/2026:16:05:46 +0000] "POST /api/v1/users.delete HTTP/1.1" 200 34 "-" "-" 9695 "rocketchat@file" "http://rocketchat:3000" 212ms

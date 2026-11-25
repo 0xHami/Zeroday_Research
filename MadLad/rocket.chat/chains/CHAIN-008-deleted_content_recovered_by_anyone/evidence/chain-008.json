@@ -1,0 +1,28 @@
+{
+  "group": "6b05a0f2e7422a44df31dab0",
+  "channel": "6b05a0f2e7422a44df31dab3",
+  "step1_timeline": {
+    "history_for_outsider": 400,
+    "deleted_ids": [
+      "Ga8DpnokmiAQHCSwR"
+    ],
+    "target_id_disclosed": true
+  },
+  "step2_thread_root": {
+    "leaked": true,
+    "in_history": false,
+    "keep_history_setting": false
+  },
+  "step3_by_id": {
+    "ids_from_outsider": [],
+    "id_present": false,
+    "getMessage": 200,
+    "text_recovered": true,
+    "in_history": false
+  },
+  "step4_anonymous": {
+    "status": 200,
+    "deleted_message": true,
+    "deleted_root": true
+  }
+}

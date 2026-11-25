@@ -1,0 +1,13 @@
+GET /websocket HTTP/1.1
+Host: 127.0.0.1:39649
+Upgrade: websocket
+Connection: Upgrade
+
+{"msg": "connect", "version": "1", "support": ["1"]}
+{"msg": "sub", "id": "314c748c", "name": "stream-room-messages", "params": ["xGfgngaYKLbhYSSwd", {"useCollection": false, "args": [{"visitorToken": "outsider-834e8323", "rid": "K4RB3B78RPCL9xf9X"}]}]}
+
+POST /api/v1/livechat/visitor HTTP/1.1
+Host: 127.0.0.1:39649
+Content-Type: application/json
+
+{"visitor": {"token": "thief-834e8323", "phone": "+1555235835"}}

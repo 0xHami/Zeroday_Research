@@ -1,0 +1,1900 @@
+{
+  "schema": "blue_spider.fingerprint/2",
+  "target": {
+    "repo": "rocket.chat",
+    "product": "Rocket.Chat",
+    "repository": "https://github.com/rocketchat/rocket.chat",
+    "version": "`9.1.0-develop` (`package.json:3` and `apps/meteor/package.json:3`; `git describe --tags --always` gives `9f3d6c8` and the checkout is on branch `develop`, so: commit-pinned, no tagged release)",
+    "commit": "9f3d6c8c48911e32ed6c2ce36befd431faa71190",
+    "base_url": "http://127.0.0.1:39649",
+    "generated_at": "2026-11-24T15:41:19Z"
+  },
+  "signals": [
+    {
+      "id": "FP-001",
+      "kind": "response_header",
+      "title": "Every response carries X-Instance-ID, a v4 UUID naming the Rocket.Chat server instance",
+      "request": {
+        "method": "GET",
+        "path": "/",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 2188,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:52 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "match": {
+        "where": "header:X-Instance-ID",
+        "type": "regex",
+        "value": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+      },
+      "evidence": "X-Instance-Id: e287198e-5576-4f77-898f-18ea23e4d9e4",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/debug.js:134-137",
+      "notes": "A header Rocket.Chat invented: the base middleware instanceIdHeader (registered in apps/meteor/server/lib/http/baseMiddlewares.ts:5) sets it on every response, REST, pages, files and errors alike (all 83 responses captured for this stage carry it), to InstanceStatus.id(), which is randomUUID() per process (packages/instance-status/src/index.ts:9). The value changes on every restart and differs per instance in a cluster, so match its shape, never its value. Breaks only if a reverse proxy or CDN strips unknown response headers. The app emits it as X-Instance-ID; the lab's Traefik rewrote the name to the canonical X-Instance-Id, and header names are case-insensitive. Another application could choose the same header name, so pair it with FP-002 when certainty matters. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-002",
+      "kind": "response_header",
+      "title": "Content-Security-Policy carries the two inline-script hashes only Rocket.Chat ships",
+      "request": {
+        "method": "GET",
+        "path": "/",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 2188,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:52 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "match": {
+        "where": "header:Content-Security-Policy",
+        "type": "literal",
+        "value": "'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw='"
+      },
+      "evidence": "Content-Security-Policy: ...script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com;...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/cors/cors.ts:77-109",
+      "notes": "The page CSP is built by the securityHeaders base middleware: the first hash is of window.close() for the CAS login popup, the second of the inline script in the Livechat demo page (cors.ts:78-81), followed by the hard-coded Zapier hosts. Present on every captured response except the /livechat page (FP-026) while Enable_CSP is on, the shipped default (apps/meteor/server/settings/general.ts:95). Breaks if an admin turns Enable_CSP off, or a proxy replaces the CSP with its own. CDN_PREFIX and Extra_CSP_Domains add hosts around the hashes but do not move them apart. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-003",
+      "kind": "favicon",
+      "title": "Root /favicon.ico is the stock Rocket.Chat icon (Shodan http.favicon.hash)",
+      "request": {
+        "method": "GET",
+        "path": "/favicon.ico",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/vnd.microsoft.icon",
+        "length": 4286,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "4286",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/vnd.microsoft.icon",
+          "Date": "Tue, 24 Nov 2026 15:17:54 GMT",
+          "Etag": "\"5e6bfbbaa9d886afe43fe8b15b3e123c8239d544\"",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "mmh3",
+        "value": "1662101165"
+      },
+      "evidence": "Content-Type: image/vnd.microsoft.icon; 4286 bytes; first bytes 00 00 01 00 01 00 20 20; sha256 f59e08088d7f7e519a244a598e8a8b8e8c2c19f11e892c979ab6d3b9f703ae39; mmh3 1662101165",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/public/favicon.ico",
+      "notes": "Served byte for byte from the shipped public/favicon.ico (same sha256). It is a static file, not the admin-managed favicon asset, so it stays the stock icon even when an admin uploads a custom favicon under Administration > Workspace > Assets (that one is served at /assets/favicon_ico.ico). Breaks if a reverse proxy answers /favicon.ico itself. Shodan query: http.favicon.hash:1662101165. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s \"${BASE:-http://127.0.0.1:39649}/favicon.ico\" | PYTHONPATH=app/backend python3 -c 'import sys; from blue_spider.fingerprints import favicon_hash; print(favicon_hash(sys.stdin.buffer.read()))'",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-004",
+      "kind": "favicon",
+      "title": "The first icon the page declares, /assets/favicon_16.png, is the stock Rocket.Chat icon",
+      "request": {
+        "method": "GET",
+        "path": "/assets/favicon_16.png",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/png",
+        "length": 1438,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "1438",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/png",
+          "Date": "Tue, 24 Nov 2026 15:17:55 GMT",
+          "Etag": "\"160585f4660ffc54fea8493dcf402f90b06c3ef7\"",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "mmh3",
+        "value": "1840690601"
+      },
+      "evidence": "Content-Type: image/png; 1438 bytes; first bytes 89 50 4e 47 0d 0a 1a 0a; sha256 301e8117fb80e77181e42d1042a7a6ad06c9701a80cf34ff2db665ec9dcff6c7; mmh3 1840690601",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/media/assets/assets.ts:75-84",
+      "notes": "The page's first <link rel=\"icon\"> (apps/meteor/server/lib/ui-master/index.ts:39): a crawler that hashes the icon the HTML declares, rather than /favicon.ico, gets this one or one of the next two. Served from the asset's default file public/images/logo/favicon-16x16.png (same sha256). An admin-uploaded favicon_16 asset replaces it, which breaks this signal on customised workspaces. Shodan query: http.favicon.hash:1840690601. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s \"${BASE:-http://127.0.0.1:39649}/assets/favicon_16.png\" | PYTHONPATH=app/backend python3 -c 'import sys; from blue_spider.fingerprints import favicon_hash; print(favicon_hash(sys.stdin.buffer.read()))'",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-005",
+      "kind": "favicon",
+      "title": "The declared 32x32 icon, /assets/favicon_32.png, is the stock Rocket.Chat icon",
+      "request": {
+        "method": "GET",
+        "path": "/assets/favicon_32.png",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/png",
+        "length": 2133,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "2133",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/png",
+          "Date": "Tue, 24 Nov 2026 15:17:55 GMT",
+          "Etag": "\"e807eadc5f83dc3853d831026f1493ddd99130cc\"",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "mmh3",
+        "value": "1060125385"
+      },
+      "evidence": "Content-Type: image/png; 2133 bytes; first bytes 89 50 4e 47 0d 0a 1a 0a; sha256 a58876dfcabbe9eb7109f637258474617f68951e04b69f84c130e4952401fd2a; mmh3 1060125385",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/media/assets/assets.ts:85-94",
+      "notes": "Declared at apps/meteor/server/lib/ui-master/index.ts:40 and served from the default public/images/logo/favicon-32x32.png (same sha256). Replaced by an admin-uploaded favicon_32 asset. Shodan query: http.favicon.hash:1060125385. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s \"${BASE:-http://127.0.0.1:39649}/assets/favicon_32.png\" | PYTHONPATH=app/backend python3 -c 'import sys; from blue_spider.fingerprints import favicon_hash; print(favicon_hash(sys.stdin.buffer.read()))'",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-006",
+      "kind": "favicon",
+      "title": "The declared scalable icon, /assets/favicon.svg, is the stock Rocket.Chat logo mark",
+      "request": {
+        "method": "GET",
+        "path": "/assets/favicon.svg",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "length": 2171,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "2171",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/svg+xml",
+          "Date": "Tue, 24 Nov 2026 15:17:54 GMT",
+          "Etag": "\"8f772396c627f4a05a50e83b90d18ccf937042ba\"",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "mmh3",
+        "value": "1422075450"
+      },
+      "evidence": "Content-Type: image/svg+xml; 2171 bytes; first bytes 3c 73 76 67 20 77 69 64; sha256 189d1b2ef423265d7762f57af5886771cb5670ca2cad5f1aa22e02720e23e236; mmh3 1422075450",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/media/assets/assets.ts:67-74",
+      "notes": "Declared with sizes=\"any\" while Assets_SvgFavicon_Enable is on, the default (apps/meteor/server/lib/ui-master/index.ts:37-50, the tag at :46); served from public/images/logo/icon.svg (same sha256). Replaced by an admin-uploaded favicon asset. Shodan query: http.favicon.hash:1422075450. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s \"${BASE:-http://127.0.0.1:39649}/assets/favicon.svg\" | PYTHONPATH=app/backend python3 -c 'import sys; from blue_spider.fingerprints import favicon_hash; print(favicon_hash(sys.stdin.buffer.read()))'",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-007",
+      "kind": "asset",
+      "title": "/manifest.webapp is Rocket.Chat's own Open Web App manifest, byte for byte",
+      "request": {
+        "method": "GET",
+        "path": "/manifest.webapp",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/x-web-app-manifest+json",
+        "length": 394,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "394",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/x-web-app-manifest+json",
+          "Date": "Tue, 24 Nov 2026 15:17:55 GMT",
+          "Etag": "\"393ff538275be3f917c327d42b2caed279093430\"",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "sha256",
+        "value": "f7c975d6d6182f5fb96114b97cee7ca8b22d8d60c6a64580c29ac9f25fba1a20"
+      },
+      "evidence": "...\"name\": \"RocketChat\",\n    \"description\": \"The Ultimate Open Source WebChat Platform\",\n    \"launch_path\": \"/\",\n    \"icons\": {\n        \"192\": \"/assets/favicon_192.png\",\n        \"512\": \"/assets/favicon_512.png\"\n    },\n    \"developer\": {\n        \"name\": \"Rocket.Chat\",\n        \"url\": \"https://rocket.chat ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/public/manifest.webapp:1",
+      "notes": "A static file from public/, served unchanged (same sha256 as the shipped file) with Content-Type application/x-web-app-manifest+json; it names \"RocketChat\", \"The Ultimate Open Source WebChat Platform\" and developer Rocket.Chat. No admin setting rewrites it. Only this build was observed, so no version range is claimed for the hash. Breaks if a proxy serves its own /manifest.webapp. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s \"${BASE:-http://127.0.0.1:39649}/manifest.webapp\" | sha256sum",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-008",
+      "kind": "api",
+      "title": "The OpenAPI document is titled Rocket.Chat API and is OpenAPI 3.1, so the server is 9.0 or later",
+      "request": {
+        "method": "GET",
+        "path": "/api/docs/json",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 1810182,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-store",
+          "Content-Length": "1810182",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:57 GMT",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "literal",
+        "value": "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Rocket.Chat API\""
+      },
+      "evidence": "{\"openapi\":\"3.1.0\",\"info\":{\"title\":\"Rocket.Chat API\",\"description\":\"REST API of this Rocket.Chat workspace. Authenticate by sending the `X-User-Id` and `X-Auth-Token` headers obtained from `/api/v1/login`.\",\"version\":\"9.1\"},\"externalDocs\":{\"url\":\"https://developer.rocket.chat/apidocs\",\"description\": ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": ">=9.0.0-rc.0 (OpenAPI 3.1 since 9.0.0, PR #41638)",
+      "version_range": {
+        "min": "9.0.0-rc.0",
+        "max": null,
+        "min_inclusive": true,
+        "max_inclusive": false
+      },
+      "source": "targets/rocket.chat/apps/meteor/server/api/default/openApi.ts:66-68",
+      "notes": "Served without authentication (route at openApi.ts:118-138). The document is about 1.8 MB; the replay tool reads only the first 512 KB, which holds the info block this matcher needs. info.version carries the server's major.minor (9.1 here, the same trimmed value as /api/info, FP-011). Version: the in-repo changelog records the document being served as OpenAPI 3.1 from 9.0.0 (#41638, apps/meteor/CHANGELOG.md:650, and 9.0.0-rc.0 at :1603). Breaks if a proxy blocks /api/docs. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/docs/json\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-009",
+      "kind": "wellknown",
+      "title": "OAuth 2.0 authorization server metadata has Rocket.Chat's exact shape, so the server is 9.0 or later",
+      "request": {
+        "method": "GET",
+        "path": "/.well-known/oauth-authorization-server",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 447,
+        "headers": {
+          "Content-Length": "447",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:56 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "regex",
+        "value": "^\\{\"issuer\":\"([^\"]+)\",\"authorization_endpoint\":\"\\1/oauth/authorize\",\"token_endpoint\":\"\\1/oauth/token\",\"registration_endpoint\":\"\\1/oauth/register\",\"response_types_supported\":\\[\"code\"\\],\"grant_types_supported\":\\[\"authorization_code\",\"refresh_token\"\\],\"token_endpoint_auth_methods_supported\":\\[\"client_secret_basic\",\"client_secret_post\"\\],\"code_challenge_methods_supported\":\\[\"S256\"\\]\\}$"
+      },
+      "evidence": "{\"issuer\":\"http://127.0.0.1:39649\",\"authorization_endpoint\":\"http://127.0.0.1:39649/oauth/authorize\",\"token_endpoint\":\"http://127.0.0.1:39649/oauth/token\",\"registration_endpoint\":\"http://127.0.0.1:39649/oauth/register\",\"response_types_supported\":[\"code\"],\"grant_types_supported\":[\"authorization_code\" ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": ">=9.0.0-rc.0 (RFC 8414 metadata added in 9.0.0, PR #43150)",
+      "version_range": {
+        "min": "9.0.0-rc.0",
+        "max": null,
+        "min_inclusive": true,
+        "max_inclusive": false
+      },
+      "source": "targets/rocket.chat/apps/meteor/server/oauth2-server/metadata.ts:17-27",
+      "notes": "RFC 8414 metadata of Rocket.Chat's OAuth2 provider: exactly these eight keys in this order, the registration endpoint advertised even while Dynamic Client Registration is off (metadata.ts:21-22), no scopes_supported, no jwks_uri. The regex is anchored and back-references the issuer, so metadata that adds any field (an OIDC provider's jwks_uri, a scopes_supported list) or orders them differently does not match. Route: apps/meteor/server/lib/auth/oauth2-server/oauth2-server.ts:121-125. Version: added in 9.0.0 (#43150, apps/meteor/CHANGELOG.md:353, 9.0.0-rc.0 at :1348). Breaks if Site_Url carries a path (the document then moves to /.well-known/oauth-authorization-server/<path>, metadata.ts:12-15). Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/.well-known/oauth-authorization-server\"",
+      "requires_js": false,
+      "family": null,
+      "findings": [
+        "VULN-018"
+      ]
+    },
+    {
+      "id": "FP-010",
+      "kind": "api",
+      "title": "Anonymous password-policy endpoint answers with Rocket.Chat's get-password-policy-* keys",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/pw.getPolicy",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 459,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-store",
+          "Content-Length": "459",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:58 GMT",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "literal",
+        "value": "\"policy\":[[\"get-password-policy-"
+      },
+      "evidence": "{\"enabled\":true,\"policy\":[[\"get-password-policy-minLength\",{\"minLength\":14}],[\"get-password-policy-forbidRepeatingCharacters\"],[\"get-password-policy-forbidRepeatingCharactersCount\",{\"forbidRepeatingCharactersCount\":3}],[\"get-password-policy-mustContainAtLeastOneLowercase\"],[\"get-password-policy-must ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/api/v1/misc.ts:503-514",
+      "notes": "authRequired: false. The rule names are Rocket.Chat i18n keys (packages/password-policies/src/PasswordPolicy.ts:249-258). Holds while Accounts_Password_Policy_Enabled is on, the shipped default (apps/meteor/server/settings/accounts.ts:841); with the policy off the answer is a generic {\"enabled\":false,\"policy\":[]} and this signal stops matching. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/v1/pw.getPolicy\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-011",
+      "kind": "api",
+      "title": "/api/info reports version 9.1, so the server is a 9.1.x build",
+      "request": {
+        "method": "GET",
+        "path": "/api/info",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 11395,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-store",
+          "Content-Length": "11395",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:53 GMT",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "regex",
+        "value": "\"version\":\"9\\.1\",\"minimumClientVersions\":\\{"
+      },
+      "evidence": "...\"version\":\"9.1\",\"minimumClientVersions\":{\"desktop\":\"3.9.6\",\"mobile\":\"4.39.0\"},\"supportedVersions\":{\"signed\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lc3RhbX ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": ">=9.1.0-develop, <9.2.0-develop (anonymous /api/info gives major.minor 9.1)",
+      "version_range": {
+        "min": "9.1.0-develop",
+        "max": "9.2.0-develop",
+        "min_inclusive": true,
+        "max_inclusive": false
+      },
+      "source": "targets/rocket.chat/apps/meteor/server/api/lib/getTrimmedServerVersion.ts:4",
+      "notes": "getTrimmedServerVersion() keeps only major.minor of Info.version (apps/meteor/rocketchat.info:2 is 9.1.0-develop), so every 9.1 build, develop, rc or patch, answers \"9.1\". The range is written in Rocket.Chat's own tag scheme, where -develop is the lowest pre-release of a version. On other versions this signal does not match while FP-024 still does, which is how it is meant to be read. minimumClientVersions (desktop 3.9.6, mobile 4.39.0) changes between releases too, but no other release was observed to bound it. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/info\"",
+      "requires_js": false,
+      "family": null,
+      "findings": [
+        "VULN-001",
+        "VULN-002",
+        "VULN-005",
+        "VULN-006",
+        "VULN-015",
+        "VULN-018",
+        "VULN-024",
+        "VULN-032",
+        "VULN-033",
+        "VULN-037",
+        "VULN-042",
+        "VULN-046",
+        "VULN-047",
+        "VULN-051",
+        "VULN-054",
+        "VULN-063",
+        "VULN-066",
+        "VULN-073",
+        "VULN-074",
+        "VULN-076",
+        "VULN-078",
+        "VULN-084"
+      ]
+    },
+    {
+      "id": "FP-012",
+      "kind": "path",
+      "title": "/avatar/<any name> renders Rocket.Chat's initials SVG in its six-colour palette",
+      "request": {
+        "method": "GET",
+        "path": "/avatar/bs14-no-such-user",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "length": 304,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/svg+xml",
+          "Date": "Tue, 24 Nov 2026 15:17:58 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "regex",
+        "value": "^<svg xmlns=\"http://www\\.w3\\.org/2000/svg\" viewBox=\"0 0 200 200\">\\n<rect width=\"100%\" height=\"100%\" fill=\"#(?:158D65|7F1B9F|B68D00|E26D0E|10529E|6C727A)\"/>\\n<text x=\"50%\" y=\"50%\" dy=\"0\\.36em\" text-anchor=\"middle\" pointer-events=\"none\" fill=\"#ffffff\" font-family=\\\"'Helvetica', 'Arial', 'Lucida Grande', 'sans-serif'\\\" font-size=\\\"\\d+\\\">"
+      },
+      "evidence": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 200\">\n<rect width=\"100%\" height=\"100%\" fill=\"#6C727A\"/>\n<text x=\"50%\" y=\"50%\" dy=\"0.36em\" text-anchor=\"middle\" pointer-events=\"none\" fill=\"#ffffff\" font-family=\"'Helvetica', 'Arial', 'Lucida Grande', 'sans-serif'\" font-size=\"125\">\nB\n</text>\n</ ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/routes/avatar/utils.ts:145",
+      "notes": "A name with no uploaded avatar falls back to its initials (apps/meteor/server/routes/avatar/user.ts:82), in a colour from apps/meteor/server/lib/utils/lib/getAvatarColor.ts:1, so any made-up name works. With Accounts_AvatarBlockUnauthenticatedAccess on, the auth middleware still renders the same fallback (apps/meteor/server/routes/avatar/middlewares/auth.ts:8-26). Breaks when an admin sets Accounts_AvatarExternalProviderUrl, which proxies avatars to that provider. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/avatar/bs14-no-such-user\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-013",
+      "kind": "body",
+      "title": "The page shell carries Rocket.Chat's parser-limit meta tag and its react-root loading markup",
+      "request": {
+        "method": "GET",
+        "path": "/",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 2188,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:52 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<meta name=\"rc-message-parser-max-length\" content=\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<div class=\"loading__animation__bounce\"></div>"
+        }
+      ],
+      "evidence": "...<base href=\"/\">\n<meta name=\"rc-message-parser-max-length\" content=\"10000\" />\n\n\t\t<link rel=\"icon\" sizes=\"16x16\" type=\"image/png\" href=/assets/favicon_16.png />\n\t\t<link rel=\"icon\" sizes=\"32x32\" type=\"image/png\" href=/assets/favicon_32.png />\n\t\t\t<link rel=\"icon\" sizes=\"any\" type=\"image/svg+xml\" href=/a ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/ui-master/index.ts:120",
+      "notes": "Server-sent HTML, no JavaScript needed. The meta tag is injected at ui-master/index.ts:120 and the page-loading block at :140-156; the <title> and application-name follow Site_Name (default Rocket.Chat), so they are deliberately not matched. The content value is MESSAGE_MAX_PARSE_LENGTH (10000, the default since 9.0.0, #42573), which an operator may change; the matcher stops at the attribute's opening quote. Breaks only if a proxy rewrites the HTML. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-014",
+      "kind": "body",
+      "title": "The page loads the Vite-built client from /bundle/, which Rocket.Chat ships from 9.1",
+      "request": {
+        "method": "GET",
+        "path": "/",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 2188,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:52 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<meta name=\"rc-message-parser-max-length\" content=\""
+        },
+        {
+          "where": "body",
+          "type": "regex",
+          "value": "<script type=\"module\" crossorigin src=\"[^\"]*/bundle/index-[A-Za-z0-9_-]+\\.js\"></script>"
+        }
+      ],
+      "evidence": "...<link rel=\"stylesheet\" crossorigin href=\"/bundle/vendor-BEhzaqJd.css\">\n<link rel=\"stylesheet\" crossorigin href=\"/bundle/vite-BlxrcuHh.css\">\n<link rel=\"stylesheet\" crossorigin href=\"/bundle/tamagui-zero-674248fa.css\">\n<link rel=\"modulepreload\" crossorigin href=\"/bundle/rolldown-runtime-CmP3EOai.js\">\n ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": ">=9.1.0-develop (Vite web client, changeset serve-vite-web-client; first release will be 9.1.0)",
+      "version_range": {
+        "min": "9.1.0-develop",
+        "max": null,
+        "min_inclusive": true,
+        "max_inclusive": false
+      },
+      "source": "targets/rocket.chat/apps/meteor/server/lib/cors/cors.ts:151-154",
+      "notes": "The unreleased changeset .changeset/serve-vite-web-client.md (a minor bump in this 9.1.0-develop tree) moves the web client to a Vite build served from /bundle/ with an immutable cache; before it the client was built and served by Meteor's own bundler (the /<sha1>.js?meteor_js_resource=true script, which this page still loads for the Meteor runtime). The minimum is written as 9.1.0-develop because no 9.1.0 release exists at this commit; develop builds made before the change would not match. With CDN_PREFIX set the src gains a host, which the regex allows. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-015",
+      "kind": "cookie",
+      "title": "No cookie is set before login: the shell arrives with no Set-Cookie at all",
+      "request": {
+        "method": "GET",
+        "path": "/",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 2188,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:52 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "header:Set-Cookie",
+          "type": "absent",
+          "value": null
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<meta name=\"rc-message-parser-max-length\" content=\""
+        }
+      ],
+      "evidence": "Set-Cookie: (absent); header names seen: Access-Control-Allow-Origin, Content-Security-Policy, Content-Type, Date, Vary, X-Content-Type-Options, X-Frame-Options, X-Instance-Id, X-Powered-By, X-Xss-Protection, Connection, Transfer-Encoding",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/cors/cors.ts:132-135",
+      "notes": "Rocket.Chat keeps sessions in localStorage and authenticates REST by header, so a default install sets no cookie on any anonymous response (none of the 83 responses captured for this stage set one). The only server-side Set-Cookie is cache_version, sent with Clear-Site-Data on static files only when an admin fills Troubleshoot_Force_Caching_Version (cors.ts:132-135); rc_uid and rc_token are written by the browser after login (apps/meteor/client/views/root/hooks/loggedIn/useStoreCookiesOnLogin.ts:14-15). The absence separates it from stacks that issue a session or CSRF cookie on first contact (PHP, Django, Rails); the meta literal ties the absence to Rocket.Chat. Breaks behind a proxy or load balancer that adds a stickiness cookie. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request. On both controls the absent Set-Cookie part held too; the meta literal is what makes the signal specific.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-016",
+      "kind": "error",
+      "title": "An anonymous call to an authenticated REST route gets Rocket.Chat's exact 401 JSON",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/me",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 401,
+        "content_type": "application/json",
+        "length": 61,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Content-Length": "61",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:53 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "status",
+          "type": "status",
+          "value": "401"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "{\"success\":false,\"error\":\"You must be logged in to do this.\"}"
+        }
+      ],
+      "evidence": "HTTP 401 {\"success\":false,\"error\":\"You must be logged in to do this.\"}",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": ">=9.0.0-develop (401 bodies without the legacy status/message fields; applyBreakingChanges coerces away the pre-release tag, so every 9.0.0 build already drops them)",
+      "version_range": {
+        "min": "9.0.0-develop",
+        "max": null,
+        "min_inclusive": true,
+        "max_inclusive": false
+      },
+      "source": "targets/rocket.chat/apps/meteor/server/api/v1/middlewares/authenticationHono.ts:28-38",
+      "notes": "Rocket.Chat's API.v1.unauthorized() shape ({success:false,error}). Any authRequired route answers this way without a token; /api/v1/me is the most stable of them. Version: before 9.0 the same middleware also wrote the legacy fields status:'error' and message (authenticationHono.ts:30-35, gated by applyBreakingChanges = shouldBreakInVersion('9.0.0') at apps/meteor/server/api/ApiClass.ts:80), and the 9.0.0 changelog records that 401 bodies no longer carry them (apps/meteor/CHANGELOG.md:239). The literal ends at the closing brace, so a body that still carries them does not match. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/v1/me\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-017",
+      "kind": "error",
+      "title": "The MCP protected-resource URL answers a 404 naming Rocket.Chat's disabled MCP endpoint, so the server is 9.0 or later",
+      "request": {
+        "method": "GET",
+        "path": "/.well-known/oauth-protected-resource",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 404,
+        "content_type": "application/json",
+        "length": 68,
+        "headers": {
+          "Content-Length": "68",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:56 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "status",
+          "type": "status",
+          "value": "404"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "{\"error\":\"not_found\",\"error_description\":\"MCP endpoint is disabled\"}"
+        }
+      ],
+      "evidence": "HTTP 404 {\"error\":\"not_found\",\"error_description\":\"MCP endpoint is disabled\"}",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": ">=9.0.0-rc.0 (MCP protected resource metadata added in 9.0.0, PR #43152)",
+      "version_range": {
+        "min": "9.0.0-rc.0",
+        "max": null,
+        "min_inclusive": true,
+        "max_inclusive": false
+      },
+      "source": "targets/rocket.chat/apps/meteor/ee/server/api/mcp/metadata.ts:28-38",
+      "notes": "In a default install the RFC 9728 document itself is not served (MCP_Enabled is off), so this is recorded as the shape of the 404, not as a route that exists: the JSON names the disabled MCP endpoint, which nothing else does. With MCP enabled (licensed add-on) the real metadata is served instead and this signal stops matching. Version: protected resource metadata for /api/v1/mcp was added in 9.0.0 (#43152, apps/meteor/CHANGELOG.md:331, 9.0.0-rc.0 at :1326). Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request. On both controls the 404 status alone held too; the body is what names the product.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/.well-known/oauth-protected-resource\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-018",
+      "kind": "error",
+      "title": "Matrix endpoints answer 403 Federation is not enabled, Rocket.Chat's federation gate",
+      "request": {
+        "method": "GET",
+        "path": "/_matrix/client/versions",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 403,
+        "content_type": "application/json",
+        "length": 37,
+        "headers": {
+          "Content-Length": "37",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:59 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "status",
+          "type": "status",
+          "value": "403"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "{\"error\":\"Federation is not enabled\"}"
+        }
+      ],
+      "evidence": "HTTP 403 {\"error\":\"Federation is not enabled\"}",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/ee/packages/federation-matrix/src/api/middlewares/isLicenseEnabled.ts:5-8",
+      "notes": "Rocket.Chat mounts its Matrix routers under /_matrix and /.well-known/matrix and gates them: without the federation licence module (isLicenseEnabled.ts:6-7) or with Federation_Service_Enabled off (isFederationEnabled.ts:7-8) every Matrix path answers this 403 (also observed at /_matrix/federation/v1/version and /.well-known/matrix/server). A real Matrix homeserver answers the versions JSON here, so this also separates Rocket.Chat from Synapse or Dendrite. A licensed workspace with federation on answers Matrix itself and stops matching. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/_matrix/client/versions\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-019",
+      "kind": "asset",
+      "title": "The Livechat embed loader defines the window.RocketChat.livechat API",
+      "request": {
+        "method": "GET",
+        "path": "/livechat/rocketchat-livechat.min.js",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/javascript; charset=utf-8",
+        "length": 8254,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "8254",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/javascript; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:54 GMT",
+          "Etag": "\"7ca3c67762933fa460accc8cef971b6d632efd99\"",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "window.RocketChat=window.RocketChat||{_:[]}"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "window.RocketChat._.push=function("
+        }
+      ],
+      "evidence": "...window.RocketChat._;window.RocketChat._.push=function(e){e.call(window.RocketChat.livechat)},window.RocketChat=window.RocketChat._.push,window.RocketChat.livechat=ie,le.forEach(e=>{e.call(window.RocketChat.livechat)})})();\n//# sourceMappingURL=rocketchat-livec ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/packages/livechat/src/widget.ts:54",
+      "notes": "The script third-party sites embed to show the chat widget, built from packages/livechat/src/widget.ts (the queue and API at :721-734) by packages/livechat/vite.widget.config.mts:19. The matched names are properties of window, which minification keeps. The file's sha256 here is 6abdaf8986613cc10162f3526b3262adf99b853b007fbb6c9c57fe04ae2270b4 for exact-build comparison only: it changes with any widget change, so it is not the matcher. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/livechat/rocketchat-livechat.min.js\"",
+      "requires_js": false,
+      "family": null,
+      "findings": [
+        "VULN-001",
+        "VULN-046",
+        "VULN-051",
+        "VULN-054",
+        "VULN-076"
+      ]
+    },
+    {
+      "id": "FP-020",
+      "kind": "asset",
+      "title": "The injected page script holds Rocket.Chat's Custom_Script event hooks",
+      "request": {
+        "method": "GET",
+        "path": "/scripts_5b78a9a0ebbbbb75eda23b4e12a60813ca1e257a.js",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/javascript; charset=UTF-8",
+        "length": 352,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=31536000",
+          "Content-Length": "352",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/javascript; charset=UTF-8",
+          "Date": "Tue, 24 Nov 2026 15:17:55 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "// Custom_Script_Logged_Out\nwindow.addEventListener('Custom_Script_Logged_Out', function() {"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "window.addEventListener('Custom_Script_On_Logout', function() {"
+        }
+      ],
+      "evidence": "...// Custom_Script_Logged_Out\nwindow.addEventListener('Custom_Script_Logged_Out', function() {\n\t//Add your script\n})\n\n\n// Custom_Script_Logged_In\nwindow.addEventListener('Custom_Script_Logged_In', function() {\n\t//Add your script\n})\n\n\n// Custom_Script_On_Logout\nwindow.addEventListener('Custom_Script_On ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/ui-master/scripts.ts:4-36",
+      "notes": "The page references it as <script id=\"scripts\" src=\"/scripts_<sha1>.js\"> (inject.ts:95-108), the sha1 being of the content: with the shipped defaults (the Custom_Script_* settings, Accounts_ForgetUserSessionOnWindowClose off at apps/meteor/server/settings/accounts.ts:256, and no BUGSNAG_CLIENT or DISABLE_ANIMATION environment variable) the name is exactly this one on any install, and its body sha256 is 598c69625956855ea733fb37e9dcb09309758d4ff8c88f3c6098643affde4e28. The handler looks the file up by the text before the first underscore (apps/meteor/server/lib/ui-master/inject.ts:34), so this URL keeps answering with the current scripts even after an admin edits them; the comment lines matched here are in the template whatever the scripts contain. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/scripts_5b78a9a0ebbbbb75eda23b4e12a60813ca1e257a.js\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-021",
+      "kind": "wellknown",
+      "title": "The PWA manifest at /images/manifest.json names Rocket.Chat and its asset icons",
+      "request": {
+        "method": "GET",
+        "path": "/images/manifest.json",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "length": 345,
+        "headers": {
+          "Accept-Ranges": "bytes",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Length": "345",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:55 GMT",
+          "Etag": "\"b1fff7fedde50c59c9c0b83ffe760d3148c9ba5a\"",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"name\": \"Rocket.Chat\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"src\": \"/assets/favicon_192.png\""
+        }
+      ],
+      "evidence": "{\n\t\"name\": \"Rocket.Chat\",\n\t\"short_name\": \"Rocket.Chat\",\n\t\"background_color\": \"#fff\",\n\t\"icons\": [\n\t\t{\n\t\t\t\"src\": \"/assets/favicon_192.png\",\n\t\t\t\"sizes\": \"192x192\",\n\t\t\t\"type\": \"image/png\"\n\t\t},\n\t\t{\n\t\t\t\"src\": \"/assets/favicon_512.png\",\n\t\t\t\"sizes\": \"512x512\",\n\t\t\t\"type\": \"image/png\"\n\t\t}\n\t],\n\t\"start_url\": \"/ ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/public/images/manifest.json:1",
+      "notes": "A static public/ file (same sha256 as shipped: 5abbaa31235088ffa4e99d562aa58a1431a4255188561df16a53552edc8b9709). Note the location: /manifest.json itself does not exist and falls through to the page shell (negative_signals). Breaks only if a proxy serves its own file. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/images/manifest.json\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-022",
+      "kind": "error",
+      "title": "A missing custom emoji returns a placeholder SVG stamped Last-Modified 1 Jan 2015",
+      "request": {
+        "method": "GET",
+        "path": "/emoji-custom/bs14.png",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "length": 414,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=0",
+          "Content-Disposition": "inline",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/svg+xml",
+          "Date": "Tue, 24 Nov 2026 15:17:59 GMT",
+          "Expires": "-1",
+          "Last-Modified": "Thu, 01 Jan 2015 00:00:00 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "header:Last-Modified",
+          "type": "literal",
+          "value": "Thu, 01 Jan 2015 00:00:00 GMT"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "style=\"width: 50px; height: 50px; background-color: "
+        }
+      ],
+      "evidence": "Last-Modified: Thu, 01 Jan 2015 00:00:00 GMT | ...<svg xmlns=\"http://www.w3.org/2000/svg\" pointer-events=\"none\" width=\"50\" height=\"50\" style=\"width: 50px; height: 50px; background-color: #000;\">\n\t<text text-anchor=\"middle\" y=\"50%\" x=\"50%\" dy=\"0.36em\" pointer-events=\"auto\" fill=\"#ffffff\" fo ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/media/emoji-custom/startup/emoji-custom.js:11-38",
+      "notes": "Where most servers 404, Rocket.Chat answers 200 with a 50x50 question-mark SVG and a fixed 2015 Last-Modified (the same sentinel date the avatar code keeps for its letter fallbacks, apps/meteor/server/routes/avatar/utils.ts:16). Holds for any name that is not an uploaded custom emoji. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/emoji-custom/bs14.png\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-023",
+      "kind": "error",
+      "title": "Unknown paths answer 200 with the Rocket.Chat page shell instead of a 404",
+      "request": {
+        "method": "GET",
+        "path": "/bs14-no-such-page",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 2188,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:52 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "status",
+          "type": "status",
+          "value": "200"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<meta name=\"rc-message-parser-max-length\" content=\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<div id=\"react-root\">"
+        }
+      ],
+      "evidence": "HTTP 200 ...<meta name=\"rc-message-parser-max-length\" content=\"10000\" />\n\n\t\t<link rel=\"icon\" sizes=\"16x16\" type=\"image/png\" href=/assets/favicon_16.png />\n\t\t<link rel=\"icon\" sizes=\"32x32\" type=\"image/png\" href=/assets/favicon_32.png />\n\t\t\t<link rel=\"icon\" sizes=\"any\" type=\"image/svg+xml\" hre ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/http/httpServer.ts:22-26",
+      "notes": "The 404 shape of the web tier: anything the HTTP server does not route falls to Meteor's webapp, which serves the client shell (same bytes as /) and lets the client router show its own not-found view. So a 200 on an arbitrary path proves nothing about that path on Rocket.Chat; /sitemap.xml, /manifest.json and /.well-known/security.txt all answer this way (see negative_signals). Under /api the answer is a real 404 instead (FP-025). Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/bs14-no-such-page\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-024",
+      "kind": "api",
+      "title": "/api/info answers anonymously with Rocket.Chat's workspace-info document",
+      "request": {
+        "method": "GET",
+        "path": "/api/info",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 11395,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-store",
+          "Content-Length": "11395",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:53 GMT",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "regex",
+          "value": "\"version\":\"\\d+\\.\\d+\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"minimumClientVersions\":{\"desktop\":\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"hashedWorkspaceUrl\":\""
+        }
+      ],
+      "evidence": "{\"workspaceUrl\":\"127.0.0.1:39649\",\"hashedWorkspaceUrl\":\"1e31f8569d51d8e31a496bca7e36e8ae0336b473b14034b9f70c4ace287adde2\",\"version\":\"9.1\",\"minimumClientVersions\":{\"desktop\":\"3.9.6\",\"mobile\":\"4.39.0\"},\"supportedVersions\":{\"signed\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lc3RhbXAiOiIyMDI2LTExLTIz ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/api/default/info.ts:17-28",
+      "notes": "The endpoint the web client itself reads the server version and supported-versions token from (apps/meteor/client/hooks/useWorkspaceInfo.ts:7), so a working deployment keeps it reachable. Anonymous callers get workspaceUrl, hashedWorkspaceUrl, the trimmed version, minimumClientVersions (apps/meteor/package.json:497-502) and the signed supportedVersions token (apps/meteor/server/api/lib/getServerInfo.ts:10-33); the full version and commit need view-statistics. Matches any version; FP-011 reads the version itself. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/info\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-025",
+      "kind": "error",
+      "title": "The REST API's 404 is plain text but carries Rocket.Chat's own Access-Control-Allow-Headers list",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/bs14-no-such-endpoint",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 404,
+        "content_type": "text/plain; charset=UTF-8",
+        "length": 13,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Content-Length": "13",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/plain; charset=UTF-8",
+          "Date": "Tue, 24 Nov 2026 15:17:53 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "status",
+          "type": "status",
+          "value": "404"
+        },
+        {
+          "where": "header:Access-Control-Allow-Headers",
+          "type": "literal",
+          "value": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "404 Not Found"
+        }
+      ],
+      "evidence": "Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization | HTTP 404 body: 404 Not Found",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/api/v1/middlewares/cors.ts:5-24",
+      "notes": "The REST cors middleware sets this exact list on every non-preflight /api response, whatever API_Enable_CORS says (cors.ts:18-24): X-User-Id and X-Auth-Token are Rocket.Chat's REST credentials and x-visitor-token is the Livechat visitor header. With MCP_Enabled the list gains a trailing MCP-Protocol-Version (cors.ts:10-11), which the substring match tolerates. The plain-text 404 body itself is the HTTP router's default and generic, so it only shapes the signal. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request. On nginx the 404 status and the 404 Not Found literal both held (its own error page says so), and on Mailpit the status: the Access-Control-Allow-Headers value is the part that identifies.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/v1/bs14-no-such-endpoint\"",
+      "requires_js": false,
+      "family": null,
+      "findings": [
+        "VULN-063",
+        "VULN-073",
+        "VULN-074",
+        "VULN-078",
+        "VULN-084"
+      ]
+    },
+    {
+      "id": "FP-026",
+      "kind": "body",
+      "title": "/livechat serves the Rocket.Chat widget page, and serves it with no Content-Security-Policy",
+      "request": {
+        "method": "GET",
+        "path": "/livechat",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "length": 359,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "text/html; charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:54 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "<title>Livechat - Rocket.Chat</title>"
+        },
+        {
+          "where": "body",
+          "type": "regex",
+          "value": "<script> SERVER_URL = '[^']*'; </script>"
+        },
+        {
+          "where": "header:Content-Security-Policy",
+          "type": "absent",
+          "value": null
+        }
+      ],
+      "evidence": "...<title>Livechat - Rocket.Chat</title>\n\t\t<script type=\"module\" crossorigin src=\"livechat/index-tLdKzdVb.js\"></script>\n\t\t<link rel=\"stylesheet\" href=\"livechat/tamagui-zero-674248fa.css\">\n\t</head>\n\t<body><script> SERVER_URL = 'http://127.0.0.1:39649'; </script>\n\t\t<div id=\"app\"></div>\n\t</body>\n</html>\n | Content-Security-Policy: (absent)",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/omnichannel/livechat.ts:46-75",
+      "notes": "The widget page is answered even while Omnichannel is off (Livechat_enabled false, the 9.x default). It is the one HTML page without the CSP every other response carries: livechat.ts:70 removes it when no Livechat_AllowedDomainsList is set, the default (stage 02's VULN-023 noted it), which is why the absent matcher is meaningful. With an allowlist and a Referer the page gets a frame-ancestors CSP instead and the absent part stops holding. The visitor API this page talks to is where the Livechat findings live. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request. On both controls the absent-CSP part held too; the title and SERVER_URL literals make it specific.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/livechat\"",
+      "requires_js": false,
+      "family": null,
+      "findings": [
+        "VULN-001",
+        "VULN-046",
+        "VULN-051",
+        "VULN-054",
+        "VULN-076"
+      ]
+    },
+    {
+      "id": "FP-027",
+      "kind": "api",
+      "title": "The public shield badge draws a JOIN CHAT label next to the workspace icon",
+      "request": {
+        "method": "GET",
+        "path": "/api/v1/shield.svg?name=bs14&channel=bs14",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "image/svg+xml;charset=utf-8",
+        "length": 853,
+        "headers": {
+          "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, X-User-Id, X-Auth-Token, x-visitor-token, Authorization",
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-store",
+          "Content-Length": "853",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "image/svg+xml;charset=utf-8",
+          "Date": "Tue, 24 Nov 2026 15:17:58 GMT",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "header:Content-Type",
+          "type": "literal",
+          "value": "image/svg+xml;charset=utf-8"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": ">JOIN CHAT</text>"
+        },
+        {
+          "where": "body",
+          "type": "regex",
+          "value": "xlink:href=\"[^\"]*/assets/favicon\\.svg\""
+        }
+      ],
+      "evidence": "...<image x=\"5\" y=\"3\" width=\"14\" height=\"14\" xlink:href=\"http://127.0.0.1:39649/assets/favicon.svg\"/><g fill=\"#fff\" font-family=\"DejaVu Sans,Verdana,Geneva,sans-serif\" font-size=\"11\"><text x=\"24\" y=\"15\" fill=\"#010101\" fill-opacity=\".3\">bs14</text><text x=\"24\" y=\"14\">bs14</text><text x=\"62\" y=\"15\" fill= ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/api/v1/misc.ts:205-342",
+      "notes": "authRequired: false; name and channel are both required by the query schema (packages/rest-typings/src/v1/misc.ts:17-38), and with no type the badge reads Join_Chat upper-cased, so it discloses nothing about the workspace (type=online would count users and is deliberately not used). API_Enable_Shields is on by default (apps/meteor/server/settings/general.ts:13); off, it answers 400 error-endpoint-disabled. The label follows the server language (English by default). Rate-limited to 60 calls a minute. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/api/v1/shield.svg?name=bs14&channel=bs14\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-028",
+      "kind": "path",
+      "title": "/livez answers Rocket.Chat's liveness document with memory, event-loop and Mongo checks",
+      "request": {
+        "method": "GET",
+        "path": "/livez",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 136,
+        "headers": {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Content-Length": "136",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:58 GMT",
+          "Expires": "0",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"checks\":{\"memory\":{\"status\":\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"eventLoop\":{\"status\":\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"mongo\":{\"status\":\""
+        }
+      ],
+      "evidence": "{\"status\":\"ok\",\"checks\":{\"memory\":{\"status\":\"ok\",\"percentile\":39.03},\"eventLoop\":{\"status\":\"ok\",\"lagMs\":12.44},\"mongo\":{\"status\":\"ok\"}}}",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/routes/health.ts:98-129",
+      "notes": "The orchestrator liveness probe (also /readyz, which resets the event-loop histogram on each call and is therefore not used here, and /health, whose {\"status\":\"ok\"} is too generic). Unauthenticated by design. Unhealthy instances answer 503 with the same keys, which the matcher still accepts. Often blocked at the edge by operators who keep probes internal. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/livez\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-029",
+      "kind": "request_header",
+      "title": "A CORS preflight to the REST API gets Rocket.Chat's own 'CORS not enabled' 405",
+      "request": {
+        "method": "OPTIONS",
+        "path": "/api/info",
+        "params": {},
+        "headers": {
+          "Origin": "https://example.com",
+          "Access-Control-Request-Method": "GET"
+        }
+      },
+      "response": {
+        "status": 405,
+        "content_type": "text/plain;charset=UTF-8",
+        "length": 66,
+        "headers": {
+          "Content-Length": "66",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/plain;charset=UTF-8",
+          "Date": "Tue, 24 Nov 2026 15:17:53 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "status",
+          "type": "status",
+          "value": "405"
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "CORS not enabled. Go to \"Admin > General > REST Api\" to enable it."
+        }
+      ],
+      "evidence": "HTTP 405 CORS not enabled. Go to \"Admin > General > REST Api\" to enable it.",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/api/v1/middlewares/cors.ts:26-34",
+      "notes": "Sending Origin and Access-Control-Request-Method is what flips it: the same OPTIONS without them answers 200 \"OK\" (observed). With API_Enable_CORS off, the shipped default, every /api path answers this 405 (also observed at /api/v1/info); with CORS on the preflight succeeds, or gets 403 \"Invalid origin\" for an origin outside API_CORS_Origin. An ordinary browser preflight, not a probe of any weakness. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request. Both controls also answered this OPTIONS with a 405 of their own; the body is the part that identifies.",
+      "reproduce": "curl -s -i -X OPTIONS -H 'Origin: https://example.com' -H 'Access-Control-Request-Method: GET' \"${BASE:-http://127.0.0.1:39649}/api/info\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    },
+    {
+      "id": "FP-030",
+      "kind": "asset",
+      "title": "The runtime config names the exact build: git commit 9f3d6c8c4891 and Meteor 3.5.2",
+      "request": {
+        "method": "GET",
+        "path": "/meteor_runtime_config.js?hash=6413d19417a3a80aed225967c8627af9c7e6479e",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/javascript; charset=UTF-8",
+        "length": 891,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "public, max-age=3600",
+          "Content-Length": "891",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/javascript; charset=UTF-8",
+          "Date": "Tue, 24 Nov 2026 15:17:59 GMT",
+          "Vary": "Accept-Encoding",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "__meteor_runtime_config__ = {\"meteorRelease\":\"METEOR@3.5.2\""
+        },
+        {
+          "where": "body",
+          "type": "literal",
+          "value": "\"gitCommitHash\":\"9f3d6c8c48911e32ed6c2ce36befd431faa71190\""
+        }
+      ],
+      "evidence": "__meteor_runtime_config__ = {\"meteorRelease\":\"METEOR@3.5.2\",\"gitCommitHash\":\"9f3d6c8c48911e32ed6c2ce36befd431faa71190\",\"meteorEnv\":{\"NODE_ENV\":\"production\",\"TEST_METADATA\":\"{}\"},\"PUBLIC_SETTINGS\":{\"packages\":{\"dynamic-import\":{\"useLocationOrigin\":true}}},\"debug\":false,\"ROOT_URL\":\"http://127.0.0.1:39 ...",
+      "confidence": "high",
+      "unique_to_product": true,
+      "auth_required": false,
+      "version_hint": "exactly 9.1.0-develop at commit 9f3d6c8c48911e32ed6c2ce36befd431faa71190 (Meteor METEOR@3.5.2); on another build read gitCommitHash",
+      "version_range": {
+        "min": "9.1.0-develop",
+        "max": "9.1.0-develop",
+        "min_inclusive": true,
+        "max_inclusive": true
+      },
+      "source": "targets/rocket.chat/apps/meteor/server/lib/cors/cors.ts:137-149",
+      "notes": "The most precise version signal: Meteor publishes the build's git commit (star.json gitCommitHash) in the runtime config, without authentication. Two steps, because Rocket.Chat serves the file only with the hash the page itself references (cors.ts:140-147): the hash is the sha1 of the runtime config (apps/meteor/server/configuration/configureBoilerplate.ts:10-21), which includes ROOT_URL, so it differs per deployment and must be read from the <script src=\"/meteor_runtime_config.js?hash=...\"> tag of / first, as the reproduce line does; request.path holds this lab's hash. Without the hash the file is a bare 404 (negative_signals). The commit maps to the release through the vendor's repository; __meteor_runtime_config__ alone would only say Meteor. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "B=${BASE:-http://127.0.0.1:39649}; curl -s \"$B/meteor_runtime_config.js?hash=$(curl -s \"$B/\" | grep -o 'meteor_runtime_config.js?hash=[0-9a-f]*' | cut -d= -f2)\"",
+      "requires_js": false,
+      "family": null,
+      "findings": [
+        "VULN-001",
+        "VULN-002",
+        "VULN-005",
+        "VULN-006",
+        "VULN-015",
+        "VULN-018",
+        "VULN-024",
+        "VULN-032",
+        "VULN-033",
+        "VULN-037",
+        "VULN-042",
+        "VULN-046",
+        "VULN-047",
+        "VULN-051",
+        "VULN-054",
+        "VULN-063",
+        "VULN-066",
+        "VULN-073",
+        "VULN-074",
+        "VULN-076",
+        "VULN-078",
+        "VULN-084"
+      ]
+    },
+    {
+      "id": "FP-031",
+      "kind": "path",
+      "title": "/sockjs/info answers the SockJS info document of a Meteor DDP endpoint",
+      "request": {
+        "method": "GET",
+        "path": "/sockjs/info",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "application/json",
+        "length": 79,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+          "Content-Length": "79",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "application/json",
+          "Date": "Tue, 24 Nov 2026 15:17:59 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "match": {
+        "where": "body",
+        "type": "regex",
+        "value": "^\\{\"websocket\":true,\"origins\":\\[\"\\*:\\*\"\\],\"cookie_needed\":false,\"entropy\":\\d+\\}$"
+      },
+      "evidence": "{\"websocket\":true,\"origins\":[\"*:*\"],\"cookie_needed\":false,\"entropy\":2787210763} | Cache-Control: no-store, no-cache, must-revalidate, max-age=0",
+      "confidence": "medium",
+      "unique_to_product": false,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/lib/realtime/routes.ts:16-22",
+      "notes": "Identifies the Meteor family (any Meteor app, or a bare SockJS server, answers this shape), not Rocket.Chat alone. Since 9.1 Rocket.Chat answers it from its own HTTP server, mimicking SockJS, and serves only the websocket transport (changeset own-http-server). This is the realtime DDP surface where the anonymous method and stream findings sit. Breaks behind proxies that route /sockjs elsewhere. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/sockjs/info\"",
+      "requires_js": false,
+      "family": "meteor",
+      "findings": [
+        "VULN-005",
+        "VULN-006",
+        "VULN-033"
+      ]
+    },
+    {
+      "id": "FP-032",
+      "kind": "path",
+      "title": "/_timesync answers the server clock in epoch milliseconds, the Meteor time-sync convention",
+      "request": {
+        "method": "GET",
+        "path": "/_timesync",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": "text/plain; charset=UTF-8",
+        "length": 13,
+        "headers": {
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          "Content-Length": "13",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Content-Type": "text/plain; charset=UTF-8",
+          "Date": "Tue, 24 Nov 2026 15:17:59 GMT",
+          "Expires": "0",
+          "Pragma": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Xss-Protection": "1",
+          "Connection": "close"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "regex",
+          "value": "^\\d{13}$"
+        },
+        {
+          "where": "header:Content-Type",
+          "type": "literal",
+          "value": "text/plain"
+        },
+        {
+          "where": "header:Cache-Control",
+          "type": "literal",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ],
+      "evidence": "1795533479629 | Content-Type: text/plain; charset=UTF-8 | Cache-Control: no-cache, no-store, must-revalidate",
+      "confidence": "medium",
+      "unique_to_product": false,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/routes/timesync.ts:9-17",
+      "notes": "The clock endpoint Meteor clients use for time sync, which Rocket.Chat now answers from its own HTTP server (docs/features/http-server.md:22). Other Meteor apps that sync time answer the same path the same way, so it narrows to the Meteor family rather than deciding. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request. Mailpit's 404 is text/plain too; the 13-digit body is the part that identifies.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/_timesync\"",
+      "requires_js": false,
+      "family": "meteor",
+      "findings": []
+    },
+    {
+      "id": "FP-033",
+      "kind": "wellknown",
+      "title": "/robots.txt disallows everything and is served with no Content-Type",
+      "request": {
+        "method": "GET",
+        "path": "/robots.txt",
+        "params": {},
+        "headers": {}
+      },
+      "response": {
+        "status": 200,
+        "content_type": null,
+        "length": 25,
+        "headers": {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Security-Policy": "default-src 'self' https://cdn.zapier.com; connect-src *; font-src 'self' https://cdn.zapier.com data:; frame-src *; img-src * data: blob:; media-src * data:; script-src 'self' 'unsafe-eval' 'sha256-jqxtvDkBbRAl9Hpqv68WdNOieepg8tJSYu1xIy7zT34=' 'sha256-aui5xYk3Lu1dQcnsPlNZI+qDTdfzdUv3fzsw80VLJgw=' https://cdn.zapier.com https://zapier.com; style-src 'self' 'unsafe-inline' https://cdn.zapier.com",
+          "Date": "Tue, 24 Nov 2026 15:17:59 GMT",
+          "X-Content-Type-Options": "nosniff",
+          "X-Frame-Options": "sameorigin",
+          "X-Instance-Id": "e287198e-5576-4f77-898f-18ea23e4d9e4",
+          "X-Powered-By": "Express",
+          "X-Xss-Protection": "1",
+          "Connection": "close",
+          "Transfer-Encoding": "chunked"
+        }
+      },
+      "all_of": [
+        {
+          "where": "body",
+          "type": "regex",
+          "value": "^User-agent: \\*\\nDisallow: /$"
+        },
+        {
+          "where": "header:Content-Type",
+          "type": "absent",
+          "value": null
+        }
+      ],
+      "evidence": "User-agent: *\nDisallow: / | Content-Type: (absent)",
+      "confidence": "low",
+      "unique_to_product": false,
+      "auth_required": false,
+      "version_hint": null,
+      "version_range": null,
+      "source": "targets/rocket.chat/apps/meteor/server/startup/robots.js:5-8",
+      "notes": "The body is the Robot_Instructions_File_Content default (apps/meteor/server/settings/general.ts:220) and admins edit it; the handler ends the response without a Content-Type, a quirk of a bare Connect handler that other Connect or Express apps share. Consistent with Rocket.Chat, never decisive. Did not match either control: a bare nginx:1.27-alpine container and Mailpit v1.31.4 (an unrelated Go web app with a single-page UI), both replayed with the same request.",
+      "reproduce": "curl -s -i \"${BASE:-http://127.0.0.1:39649}/robots.txt\"",
+      "requires_js": false,
+      "family": null,
+      "findings": []
+    }
+  ],
+  "negative_signals": [
+    {
+      "path": "/sitemap.xml",
+      "observed": "200 text/html, 2188 bytes, the page shell",
+      "note": "Not served: falls through to the page shell (200 text/html, same bytes as /). A 200 here is not a sitemap; scanners that treat 200 as presence get false positives on Rocket.Chat."
+    },
+    {
+      "path": "/.well-known/security.txt",
+      "observed": "200 text/html, 2188 bytes, the page shell",
+      "note": "No security.txt is shipped; the path falls through to the page shell with 200 text/html."
+    },
+    {
+      "path": "/.well-known/openid-configuration",
+      "observed": "200 text/html, 2188 bytes, the page shell",
+      "note": "Rocket.Chat's OAuth2 provider is not an OpenID provider: no OIDC discovery document, only the RFC 8414 one (FP-009); the path falls through to the page shell. GitLab and Keycloak serve JSON here."
+    },
+    {
+      "path": "/manifest.json",
+      "observed": "200 text/html, 2188 bytes, the page shell",
+      "note": "The PWA manifest lives at /images/manifest.json (FP-021); /manifest.json falls through to the page shell."
+    },
+    {
+      "path": "/meteor_runtime_config.js",
+      "observed": "404, empty body",
+      "note": "Without the page's hash the runtime config is an empty 404 (apps/meteor/server/lib/cors/cors.ts:140-147). Meteor's own webapp package serves it at this URL with no hash check (programs/server/packages/webapp.js:641-645 in the shipped bundle), so a stock Meteor app answers 200 here. Separates Rocket.Chat from other Meteor apps."
+    },
+    {
+      "path": "/api/v4/system/ping",
+      "observed": "404 text/plain, 13 bytes: '404 Not Found'",
+      "note": "Mattermost's health endpoint does not exist: plain-text 404 from the REST router, with Rocket.Chat's Access-Control-Allow-Headers. Separates it from Mattermost."
+    },
+    {
+      "path": "/api/v1/server_settings",
+      "observed": "404 text/plain, 13 bytes: '404 Not Found'",
+      "note": "Zulip's server_settings endpoint does not exist (plain-text 404). Separates it from Zulip."
+    },
+    {
+      "path": "POST /sockjs/000/bs14abcd/xhr",
+      "observed": "404, empty body",
+      "note": "The SockJS xhr transport is not served (empty 404, apps/meteor/server/lib/realtime/routes.ts:24). The changeset own-http-server records that from 9.1 only the websocket transport is served and /sockjs xhr and polling answer 404, as in microservices deployments; because microservices deployments of older versions behave the same way, this is not used as a version signal."
+    },
+    {
+      "path": "/assets/favicon.ico",
+      "observed": "403, empty body",
+      "note": "403 with an empty body, not the icon: /assets/<key>.<ext> serves the admin-managed assets and the favicon key only allows svg (apps/meteor/server/lib/media/assets/assets.ts:424-427). The .ico asset is /assets/favicon_ico.ico; /favicon.ico is the static file (FP-003)."
+    }
+  ],
+  "notes": "How these were observed. Every signal was fetched without credentials from the lab at http://127.0.0.1:39649 on 2026-11-24, through the vendor-documented Traefik reverse proxy in front of the app and through this session's egress proxy. Fetching the same paths from inside the lab, straight from the app container, showed that the two hops change only two things: Traefik rewrites header names to their canonical case (the app sends X-Instance-ID, the file shows X-Instance-Id; matchers compare names case-insensitively) and the egress proxy adds Connection: close. Each response.headers map is the full map as received here, those two included. blue_spider.fingerprints.check() replayed all 33 signals from this host and, separately, from inside the lab with the same code: 33 of 33 matched both times. Query strings are written into request.path because the replay tool appends nothing, so request.params is always empty. The reproduce lines take the target from $BASE and default to the lab.\n\nControls. Every signal was replayed against a bare nginx:1.27-alpine container started for this stage (bluespiderlab_rocket.chat_control on 127.0.0.1:39650, run on 0.05 CPU lent by the idle mail sink so the stack stayed inside its 3.0-CPU budget, then removed, with the mail sink's share restored) and against Mailpit v1.31.4, an unrelated Go web application already in the lab. Neither control matched any signal: 0 of 33 each, and check() reported matched_control 0. Where the generic half of a combined matcher did hold on a control, that signal's notes say so.\n\nWhat masks or moves these signals in a real deployment. A reverse proxy or CDN may strip X-Instance-ID (FP-001), replace the CSP (FP-002), answer /favicon.ico itself (FP-003), add a stickiness cookie (FP-015), or block /api/docs, /livez, /_matrix or /livechat. A Site_Url with a path (https://host/chat) moves every path under that prefix, and moves the OAuth metadata to /.well-known/oauth-authorization-server/chat. CDN_PREFIX moves /bundle/ and the script URLs to the CDN host; the regexes allow a host there. These admin settings each turn one signal off: Enable_CSP (FP-002), uploaded favicon assets (FP-004, FP-005, FP-006; FP-003 survives), Accounts_Password_Policy_Enabled (FP-010), API_Enable_Shields (FP-027), Accounts_AvatarExternalProviderUrl (FP-012), Robot_Instructions_File_Content (FP-033), API_Enable_CORS (FP-029), MCP_Enabled with its licence (FP-017), and the federation licence with Federation_Service_Enabled (FP-018). Site_Name changes the page title, which is why no signal matches the title.\n\nVersion. The exact build comes from /meteor_runtime_config.js (FP-030: git commit 9f3d6c8c48911e32ed6c2ce36befd431faa71190 and Meteor 3.5.2), which needs the per-deployment hash read from / first. Without it, /api/info gives major.minor (FP-011: 9.1, so >=9.1.0-develop and <9.2.0-develop), the Vite client under /bundle/ gives >=9.1.0-develop (FP-014), and four signals each set a 9.0 floor: OpenAPI 3.1 (FP-008), the RFC 8414 metadata (FP-009) and the MCP 404 (FP-017) from 9.0.0-rc.0, and the short 401 body (FP-016) from any 9.0.0 build, develop included. The ranges use Rocket.Chat's own tag scheme, where -develop is the lowest pre-release of a version. Only this one build could be observed, so every bound comes from the in-repo changelog, changesets and code at this commit, and nothing bounds the version from above except the major.minor of /api/info.\n\nNot tested, and why. Other releases (the lab holds one build). HTTPS: the lab is plain HTTP per its manifest, so no TLS or HSTS signal is recorded, and none would describe the product. A microservices deployment, where a separate ddp-streamer serves DDP. Licensed (EE) workspaces with MCP or Matrix federation on. Workspaces served under a path prefix. A non-English server language, which changes the shield label (FP-027).\n\nCandidates dropped. Generic or framework defaults: X-Powered-By: Express (sent only on Meteor-served responses), /health ({\"status\":\"ok\"}), the stock swagger-ui-express page at /api-docs/, the plain-text 404 of /api on its own, /websocket without an upgrade (SockJS's own 400 text), /oauth/token and /oauth/userinfo (OAuth library messages, rate limited), and /hooks/<id>/<token> with made-up values, which answers a bare 500 Internal Server Error: generic, and a probe that makes the server log an error is not one a fingerprint should send. Routes that 404 or 400 in a default install, so they fingerprint nothing: /file-decrypt/ (a 404 stub), /custom-sounds/<missing>, /file-upload/<missing>, /data-export/<missing>, /video-conference/rnnoise/<missing>, /api/apps/public/<missing>, /_saml/* (licensed), /i18n/<unknown language> (400), and /api/v1/mcp, whose JSON-RPC 'MCP endpoint is disabled' duplicates FP-017. Per-build or per-deployment values: the Meteor appId in the runtime config (generated at build time; the repository has no .meteor/.id), the supportedVersions token's timestamp (the newest of the build, licence and cloud copies), the main Meteor bundle /<sha1>.js?meteor_js_resource=true (named per build, and larger than the 512 KB the replay tool reads), and /i18n/en.json (532 KB). /readyz was not used as a signal because each call resets its event-loop histogram.\n\nPassed on for the reviewer: one route was left out because it has a side effect, and it discloses data. GET /requestSeats (and /links/manage-subscription) answers anonymous callers with a 302 to https://go.rocket.chat/i/contact-sales carrying the workspace's active user count, plus its workspaceId and the setup wizard's Industry, Country and Size when those are set (apps/meteor/ee/server/requestSeatsRoute.ts:19-33, apps/meteor/ee/server/lib/license/getSeatsRequestLink.ts:6-30). Every call also increments a seat-request counter (requestSeatsRoute.ts:30, apps/meteor/server/services/analytics/service.ts:9-11). This stage reached that handler five times while classifying routes, and the lab's counter now reads 5; the statistics job resets it to 0 (apps/meteor/server/lib/statistics/lib/statistics.ts:471). Apart from that counter, and one early /readyz call that reset that probe's event-loop histogram as every orchestrator poll does, nothing in the lab was changed. No earlier stage recorded this disclosure in report.json.\n\nNo signal sends or needs a credential. Every signal is a GET except FP-029, an OPTIONS preflight; negative_signals include one POST, a SockJS transport handshake. No signal is an attack or a probe for a weakness.",
+  "attribution": "Blue Spider, a product of Kohi Research Corporation (kohirc.com). Copyright 2026 Kohi Research Corporation. All rights reserved. Blue Spider (TM) is a trademark of Kohi Research Corporation. Generated by Blue Spider; do not use or redistribute without attribution to Kohi Research Corporation."
+}

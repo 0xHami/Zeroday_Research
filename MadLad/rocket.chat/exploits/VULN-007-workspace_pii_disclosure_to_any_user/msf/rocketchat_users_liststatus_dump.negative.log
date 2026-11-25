@@ -1,0 +1,11 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/users.list
+SSL => false
+VERBOSE => true
+[*] Running module against 127.0.0.1
+[-] Auxiliary aborted due to failure: no-access: Could not sign in with the credentials given.
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

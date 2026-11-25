@@ -1,0 +1,2056 @@
+{
+  "target": "rocket.chat",
+  "nodes": [
+    {
+      "id": "F-AUTH-LOGIN",
+      "label": "Password login, failed-login blocking",
+      "description": "Password login, failed-login blocking. Category: User Identity & Access. Auth: None. Docs: documented. Findings: VULN-017 (Low). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/ApiClass.ts",
+        "packages/ddp-server/src/methods/accounts.ts",
+        "apps/meteor/server/lib/realtime/sessionAccounts.ts",
+        "apps/meteor/server/lib/2fa/loginHandler.ts",
+        "apps/meteor/ee/server/configuration/ldapCore.ts",
+        "apps/meteor/server/configuration/cas.ts",
+        "apps/meteor/ee/server/lib/saml/loginHandler.ts",
+        "apps/meteor/server/lib/auth/restrictLoginAttempts.ts"
+      ],
+      "routes": [
+        "POST /api/v1/login",
+        "login",
+        "/websocket",
+        "totp",
+        "ldap",
+        "cas",
+        "saml",
+        "apple",
+        "iframe",
+        "login-token"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-AUTH-REGISTER",
+      "label": "Self-service registration, secret URL",
+      "description": "Self-service registration, secret URL. Category: User Identity & Access. Auth: None. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/v1/users.ts",
+        "apps/meteor/client/startup/routes.tsx",
+        "apps/meteor/server/meteor-methods/auth/checkRegistrationSecretURL.ts",
+        "apps/meteor/server/meteor-methods/users/registerUser.ts",
+        "apps/meteor/server/lib/auth/startup.js",
+        "apps/meteor/server/lib/auth/passwordPolicy.ts"
+      ],
+      "routes": [
+        "POST /api/v1/users.register",
+        "/register/:hash",
+        "checkRegistrationSecretURL"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AUTH-EMAILVERIFY",
+      "label": "Email verification",
+      "description": "Email verification. Category: User Identity & Access. Auth: None. Docs: documented. Findings: VULN-015 (Medium). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/v1/users.ts",
+        "apps/meteor/server/lib/2fa/loginHandler.ts",
+        "apps/meteor/server/lib/auth/startup.js"
+      ],
+      "routes": [
+        "POST /api/v1/users.sendConfirmationEmail",
+        "POST /api/v1/users.verifyEmail",
+        "verifyEmail"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-AUTH-RESET",
+      "label": "Password reset by email token",
+      "description": "Password reset by email token. Category: User Identity & Access (recovery). Auth: None. Docs: documented. Findings: VULN-015 (Medium). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/meteor-methods/auth/sendForgotPasswordEmail.ts"
+      ],
+      "routes": [
+        "POST /api/v1/users.forgotPassword",
+        "/reset-password/:token",
+        "resetPassword",
+        "method.callAnon/resetPassword"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-AUTH-2FA",
+      "label": "TOTP, email OTP, backup codes, step-up",
+      "description": "TOTP, email OTP, backup codes, step-up. Category: User Identity & Access (MFA). Auth: session / none for challenges. Docs: documented. Findings: VULN-004 (Medium), VULN-015 (Medium). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/v1/twoFactorChallenges.ts",
+        "apps/meteor/server/lib/2fa/code/index.ts",
+        "apps/meteor/server/lib/2fa/lib/totp.ts",
+        "packages/models/src/models/Users.ts"
+      ],
+      "routes": [
+        "users.enableTotp",
+        "users.validateTotp",
+        "users.disableTotp",
+        "users.regenerateTotpCodes",
+        "users.totpCodesRemaining",
+        "users.2fa.enableEmail",
+        "users.2fa.disableEmail",
+        "users.2fa.sendEmailCode",
+        "twoFactorChallenges.sendEmailCode",
+        "twoFactorChallenges.verifyChallenge",
+        "twoFactorRequired",
+        "x-2fa-code",
+        "x-2fa-method"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-AUTH-PAT",
+      "label": "Personal access tokens, admin tokens",
+      "description": "Personal access tokens, admin tokens. Category: User Identity & Access (API keys). Auth: session. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/v1/users.ts",
+        "apps/meteor/imports/personal-access-tokens/server/api/methods",
+        "apps/meteor/server/lib/2fa/code/index.ts"
+      ],
+      "routes": [
+        "users.generatePersonalAccessToken",
+        "users.regeneratePersonalAccessToken",
+        "users.removePersonalAccessToken",
+        "users.getPersonalAccessTokens",
+        "users.createToken",
+        "generateAccessToken"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AUTH-SESSIONS",
+      "label": "Sessions, logout, device management",
+      "description": "Sessions, logout, device management. Category: User Identity & Access. Auth: session. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/ee/server/api/sessions.ts"
+      ],
+      "routes": [
+        "POST|GET /api/v1/logout",
+        "users.logout",
+        "logout-other-user",
+        "users.logoutOtherClients",
+        "users.removeOtherTokens",
+        "sessions/*",
+        "device-management",
+        "logout"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AUTH-OAUTHLOGIN",
+      "label": "Social and OAuth login, login codes",
+      "description": "Social and OAuth login, login codes. Category: Integration / Identity. Auth: None. Docs: documented. Findings: VULN-002 (High). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/configuration/configurePassport.ts",
+        "apps/meteor/server/lib/oauth/configureOAuthServices.ts",
+        "apps/meteor/server/lib/oauth/oauthConfigs.ts",
+        "apps/meteor/server/lib/auth-providers/gitlab.ts",
+        "apps/meteor/server/lib/auth-providers/apple/applePassportOAuth.ts",
+        "apps/meteor/server/lib/auth-providers/custom-oauth/customOAuth.ts",
+        "apps/meteor/server/api/v1/loginCode.ts",
+        "apps/meteor/server/configuration/accounts_meld.js",
+        "apps/meteor/server/lib/oauth/passportOAuthCallback.ts",
+        "packages/models/src/models/LoginCodes.ts",
+        "packages/models/src/models/TwoFactorChallenges.ts"
+      ],
+      "routes": [
+        "GET /oauth/<provider>",
+        "GET /_oauth/<provider>",
+        "oauth-enterprise",
+        "POST /api/v1/loginCode.redeem",
+        "/2fa/:method/:challengeId"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "F-AUTH-OAUTHPROVIDER",
+      "label": "OAuth2 authorization server, DCR, OAuth apps",
+      "description": "OAuth2 authorization server, DCR, OAuth apps. Category: Integration / Identity. Auth: mixed. Docs: documented. Findings: VULN-018 (Low). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/oauth2-server/oauth.ts",
+        "apps/meteor/server/lib/auth/oauth2-server/oauth2-server.ts",
+        "apps/meteor/server/oauth2-server/metadata.ts",
+        "apps/meteor/server/api/v1/oauthapps.ts"
+      ],
+      "routes": [
+        "GET|POST /oauth/authorize",
+        "ALL /oauth/token",
+        "GET /oauth/userinfo",
+        "POST /oauth/register",
+        "/.well-known/oauth-authorization-server",
+        "serveAuthorizationServerMetadata",
+        "oauth-apps.*"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-AUTH-SSO-EE",
+      "label": "SAML, LDAP, CAS",
+      "description": "SAML, LDAP, CAS. Category: Identity (SSO). Auth: None. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/ee/server/lib/saml/listener.ts",
+        "apps/meteor/ee/server/meteor-methods/samlLogout.ts",
+        "apps/meteor/server/configuration/cas.ts",
+        "apps/meteor/ee/server/lib/saml/lib/settings.ts"
+      ],
+      "routes": [
+        "/_saml/*",
+        "saml.parseMetadata",
+        "samlLogout",
+        "ldap.testConnection|testSearch|syncNow",
+        "ldap-enterprise"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AUTH-LEGACYLOGIN",
+      "label": "iframe and login-token handlers",
+      "description": "iframe and login-token handlers. Category: Identity (legacy auth). Auth: None. Docs: documented (iframe) / undocumented (login-token). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/lib/auth-providers/iframe.ts",
+        "apps/meteor/server/lib/auth/token-login.js"
+      ],
+      "routes": [
+        "iframe",
+        "services.iframe.token",
+        "login-token",
+        "services.loginToken.token",
+        "/login-token/:token"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-USER-PROFILE",
+      "label": "Profile, preferences, status",
+      "description": "Profile, preferences, status. Category: Profile and account. Auth: session. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/meteor-methods/users/setUserStatus.ts"
+      ],
+      "routes": [
+        "users.updateOwnBasicInfo",
+        "users.setPreferences",
+        "users.getPreferences",
+        "users.setStatus",
+        "users.getStatus",
+        "users.getPresence",
+        "users.presence",
+        "setUserStatus",
+        "UserPresence:online|away"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-USER-AVATAR",
+      "label": "Avatars (upload, URL, external provider)",
+      "description": "Avatars (upload, URL, external provider). Category: Profile; Server-side fetch. Auth: session / public read. Docs: documented. Findings: VULN-022 (Low). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/routes/avatar/index.ts",
+        "apps/meteor/server/lib/users/setUserAvatar.ts"
+      ],
+      "routes": [
+        "users.setAvatar",
+        "users.resetAvatar",
+        "users.getAvatar",
+        "users.getAvatarSuggestion",
+        "GET /avatar/<username>",
+        "/avatar/uid/<id>",
+        "/avatar/room/<rid>",
+        "/avatar/contact/<id>"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-USER-DIRECTORY",
+      "label": "User listing, lookup, autocomplete, spotlight",
+      "description": "User listing, lookup, autocomplete, spotlight. Category: Search & Discovery. Auth: session (spotlight anonymous-capable). Docs: documented. Findings: VULN-004 (Medium), VULN-007 (Medium). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/v1/misc.ts",
+        "apps/meteor/server/lib/users/getFullUserData.ts",
+        "apps/meteor/server/api/lib/parseJsonQuery.ts",
+        "apps/meteor/server/api/lib/users.ts",
+        "apps/meteor/server/lib/statusVisibility"
+      ],
+      "routes": [
+        "users.info",
+        "users.list",
+        "users.listByStatus",
+        "users.listStatusVisibility",
+        "users.autocomplete",
+        "users.listTeams",
+        "users.checkUsernameAvailability",
+        "spotlight",
+        "directory"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-USER-DELETE",
+      "label": "Account deletion",
+      "description": "Account deletion. Category: Profile; Data lifecycle. Auth: session. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/api/v1/users.ts",
+        "apps/meteor/server/lib/users/deleteUser.ts"
+      ],
+      "routes": [
+        "users.deleteOwnAccount",
+        "Accounts_AllowDeleteOwnAccount",
+        "users.delete",
+        "delete-user"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-USER-DATAEXPORT",
+      "label": "Self-service data download",
+      "description": "Self-service data download. Category: Data lifecycle (GDPR). Auth: session / owner. Docs: documented. Findings: VULN-024 (Low). Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/routes/userDataDownload.ts",
+        "apps/meteor/server/cron/userDataDownloads.ts"
+      ],
+      "routes": [
+        "users.requestDataDownload",
+        "GET /data-export/<fileId>"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-USER-ADMIN",
+      "label": "Administrator user management",
+      "description": "Administrator user management. Category: Administration. Auth: admin. Docs: documented. Detail: features/identity-auth.md.",
+      "class": "identity-auth",
+      "files": [
+        "apps/meteor/server/lib/oauth/twoFactorAuth.ts",
+        "packages/rest-typings/src/v1/users/UserCreateParamsPOST.ts"
+      ],
+      "routes": [
+        "users.create",
+        "users.update",
+        "users.setActiveStatus",
+        "users.deactivateIdle",
+        "users.resetTOTP",
+        "users.resetE2EKey",
+        "users.sendWelcomeEmail"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AZ-RBAC",
+      "label": "Roles and permissions",
+      "description": "Roles and permissions. Category: Authorization. Auth: session / admin. Docs: documented. Findings: VULN-005 (Low), VULN-020 (Low). Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "apps/meteor/server/api/v1/roles.ts",
+        "apps/meteor/ee/server/api/roles.ts",
+        "apps/meteor/server/api/v1/permissions.ts",
+        "apps/meteor/server/lib/authorization/streamer/permissions/index.ts",
+        "packages/authorization/src/Authorization.ts",
+        "apps/meteor/server/lib/authorization/constant/permissions.ts",
+        "apps/meteor/server/api/v1/middlewares/permissions.ts",
+        "packages/streamer/src/listeners.module.ts"
+      ],
+      "routes": [
+        "roles.list",
+        "roles.sync",
+        "roles.addUserToRole",
+        "roles.getUsersInRole",
+        "roles.delete",
+        "roles.removeUserFromRole",
+        "roles.getUsersInPublicRoles",
+        "roles.create",
+        "roles.update",
+        "custom-roles",
+        "permissions.listAll",
+        "permissions.update",
+        "permissions.addRole",
+        "permissions.removeRole",
+        "permissions/get",
+        "stream-roles"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-AZ-ROOMACCESS",
+      "label": "Room access model",
+      "description": "Room access model. Category: Authorization. Auth: per route. Docs: documented. Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "packages/authorization/src/canAccessRoom.ts",
+        "packages/models/src/models/Subscriptions.ts",
+        "apps/meteor/server/api/v1/channels.ts"
+      ],
+      "routes": [
+        "every room-scoped route, method and stream"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AZ-TEAMS",
+      "label": "Teams (tenancy unit)",
+      "description": "Teams (tenancy unit). Category: Authorization; Social & Collaboration. Auth: session. Docs: documented. Findings: VULN-008 (Medium). Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "apps/meteor/server/api/v1/teams.ts",
+        "apps/meteor/server/services/team/service.ts"
+      ],
+      "routes": [
+        "teams.create",
+        "teams.list",
+        "teams.listAll",
+        "teams.info",
+        "teams.members",
+        "teams.addMembers",
+        "teams.updateMember",
+        "teams.removeMember",
+        "teams.leave",
+        "teams.addRooms",
+        "teams.removeRoom",
+        "teams.updateRoom",
+        "teams.listRooms",
+        "teams.listRoomsOfUser",
+        "teams.listChildren",
+        "teams.convertToChannel",
+        "teams.delete",
+        "teams.update",
+        "teams.autocomplete",
+        "channels.convertToTeam"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-AZ-BAN",
+      "label": "Ban, kick, mute, read-only",
+      "description": "Ban, kick, mute, read-only. Category: Authorization; Communication. Auth: owner / moderator. Docs: documented. Findings: VULN-009 (Medium). Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "apps/meteor/server/lib/banUserFromRoom.ts",
+        "apps/meteor/server/lib/rooms/banUserFromRoom.ts",
+        "apps/meteor/server/hooks/messages/sendNotificationsOnMessage.ts"
+      ],
+      "routes": [
+        "rooms.banUser",
+        "rooms.unbanUser",
+        "rooms.bannedUsers",
+        "rooms.muteUser",
+        "rooms.unmuteUser",
+        "channels.kick",
+        "groups.kick",
+        "/ban",
+        "/unban",
+        "/kick",
+        "/mute"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-AZ-INVITES",
+      "label": "Invite links, invitation email",
+      "description": "Invite links, invitation email. Category: Registration; Authorization. Auth: session / none to validate. Docs: documented. Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "apps/meteor/server/api/v1/invites.ts",
+        "apps/meteor/server/lib/rooms/invites/findOrCreateInvite.ts"
+      ],
+      "routes": [
+        "listInvites",
+        "findOrCreateInvite",
+        "removeInvite/:_id",
+        "useInviteToken",
+        "validateInviteToken",
+        "valid",
+        "sendInvitationEmail",
+        "/invite/:hash"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AZ-ABAC-EE",
+      "label": "Attribute-based access control",
+      "description": "Attribute-based access control. Category: Authorization. Auth: admin (EE). Docs: documented. Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "apps/meteor/ee/server/api/abac/index.ts",
+        "packages/authorization/src/canAccessRoom.ts"
+      ],
+      "routes": [
+        "abac/*",
+        "abac"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AZ-MODERATION",
+      "label": "Moderation console, reporting",
+      "description": "Moderation console, reporting. Category: Administration; Communication. Auth: moderator / any to report. Docs: documented. Detail: features/authorization-tenancy.md.",
+      "class": "authorization-tenancy",
+      "files": [
+        "apps/meteor/server/api/v1/moderation.ts"
+      ],
+      "routes": [
+        "moderation.*",
+        "view-moderation-console",
+        "manage-moderation-actions",
+        "moderation.reportUser",
+        "chat.reportMessage"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-SEND",
+      "label": "Send and post messages",
+      "description": "Send and post messages. Category: Communication. Auth: session. Docs: documented. Findings: VULN-012 (Low). Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/v1/chat.ts",
+        "apps/meteor/server/api/v1/rooms.ts",
+        "packages/rest-typings/src/v1/chat.ts",
+        "apps/meteor/server/meteor-methods/messages/sendFileMessage.ts",
+        "apps/meteor/server/meteor-methods/messages/sendMessage.ts",
+        "apps/meteor/server/lib/messages/sendMessage.ts",
+        "apps/meteor/server/api/lib/assertValidMessageBlocks.ts"
+      ],
+      "routes": [
+        "chat.sendMessage",
+        "chat.postMessage",
+        "processWebhookMessage",
+        "rooms.media/:rid",
+        "rooms.mediaConfirm/:rid/:fileId",
+        "/hooks"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-MSG-EDITDELETE",
+      "label": "Edit, delete, react, pin, star, follow",
+      "description": "Edit, delete, react, pin, star, follow. Category: Content; Communication. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/lib/messages/updateMessage.ts"
+      ],
+      "routes": [
+        "chat.update",
+        "chat.delete",
+        "chat.react",
+        "chat.pinMessage",
+        "chat.unPinMessage",
+        "chat.starMessage",
+        "chat.unStarMessage",
+        "chat.followMessage",
+        "chat.unfollowMessage",
+        "chat.ignoreUser",
+        "chat.reportMessage"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-READ",
+      "label": "History, sync, threads, deleted-message sync",
+      "description": "History, sync, threads, deleted-message sync. Category: Communication; Search. Auth: session / anonymous read. Docs: documented. Findings: VULN-010 (Low). Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/meteor-methods/messages/getChannelHistory.ts"
+      ],
+      "routes": [
+        "channels.history|messages",
+        "groups.history|messages",
+        "im.history|messages|messages.others",
+        "rooms.history",
+        "chat.getMessage",
+        "chat.syncMessages",
+        "chat.getDeletedMessages",
+        "chat.getThreadsList",
+        "chat.getThreadMessages",
+        "chat.syncThreadMessages",
+        "chat.getMentionedMessages",
+        "chat.getStarredMessages",
+        "chat.getPinnedMessages",
+        "chat.getDiscussions",
+        "chat.getMessages",
+        "stream-room-messages"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-MSG-SEARCH",
+      "label": "Message and global search",
+      "description": "Message and global search. Category: Search & Discovery. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/meteor-methods/platform/search.ts",
+        "apps/meteor/server/lib/parseMessageSearchQuery.ts",
+        "apps/meteor/server/lib/spotlight.js"
+      ],
+      "routes": [
+        "chat.search",
+        "rocketchatSearch.search",
+        "getProvider",
+        "spotlight",
+        "rooms.autocomplete.*",
+        "directory"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ROOM-MGMT",
+      "label": "Rooms, channels, groups, DMs",
+      "description": "Rooms, channels, groups, DMs. Category: Social & Collaboration. Auth: session. Docs: documented. Findings: VULN-008 (Medium). Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/experimental/rooms.setCategory.ts",
+        "apps/meteor/server/lib/rooms"
+      ],
+      "routes": [
+        "channels.*",
+        "groups.*",
+        "im.*",
+        "dm.*",
+        "rooms.*",
+        "rooms.saveRoomSettings",
+        "rooms.changeArchivationState",
+        "rooms.delete",
+        "rooms.leave",
+        "rooms.favorite",
+        "rooms.export",
+        "rooms.cleanHistory",
+        "rooms.info",
+        "rooms.get",
+        "rooms.membersOrderedByRole",
+        "rooms.adminRooms*",
+        "rooms.invite",
+        "rooms.join",
+        "rooms.open",
+        "rooms.hide",
+        "rooms.roles",
+        "rooms.isMember",
+        "rooms.nameExists",
+        "POST /api/experimental/rooms.setCategory"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-MSG-DISCUSSIONS",
+      "label": "Discussions and threads",
+      "description": "Discussions and threads. Category: Communication. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/meteor-methods/messages/createDiscussion.ts"
+      ],
+      "routes": [
+        "rooms.createDiscussion",
+        "rooms.getDiscussions",
+        "chat.getDiscussions",
+        "Threads_enabled"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-SLASH",
+      "label": "Slash commands",
+      "description": "Slash commands. Category: Communication; Integration. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/v1/commands.ts",
+        "apps/meteor/server/slashcommands"
+      ],
+      "routes": [
+        "commands.get",
+        "commands.list",
+        "commands.run",
+        "commands.preview"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-NOTIFY",
+      "label": "Notifications (push, email, in-app)",
+      "description": "Notifications (push, email, in-app). Category: Communication & Notifications. Auth: session. Docs: documented. Findings: VULN-009 (Medium). Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/v1/push.ts",
+        "apps/meteor/server/services/messages/hooks/BeforeSaveMentions.ts",
+        "apps/meteor/server/hooks/messages/sendNotificationsOnMessage.ts",
+        "apps/meteor/server/lib/notifications/message/desktop.ts",
+        "apps/meteor/server/lib/rooms/roomCoordinator.ts",
+        "apps/meteor/server/lib/notifications/email",
+        "apps/meteor/server/lib/notifications/queue",
+        "apps/meteor/server/lib/notifications/push"
+      ],
+      "routes": [
+        "rooms.saveNotification",
+        "push.token",
+        "push.get",
+        "push.info",
+        "push.test",
+        "stream-notify-user",
+        "message",
+        "notification",
+        "rooms-changed",
+        "subscriptions-changed",
+        "userData",
+        "force_logout"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-MSG-E2E",
+      "label": "End-to-end encryption",
+      "description": "End-to-end encryption. Category: Content; Security. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/v1/e2e.ts",
+        "apps/meteor/client/lib/e2ee"
+      ],
+      "routes": [
+        "e2e.setRoomKeyID",
+        "e2e.fetchMyKeys",
+        "e2e.getUsersOfRoomWithoutKey",
+        "e2e.updateGroupKey",
+        "e2e.acceptSuggestedGroupKey",
+        "e2e.rejectSuggestedGroupKey",
+        "e2e.provideUsersSuggestedGroupKeys",
+        "e2e.fetchUsersWaitingForGroupKey",
+        "e2e.resetRoomKey",
+        "e2e.setUserPublicAndPrivateKeys",
+        "e2e.requestSubscriptionKeys"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-URLPREVIEW",
+      "label": "Link previews and oEmbed",
+      "description": "Link previews and oEmbed. Category: Server-side fetch. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/services/messages/hooks/AfterSaveOEmbed.ts",
+        "packages/server-fetch/src/index.ts",
+        "apps/meteor/server/cron/oembed.ts"
+      ],
+      "routes": [
+        "chat.getURLPreview",
+        "OEmbedCacheCleanup",
+        "clear-oembed-cache"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-VIDEOCONF",
+      "label": "Video conference, media calls, call history",
+      "description": "Video conference, media calls, call history. Category: Communication. Auth: session (join anonymous-capable). Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/v1/videoConference.ts",
+        "apps/meteor/server/services/video-conference/service.ts",
+        "packages/rest-typings/src/v1/videoConference/VideoConfStartProps.ts"
+      ],
+      "routes": [
+        "video-conference.*",
+        "video-conference.join",
+        "media-calls.*",
+        "call-history.*",
+        "video-conference.callConfig",
+        "stream-video-conference",
+        "notify-user/<uid>/video-conference",
+        "notify-user/<uid>/media-calls"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MSG-AUTOTRANSLATE",
+      "label": "Auto-translate, read receipts (EE), calendar",
+      "description": "Auto-translate, read receipts (EE), calendar. Category: Communication; Integration. Auth: session. Docs: documented. Detail: features/messaging.md.",
+      "class": "messaging",
+      "files": [
+        "apps/meteor/server/api/v1/autotranslate.ts",
+        "apps/meteor/server/api/v1/calendar.ts",
+        "apps/meteor/ee/server/api/chat.ts",
+        "apps/meteor/server/lib/autotranslate/permissions.ts",
+        "apps/meteor/server/lib/autotranslate"
+      ],
+      "routes": [
+        "autotranslate.*",
+        "calendar-events.*"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-FILE-UPLOAD",
+      "label": "Room file upload",
+      "description": "Room file upload. Category: File upload. Auth: session. Docs: documented. Findings: VULN-012 (Low), VULN-021 (Low). Detail: features/files-media.md.",
+      "class": "files-media",
+      "files": [
+        "apps/meteor/server/api/v1/rooms.ts",
+        "apps/meteor/server/api/v1/uploads.ts",
+        "apps/meteor/server/lib/uikit/confirmViewFiles.ts",
+        "apps/meteor/server/api/lib/MultipartUploadHandler.ts",
+        "apps/meteor/lib/mimeTypes.ts",
+        "apps/meteor/server/lib/media/file-upload/lib/FileUpload.ts",
+        "apps/meteor/lib/restrictions.ts",
+        "apps/meteor/server/settings/file-upload.ts",
+        "apps/meteor/server/cron/temporaryUploadsCleanup.ts"
+      ],
+      "routes": [
+        "POST /api/v1/rooms.media/:rid",
+        "POST /api/v1/rooms.mediaConfirm/:rid/:fileId",
+        "POST /api/v1/uploads.delete",
+        "file_input",
+        "livechat/upload/:rid"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-FILE-SERVE",
+      "label": "Protected file download",
+      "description": "Protected file download. Category: File upload (private access). Auth: cookie / token / JWT. Docs: documented. Findings: VULN-009 (Medium), VULN-021 (Low), VULN-024 (Low). Detail: features/files-media.md.",
+      "class": "files-media",
+      "files": [
+        "apps/meteor/server/lib/media/file-upload/lib/requests.ts",
+        "apps/meteor/server/lib/media/file-upload/config/GridFS.ts"
+      ],
+      "routes": [
+        "GET /file-upload/<fileId>/<name>",
+        "?replyWithRedirectUrl=true",
+        "?contentDisposition=inline",
+        "?download"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-FILE-THUMB",
+      "label": "Image processing (sharp)",
+      "description": "Image processing (sharp). Category: File upload (image processing). Auth: n/a (server side). Docs: documented. Detail: features/files-media.md.",
+      "class": "files-media",
+      "files": [
+        "apps/meteor/server/lib/media/file-upload/lib/FileUpload.ts"
+      ],
+      "routes": [
+        "rooms.media (thumbnail step)",
+        "users.setAvatar"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MEDIA-EMOJI",
+      "label": "Custom emoji",
+      "description": "Custom emoji. Category: Content; Administration. Auth: manage-emoji. Docs: documented. Detail: features/files-media.md.",
+      "class": "files-media",
+      "files": [
+        "apps/meteor/server/api/v1/emoji-custom.ts",
+        "apps/meteor/server/lib/media/emoji-custom/startup/emoji-custom.js"
+      ],
+      "routes": [
+        "emoji-custom.list|all|create|update|delete",
+        "GET /emoji-custom/<name>"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MEDIA-SOUNDS",
+      "label": "Custom sounds",
+      "description": "Custom sounds. Category: Content; Administration. Auth: manage-sounds. Docs: documented. Detail: features/files-media.md.",
+      "class": "files-media",
+      "files": [
+        "apps/meteor/server/api/v1/custom-sounds.ts",
+        "apps/meteor/server/lib/media/custom-sounds/startup/custom-sounds.js"
+      ],
+      "routes": [
+        "custom-sounds.*",
+        "manage-sounds",
+        "GET /custom-sounds/<file>"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-MEDIA-ASSETS",
+      "label": "Workspace assets (logo, favicon)",
+      "description": "Workspace assets (logo, favicon). Category: Administration (branding). Auth: manage-assets. Docs: documented. Detail: features/files-media.md.",
+      "class": "files-media",
+      "files": [
+        "apps/meteor/server/api/v1/assets.ts",
+        "apps/meteor/server/lib/media/assets/assets.ts"
+      ],
+      "routes": [
+        "assets.setAsset",
+        "assets.unsetAsset",
+        "manage-assets",
+        "GET /assets/<asset>"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-RT-DDP",
+      "label": "In-house DDP server",
+      "description": "In-house DDP server. Category: APIs (WebSocket). Auth: none to connect. Docs: documented. Detail: features/realtime.md.",
+      "class": "realtime",
+      "files": [
+        "apps/meteor/server/lib/realtime/websocket.ts",
+        "packages/ddp-server/src/codec.ts",
+        "packages/ddp-server/src/Session.ts",
+        "packages/ddp-server/src/Server.ts",
+        "apps/meteor/server/lib/realtime/meteorMethods.ts",
+        "packages/ddp-server/src/clientAddress.ts",
+        "apps/meteor/server/lib/realtime/sessionAccounts.ts"
+      ],
+      "routes": [
+        "/websocket",
+        "/sockjs/websocket",
+        "/sockjs/<server>/<session>/websocket",
+        "GET /sockjs/info"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-RT-METHODS",
+      "label": "Remaining Meteor methods, method.call bridge",
+      "description": "Remaining Meteor methods, method.call bridge. Category: APIs (RPC). Auth: per method. Docs: documented. Findings: VULN-005 (Low). Detail: features/realtime.md.",
+      "class": "realtime",
+      "files": [
+        "apps/meteor/server/api/v1/misc.ts",
+        "apps/meteor/server/lib/auth/startup.js",
+        "apps/meteor/server/lib/authorization/streamer/permissions/index.ts",
+        "apps/meteor/server/publications/room/index.ts",
+        "apps/meteor/server/startup/rateLimiter.js"
+      ],
+      "routes": [
+        "POST /api/v1/method.call/:method",
+        "POST /api/v1/method.callAnon/:method",
+        ":method",
+        "permissions/get",
+        "public-settings/get",
+        "private-settings/get",
+        "subscriptions/get",
+        "rooms/get",
+        "getRoomByTypeAndName",
+        "rocketchatSearch.getProvider",
+        "rocketchatSearch.search",
+        "UserPresence:online",
+        "UserPresence:away",
+        "setUserStatus",
+        "sendSMTPTestEmail",
+        "checkRegistrationSecretURL",
+        "OEmbedCacheCleanup",
+        "restart_server",
+        "removeSlackBridgeChannelLinks",
+        "resetIrcConnection",
+        "samlLogout",
+        "login",
+        "logout",
+        "resetPassword",
+        "verifyEmail",
+        "changePassword",
+        "createUser",
+        "forbidClientAccountCreation",
+        "targets/",
+        "stream-notify-room",
+        "stream-notify-room-users",
+        "stream-notify-user"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-RT-STREAMS",
+      "label": "Realtime streams",
+      "description": "Realtime streams. Category: APIs (WebSocket). Auth: per stream. Docs: documented (rules undocumented). Findings: VULN-003 (Medium), VULN-006 (Info), VULN-008 (Medium), VULN-011 (Low). Detail: features/realtime.md.",
+      "class": "realtime",
+      "files": [
+        "packages/streamer/src/notifications.module.ts",
+        "packages/streamer/src/streamer.module.ts",
+        "packages/streamer/src/listeners.module.ts"
+      ],
+      "routes": [
+        "stream-room-messages",
+        "stream-notify-room",
+        "stream-notify-room-users",
+        "stream-notify-user",
+        "stream-notify-logged",
+        "stream-notify-all",
+        "stream-user-presence",
+        "stream-importers",
+        "stream-apps",
+        "stream-roles",
+        "stream-room-data",
+        "stream-video-conference",
+        "stream-livechat-room",
+        "stream-livechat-inquiry-queue-observer",
+        "stream-canned-responses",
+        "stream-integrationHistory",
+        "notify-room",
+        "notify-room-users",
+        "notify-user"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-RT-PRESENCE",
+      "label": "Presence and status",
+      "description": "Presence and status. Category: Profile. Auth: session. Docs: documented. Detail: features/realtime.md.",
+      "class": "realtime",
+      "files": [
+        "packages/streamer/src/StatusVisibilityGate.ts"
+      ],
+      "routes": [
+        "stream-user-presence",
+        "users.presence",
+        "users.getPresence",
+        "presence.getConnections",
+        "presence.enableBroadcast",
+        "manage-user-status",
+        "UserPresence:*",
+        "setUserStatus"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-INT-INCOMING",
+      "label": "Incoming webhooks",
+      "description": "Incoming webhooks. Category: Integration. Auth: URL token. Docs: documented. Findings: VULN-019 (Low). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/api/webhooks.ts",
+        "packages/models/src/models/Integrations.ts"
+      ],
+      "routes": [
+        "/hooks/:integrationId/:token",
+        "/hooks/:integrationId/:userId/:token",
+        "sample/",
+        "info/",
+        "add/",
+        "remove/"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-INT-OUTGOING",
+      "label": "Outgoing webhooks",
+      "description": "Outgoing webhooks. Category: Integration. Auth: admin. Docs: documented. Findings: VULN-019 (Low). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/api/v1/integrations.ts",
+        "apps/meteor/server/lib/integrations/lib/triggerHandler.ts",
+        "apps/meteor/server/lib/authorization/constant/permissions.ts",
+        "apps/meteor/server/lib/integrations/lib/validateOutgoingIntegration.ts"
+      ],
+      "routes": [
+        "integrations.create|get|update|remove|list|history|clearHistory|replayOutgoing"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-INT-SCRIPTS",
+      "label": "Integration scripts (isolated-vm)",
+      "description": "Integration scripts (isolated-vm). Category: Workflow (automation). Auth: admin. Docs: documented. Findings: VULN-025 (Info). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/lib/integrations/lib/isolated-vm/isolated-vm.ts"
+      ],
+      "routes": [
+        "POST /hooks/:integrationId/:token",
+        "outgoing triggers"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-APPS-ENGINE",
+      "label": "Apps-Engine, marketplace, app endpoints",
+      "description": "Apps-Engine, marketplace, app endpoints. Category: Administration (extensions). Auth: admin / per app. Docs: documented. Findings: VULN-006 (Info). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/ee/server/api/apps/rest.ts",
+        "apps/meteor/server/modules/apps/bridges/api.ts",
+        "apps/meteor/ee/server/cron/apps.ts",
+        "apps/meteor/server/modules/apps/bridges"
+      ],
+      "routes": [
+        "/api/apps/*",
+        "/api/apps/public/:appId/*",
+        "/api/apps/private/:appId/:hash/*"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-APPS-UIKIT",
+      "label": "UIKit interactions, core apps",
+      "description": "UIKit interactions, core apps. Category: APIs (internal). Auth: session / visitor token. Docs: documented. Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/ee/server/api/apps/uikit.ts",
+        "apps/meteor/server/modules/core-apps/mention.module.ts",
+        "apps/meteor/server/lib/uikit/recordedViews.ts"
+      ],
+      "routes": [
+        "POST /api/apps/ui.interaction/:appId",
+        "mention-core",
+        "banner-core",
+        "nps-core",
+        "videoconf-core"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-INT-IMPORT",
+      "label": "Data import (Slack, CSV)",
+      "description": "Data import (Slack, CSV). Category: Administration (import). Auth: run-import. Docs: documented. Findings: VULN-006 (Info), VULN-014 (Low). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/api/v1/import.ts",
+        "apps/meteor/server/meteor-methods/import/downloadPublicImportFile.ts"
+      ],
+      "routes": [
+        "uploadImportFile",
+        "downloadPublicImportFile",
+        "startImport",
+        "getImportFileData",
+        "getImportProgress",
+        "getLatestImportOperations",
+        "downloadPendingFiles",
+        "downloadPendingAvatars",
+        "getCurrentImportOperation",
+        "importers.list",
+        "import.clear|new|status|addUsers|run",
+        "run-import",
+        "view-import-operations",
+        "stream-importers"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-INT-EMAIL-DIRECTREPLY",
+      "label": "Reply by email",
+      "description": "Reply by email. Category: Email (inbound parse). Auth: From header. Docs: documented. Findings: VULN-013 (Medium). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/configuration/configureDirectReply.ts",
+        "apps/meteor/server/lib/notifications/processDirectEmail.ts",
+        "packages/node-poplib"
+      ],
+      "routes": [
+        "Direct_Reply_*"
+      ],
+      "severity": "medium"
+    },
+    {
+      "id": "F-INT-EMAILINBOX",
+      "label": "Email inbox channel",
+      "description": "Email inbox channel. Category: Support (email piping). Auth: manage-email-inbox. Docs: documented. Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/api/v1/email-inbox.ts",
+        "apps/meteor/server/features/EmailInbox"
+      ],
+      "routes": [
+        "email-inbox*",
+        "manage-email-inbox"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-INT-BRIDGES",
+      "label": "Slack bridge, IRC, Nextcloud, Smarsh",
+      "description": "Slack bridge, IRC, Nextcloud, Smarsh. Category: Integration. Auth: admin. Docs: documented (WebDAV documented, missing). Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/startup/migrations/v336.ts",
+        "apps/meteor/server/bridges"
+      ],
+      "routes": [
+        "removeSlackBridgeChannelLinks",
+        "resetIrcConnection"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-INT-PUSH-CLOUD-CALENDAR",
+      "label": "Push, cloud, calendar and Outlook",
+      "description": "Push, cloud, calendar and Outlook. Category: Integration. Auth: session / admin. Docs: documented. Detail: features/integrations-apps.md.",
+      "class": "integrations-apps",
+      "files": [
+        "apps/meteor/server/api/v1/push.ts",
+        "apps/meteor/server/api/v1/cloud.ts",
+        "apps/meteor/server/api/v1/calendar.ts",
+        "apps/meteor/server/cron/usageReport.ts",
+        "apps/meteor/server/lib/notifications/push"
+      ],
+      "routes": [
+        "push.*",
+        "cloud.*",
+        "calendar-events.*"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-OMNI-WIDGET",
+      "label": "Livechat widget page",
+      "description": "Livechat widget page. Category: Support (live chat widget). Auth: None. Docs: documented. Findings: VULN-023 (Low). Detail: features/omnichannel.md.",
+      "class": "omnichannel",
+      "files": [
+        "apps/meteor/server/lib/omnichannel/livechat.ts",
+        "packages/livechat"
+      ],
+      "routes": [
+        "GET /livechat"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-OMNI-VISITOR",
+      "label": "Visitor registration and visitor-token APIs",
+      "description": "Visitor registration and visitor-token APIs. Category: Registration (guest); Support. Auth: None. Docs: documented. Findings: VULN-001 (High). Detail: features/omnichannel.md.",
+      "class": "omnichannel",
+      "files": [
+        "apps/meteor/server/api/v1/omnichannel/visitor.ts",
+        "packages/omni-core/src/visitor/create.ts",
+        "packages/models/src/models/LivechatVisitors.ts",
+        "apps/meteor/server/lib/omnichannel/rooms.ts",
+        "apps/meteor/server/api/v1/omnichannel"
+      ],
+      "routes": [
+        "POST /api/v1/livechat/visitor",
+        "GET|DELETE /api/v1/livechat/visitor/:token",
+        "livechat/visitor.status",
+        "livechat/config",
+        "livechat/room",
+        "livechat/room.close",
+        "livechat/room.survey",
+        "livechat/message",
+        "livechat/message/:_id",
+        "livechat/messages.history/:rid",
+        "livechat/upload/:rid",
+        "livechat/transcript",
+        "livechat/offline.message",
+        "livechat/page.visited",
+        "livechat/custom.field(s)",
+        "livechat/agent.info/:rid/:token",
+        "livechat/agent.next/:token",
+        "livechat/visitor/department.transfer",
+        "stream-livechat-room",
+        "stream-notify-room",
+        "extraData.token"
+      ],
+      "severity": "high"
+    },
+    {
+      "id": "F-OMNI-AGENT",
+      "label": "Agent, manager and monitor APIs",
+      "description": "Agent, manager and monitor APIs. Category: Support. Auth: livechat roles. Docs: documented. Detail: features/omnichannel.md.",
+      "class": "omnichannel",
+      "files": [
+        "apps/meteor/server/api/v1/omnichannel/agent.ts",
+        "apps/meteor/server/api/v1/omnichannel/inquiries.ts",
+        "apps/meteor/server/api/v1/omnichannel/queue.ts",
+        "apps/meteor/server/api/v1/omnichannel/rooms.ts",
+        "apps/meteor/server/api/v1/omnichannel/transfer.ts",
+        "apps/meteor/server/api/v1/omnichannel/departments.ts",
+        "apps/meteor/server/api/v1/omnichannel"
+      ],
+      "routes": [
+        "livechat-enterprise",
+        "canned-responses"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-OMNI-SMS",
+      "label": "SMS and outbound messaging",
+      "description": "SMS and outbound messaging. Category: Integration (SMS). Auth: provider signature. Docs: documented. Detail: features/omnichannel.md.",
+      "class": "omnichannel",
+      "files": [
+        "apps/meteor/server/api/v1/omnichannel/sms.ts",
+        "apps/meteor/server/services/omnichannel-integrations/providers"
+      ],
+      "routes": [
+        "POST /api/v1/livechat/sms-incoming/:service",
+        "omnichannel/outbound/*",
+        "outbound-messaging"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-OMNI-CONTACTS",
+      "label": "Omnichannel and local contacts",
+      "description": "Omnichannel and local contacts. Category: CRM. Auth: session. Docs: documented. Detail: features/omnichannel.md.",
+      "class": "omnichannel",
+      "files": [
+        "apps/meteor/ee/server/api/contacts.ts",
+        "apps/meteor/server/routes/avatar/contact.ts"
+      ],
+      "routes": [
+        "omnichannel/contacts*",
+        "contacts.*",
+        "Contacts.findOneOwnedByUserId",
+        "/avatar/contact/:id"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ADM-SETTINGS",
+      "label": "Settings (public, OAuth, admin)",
+      "description": "Settings (public, OAuth, admin). Category: Administration. Auth: none / admin. Docs: documented. Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/api/v1/settings.ts",
+        "apps/meteor/server/publications/settings/index.ts",
+        "apps/meteor/ee/server/lib/saml/lib/settings.ts",
+        "apps/meteor/server/settings/cached.ts",
+        "apps/meteor/server/settings/lib/auditedSettingUpdates.ts"
+      ],
+      "routes": [
+        "settings.public",
+        "settings.oauth",
+        "service.configurations",
+        "settings",
+        "settings/:_id",
+        "settings.addCustomOAuth",
+        "public-settings/get",
+        "private-settings/get",
+        "notify-all",
+        "public-settings-changed",
+        "notify-logged",
+        "private-settings-changed"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ADM-SETUPWIZARD",
+      "label": "Setup wizard",
+      "description": "Setup wizard. Category: Registration (organisation); Administration. Auth: none until completed. Docs: documented. Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/api/v1/setupWizard.ts",
+        "apps/meteor/server/startup/initialData.ts"
+      ],
+      "routes": [
+        "setupWizard.parameters",
+        "/setup-wizard/:step?",
+        "ADMIN_*"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ADM-STATS",
+      "label": "Info, OpenAPI, statistics, health",
+      "description": "Info, OpenAPI, statistics, health. Category: Infrastructure. Auth: none / view-statistics. Docs: documented. Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/api/default/info.ts",
+        "apps/meteor/server/api/lib/getServerInfo.ts",
+        "apps/meteor/server/api/default/openApi.ts",
+        "apps/meteor/server/routes/health.ts",
+        "apps/meteor/server/routes/timesync.ts",
+        "apps/meteor/server/lib/statistics"
+      ],
+      "routes": [
+        "GET /api/info",
+        "view-statistics",
+        "GET /api/docs/json",
+        "/api-docs/",
+        "/health",
+        "/livez",
+        "/readyz",
+        "/_timesync",
+        "statistics",
+        "statistics.list",
+        "statistics.telemetry",
+        "instances.get",
+        "Prometheus_Enabled=false"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ADM-HTTP",
+      "label": "HTTP server, CSP, CORS, rate limit, client IP",
+      "description": "HTTP server, CSP, CORS, rate limit, client IP. Category: Infrastructure. Auth: n/a. Docs: documented. Findings: VULN-017 (Low). Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/lib/http/baseMiddlewares.ts",
+        "apps/meteor/server/lib/cors/cors.ts",
+        "apps/meteor/server/api/v1/middlewares/cors.ts",
+        "apps/meteor/server/api/ApiClass.ts",
+        "apps/meteor/server/startup/rateLimiter.js",
+        "apps/meteor/server/api/v1/middlewares/remoteAddressMiddleware.ts",
+        "apps/meteor/server/lib/http/httpServer.ts"
+      ],
+      "routes": [
+        "all HTTP requests",
+        "/websocket"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-ADM-MAILER",
+      "label": "Mailer, SMTP test, unsubscribe",
+      "description": "Mailer, SMTP test, unsubscribe. Category: Email. Auth: send-mail / session. Docs: documented. Findings: VULN-016 (Low). Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/api/v1/mailer.ts",
+        "apps/meteor/server/lib/auth/startup.js",
+        "apps/meteor/server/lib/notifications/email/api.ts",
+        "apps/meteor/server/lib/notifications/mail-messages/functions/unsubscribe.ts",
+        "apps/meteor/server/meteor-methods/settings/sendSMTPTestEmail.ts"
+      ],
+      "routes": [
+        "mailer",
+        "send-mail",
+        "mailer.unsubscribe",
+        "/mailer/unsubscribe/:_id/:createdAt",
+        "sendSMTPTestEmail"
+      ],
+      "severity": "low"
+    },
+    {
+      "id": "F-ADM-MISC",
+      "label": "Banners, licenses, audit, cloud",
+      "description": "Banners, licenses, audit, cloud. Category: Administration. Auth: session / admin. Docs: documented. Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/api/v1/banners.ts",
+        "apps/meteor/server/api/v1/cloud.ts",
+        "apps/meteor/ee/server/api/licenses.ts",
+        "apps/meteor/ee/server/api/audit.ts",
+        "apps/meteor/server/settings/lib/auditedSettingUpdates.ts",
+        "apps/meteor/server/api/v1/misc.ts",
+        "apps/meteor/server/lib/auditServerEvents"
+      ],
+      "routes": [
+        "banners.*",
+        "licenses.*",
+        "audit.*",
+        "cloud.*"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ADM-CRON",
+      "label": "Scheduled jobs",
+      "description": "Scheduled jobs. Category: Infrastructure (jobs). Auth: n/a. Docs: undocumented. Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/server/cron/nps.ts",
+        "apps/meteor/server/cron/oembed.ts",
+        "apps/meteor/server/cron/start.ts",
+        "apps/meteor/server/cron/temporaryUploadsCleanup.ts",
+        "apps/meteor/server/cron/usageReport.ts",
+        "apps/meteor/server/cron/userDataDownloads.ts",
+        "apps/meteor/server/cron/videoConferences.ts",
+        "apps/meteor/server/lib/rooms/retention"
+      ],
+      "routes": [
+        "@rocket.chat/agenda"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-ADM-CLI",
+      "label": "Environment-variable control, restart",
+      "description": "Environment-variable control, restart. Category: Infrastructure. Auth: n/a. Docs: documented. Detail: features/admin-platform.md.",
+      "class": "admin-platform",
+      "files": [
+        "apps/meteor/packages/rocketchat-mongo-config/server/index.js",
+        "apps/meteor/server/meteor-methods/platform/restartServer.ts",
+        "apps/meteor/server/startup/initialData.ts"
+      ],
+      "routes": [
+        "environment variables",
+        "DDP restart_server"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AI-MCP",
+      "label": "MCP server",
+      "description": "MCP server. Category: Integration (LLM / MCP). Auth: PAT or OAuth + access-mcp (EE). Docs: documented. Detail: features/ai-ee.md.",
+      "class": "ai-ee",
+      "files": [
+        "apps/meteor/ee/server/api/mcp/index.ts",
+        "apps/meteor/ee/server/api/mcp/metadata.ts",
+        "apps/meteor/ee/server/startup/mcp.ts"
+      ],
+      "routes": [
+        "POST|GET /api/v1/mcp",
+        "/.well-known/oauth-protected-resource[/api/v1/mcp]"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-AI-SEARCH",
+      "label": "AI search and answers",
+      "description": "AI search and answers. Category: Search; Integration (LLM / RAG). Auth: session (EE). Docs: documented. Detail: features/ai-ee.md.",
+      "class": "ai-ee",
+      "files": [
+        "apps/meteor/server/api/v1/ai-search.ts",
+        "packages/ai-search",
+        "apps/meteor/server/services/ai-search"
+      ],
+      "routes": [
+        "GET /api/v1/ai.search",
+        "GET /api/v1/ai.llm.models",
+        "POST /api/v1/ai.search.answer"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-FED-MATRIX",
+      "label": "Matrix federation",
+      "description": "Matrix federation. Category: Integration (federation). Auth: server keys (EE). Docs: documented. Detail: features/ai-ee.md.",
+      "class": "ai-ee",
+      "files": [
+        "apps/meteor/ee/server/api/federation.ts",
+        "apps/meteor/ee/server/hooks/federation/index.ts",
+        "ee/packages/federation-matrix",
+        "ee/packages/federation-matrix/src/FederationMatrix.ts",
+        "ee/packages/federation-matrix/src/api/_matrix"
+      ],
+      "routes": [
+        "/_matrix/*",
+        "/.well-known/matrix/*",
+        "federation/matrixIds.verify"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-FED-XMPP",
+      "label": "Native XMPP server",
+      "description": "Native XMPP server. Category: Integration (federation). Auth: server-to-server (EE). Docs: documented. Detail: features/ai-ee.md.",
+      "class": "ai-ee",
+      "files": [
+        "ee/packages/xmpp-server",
+        "docs/features/xmpp-server.md",
+        "ee/packages/xmpp-server/docs",
+        "apps/meteor/ee/server/api"
+      ],
+      "routes": [
+        "XMPP server-to-server listener"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-CLI-SPA",
+      "label": "Web client SPA and link-arrival routes",
+      "description": "Web client SPA and link-arrival routes. Category: Public surfaces. Auth: mixed. Docs: documented. Detail: features/client.md.",
+      "class": "client",
+      "files": [
+        "apps/meteor/client/startup/routes.tsx",
+        "apps/meteor/server/lib/ui-master/inject.ts",
+        "apps/meteor/server/lib/ui-master/scripts.ts",
+        "apps/meteor/server/lib/cors/cors.ts"
+      ],
+      "routes": [
+        "/home",
+        "/login",
+        "/2fa/:method/:challengeId",
+        "/register/:hash",
+        "/invite/:hash",
+        "/reset-password/:token",
+        "/login-token/:token",
+        "/saml/:token",
+        "/oauth/authorize",
+        "/oauth/error/:error",
+        "/setup-wizard/:step?",
+        "/mailer/unsubscribe/:_id/:createdAt",
+        "/conference/:id",
+        "/meet/:rid",
+        "/directory/:tab?",
+        "/omnichannel-directory/...",
+        "/livechat-queue",
+        "/call-history/...",
+        "/search",
+        "/terms-of-service",
+        "/privacy-policy",
+        "/legal-notice"
+      ],
+      "severity": "info"
+    },
+    {
+      "id": "F-CLI-RENDER",
+      "label": "Message and content rendering",
+      "description": "Message and content rendering. Category: Content (markdown, rich text). Auth: n/a (client). Docs: documented. Detail: features/client.md.",
+      "class": "client",
+      "files": [
+        "packages/gazzodown/src/katex/KatexElement.tsx",
+        "apps/meteor/client/components/message/content/urlPreviews/OEmbedHtmlPreview.tsx",
+        "apps/meteor/client/views/omnichannel/appearance/AppearanceForm.tsx",
+        "apps/meteor/client/components/MarkdownTextInner.tsx",
+        "apps/meteor/client/lib/utils/normalizeMessagePreview/normalizeMessagePreview.ts",
+        "apps/meteor/client/sidebar/RoomList/SidebarItemTemplateWithData.tsx",
+        "apps/meteor/client/lib/emoji/emojiParser.ts",
+        "apps/meteor/client/lib/userData.ts",
+        "apps/meteor/client/lib/VideoConfManager.ts",
+        "packages/gazzodown",
+        "packages/fuselage-ui-kit"
+      ],
+      "routes": [
+        "message list, threads, sidebar (client)"
+      ],
+      "severity": "info"
+    }
+  ],
+  "edges": [
+    {
+      "source": "F-AUTH-LOGIN",
+      "target": "F-AUTH-2FA",
+      "label": "asks second factor"
+    },
+    {
+      "source": "F-AUTH-RESET",
+      "target": "F-AUTH-2FA",
+      "label": "skips second factor (VULN-015)"
+    },
+    {
+      "source": "F-AUTH-EMAILVERIFY",
+      "target": "F-AUTH-2FA",
+      "label": "skips second factor (VULN-015)"
+    },
+    {
+      "source": "F-AUTH-OAUTHLOGIN",
+      "target": "F-AUTH-LOGIN",
+      "label": "issues login code"
+    },
+    {
+      "source": "F-AUTH-OAUTHLOGIN",
+      "target": "F-USER-PROFILE",
+      "label": "links account by email (VULN-002)"
+    },
+    {
+      "source": "F-AUTH-OAUTHLOGIN",
+      "target": "F-AUTH-2FA",
+      "label": "asks second factor"
+    },
+    {
+      "source": "F-AUTH-SSO-EE",
+      "target": "F-AUTH-LOGIN",
+      "label": "login handler"
+    },
+    {
+      "source": "F-AUTH-LEGACYLOGIN",
+      "target": "F-AUTH-LOGIN",
+      "label": "login handler"
+    },
+    {
+      "source": "F-AUTH-REGISTER",
+      "target": "F-AZ-INVITES",
+      "label": "register through invite"
+    },
+    {
+      "source": "F-AUTH-REGISTER",
+      "target": "F-AUTH-EMAILVERIFY",
+      "label": "sends verification"
+    },
+    {
+      "source": "F-AUTH-PAT",
+      "target": "F-AUTH-2FA",
+      "label": "bypassTwoFactor tokens"
+    },
+    {
+      "source": "F-AUTH-SESSIONS",
+      "target": "F-RT-DDP",
+      "label": "resume token"
+    },
+    {
+      "source": "F-AUTH-OAUTHPROVIDER",
+      "target": "F-AI-MCP",
+      "label": "client registration for MCP"
+    },
+    {
+      "source": "F-AUTH-OAUTHPROVIDER",
+      "target": "F-USER-PROFILE",
+      "label": "userinfo (VULN-018)"
+    },
+    {
+      "source": "F-AI-MCP",
+      "target": "F-AUTH-PAT",
+      "label": "authenticates with PAT"
+    },
+    {
+      "source": "F-USER-DIRECTORY",
+      "target": "F-AZ-TEAMS",
+      "label": "lists users across teams (VULN-007)"
+    },
+    {
+      "source": "F-USER-DIRECTORY",
+      "target": "F-AUTH-2FA",
+      "label": "returns TOTP secret (VULN-004)"
+    },
+    {
+      "source": "F-USER-ADMIN",
+      "target": "F-AZ-RBAC",
+      "label": "assigns roles"
+    },
+    {
+      "source": "F-USER-DELETE",
+      "target": "F-USER-PROFILE",
+      "label": "removes account"
+    },
+    {
+      "source": "F-USER-DATAEXPORT",
+      "target": "F-ADM-CRON",
+      "label": "generated by job"
+    },
+    {
+      "source": "F-USER-AVATAR",
+      "target": "F-FILE-THUMB",
+      "label": "resizes image"
+    },
+    {
+      "source": "F-AZ-RBAC",
+      "target": "F-AZ-ROOMACCESS",
+      "label": "permissions feed access"
+    },
+    {
+      "source": "F-AZ-ABAC-EE",
+      "target": "F-AZ-ROOMACCESS",
+      "label": "attribute rules"
+    },
+    {
+      "source": "F-AZ-TEAMS",
+      "target": "F-ROOM-MGMT",
+      "label": "team rooms"
+    },
+    {
+      "source": "F-AZ-INVITES",
+      "target": "F-ROOM-MGMT",
+      "label": "adds member"
+    },
+    {
+      "source": "F-AZ-BAN",
+      "target": "F-ROOM-MGMT",
+      "label": "bans member"
+    },
+    {
+      "source": "F-AZ-BAN",
+      "target": "F-MSG-NOTIFY",
+      "label": "banned still notified (VULN-009)"
+    },
+    {
+      "source": "F-AZ-BAN",
+      "target": "F-FILE-SERVE",
+      "label": "banned still download (VULN-009)"
+    },
+    {
+      "source": "F-AZ-MODERATION",
+      "target": "F-MSG-EDITDELETE",
+      "label": "moderation actions"
+    },
+    {
+      "source": "F-AZ-ROOMACCESS",
+      "target": "F-RT-STREAMS",
+      "label": "read rule at subscribe"
+    },
+    {
+      "source": "F-ROOM-MGMT",
+      "target": "F-RT-STREAMS",
+      "label": "privacy change not revoked (VULN-008)"
+    },
+    {
+      "source": "F-MSG-DISCUSSIONS",
+      "target": "F-ROOM-MGMT",
+      "label": "child rooms"
+    },
+    {
+      "source": "F-MSG-READ",
+      "target": "F-AZ-ROOMACCESS",
+      "label": "canReadRoom"
+    },
+    {
+      "source": "F-MSG-READ",
+      "target": "F-AZ-ROOMACCESS",
+      "label": "deleted sync unchecked (VULN-010)"
+    },
+    {
+      "source": "F-MSG-SEARCH",
+      "target": "F-AZ-ROOMACCESS",
+      "label": "scoped to rooms"
+    },
+    {
+      "source": "F-MSG-SEND",
+      "target": "F-MSG-NOTIFY",
+      "label": "triggers notifications"
+    },
+    {
+      "source": "F-MSG-SEND",
+      "target": "F-MSG-URLPREVIEW",
+      "label": "previews links"
+    },
+    {
+      "source": "F-MSG-SEND",
+      "target": "F-INT-OUTGOING",
+      "label": "triggers webhooks"
+    },
+    {
+      "source": "F-MSG-SEND",
+      "target": "F-RT-STREAMS",
+      "label": "broadcast to room"
+    },
+    {
+      "source": "F-MSG-SLASH",
+      "target": "F-APPS-ENGINE",
+      "label": "app commands"
+    },
+    {
+      "source": "F-MSG-E2E",
+      "target": "F-FILE-UPLOAD",
+      "label": "encrypted uploads"
+    },
+    {
+      "source": "F-MSG-VIDEOCONF",
+      "target": "F-MSG-NOTIFY",
+      "label": "call notifications"
+    },
+    {
+      "source": "F-MSG-AUTOTRANSLATE",
+      "target": "F-MSG-SEND",
+      "label": "translates messages"
+    },
+    {
+      "source": "F-MSG-NOTIFY",
+      "target": "F-INT-EMAIL-DIRECTREPLY",
+      "label": "reply-to address"
+    },
+    {
+      "source": "F-FILE-UPLOAD",
+      "target": "F-FILE-SERVE",
+      "label": "stored then served"
+    },
+    {
+      "source": "F-FILE-UPLOAD",
+      "target": "F-FILE-THUMB",
+      "label": "thumbnails"
+    },
+    {
+      "source": "F-FILE-UPLOAD",
+      "target": "F-MSG-SEND",
+      "label": "file message type (VULN-012)"
+    },
+    {
+      "source": "F-FILE-SERVE",
+      "target": "F-CLI-SPA",
+      "label": "inline on main origin (VULN-021)"
+    },
+    {
+      "source": "F-MEDIA-EMOJI",
+      "target": "F-CLI-RENDER",
+      "label": "emoji rendering"
+    },
+    {
+      "source": "F-MEDIA-SOUNDS",
+      "target": "F-MSG-NOTIFY",
+      "label": "notification sounds"
+    },
+    {
+      "source": "F-MEDIA-ASSETS",
+      "target": "F-CLI-SPA",
+      "label": "logos and favicons"
+    },
+    {
+      "source": "F-RT-DDP",
+      "target": "F-RT-METHODS",
+      "label": "runs methods"
+    },
+    {
+      "source": "F-RT-DDP",
+      "target": "F-RT-STREAMS",
+      "label": "serves streams"
+    },
+    {
+      "source": "F-RT-METHODS",
+      "target": "F-AZ-RBAC",
+      "label": "permissions/get (VULN-005)"
+    },
+    {
+      "source": "F-RT-PRESENCE",
+      "target": "F-RT-STREAMS",
+      "label": "presence stream"
+    },
+    {
+      "source": "F-RT-STREAMS",
+      "target": "F-CLI-SPA",
+      "label": "userData applied (VULN-003)"
+    },
+    {
+      "source": "F-RT-STREAMS",
+      "target": "F-MSG-VIDEOCONF",
+      "label": "call ringing (VULN-003)"
+    },
+    {
+      "source": "F-INT-INCOMING",
+      "target": "F-MSG-SEND",
+      "label": "posts as user"
+    },
+    {
+      "source": "F-INT-INCOMING",
+      "target": "F-INT-SCRIPTS",
+      "label": "runs script"
+    },
+    {
+      "source": "F-INT-OUTGOING",
+      "target": "F-INT-SCRIPTS",
+      "label": "runs script"
+    },
+    {
+      "source": "F-INT-INCOMING",
+      "target": "F-INT-OUTGOING",
+      "label": "hooks add (VULN-019)"
+    },
+    {
+      "source": "F-INT-SCRIPTS",
+      "target": "F-ADM-HTTP",
+      "label": "blocks event loop (VULN-025)"
+    },
+    {
+      "source": "F-INT-EMAIL-DIRECTREPLY",
+      "target": "F-MSG-SEND",
+      "label": "posts as From (VULN-013)"
+    },
+    {
+      "source": "F-INT-IMPORT",
+      "target": "F-USER-ADMIN",
+      "label": "creates users"
+    },
+    {
+      "source": "F-INT-IMPORT",
+      "target": "F-RT-STREAMS",
+      "label": "progress stream (VULN-006)"
+    },
+    {
+      "source": "F-INT-BRIDGES",
+      "target": "F-MSG-SEND",
+      "label": "bridged messages"
+    },
+    {
+      "source": "F-INT-PUSH-CLOUD-CALENDAR",
+      "target": "F-MSG-NOTIFY",
+      "label": "push gateway"
+    },
+    {
+      "source": "F-INT-EMAILINBOX",
+      "target": "F-OMNI-AGENT",
+      "label": "email channel"
+    },
+    {
+      "source": "F-APPS-ENGINE",
+      "target": "F-APPS-UIKIT",
+      "label": "app interfaces"
+    },
+    {
+      "source": "F-APPS-UIKIT",
+      "target": "F-CLI-RENDER",
+      "label": "blocks rendered"
+    },
+    {
+      "source": "F-OMNI-WIDGET",
+      "target": "F-OMNI-VISITOR",
+      "label": "registers visitor"
+    },
+    {
+      "source": "F-OMNI-VISITOR",
+      "target": "F-OMNI-CONTACTS",
+      "label": "contact records"
+    },
+    {
+      "source": "F-OMNI-AGENT",
+      "target": "F-OMNI-VISITOR",
+      "label": "serves visitors"
+    },
+    {
+      "source": "F-OMNI-SMS",
+      "target": "F-OMNI-VISITOR",
+      "label": "visitor by phone (VULN-001)"
+    },
+    {
+      "source": "F-ADM-SETTINGS",
+      "target": "F-CLI-SPA",
+      "label": "public settings, custom scripts"
+    },
+    {
+      "source": "F-ADM-SETUPWIZARD",
+      "target": "F-ADM-SETTINGS",
+      "label": "writes settings"
+    },
+    {
+      "source": "F-ADM-CLI",
+      "target": "F-ADM-SETTINGS",
+      "label": "environment overrides"
+    },
+    {
+      "source": "F-ADM-STATS",
+      "target": "F-ADM-SETTINGS",
+      "label": "reads settings"
+    },
+    {
+      "source": "F-ADM-MISC",
+      "target": "F-CLI-SPA",
+      "label": "banners"
+    },
+    {
+      "source": "F-ADM-HTTP",
+      "target": "F-AUTH-LOGIN",
+      "label": "client address for limits (VULN-017)"
+    },
+    {
+      "source": "F-ADM-HTTP",
+      "target": "F-OMNI-WIDGET",
+      "label": "CSP removed (VULN-023)"
+    },
+    {
+      "source": "F-ADM-MAILER",
+      "target": "F-USER-PROFILE",
+      "label": "unsubscribe flag (VULN-016)"
+    },
+    {
+      "source": "F-ADM-CRON",
+      "target": "F-FILE-UPLOAD",
+      "label": "temporary upload cleanup"
+    },
+    {
+      "source": "F-AI-SEARCH",
+      "target": "F-MSG-READ",
+      "label": "indexes messages"
+    },
+    {
+      "source": "F-FED-MATRIX",
+      "target": "F-RT-STREAMS",
+      "label": "typing forwarded (VULN-011)"
+    },
+    {
+      "source": "F-FED-XMPP",
+      "target": "F-MSG-SEND",
+      "label": "federated messages"
+    },
+    {
+      "source": "F-CLI-RENDER",
+      "target": "F-CLI-SPA",
+      "label": "renders in client"
+    },
+    {
+      "source": "F-USER-AVATAR",
+      "target": "F-ADM-HTTP",
+      "label": "provider proxy (VULN-022)"
+    },
+    {
+      "source": "F-USER-DATAEXPORT",
+      "target": "F-ADM-HTTP",
+      "label": "cacheable download (VULN-024)"
+    }
+  ],
+  "attribution": "Blue Spider, a product of Kohi Research Corporation (kohirc.com). Copyright 2026 Kohi Research Corporation. All rights reserved. Blue Spider (TM) is a trademark of Kohi Research Corporation. Generated by Blue Spider; do not use or redistribute without attribution to Kohi Research Corporation."
+}

@@ -1,0 +1,6 @@
+GET /api/v1/users.listByStatus?count=50&roles=admin HTTP/1.1
+Host: 127.0.0.1:39649
+X-Auth-Token: wI_nU4Ls4IVSy6r_yD99OCUg6g3wSF6PiF1q_Fjri3k
+X-User-Id: hkaugeKWqnoAFtEXi
+Accept: application/json
+

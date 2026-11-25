@@ -1,0 +1,6 @@
+172.18.0.3 - - [24/Nov/2026:15:52:59 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 344 "-" "-" 8681 "rocketchat@file" "http://rocketchat:3000" 47ms
+172.18.0.3 - - [24/Nov/2026:15:52:59 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 344 "-" "-" 8682 "rocketchat@file" "http://rocketchat:3000" 35ms
+172.18.0.3 - - [24/Nov/2026:15:52:59 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 361 "-" "-" 8683 "rocketchat@file" "http://rocketchat:3000" 68ms
+172.18.0.3 - - [24/Nov/2026:15:52:59 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 363 "-" "-" 8684 "rocketchat@file" "http://rocketchat:3000" 37ms
+172.18.0.3 - - [24/Nov/2026:15:53:03 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 342 "-" "-" 8691 "rocketchat@file" "http://rocketchat:3000" 180ms
+172.18.0.3 - - [24/Nov/2026:15:53:04 +0000] "POST /api/v1/livechat/visitor HTTP/1.1" 200 413 "-" "-" 8694 "rocketchat@file" "http://rocketchat:3000" 68ms

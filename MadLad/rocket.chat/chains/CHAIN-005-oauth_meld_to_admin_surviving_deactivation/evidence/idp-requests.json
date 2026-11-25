@@ -1,0 +1,28 @@
+[
+  {
+    "method": "GET",
+    "path": "/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A39649%2F_oauth%2Fgitlab&scope=read_user&code_challenge=gTQgnKR4W2fa3ZqUYmg8EGNCSHmSmWCWgWE-Uinekdc&code_challenge_method=S256&state=8DcCmF7SGn6PoxXMXC5mW8NE&client_id=mock-client"
+  },
+  {
+    "method": "POST",
+    "path": "/oauth/token",
+    "body": "grant_type=authorization_code&redirect_uri=http%3A%2F%2F127.0.0.1%3A39649%2F_oauth%2Fgitlab&code_verifier=VI9zcIvmfwBCj2sOl00oMaXkiR4Ep4f98dkBmFA6ZLE&client_id=mock-client&client_secret=mock-secret&code=mock-9ce66a273346"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v4/user?access_token=mock-8cc32c6025f53645"
+  },
+  {
+    "method": "GET",
+    "path": "/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A39649%2F_oauth%2Fgitlab&scope=read_user&code_challenge=zmg4NLf4G14aZFMoVNP2XyGD7vh98NHRPeVoMImIm80&code_challenge_method=S256&state=CSMERAL8Qa12iflvHmA0VjzS&client_id=mock-client"
+  },
+  {
+    "method": "POST",
+    "path": "/oauth/token",
+    "body": "grant_type=authorization_code&redirect_uri=http%3A%2F%2F127.0.0.1%3A39649%2F_oauth%2Fgitlab&code_verifier=JpJM6HCemwMaYbudTT38CkNZzCM6oAF1coUdvZh0Ons&client_id=mock-client&client_secret=mock-secret&code=mock-488cc90219e0"
+  },
+  {
+    "method": "GET",
+    "path": "/api/v4/user?access_token=mock-112671841450e6a8"
+  }
+]

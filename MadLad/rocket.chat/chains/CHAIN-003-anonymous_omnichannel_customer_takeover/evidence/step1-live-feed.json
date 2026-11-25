@@ -1,0 +1,63 @@
+{
+  "subscription": [
+    "xGfgngaYKLbhYSSwd",
+    {
+      "useCollection": false,
+      "args": [
+        {
+          "visitorToken": "outsider-834e8323",
+          "rid": "K4RB3B78RPCL9xf9X"
+        }
+      ]
+    }
+  ],
+  "result": {
+    "msg": "ready",
+    "subs": [
+      "314c748c"
+    ]
+  },
+  "frame": {
+    "msg": "changed",
+    "collection": "stream-room-messages",
+    "id": "id",
+    "fields": {
+      "eventName": "xGfgngaYKLbhYSSwd",
+      "args": [
+        {
+          "_id": "2ATJZnD6MZYSAZDSX",
+          "rid": "xGfgngaYKLbhYSSwd",
+          "msg": "invoice 88834e8323 paid with the card ending 4242",
+          "token": "customer-834e8323",
+          "alias": "Dana Customer",
+          "ts": {
+            "$date": 1795529445451
+          },
+          "u": {
+            "_id": "6b059ae0e7422a44df31d787",
+            "username": "guest-15",
+            "name": "Dana Customer"
+          },
+          "_updatedAt": {
+            "$date": 1795529445512
+          },
+          "md": [
+            {
+              "type": "PARAGRAPH",
+              "value": [
+                {
+                  "type": "PLAIN_TEXT",
+                  "value": "invoice 88834e8323 paid with the card ending 4242"
+                }
+              ]
+            }
+          ],
+          "mentions": [],
+          "channels": [],
+          "urls": []
+        }
+      ]
+    }
+  },
+  "harvested_phone": "+1555235835"
+}

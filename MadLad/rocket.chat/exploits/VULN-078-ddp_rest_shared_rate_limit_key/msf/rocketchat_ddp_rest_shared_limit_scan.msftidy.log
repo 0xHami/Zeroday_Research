@@ -1,0 +1,14 @@
+/tmp/tmp.kAqbyEnXGB/modules/auxiliary/blue_spider/rocketchat_ddp_rest_shared_limit_scan.rb:29 - [[1;31;40mERROR[0m] Writes to stdout
+/opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:101:in 'RuboCopRunner#required_modules': Error retrieving new modules when verifying Rubocop (RuboCopRunnerException)
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:90:in 'RuboCopRunner#requires_rubocop?'
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:57:in 'RuboCopRunner#run'
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:930:in 'block (2 levels) in Msftidy#run'
+	from /opt/metasploit-framework/embedded/lib/ruby/3.4.0/find.rb:51:in 'block (2 levels) in Find.find'
+	from /opt/metasploit-framework/embedded/lib/ruby/3.4.0/find.rb:50:in 'Kernel#catch'
+	from /opt/metasploit-framework/embedded/lib/ruby/3.4.0/find.rb:50:in 'block in Find.find'
+	from /opt/metasploit-framework/embedded/lib/ruby/3.4.0/find.rb:45:in 'Array#each'
+	from /opt/metasploit-framework/embedded/lib/ruby/3.4.0/find.rb:45:in 'Find.find'
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:917:in 'block in Msftidy#run'
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:915:in 'Array#each'
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:915:in 'Msftidy#run'
+	from /opt/metasploit-framework/embedded/framework/tools/dev/msftidy.rb:982:in '<main>'

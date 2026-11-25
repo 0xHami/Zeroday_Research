@@ -1,0 +1,9 @@
+{
+  "username": "sadm_9f359e8a",
+  "private_setting_read": 200,
+  "same_read_as_ordinary_user": 403,
+  "roles": [
+    "admin",
+    "user"
+  ]
+}

@@ -1,0 +1,9 @@
+GET /oauth/gitlab HTTP/1.1
+Host: 127.0.0.1:39649
+
+(the stand-in IdP asserted: {"id": 93413, "username": "outsider-7fe21092", "name": "Outsider", "email": "vicadm_7fe21092@lab.invalid"})
+
+POST /api/v1/loginCode.redeem HTTP/1.1
+Content-Type: application/json
+
+{"code": "eff719a19e9ae5171831e739869e67aff4a1997e4010948fd69e1764bc086c99"}

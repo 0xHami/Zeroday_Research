@@ -1,0 +1,95 @@
+{
+  "workspace_admin": "admin",
+  "delegated_role": {
+    "name": "moderator",
+    "permissions": [
+      "assign-roles",
+      "edit-other-user-info",
+      "view-full-other-user-info"
+    ],
+    "permission_roles_before": {
+      "assign-roles": [
+        "admin"
+      ],
+      "edit-other-user-info": [
+        "admin"
+      ],
+      "view-full-other-user-info": [
+        "admin"
+      ]
+    },
+    "assign_admin_role_holders": [
+      "admin"
+    ]
+  },
+  "admin_before": {
+    "username": "admin",
+    "roles": [
+      "admin"
+    ],
+    "active": true,
+    "type": "user",
+    "emails": [
+      {
+        "address": "admin@lab.invalid",
+        "verified": false
+      }
+    ]
+  },
+  "step1_oracle": {
+    "accounts_probed": 21,
+    "oracle_says": [
+      "admin",
+      "spare_08a9b1e2"
+    ],
+    "admin_view": [
+      "admin",
+      "spare_08a9b1e2"
+    ]
+  },
+  "step2_demotion": {
+    "promotion_refused": 400,
+    "demoted": [
+      [
+        "admin",
+        200,
+        [
+          "user"
+        ]
+      ]
+    ],
+    "admin_roles_after": [
+      "user"
+    ],
+    "demoted_admin_setting_read": 403,
+    "demoted_admin_setting_write": 403,
+    "admins_remaining": [
+      "spare_08a9b1e2"
+    ]
+  },
+  "step3_policy": {
+    "baseline": 14,
+    "now": 414,
+    "increments": 400,
+    "registration": {
+      "status": 400,
+      "body": "{\"success\":false,\"error\":\"The password provided does not meet the server's password policy.\",\"errorType\":\"error-password-policy-not-met\",\"details\":[{\"error\":\"error-password-policy-not-met-minLength\",\""
+    },
+    "password_change": {
+      "status": 400,
+      "body": "{\"success\":false,\"error\":\"The password provided does not meet the server's password policy.\",\"errorType\":\"error-password-policy-not-met\",\"details\":[{\"error\":\"error-password-policy-not-met-minLength\",\""
+    },
+    "demoted_admin_repair_attempt": {
+      "status": 403,
+      "body": "{\"success\":false,\"error\":\"User does not have the permissions required for this action\",\"errorType\":\"error-forbidden\"}"
+    },
+    "value_after_repair_attempt": 414
+  },
+  "restore": {
+    "admin_roles": [
+      "admin"
+    ],
+    "protected_read": 200,
+    "policy": 14
+  }
+}

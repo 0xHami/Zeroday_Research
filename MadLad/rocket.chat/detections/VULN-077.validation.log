@@ -1,0 +1,65 @@
+Blue Spider, stage 15: validation of VULN-077.sigma.yml (Rocket.Chat rocket.chat)
+date (UTC): 2026-11-24
+
+LOG SOURCE
+  the lab's access log: container stdout of bluespiderlab_rocket.chat_proxy
+  (Traefik v3.4, started with --accesslog=true), combined format;
+  the application itself logs no request line at its shipped Log_Level 0.
+
+POSITIVES
+  replay of exploits/VULN-077-visitor_tokens_in_pages_visited/automation.py at 2026-11-24T16:03:36+00:00
+  verdict of that run: ==> VULN-077 CONFIRMED 2026-11-24 - a non-admin agent read the customer's visitor token out of visitors.pagesVisited, which visitors.info withholds for the same caller, and used it to read the conversation and post as the customer
+  lines the lab logged during the run (whole window): 24
+    -> VULN-077.capture.log
+  the attack's own request lines, selected with /"GET /api/v1/livechat/visitors\.pagesVisited//: 1
+    -> VULN-077.positive.log
+  events built: 1 (det.log_event 1, webserver-field fallback 0)
+
+NEGATIVES
+  clean.log: this workspace used legitimately (the web client in Chromium plus a
+  documented-API client on the findings' own routes), lines: 400
+  events built: 400 (det.log_event 378, webserver-field fallback 22)
+
+det.sigma_problems(rule)
+  []  (no structural fault)
+
+det.validate_sigma(rule, positives, negatives)
+  {
+    "ok": true,
+    "positives": 1,
+    "matched_positives": 1,
+    "negatives": 400,
+    "matched_negatives": 0,
+    "missed_positive_indexes": [],
+    "false_positive_indexes": [],
+    "verdict": "CONFIRMED"
+  }
+
+extra check, not required by the stage: the same run's other lines as negatives
+  (the exploit's own setup traffic, 23 lines, 23 events; a rule must not fire on them)
+  {
+    "ok": true,
+    "positives": 1,
+    "matched_positives": 1,
+    "negatives": 23,
+    "matched_negatives": 0,
+    "missed_positive_indexes": [],
+    "false_positive_indexes": [],
+    "verdict": "CONFIRMED"
+  }
+
+pySigma `sigma check`, inside the attacker container
+  $ docker exec bluespiderlab_rocket.chat_attacker sh -c 'sigma check "/exploits/VULN-077-visitor_tokens_in_pages_visited/detection/VULN-077.sigma.yml"; echo "SIGMA_CHECK_EXIT=$?"'
+  === Summary ===
+  Found 0 errors, 0 condition errors and 0 issues.
+  No rule errors found.
+  No condition errors found.
+  No validation issues found.
+  SIGMA_CHECK_EXIT=0
+  Parsing Sigma rules
+  Checking Sigma rules
+  {"ok": true, "exit_code": 0, "issues": [], "summary": "valid"}
+
+VERDICT: CONFIRMED
+
+Blue Spider, a product of Kohi Research Corporation (kohirc.com).

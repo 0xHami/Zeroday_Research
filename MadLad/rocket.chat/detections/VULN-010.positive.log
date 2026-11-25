@@ -1,0 +1,2 @@
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "GET /api/v1/chat.getDeletedMessages?roomId=6b05b348e7422a44df31dbb5&since=2000-01-01T00:00:00.000Z&count=100 HTTP/1.1" 200 88 "-" "-" 8825 "rocketchat@file" "http://rocketchat:3000" 25ms
+172.18.0.3 - - [24/Nov/2026:15:54:48 +0000] "GET /api/v1/chat.getDeletedMessages?roomId=6b05b348e7422a44df31dbb5&since=2026-11-24T15:54:48.000Z&count=100 HTTP/1.1" 200 88 "-" "-" 8826 "rocketchat@file" "http://rocketchat:3000" 43ms

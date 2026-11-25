@@ -1,0 +1,18 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/channels.list.joined
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+CALLS => 20
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-063: exploited
+[+] 127.0.0.1:39649 - 20/20 rapid calls allowed, 0 rate-limited: the documented 10/min limit is not enforced
+[*]   a patched (restarted) install would start returning HTTP 429 well before this many calls
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124200048_default_127.0.0.1_blue_spider.vuln_649714.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

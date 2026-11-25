@@ -1,0 +1,2 @@
+172.18.0.3 - - [24/Nov/2026:16:05:45 +0000] "POST /api/v1/users.register HTTP/1.1" 400 48 "-" "-" 9691 "rocketchat@file" "http://rocketchat:3000" 21ms
+172.18.0.3 - - [24/Nov/2026:16:05:45 +0000] "POST /api/v1/users.register HTTP/1.1" 400 175 "-" "-" 9692 "rocketchat@file" "http://rocketchat:3000" 51ms

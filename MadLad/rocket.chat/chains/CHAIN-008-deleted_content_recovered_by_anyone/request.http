@@ -1,0 +1,6 @@
+GET /api/v1/chat.getDeletedMessages?roomId=6b05a0f2e7422a44df31dab0&since=1970-01-01T00:00:00.000Z&count=100 HTTP/1.1
+Host: 127.0.0.1:39649
+X-Auth-Token: Pq54dnpXTisLYVPJ_7pmL4kF2yy4QD6j3vC31mR-KZu
+X-User-Id: 8X8PCfcvsMqKzbqaM
+Accept: application/json
+

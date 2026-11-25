@@ -1,0 +1,4 @@
+To: atk_5d7a3bf5@lab.invalid
+Subject: Rocket.Chat - Password recovery
+
+Rocket.Chat Cloud Forgot your password? Let's get you a new one! Reset (http://127.0.0.1:39649/reset-password/nG4ZxUkCXVFZyh4DspQHICD11yTc78aSp3nF3qxJ5mr) If you didn't ask for your password reset, you can ignore this email. Blog (https://rocket.chat/blog) | Github (https://github.com/RocketChat) | Facebook (https://www.facebook.com/RocketChatApp) | Instagram (https://www.instagram.com/rocket.chat) © Rocket.Chat Technologies Corp. Made with ❤️ in 🇧🇷 🇨🇦 🇩🇪 🇮🇳 🇬🇧 🇺🇸

@@ -1,0 +1,2 @@
+172.18.0.3 - - [24/Nov/2026:16:00:20 +0000] "POST /api/v1/livechat/offline.message HTTP/1.1" 200 58 "-" "-" 9337 "rocketchat@file" "http://rocketchat:3000" 163ms
+172.18.0.3 - - [24/Nov/2026:16:00:22 +0000] "POST /api/v1/livechat/offline.message HTTP/1.1" 200 58 "-" "-" 9338 "rocketchat@file" "http://rocketchat:3000" 23ms

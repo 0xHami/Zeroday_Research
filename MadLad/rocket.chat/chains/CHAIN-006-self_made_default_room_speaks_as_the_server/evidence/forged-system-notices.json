@@ -1,0 +1,72 @@
+{
+  "step1_flags": {
+    "status": 200,
+    "stored": {
+      "name": "it-announcements-9a8b55af",
+      "default": true,
+      "featured": true,
+      "t": "c",
+      "description": "Official IT announcements"
+    },
+    "channels_create_control": 400
+  },
+  "step2_audience": {
+    "new_account_rooms": [
+      "teda7-026fccd1",
+      "onboarding-026fccd1",
+      "tb54d-2465c862",
+      "onboarding-2465c862",
+      "it-announcements-9a8b55af",
+      "general"
+    ],
+    "auto_joined": true,
+    "featured_rooms": [
+      "it-announcements-9a8b55af",
+      "onboarding-026fccd1",
+      "onboarding-2465c862"
+    ]
+  },
+  "step3_voice": {
+    "forged": [
+      {
+        "requested_type": "r",
+        "stored_type": "r",
+        "msg": "Room renamed to it-announcements-verified (9a8b55af)",
+        "id": "JeMaTThAyBWFzqGT8",
+        "status": 200
+      },
+      {
+        "requested_type": "au",
+        "stored_type": "au",
+        "msg": "IT added everyone to this channel: confirm your account at https://sso-verify.example/9a8b55af",
+        "id": "eyjQxGKrHMKAFKqZX",
+        "status": 200
+      },
+      {
+        "requested_type": "subscription-role-added",
+        "stored_type": "subscription-role-added",
+        "msg": "joiner_9a8b55af was set as owner by IT (9a8b55af)",
+        "id": "N2X6it3qme63hsGmL",
+        "status": 200
+      }
+    ],
+    "chat_sendMessage_control": 400,
+    "read_by_auto_joined_member": [
+      {
+        "t": "subscription-role-added",
+        "msg": "joiner_9a8b55af was set as owner by IT (9a8b55af)",
+        "u": "newstarter_9a8b55af"
+      },
+      {
+        "t": "au",
+        "msg": "IT added everyone to this channel: confirm your account at https://sso-verify.example/9a8b55af",
+        "u": "newstarter_9a8b55af"
+      },
+      {
+        "t": "r",
+        "msg": "Room renamed to it-announcements-verified (9a8b55af)",
+        "u": "newstarter_9a8b55af"
+      }
+    ]
+  }
+}

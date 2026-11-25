@@ -1,0 +1,2 @@
+172.18.0.3 - - [24/Nov/2026:15:59:38 +0000] "GET /api/v1/channels.anonymousread?roomId=yw59nm7eTm9atPXJ3&count=100 HTTP/1.1" 200 770 "-" "-" 9267 "rocketchat@file" "http://rocketchat:3000" 17ms
+172.18.0.3 - - [24/Nov/2026:15:59:38 +0000] "GET /api/v1/channels.anonymousread?roomId=6b05b46ae7422a44df31dd32&count=100 HTTP/1.1" 200 513 "-" "-" 9274 "rocketchat@file" "http://rocketchat:3000" 20ms
